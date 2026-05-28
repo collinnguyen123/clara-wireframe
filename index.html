@@ -1082,5 +1082,52 @@ document.addEventListener('click', e => {
 });
 </script>
 
+
+<style id="clara-gate-style">
+#clara-gate-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#1F3329 0%,#2F473B 100%);z-index:99999;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif}
+#clara-gate-box{background:#F7F5F0;border-radius:24px;padding:48px 44px;box-shadow:0 30px 80px rgba(0,0,0,.4);max-width:420px;width:90%;text-align:center}
+#clara-gate-box .logo{font-family:Georgia,serif;font-weight:700;font-size:38px;color:#4A6B5B;margin-bottom:6px}
+#clara-gate-box .sub{font-family:Georgia,serif;font-style:italic;color:#5A615D;margin-bottom:32px;font-size:14px;line-height:1.5}
+#clara-gate-box input{width:100%;padding:14px 18px;border:1.5px solid #D9D4CA;border-radius:14px;font-size:15px;font-family:Arial,sans-serif;background:#fff;color:#1F2421;margin-bottom:14px;outline:none;transition:border-color .15s}
+#clara-gate-box input:focus{border-color:#4A6B5B}
+#clara-gate-box button{width:100%;padding:14px;background:#4A6B5B;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:Arial,sans-serif;transition:background .15s}
+#clara-gate-box button:hover{background:#2F473B}
+#clara-gate-err{color:#A35540;font-size:12.5px;margin-top:10px;height:18px;font-family:Arial,sans-serif}
+#clara-gate-foot{margin-top:24px;font-size:11.5px;color:#8A908B;font-family:Arial,sans-serif;font-style:italic}
+</style>
+<div id="clara-gate-overlay">
+  <div id="clara-gate-box">
+    <div class="logo">clara</div>
+    <div class="sub">This wireframe is for the Clara internal team and trusted advisors. Enter the password to continue.</div>
+    <input id="clara-gate-input" type="password" placeholder="Password" autofocus />
+    <button onclick="claraGateCheck()">Continue</button>
+    <div id="clara-gate-err"></div>
+    <div id="clara-gate-foot">clara · Clara Relief Inc. · confidential</div>
+  </div>
+</div>
+<script>
+(function(){
+  var PW = "clara2026";
+  if (localStorage.getItem("claraGateOpen") === "yes") {
+    document.getElementById("clara-gate-overlay").style.display = "none";
+    return;
+  }
+  document.body.style.overflow = "hidden";
+  window.claraGateCheck = function(){
+    var v = document.getElementById("clara-gate-input").value;
+    if (v === PW){
+      localStorage.setItem("claraGateOpen","yes");
+      document.getElementById("clara-gate-overlay").remove();
+      document.body.style.overflow = "";
+    } else {
+      document.getElementById("clara-gate-err").textContent = "Incorrect password. Try again.";
+      document.getElementById("clara-gate-input").value = "";
+    }
+  };
+  document.getElementById("clara-gate-input").addEventListener("keydown", function(e){
+    if (e.key === "Enter") claraGateCheck();
+  });
+})();
+</script>
 </body>
 </html>
