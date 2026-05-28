@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>clara: Back Pain Quiz · MOCK v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f7f5f0; --cream-soft:#fbf9f4; --cream-deep:#ece8df;
+  --ink:#1f2421; --ink-soft:#5a615d; --ink-muted:#8a908b;
+  --accent:#4a6b5b; --accent-soft:#d9e4dc; --accent-pale:#eef3ee;
+  --warm:#c97257; --warm-soft:#f4dfd5; --warm-pale:#fbf2ed; --warm-deep:#a35540;
+  --line:#e8e4dc; --line-strong:#d4cfc4;
+  --shadow:0 1px 2px rgba(31,36,33,0.04),0 4px 16px rgba(31,36,33,0.06);
+  --shadow-hover:0 2px 4px rgba(31,36,33,0.06),0 8px 24px rgba(31,36,33,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--cream);color:var(--ink);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;min-height:100vh;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.95);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1100px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Inter',sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.045em;color:var(--ink);text-transform:lowercase;text-decoration:none;cursor:pointer;transition:color 0.15s;}
+.logo:hover{color:var(--accent);}
+.progress-pill{display:flex;align-items:center;gap:16px;background:var(--cream-soft);border:1px solid var(--line);border-radius:999px;padding:6px 18px;font-size:14px;color:var(--ink-soft);}
+.back-btn{width:32px;height:32px;background:var(--cream-deep);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink);transition:background 0.15s;}
+.back-btn:hover{background:var(--line-strong);}
+.progress-step{font-weight:500;color:var(--ink);}
+.progress-divider{color:var(--ink-muted);}
+.progress-percent{display:flex;align-items:center;gap:8px;color:var(--ink-muted);font-size:13px;}
+.progress-circle{width:18px;height:18px;border:2px solid var(--line-strong);border-top-color:var(--accent);border-radius:50%;}
+.help-link{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-soft);text-decoration:none;}
+.help-link:hover{color:var(--ink);}
+
+.hero{max-width:1100px;margin:0 auto;padding:80px 32px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.hero-content{padding:24px 0;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--warm-deep);font-size:14px;font-weight:600;margin-bottom:18px;}
+.hero-eyebrow-mark{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--warm);}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:500;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+.hero p{font-size:18px;color:var(--ink-soft);margin-bottom:32px;max-width:480px;}
+.btn-primary{background:var(--ink);color:var(--cream);padding:16px 36px;border-radius:999px;font-size:16px;font-weight:500;display:inline-flex;align-items:center;gap:10px;transition:all 0.2s;}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-hover);}
+.hero-visual{height:480px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.pillpack-svg{width:100%;height:auto;display:block;max-width:520px;}
+.hero-caption{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:30px;color:#2c4234;text-align:center;margin-top:6px;}
+
+.quiz-screen{display:none;}
+.quiz-screen.active{display:block;animation:fadeIn 0.25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.quiz-container{max-width:720px;margin:0 auto;padding:48px 32px 80px;}
+.quiz-question{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;line-height:1.15;letter-spacing:-0.01em;margin-bottom:16px;color:var(--ink);}
+.quiz-question-sub{font-size:16px;color:var(--ink-soft);margin-bottom:32px;}
+.why-ask{background:var(--accent-pale);border-left:3px solid var(--accent);border-radius:8px;padding:16px 20px;margin-bottom:28px;font-size:14px;line-height:1.6;color:var(--ink-soft);}
+.why-ask-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--accent);margin-bottom:6px;margin-right:10px;text-transform:uppercase;}
+.opt-stack{display:flex;flex-direction:column;gap:10px;}
+.opt{background:var(--cream-soft);border:1.5px solid var(--line);border-radius:14px;padding:20px 24px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:16px;color:var(--ink);}
+.opt:hover{border-color:var(--accent);background:var(--accent-pale);}
+.opt.selected{border-color:var(--accent);background:var(--accent-pale);box-shadow:inset 0 0 0 1.5px var(--accent);}
+.opt-arrow{color:var(--ink-muted);font-size:18px;flex-shrink:0;}
+.opt:hover .opt-arrow{color:var(--accent);}
+.opt.multi{padding-left:56px;position:relative;}
+.opt.multi::before{content:"";position:absolute;left:24px;top:50%;transform:translateY(-50%);width:22px;height:22px;border:1.5px solid var(--line-strong);border-radius:6px;background:white;transition:all 0.15s;}
+.opt.multi.selected::before{background:var(--accent);border-color:var(--accent);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path d='M6 11L3 8l1-1 2 2 5-5 1 1z'/></svg>");background-size:16px;background-repeat:no-repeat;background-position:center;}
+.opt-sub{font-size:13px;color:var(--ink-muted);margin-top:4px;line-height:1.4;}
+.opt-content{flex:1;}
+.opt-escape{margin-top:24px;width:100%;background:var(--ink);color:var(--cream);border-radius:14px;padding:20px 24px;font-size:16px;cursor:pointer;transition:all 0.15s;font-family:inherit;}
+.opt-escape:hover{background:var(--accent);}
+.other-allergy-input{width:100%;box-sizing:border-box;padding:14px 18px;border:1.5px solid var(--line-strong);border-radius:12px;font-family:inherit;font-size:15px;color:var(--ink);background:#fff;margin-top:2px;}
+.other-allergy-input:focus{outline:none;border-color:var(--accent);}
+.other-allergy-input::placeholder{color:var(--ink-muted);}
+.continue-row{margin-top:32px;display:flex;justify-content:space-between;align-items:center;}
+.btn-continue{background:var(--ink);color:var(--cream);padding:14px 32px;border:1.5px solid var(--ink);border-radius:999px;font-size:15px;font-weight:500;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:180px;}
+.btn-continue:hover{background:var(--accent);}
+.btn-back{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:180px;font-size:15px;font-weight:500;color:var(--accent);background:#cce1d5;border:1.5px solid #a9c6b5;border-radius:999px;padding:14px 32px;transition:all 0.2s;}
+.btn-back:hover{background:#bcd6c8;border-color:var(--accent);transform:translateX(-2px);}
+.btn-secondary{font-size:14px;color:var(--ink-soft);text-decoration:underline;text-underline-offset:4px;}
+.btn-secondary:hover{color:var(--ink);}
+
+.alert-screen{max-width:640px;margin:0 auto;padding:80px 32px;text-align:center;}
+.alert-icon{width:72px;height:72px;background:var(--warm-soft);color:var(--warm-deep);border-radius:50%;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;font-size:32px;}
+.alert-screen h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;margin-bottom:16px;}
+.alert-screen p{color:var(--ink-soft);font-size:16px;margin-bottom:24px;max-width:520px;margin-left:auto;margin-right:auto;}
+.alert-actions{margin-top:32px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+.loading-wrap{max-width:640px;margin:0 auto;padding:80px 32px;text-align:center;}
+.loading-mark{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:36px;color:var(--warm);margin-bottom:20px;}
+.loading-wrap h2{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:500;margin-bottom:32px;}
+.loading-checks{display:flex;flex-direction:column;gap:16px;max-width:380px;margin:0 auto 36px;text-align:left;}
+.loading-check{display:flex;align-items:center;gap:14px;font-size:16px;color:var(--ink-muted);opacity:0;transition:opacity 0.4s,color 0.4s;}
+.loading-check.done{opacity:1;color:var(--ink);}
+.loading-check .check-icon{width:22px;height:22px;border:2px solid var(--line-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.3s;}
+.loading-check.done .check-icon{background:var(--accent);border-color:var(--accent);color:white;}
+.loading-edu{margin-top:40px;padding:20px 24px;background:var(--cream-soft);border:1px solid var(--line);border-radius:14px;font-size:14px;line-height:1.6;color:var(--ink-soft);text-align:left;max-width:520px;margin-left:auto;margin-right:auto;}
+.loading-edu-label{font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--warm-deep);text-transform:uppercase;display:block;margin-bottom:8px;}
+
+.plan-container{max-width:820px;margin:0 auto;padding:48px 32px 80px;}
+.plan-eyebrow{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+.plan-title{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:500;line-height:1.1;letter-spacing:-0.02em;margin-bottom:20px;}
+.plan-summary{background:var(--accent-pale);border-left:4px solid var(--accent);border-radius:12px;padding:20px 24px;margin-bottom:32px;font-size:15px;line-height:1.6;color:var(--ink);}
+.plan-summary-label{font-weight:600;display:block;margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);}
+.review-flag{background:var(--warm-pale);border:1px solid var(--warm-soft);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:14px;line-height:1.6;color:var(--warm-deep);}
+.review-flag strong{color:var(--warm-deep);}
+.kit-card{background:var(--cream-soft);border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:24px;}
+.kit-header{margin-bottom:8px;}
+.kit-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--ink);}
+.kit-tagline{color:var(--ink-soft);margin-bottom:24px;font-size:15px;}
+.section-label{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-deep);margin:20px 0 12px;}
+.component{background:white;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:12px;}
+.comp-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.comp-name{font-weight:600;font-size:16px;color:var(--ink);flex:1 1 auto;min-width:0;}
+.comp-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:0.06em;margin-left:8px;}
+.badge-rx{background:var(--warm);color:white;}
+.badge-included{background:var(--accent);color:white;}
+.badge-otc{background:var(--cream-deep);color:var(--ink-soft);}
+.badge-referral{background:var(--ink);color:var(--cream);}
+.comp-why{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-top:4px;}
+.comp-why strong{color:var(--ink);}
+.cream-step{margin-top:24px;background:var(--warm-pale);border:1px solid var(--warm-soft);border-radius:12px;padding:20px 22px;}
+.cream-step-label{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--warm-deep);margin-bottom:8px;}
+.cream-step p{font-size:14px;line-height:1.65;color:var(--ink);}
+.cream-ladder{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.cream-tier{flex:1;min-width:140px;border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;background:white;font-size:12.5px;color:var(--ink-soft);}
+.cream-tier.active{border-color:var(--warm);background:var(--warm-soft);}
+.cream-tier b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px;}
+.cream-step-inline{margin:14px 0 4px;}
+.read-more-btn{display:block;margin-top:8px;background:none;border:none;color:var(--warm-deep);font-weight:700;font-size:13px;cursor:pointer;padding:0;font-family:inherit;text-decoration:underline;}
+.cream-howto{margin-top:16px;background:var(--accent-pale);border:1px solid #cfe0d5;border-left:3px solid var(--accent);border-radius:12px;padding:15px 18px;}
+.cream-howto-title{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:9px;}
+.cream-howto-list{margin:0;padding-left:18px;}
+.cream-howto-list li{font-size:13.5px;line-height:1.55;color:var(--ink);margin-bottom:7px;}
+.cream-howto-list li.warn{font-weight:700;color:var(--warm-deep);}
+.cream-more{display:block;margin-top:12px;}
+.cream-more[hidden]{display:none;}
+.comp-price{font-size:14px;color:var(--ink);font-weight:600;white-space:nowrap;}
+.comp-price-block{flex:0 0 auto;text-align:right;max-width:210px;}
+.comp-insurance{font-size:12px;color:var(--accent);margin-top:3px;font-weight:600;line-height:1.35;}
+.comp-prn{font-size:12.5px;color:var(--ink-muted);margin-top:6px;font-style:italic;}
+.plan-perday{text-align:center;background:var(--accent-pale);border:1px solid var(--accent-soft);border-radius:14px;padding:20px;margin-top:24px;}
+.plan-perday-label{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;}
+.plan-perday-amount{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;color:var(--ink);line-height:1.1;margin-top:4px;}
+.plan-perday-unit{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink-soft);font-weight:500;margin-left:4px;}
+.plan-perday-sub{font-size:12.5px;color:var(--ink-muted);margin-top:6px;}
+.plan-cost-detail{margin-top:16px;}
+.cost-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:13px 4px;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink);}
+.cost-row span:last-child{font-weight:600;white-space:nowrap;}
+.cost-sub{font-size:12px;color:var(--accent);font-weight:600;margin-top:2px;}
+.cost-row.cost-total{border-bottom:none;border-top:2px solid var(--line-strong);padding-top:14px;margin-top:2px;font-weight:700;}
+.cost-row.cost-total span{font-size:18px;font-weight:700;}
+
+/* Finance card (compound cream as the hero, matches Neuropathic quiz styling) */
+.finance-card{background:var(--cream-soft);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-top:24px;margin-bottom:24px;}
+.finance-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:4px;color:var(--ink);}
+.finance-sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:18px;}
+.fin-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.fin-price{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--ink);}
+.fin-price small{font-size:15px;color:var(--ink-soft);font-family:'Inter',sans-serif;font-weight:500;}
+.fin-perday{font-size:13.5px;color:var(--ink-soft);background:var(--accent-pale);border-radius:999px;padding:5px 14px;}
+.fin-seg-label{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.fin-seg{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.fin-opt{flex:1;min-width:120px;border:1.5px solid var(--line-strong);border-radius:12px;padding:13px 14px;background:white;cursor:pointer;transition:all 0.15s;text-align:center;}
+.fin-opt:hover{border-color:var(--accent);}
+.fin-opt.active{border-color:var(--accent);background:var(--accent-pale);box-shadow:inset 0 0 0 1.5px var(--accent);}
+.fin-opt b{display:block;font-size:15px;color:var(--ink);}
+.fin-opt span{font-size:12px;color:var(--ink-muted);}
+.fin-total{display:flex;justify-content:space-between;align-items:center;background:white;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:10px;}
+.fin-total .lab{font-size:13px;color:var(--ink-soft);}
+.fin-total .val{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--accent);}
+.fin-covered{display:flex;align-items:center;gap:10px;background:#fdeceb;border:1.5px solid #e6b0aa;border-left:5px solid #c0392b;border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:18px;font-weight:800;color:#c0392b;line-height:1.35;}
+.fin-covered .cov-ico{font-size:20px;flex-shrink:0;}
+.fin-includes{font-size:13px;line-height:1.6;color:var(--ink-soft);}
+.fin-includes b{color:var(--ink);}
+.fin-includes ul{margin:8px 0 0;padding-left:18px;}
+.fin-includes li{margin-bottom:5px;}
+.fin-insurance{margin-top:16px;background:var(--accent-pale);border-left:3px solid var(--accent);border-radius:8px;padding:14px 18px;font-size:13px;line-height:1.6;color:var(--ink-soft);}
+.fin-insurance strong{color:var(--accent);}
+.fin-oral-note{margin-top:14px;background:white;border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:13.5px;line-height:1.55;color:var(--ink-soft);}
+.fin-oral-note b{color:var(--ink);}
+.fin-oral-note .oral-amt{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--ink);}
+
+.plan-insurance{margin-top:16px;background:var(--accent-pale);border-left:3px solid var(--accent);border-radius:8px;padding:16px 20px;font-size:13.5px;line-height:1.6;color:var(--ink-soft);}
+.plan-insurance strong{color:var(--accent);font-weight:700;}
+.plan-ctas{margin-top:28px;display:flex;flex-direction:column;gap:10px;}
+.cta-primary{background:var(--ink);color:var(--cream);padding:18px 24px;border-radius:14px;font-size:16px;font-weight:500;text-align:center;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.cta-primary:hover{background:var(--accent);}
+.cta-secondary{background:white;color:var(--ink);border:1.5px solid var(--line-strong);padding:18px 24px;border-radius:14px;font-size:15px;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.cta-secondary:hover{border-color:var(--accent);background:var(--accent-pale);}
+.plan-disclaimer{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-muted);line-height:1.6;}
+.mock-footer{text-align:center;padding:32px 24px 48px;font-size:12px;color:var(--ink-muted);border-top:1px solid var(--line);margin-top:48px;}
+
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding:48px 24px;gap:32px;}.hero h1{font-size:52px;}.hero-visual{height:280px;}.quiz-question{font-size:32px;}.plan-title{font-size:36px;}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="goHome(); return false;" title="Back to start">clara</a>
+    <div class="progress-pill" id="progress-bar" style="display:none;">
+      <button class="back-btn" onclick="goBack()">←</button>
+      <span class="progress-step">Step 1 of 3</span><span class="progress-divider">·</span>
+      <span class="progress-step">Get care</span><span class="progress-divider">·</span>
+      <span class="progress-percent"><span class="progress-circle"></span><span id="progress-percent-text">0% complete</span></span>
+    </div>
+    <a href="#" class="help-link">💬 Help</a>
+  </div>
+</nav>
+
+<!-- LANDING -->
+<section class="quiz-screen active" id="landing">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="hero-eyebrow-mark">clara</span> · Back pain care</div>
+      <h1>Find clarity on your <em style="color:var(--warm-deep);font-style:italic;">back pain.</em></h1>
+      <p>Around 80–90% of back pain has no serious structural cause, and the right plan is mostly movement, supported by the right medication when it's needed. Take 5 minutes. We'll build you an evidence based plan, reviewed by a physician licensed in Canada before anything ships.</p>
+      <button class="btn-primary" onclick="startQuiz()">Get started →</button>
+    </div>
+    <div class="hero-visual">
+      <svg class="pillpack-svg" viewBox="0 0 560 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="clara back pain compound cream and daily pill pack">
+        <defs>
+          <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="13" flood-color="#1f2421" flood-opacity="0.13"/></filter>
+          <linearGradient id="bodyG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#d8d3c8"/><stop offset="0.10" stop-color="#f1eee8"/>
+            <stop offset="0.34" stop-color="#ffffff"/><stop offset="0.54" stop-color="#fdfcf9"/>
+            <stop offset="0.76" stop-color="#eeeae3"/><stop offset="1" stop-color="#d0cabf"/>
+          </linearGradient>
+          <linearGradient id="pumpG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#c9c4ba"/><stop offset="0.36" stop-color="#f6f4ef"/>
+            <stop offset="0.62" stop-color="#ece9e1"/><stop offset="1" stop-color="#c6c1b7"/>
+          </linearGradient>
+          <linearGradient id="sageG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#6d8878"/><stop offset="0.4" stop-color="#92ab9c"/><stop offset="1" stop-color="#688374"/>
+          </linearGradient>
+          <linearGradient id="terraG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#b15d42"/><stop offset="0.4" stop-color="#cf7c61"/><stop offset="1" stop-color="#ac573d"/>
+          </linearGradient>
+          <linearGradient id="hlG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset="0.5" stop-color="#ffffff" stop-opacity="0.6"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="edgeG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#2a2620" stop-opacity="0.24"/><stop offset="0.13" stop-color="#2a2620" stop-opacity="0.05"/>
+            <stop offset="0.30" stop-color="#2a2620" stop-opacity="0"/><stop offset="0.70" stop-color="#2a2620" stop-opacity="0"/>
+            <stop offset="0.87" stop-color="#2a2620" stop-opacity="0.06"/><stop offset="1" stop-color="#2a2620" stop-opacity="0.22"/>
+          </linearGradient>
+          <clipPath id="bodyClip"><rect x="0" y="42" width="108" height="252" rx="11"/></clipPath>
+        </defs>
+        <circle cx="280" cy="235" r="190" fill="#93ab9c"/>
+        <rect x="118" y="118" width="26" height="13" rx="6.5" fill="#f3eee3" stroke="#e2dac9" stroke-width="1" transform="rotate(24 131 124)"/>
+        <circle cx="438" cy="118" r="9" fill="#e9ddc7"/>
+        <circle cx="462" cy="148" r="6.5" fill="#f3eee3"/>
+        <!-- box (behind) -->
+        <g transform="translate(150 92) rotate(-7)" filter="url(#bs)">
+          <rect width="96" height="252" rx="8" fill="#efe9dc"/>
+          <rect x="0" y="34" width="96" height="9" fill="#9bb3a3"/>
+          <rect x="0" y="198" width="96" height="9" fill="#9bb3a3"/>
+          <rect x="0" y="216" width="96" height="6" fill="#c97257"/>
+          <text x="14" y="138" font-family="Inter,sans-serif" font-weight="800" font-size="22" fill="#1f2421" letter-spacing="-0.04em">clara</text>
+        </g>
+        <!-- realistic airless pump bottle (front) -->
+        <g transform="translate(290 82)">
+          <!-- contact shadow -->
+          <ellipse cx="54" cy="299" rx="50" ry="8" fill="#1f2421" opacity="0.11"/>
+          <g filter="url(#bs)">
+            <!-- frosted collar -->
+            <rect x="33" y="31" width="42" height="15" rx="3" fill="#e7e3db" stroke="#d2cdc3" stroke-width="0.8"/>
+            <!-- pump stem -->
+            <rect x="35" y="17" width="38" height="16" rx="3" fill="url(#pumpG)" stroke="#cbc6bc" stroke-width="0.6"/>
+            <!-- actuator cap -->
+            <rect x="25" y="1" width="58" height="18" rx="9" fill="url(#pumpG)" stroke="#cbc6bc" stroke-width="0.6"/>
+            <rect x="32" y="4" width="22" height="3.5" rx="1.75" fill="#ffffff" opacity="0.65"/>
+            <line x1="27" y1="17.5" x2="81" y2="17.5" stroke="#c4bfb4" stroke-width="0.7"/>
+            <!-- bottle body -->
+            <rect x="0" y="42" width="108" height="252" rx="11" fill="url(#bodyG)" stroke="#cdc8bd" stroke-width="0.9"/>
+          </g>
+          <g clip-path="url(#bodyClip)">
+            <!-- sage band near top -->
+            <rect x="-2" y="83" width="112" height="13" fill="url(#sageG)"/>
+            <!-- terracotta band near bottom -->
+            <rect x="-2" y="250" width="112" height="11" fill="url(#terraG)"/>
+            <!-- soft specular highlight -->
+            <rect x="11" y="42" width="28" height="252" fill="url(#hlG)"/>
+            <!-- cylinder edge shading -->
+            <rect x="0" y="42" width="108" height="252" fill="url(#edgeG)"/>
+          </g>
+          <!-- wordmark -->
+          <text x="54" y="179" font-family="Inter,sans-serif" font-weight="800" font-size="25" fill="#1f2421" letter-spacing="-0.04em" text-anchor="middle">clara</text>
+        </g>
+        <!-- 'For Back Pain' pill pack (front) -->
+        <g transform="translate(92 282) rotate(-3)">
+          <rect width="196" height="122" rx="14" fill="#ffffff" filter="url(#bs)"/>
+          <rect x="22" y="22" width="64" height="5" rx="2.5" fill="#5f7d6b"/>
+          <text x="22" y="58" font-family="Inter,sans-serif" font-weight="800" font-size="20" fill="#3c3a31" letter-spacing="-0.4">For Back Pain</text>
+          <text x="22" y="80" font-family="Inter,sans-serif" font-size="12" fill="#9aa09b">Your daily pack</text>
+          <g transform="translate(166 44) rotate(-32)" stroke="#c2b8a6" stroke-width="1.5" fill="none"><rect x="-9" y="-4.5" width="18" height="9" rx="4.5"/><line x1="0" y1="-4.5" x2="0" y2="4.5"/></g>
+          <line x1="22" y1="94" x2="174" y2="94" stroke="#ebe7df" stroke-width="1.4"/>
+          <text x="174" y="110" font-family="'Cormorant Garamond',serif" font-weight="600" font-size="18" fill="#3c3a31" text-anchor="end">clara</text>
+        </g>
+      </svg>
+      <div class="hero-caption">"Let's get you moving again."</div>
+    </div>
+  </div>
+</section>
+
+<!-- Q1 DURATION -->
+<section class="quiz-screen" id="q1" data-progress="7">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How long have you had this back pain?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Acute and chronic back pain have completely different treatment approaches, this changes your entire plan.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q1','acute'); goNext('q2');"><div class="opt-content">Less than 4 weeks<div class="opt-sub">A recent, acute episode</div></div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q1','subacute'); goNext('q2');"><div class="opt-content">4 to 12 weeks<div class="opt-sub">Subacute, the key window to prevent it becoming chronic</div></div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q1','chronic'); goNext('q2');"><div class="opt-content">More than 12 weeks<div class="opt-sub">Chronic back pain</div></div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q1','recurrent'); goNext('q2');"><div class="opt-content">It comes and goes: I've had episodes for years</div><span class="opt-arrow">→</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Q2 RED FLAGS -->
+<section class="quiz-screen" id="q2" data-progress="14">
+  <div class="quiz-container">
+    <h1 class="quiz-question">A few important safety questions.</h1>
+    <p class="quiz-question-sub">Please check anything that applies to you, even if it seems unrelated.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>These symptoms are uncommon with ordinary back pain, but when present they can signal something that needs a hands on evaluation. This is the single most important screen we do.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'redflag','cauda')"><div class="opt-content">Loss of bladder or bowel control, or numbness in the saddle area<div class="opt-sub">The area between your legs that would touch a saddle</div></div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','weakness')"><div class="opt-content">New or worsening weakness in one or both legs<div class="opt-sub">Trouble lifting your foot, knees giving way, or it's getting worse</div></div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','cancer')"><div class="opt-content">A history of cancer with new back pain</div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','infection')"><div class="opt-content">Fever, a recent infection, IV drug use, or a weakened immune system</div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','trauma')"><div class="opt-content">A significant injury (fall, accident), or a minor injury if you're over 75, on long term steroids, or have osteoporosis</div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','aaa')"><div class="opt-content">A pulsing or throbbing feeling in your abdomen along with the back pain<div class="opt-sub">Especially relevant for men over 50 who smoke</div></div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','night')"><div class="opt-content">Pain that's worse at night or at rest, with unexplained weight loss</div></div>
+    </div>
+    <button class="opt-escape" onclick="checkRedFlags()">None of the above apply to me</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="checkRedFlags()">Continue →</button></div>
+  </div>
+</section>
+
+<!-- RED FLAG EXIT -->
+<section class="quiz-screen" id="redflag-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">⚠</div>
+    <h2>We need to make sure you're seen in person first.</h2>
+    <p>Based on what you told us, your symptoms could signal something more than ordinary back pain. Clara provides safe online care for routine back pain, and your situation deserves a hands on evaluation we can't safely do online.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>If you have new bladder/bowel changes, saddle numbness, worsening leg weakness, or a pulsing belly with back pain, please go to the emergency room today.<br>Otherwise, see your family doctor or a walk in clinic within the next few days.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q3 LOCATION -->
+<section class="quiz-screen" id="q3" data-progress="21">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Where is your pain?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Pain that travels down a leg may involve a nerve, which slightly changes the plan compared with pain that stays in the back.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q3','lower-only'); goNext('q4');"><div class="opt-content">Lower back only</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q3','lower-buttock'); goNext('q4');"><div class="opt-content">Lower back + one buttock or hip</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q3','sciatica'); goNext('q4');"><div class="opt-content">Lower back + pain radiating down one leg (sciatica)</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q3','both-legs'); goNext('q4');"><div class="opt-content">Lower back + both legs</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q3','upper'); goNext('q4');"><div class="opt-content">Mid back or upper back</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q3','unsure'); goNext('q4');"><div class="opt-content">I'm not sure</div><span class="opt-arrow">→</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Q4 DIRECTIONAL -->
+<section class="quiz-screen" id="q4" data-progress="30">
+  <div class="quiz-container">
+    <h1 class="quiz-question">When is your pain worse?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>How your pain behaves with movement is a helpful clue. In particular, pain that's worse when you stand or walk is something we like a physician to take a closer look at.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q4','sitting')"><div class="opt-content">Sitting for a long time (car, desk)</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','forward')"><div class="opt-content">Bending forward (tying shoes, picking things up)</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','backward')"><div class="opt-content">Leaning backward or arching my back</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','twisting')"><div class="opt-content">Twisting or turning</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','standing')"><div class="opt-content">Standing in one place for a while</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','walking')"><div class="opt-content">Walking or moving around</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','morning')"><div class="opt-content">First thing in the morning, before I get moving</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','lying')"><div class="opt-content">Lying flat on my back</div></div>
+      <div class="opt multi" onclick="multi(this,'q4','activity')"><div class="opt-content">During or after specific activities (lifting, running)</div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q4','none'); goNext('q4b')">None of the above applies to me</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q4b')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q4b INFLAMMATORY BACK PAIN SCREEN -->
+<section class="quiz-screen" id="q4b" data-progress="34">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How did your back pain start, and how does it behave?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>A small number of people have an inflammatory type of back pain (linked to conditions like ankylosing spondylitis) rather than the common mechanical type. It behaves differently, and if we see that pattern we want a physician to consider a referral, because the work up and treatment are different.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q4b','insidious')"><div class="opt-content">It came on gradually over weeks or months, not from a specific injury</div></div>
+      <div class="opt multi" onclick="multi(this,'q4b','am-stiff')"><div class="opt-content">Morning stiffness in my back that lasts more than 30 minutes</div></div>
+      <div class="opt multi" onclick="multi(this,'q4b','better-move')"><div class="opt-content">It gets better with movement and exercise, but not with rest</div></div>
+      <div class="opt multi" onclick="multi(this,'q4b','night-2nd')"><div class="opt-content">It wakes me in the second half of the night</div></div>
+      <div class="opt multi" onclick="multi(this,'q4b','onset-45')"><div class="opt-content">It first started before I was 45 years old</div></div>
+      <div class="opt multi" onclick="multi(this,'q4b','spa-assoc')"><div class="opt-content">I have psoriasis, inflammatory bowel disease (Crohn's or colitis), or a close relative with ankylosing spondylitis</div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q4b','none'); goNext('q4c')">None of these apply to me</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q4c')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q4c SHINGLES / SKIN SCREEN (hard exit) -->
+<section class="quiz-screen" id="q4c" data-progress="36">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Any skin changes or burning skin pain in the painful area?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Sometimes what feels like back pain is actually shingles. It often starts as a burning or tingling pain on one side, sometimes a day or two before any rash appears. Shingles needs a different, time sensitive treatment, so we want to catch it early.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'shingles','rash-band')"><div class="opt-content">A rash, small blisters, or a red band on the skin, on one side only<div class="opt-sub">It often wraps around one side, from the back toward the chest or belly</div></div></div>
+      <div class="opt multi" onclick="multi(this,'shingles','skin-burning')"><div class="opt-content">Burning, stinging, or electric pain in the skin itself, not deep in the muscle</div></div>
+      <div class="opt multi" onclick="multi(this,'shingles','skin-sensitive')"><div class="opt-content">Skin on one side that is sore or very sensitive to light touch or clothing</div></div>
+      <div class="opt multi" onclick="multi(this,'shingles','rash-timing')"><div class="opt-content">A rash or blisters that appeared around the same time as the pain, or within a few days of it</div></div>
+    </div>
+    <button class="opt-escape" onclick="checkShingles()">No, my skin looks and feels normal</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="checkShingles()">Continue →</button></div>
+  </div>
+</section>
+
+<!-- SHINGLES EXIT (hard) -->
+<section class="quiz-screen" id="shingles-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">⚠</div>
+    <h2>Let's get you assessed in person first.</h2>
+    <p>What you told us about your skin, a rash or burning, one sided skin pain, can point to a condition other than ordinary back pain, such as shingles. Some of these need a hands on look and time sensitive treatment that works best when it is started early.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>Please see your doctor or a walk in clinic, or visit the emergency department, to be assessed for other conditions that may require more urgent assessment. Clara provides safe online care for routine back pain, and this is something we want a clinician to look at in person.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q4d NON-SPINAL SAFETY NET (hard exit) -->
+<section class="quiz-screen" id="q4d" data-progress="37">
+  <div class="quiz-container">
+    <h1 class="quiz-question">A few last checks: is anything else happening along with the pain?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Once in a while, pain that feels like it is in the back is actually coming from somewhere else, like the kidneys, the abdomen, or the pelvis. These need a different kind of assessment, so we check for a few tell tale signs.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'nonspinal','urine-blood')"><div class="opt-content">Blood in my urine, or pain or burning when I urinate</div></div>
+      <div class="opt multi" onclick="multi(this,'nonspinal','colicky')"><div class="opt-content">Pain that comes in waves, and I cannot find a comfortable position (I keep moving around)</div></div>
+      <div class="opt multi" onclick="multi(this,'nonspinal','abdo-through')"><div class="opt-content">Pain in my upper belly or stomach that goes straight through to my back, with nausea or vomiting</div></div>
+      <div class="opt multi" onclick="multi(this,'nonspinal','menstrual')"><div class="opt-content">The pain follows my menstrual cycle, or comes with pelvic or period symptoms</div></div>
+    </div>
+    <button class="opt-escape" onclick="checkNonSpinal()">No, none of these</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="checkNonSpinal()">Continue →</button></div>
+  </div>
+</section>
+
+<!-- NON-SPINAL EXIT (hard) -->
+<section class="quiz-screen" id="nonspinal-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">⚠</div>
+    <h2>Let's get you assessed in person first.</h2>
+    <p>Some of what you told us suggests your pain may be coming from something other than your back, for example your kidneys, your abdomen, or your pelvis. Those need a different kind of assessment than online back pain care can provide.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>Please see your doctor promptly to be assessed, or go to the emergency department if your pain is severe, you have blood in your urine with a fever, or you feel very unwell. Clara provides safe online care for routine back pain, and this is something we want a clinician to look at in person.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q5 SEVERITY -->
+<section class="quiz-screen" id="q5" data-progress="38">
+  <div class="quiz-container">
+    <h1 class="quiz-question">On a scale of 0 to 10, where is your pain right now?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Your pain level helps us calibrate how strong the initial plan needs to be. There's no right or wrong answer, just be honest.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q5','mild'); goNext('q6');"><div class="opt-content">0–2 (mild)<div class="opt-sub">I notice it but it doesn't really stop me</div></div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q5','moderate'); goNext('q6');"><div class="opt-content">3–4 (moderate)<div class="opt-sub">It bothers me but I can function</div></div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q5','significant'); goNext('q6');"><div class="opt-content">5–6 (significant)<div class="opt-sub">It limits some of what I want to do</div></div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q5','severe'); goNext('q6');"><div class="opt-content">7–8 (severe)<div class="opt-sub">It limits most of what I want to do</div></div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q5','disabling'); goNext('q6');"><div class="opt-content">9–10 (disabling)<div class="opt-sub">I can barely function</div></div><span class="opt-arrow">→</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Q6 FUNCTION -->
+<section class="quiz-screen" id="q6" data-progress="46">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How is your back pain affecting your life?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>How pain affects your sleep, work, and activity matters as much as the pain itself for choosing your plan, and tells us how much support you need.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q6','sleep')"><div class="opt-content">Trouble sleeping because of pain</div></div>
+      <div class="opt multi" onclick="multi(this,'q6','work')"><div class="opt-content">Affecting my work or productivity</div></div>
+      <div class="opt multi" onclick="multi(this,'q6','sitting')"><div class="opt-content">Can't sit through a workday or long drive</div></div>
+      <div class="opt multi" onclick="multi(this,'q6','exercise')"><div class="opt-content">Stopped exercising or recreational activities</div></div>
+      <div class="opt multi" onclick="multi(this,'q6','fear')"><div class="opt-content">Avoiding movements out of fear of making it worse</div></div>
+      <div class="opt multi" onclick="multi(this,'q6','mood')"><div class="opt-content">Affecting my mood, frustrated, anxious, or down</div></div>
+      <div class="opt multi" onclick="multi(this,'q6','social')"><div class="opt-content">Affecting my relationships or social life</div></div>
+      <div class="opt multi" onclick="multi(this,'q6','minimal')"><div class="opt-content">Annoying, but not really affecting my life</div></div>
+    </div>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q7')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q7 MEDICATIONS & PROCEDURES TRIED -->
+<section class="quiz-screen" id="q7" data-progress="52">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Which medications or procedures have you tried?</h1>
+    <p class="quiz-question-sub">Select all that apply, brand or generic, whatever you remember.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>What you've already taken, and how strong it was, tells us where to start you on the treatment ladder so we don't repeat something that didn't help.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q7','otc-nsaid')"><div class="opt-content">Over-the-counter anti-inflammatories (Advil/Ibuprofen, Aleve/Naproxen)</div></div>
+      <div class="opt multi" onclick="multi(this,'q7','rx-nsaid')"><div class="opt-content">Prescription anti-inflammatories (Celebrex, Mobic/Meloxicam, Voltaren)</div></div>
+      <div class="opt multi" onclick="multi(this,'q7','muscle-relax')"><div class="opt-content">Muscle relaxants (Flexeril/Cyclobenzaprine, Zanaflex/Tizanidine)</div></div>
+      <div class="opt multi" onclick="multi(this,'q7','duloxetine')"><div class="opt-content">Duloxetine (Cymbalta) or another SNRI for pain</div></div>
+      <div class="opt multi" onclick="multi(this,'q7','gabapentinoid')"><div class="opt-content">Gabapentin (Neurontin) or Pregabalin (Lyrica)</div></div>
+      <div class="opt multi" onclick="multi(this,'q7','opioid')"><div class="opt-content">Opioids (Tylenol 3, Percocet, Tramadol)</div></div>
+      <div class="opt multi" onclick="multi(this,'q7','injection')"><div class="opt-content">Cortisone injection, epidural, or nerve block</div></div>
+      <div class="opt multi" onclick="multi(this,'q7','surgery')"><div class="opt-content">Back surgery</div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q7','none'); goNext('q7b')">I haven't tried any medications or procedures yet</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q7b')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q7b PHYSICAL & MOVEMENT THERAPIES TRIED -->
+<section class="quiz-screen" id="q7b" data-progress="58">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Which physical or hands on therapies have you tried?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Movement and hands on care are the backbone of back pain recovery. Knowing what you've already done lets us build on it rather than start from scratch.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q7b','physio')"><div class="opt-content">Physiotherapy</div></div>
+      <div class="opt multi" onclick="multi(this,'q7b','exercise')"><div class="opt-content">Pilates, yoga, or a structured exercise program</div></div>
+      <div class="opt multi" onclick="multi(this,'q7b','chiro')"><div class="opt-content">Chiropractic care</div></div>
+      <div class="opt multi" onclick="multi(this,'q7b','massage')"><div class="opt-content">Massage therapy</div></div>
+      <div class="opt multi" onclick="multi(this,'q7b','acupuncture')"><div class="opt-content">Acupuncture</div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q7b','none'); goNext('q8')">I haven't tried any physical therapies yet</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q8')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q8 TOPICALS TRIED (drives C1 vs C2) -->
+<section class="quiz-screen" id="q8" data-progress="64">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Have you tried any pain creams, gels, or patches?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Topicals are a safe, low risk way to treat localized pain. Knowing what you've already used, especially whether you've tried a compounded cream, tells us where to start so we don't repeat something that didn't work.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q8','voltaren')"><div class="opt-content">Voltaren Gel (diclofenac)</div></div>
+      <div class="opt multi" onclick="multi(this,'q8','a535')"><div class="opt-content">A535, Rub A535, or similar warming/cooling rubs</div></div>
+      <div class="opt multi" onclick="multi(this,'q8','otc-cream')"><div class="opt-content">Other over-the-counter creams (Bengay, Icy Hot, menthol)</div></div>
+      <div class="opt multi" onclick="multi(this,'q8','lidocaine')"><div class="opt-content">Lidocaine patches (numbing patches)</div></div>
+      <div class="opt multi" onclick="multi(this,'q8','capsaicin')"><div class="opt-content">Capsaicin cream (chili-pepper based, causes warmth)</div></div>
+      <div class="opt multi" onclick="multi(this,'q8','compound')"><div class="opt-content">A compounded cream from a pharmacy (custom mixed prescription cream)<div class="opt-sub">A multi ingredient cream made just for you by a compounding pharmacy</div></div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q8','none'); goNext('q9')">I haven't tried any creams or patches</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q9')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q9 HEALTH CONDITIONS -->
+<section class="quiz-screen" id="q9" data-progress="73">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Do you have any of these health conditions?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Some pain medications interact with certain conditions. Anti-inflammatories can affect the kidneys, stomach, heart, and blood pressure, so we hold them when those flags are present; the nerve pain medication we sometimes use (duloxetine) needs extra care with the liver and with mood conditions like bipolar disorder. This is the same safety check any prescriber would do, and it's how we keep you safe.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q9','kidney')"><div class="opt-content">Kidney disease or reduced kidney function</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','gi')"><div class="opt-content">History of stomach ulcers or gastrointestinal bleeding</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','anticoag')"><div class="opt-content">Taking blood thinners (Warfarin, Eliquis, Xarelto, daily aspirin)</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','cv')"><div class="opt-content">Heart disease, prior heart attack, or stroke</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','htn')"><div class="opt-content">Uncontrolled high blood pressure</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','asthma')"><div class="opt-content">Asthma that worsens with anti-inflammatories (NSAIDs)</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','liver')"><div class="opt-content">Liver disease</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','glaucoma-bph')"><div class="opt-content">Narrow angle glaucoma, or trouble urinating (enlarged prostate)</div></div>
+      <div class="opt multi" onclick="multi(this,'q9','bipolar')"><div class="opt-content">Bipolar disorder</div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q9','none'); goNext('q9b')">None of these apply</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q9b')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q9b DRUG ALLERGIES -->
+<section class="quiz-screen" id="q9b" data-progress="77">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Do you have any of these drug allergies?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>An allergy changes which pain medicines are safe for you. In particular, one of the anti-inflammatories we sometimes use (celecoxib) is related to sulfa drugs, so we avoid it if you are allergic to sulfa.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q9b','nsaid')"><div class="opt-content">An allergy to anti-inflammatories or aspirin (Advil, Aleve, aspirin, Celebrex)<div class="opt-sub">For example hives, swelling, or trouble breathing after taking one</div></div></div>
+      <div class="opt multi" onclick="multi(this,'q9b','sulfa')"><div class="opt-content">A sulfa (sulfonamide) antibiotic allergy<div class="opt-sub">For example a reaction to Bactrim or Septra</div></div></div>
+      <div class="opt multi" onclick="toggleOtherAllergy(this)"><div class="opt-content">Other medical allergies<div class="opt-sub">For example penicillin, tell us what so your physician knows</div></div></div>
+      <input type="text" id="q9b-other-input" class="other-allergy-input" placeholder="Type your allergy (for example penicillin)" oninput="setOtherAllergy(this.value)" style="display:none;" />
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q9b','none'); goNext('q10')">No known drug allergies</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q10')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q10 CURRENT MEDS -->
+<section class="quiz-screen" id="q10" data-progress="81">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Are you currently taking any of these medications?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Some medications interact with the medicines we might use. Other antidepressants and triptan migraine medicines can add to serotonin levels with duloxetine, and an MAOI can't be combined with it at all. Blood pressure pills and water pills can also raise the kidney risk of anti-inflammatories, so we check every time before recommending anything.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q10','ssri')"><div class="opt-content">An SSRI antidepressant (Prozac, Zoloft, Cipralex)</div></div>
+      <div class="opt multi" onclick="multi(this,'q10','snri')"><div class="opt-content">An SNRI antidepressant (Cymbalta/Duloxetine, Effexor/Venlafaxine)</div></div>
+      <div class="opt multi" onclick="multi(this,'q10','maoi')"><div class="opt-content">An MAOI antidepressant (rare, Nardil, Parnate)</div></div>
+      <div class="opt multi" onclick="multi(this,'q10','triptan')"><div class="opt-content">Triptans for migraine (Imitrex, Maxalt)</div></div>
+      <div class="opt multi" onclick="multi(this,'q10','acei-arb')"><div class="opt-content">A blood pressure pill, an ACE inhibitor or ARB (Ramipril, Perindopril, Lisinopril, Losartan, Valsartan)</div></div>
+      <div class="opt multi" onclick="multi(this,'q10','diuretic')"><div class="opt-content">A water pill / diuretic (Hydrochlorothiazide, Furosemide, Indapamide)</div></div>
+      <div class="opt multi" onclick="multi(this,'q10','other')"><div class="opt-content">Other regular prescription medications</div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q10','none'); goNext('q11')">None of these apply</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q11')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q11 PREGNANCY -->
+<section class="quiz-screen" id="q11" data-progress="88">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Are you currently pregnant or breastfeeding?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Pregnancy and breastfeeding change which medications are safe. If this applies, your plan will be built around the safest options and personally reviewed by a physician.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'q11','pregnant')"><div class="opt-content">I'm pregnant or trying to conceive</div></div>
+      <div class="opt multi" onclick="multi(this,'q11','breastfeed')"><div class="opt-content">I'm breastfeeding</div></div>
+    </div>
+    <button class="opt-escape" onclick="multi(null,'q11','neither'); goNext('q12')">Neither of these apply</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><button class="btn-continue" onclick="goNext('q12')">Continue →</button></div>
+  </div>
+</section>
+
+<!-- Q12 AGE -->
+<section class="quiz-screen" id="q12" data-progress="93">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How old are you?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Age affects which medications are safest, some muscle relaxants, for example, aren't recommended over 65. We also take extra care to rule out a fracture in people 75 and older.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q12','18-64'); goNext('q13');"><div class="opt-content">18 to 64</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q12','65-74'); goNext('q13');"><div class="opt-content">65 to 74</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q12','75plus'); goNext('q13');"><div class="opt-content">75 or older</div><span class="opt-arrow">→</span></div>
+    </div>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">← Back</button><span></span></div>
+  </div>
+</section>
+
+<!-- Q13 GOAL -->
+<section class="quiz-screen" id="q13" data-progress="97">
+  <div class="quiz-container">
+    <h1 class="quiz-question">What are you most hoping for from clara?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Different goals lead to different plans. There's no wrong answer, this just helps us tailor what we recommend.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q13','episode'); goNext('loading');"><div class="opt-content">Relief from the episode I'm in right now</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q13','longterm'); goNext('loading');"><div class="opt-content">A long term plan for chronic or recurring back pain</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q13','second-opinion'); goNext('loading');"><div class="opt-content">A second opinion: I've had conflicting advice</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q13','activities'); goNext('loading');"><div class="opt-content">Getting back to specific activities I've stopped</div><span class="opt-arrow">→</span></div>
+      <div class="opt" onclick="single(this,'q13','browse'); goNext('loading');"><div class="opt-content">I'm not sure yet: I want to see what's available</div><span class="opt-arrow">→</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOADING -->
+<section class="quiz-screen" id="loading" data-progress="99">
+  <div class="loading-wrap">
+    <div class="loading-mark">clara</div>
+    <h2>Building your personalized plan</h2>
+    <div class="loading-checks">
+      <div class="loading-check" id="lc1"><span class="check-icon">✓</span><span>Reviewing your responses</span></div>
+      <div class="loading-check" id="lc2"><span class="check-icon">✓</span><span>Running your safety &amp; interaction screen</span></div>
+      <div class="loading-check" id="lc3"><span class="check-icon">✓</span><span>Matching to the Canadian treatment ladder</span></div>
+      <div class="loading-check" id="lc4"><span class="check-icon">✓</span><span>Building your movement plan</span></div>
+      <div class="loading-check" id="lc5"><span class="check-icon">✓</span><span>Wrapping up</span></div>
+    </div>
+    <div class="loading-edu"><span class="loading-edu-label">While we build this</span>Around 80–90% of low back pain has no specific structural cause that shows up on a scan, it's mechanical, and it responds best to the right combination of movement, education, and (when needed) medication. Your plan reflects this.</div>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section class="quiz-screen" id="plan">
+  <div class="plan-container">
+    <div class="plan-eyebrow">Your personalized plan</div>
+    <h1 class="plan-title">Your <em style="font-style:italic;color:var(--warm-deep);">clara</em> back pain plan</h1>
+    <div class="review-flag" id="review-flag-block" style="display:none;"><strong>A physician will personally review your plan.</strong> <span id="review-flag-text"></span></div>
+    <div class="plan-summary" id="plan-summary-block"><span class="plan-summary-label">Based on what you told us</span><span id="plan-summary-text">Loading your summary…</span></div>
+    <div class="kit-card">
+      <div class="kit-header"><div class="kit-name" id="kit-name-text">Your clara Plan</div></div>
+      <p class="kit-tagline">An evidence based plan built around your specific profile, reviewed by a physician licensed in Canada before anything ships.</p>
+      <div id="plan-components"></div>
+    </div>
+
+    <!-- FINANCE (compound cream led, Neuropathic style) -->
+    <div class="finance-card" id="finance-card">
+      <div class="finance-title">Your cost, made simple</div>
+      <div class="finance-sub">One clara compounded cream bottle is a 30 day supply for one treatment area, applied 2 to 3 times a day.</div>
+      <div class="fin-price-row">
+        <div class="fin-price">$340 <small>CAD / bottle</small></div>
+        <div class="fin-perday">About $11.33 a day</div>
+      </div>
+      <div class="fin-seg-label">Choose your supply</div>
+      <div class="fin-seg">
+        <div class="fin-opt active" id="fin1" onclick="setFin(1)"><b>1 month</b><span>1 bottle</span></div>
+        <div class="fin-opt" id="fin3" onclick="setFin(3)"><b>3 months</b><span>3 bottles</span></div>
+        <div class="fin-opt" id="fin6" onclick="setFin(6)"><b>6 months</b><span>6 bottles</span></div>
+      </div>
+      <div class="fin-total">
+        <span class="lab" id="fin-total-lab">1 bottle, one month supply</span>
+        <span class="val" id="fin-total-val">$340</span>
+      </div>
+      <div class="fin-covered"><span class="cov-ico">&#10003;</span><span>This is usually covered by most insurance plans</span></div>
+      <div class="fin-includes">
+        <b>Every order includes:</b>
+        <ul>
+          <li>A physician review and approval before anything is made or shipped</li>
+          <li>Your custom compounded cream from a licensed Canadian compounding pharmacy</li>
+          <li>A pharmacist consult and clear instructions for safe use</li>
+          <li>Discreet shipping and ongoing messaging with your care team</li>
+        </ul>
+      </div>
+      <div id="fin-oral-block"></div>
+      <div class="fin-insurance"><strong>About insurance.</strong> Good news: compounded creams are covered by most insurance and drug plans. Your dedicated clara pharmacist gives you an itemized receipt and submits the claim to your plan for you, so most patients pay little out of pocket. Monthly supply auto refills only if you choose a subscription, and you can pause or cancel anytime. Your exact coverage and final pricing are confirmed at checkout.</div>
+    </div>
+
+    <div class="plan-ctas">
+      <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a physician review queue, for the mock, this is where we stop.')">Add to cart, start my plan</button>
+      <button class="cta-secondary" onclick="alert('Plan saved. In the live version you would receive an email summary and a short primer on back pain.')">Save this plan and think about it</button>
+      <button class="cta-secondary" onclick="alert('In the live version, this would email a printable PDF of the plan to share with your GP.')">Email me this plan</button>
+    </div>
+    <div class="plan-disclaimer">This plan is a recommendation generated from your assessment, not a prescription. A physician licensed in Canada reviews and approves (or modifies) every order before anything ships. You'll get an SMS the moment your plan is reviewed. We do not prescribe opioids, gabapentin/pregabalin, benzodiazepines, or acetaminophen (Tylenol) for back pain, the evidence shows safer, more effective options exist. We'll tell you why if you ask. Pricing is finalized at checkout.</div>
+    <div class="mock-footer">clara · Back Pain Quiz · MOCK v2 · May 2026 · First pass demonstration, not the live product · Clinical logic per Clara LBP Clinician Summary (ACP 2017, AAFP 2024–2025, CFP PEER 2021)</div>
+  </div>
+</section>
+
+<script>
+  const state={answers:{},currentStep:'landing',history:['landing']};
+  const PRICE=340;  // Clara Back Pain compound cream, CAD per bottle (30 day supply)
+
+  function showStep(stepId){
+    document.querySelectorAll('.quiz-screen').forEach(s=>s.classList.remove('active'));
+    const el=document.getElementById(stepId);
+    if(el){
+      el.classList.add('active');state.currentStep=stepId;window.scrollTo({top:0,behavior:'smooth'});
+      const progress=el.getAttribute('data-progress');const bar=document.getElementById('progress-bar');
+      if(progress){bar.style.display='flex';document.getElementById('progress-percent-text').textContent=progress+'% complete';}
+      else{bar.style.display='none';}
+      if(stepId==='loading')animateLoading();
+    }
+  }
+  function goNext(stepId){state.history.push(stepId);showStep(stepId);}
+  function goBack(){if(state.history.length>1){state.history.pop();showStep(state.history[state.history.length-1]);}}
+  function startQuiz(){goNext('q1');}
+  function resetQuiz(){state.answers={};state.history=['landing'];document.querySelectorAll('.opt.selected').forEach(o=>o.classList.remove('selected'));showStep('landing');}
+  function goHome(){resetQuiz();}
+
+  function single(el,question,value){
+    state.answers[question]=[value];
+    if(el){const p=el.closest('.opt-stack');p.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');}
+  }
+  function multi(el,question,value){
+    if(!state.answers[question])state.answers[question]=[];
+    if(el){
+      if(state.answers[question].includes(value)){state.answers[question]=state.answers[question].filter(v=>v!==value);el.classList.remove('selected');}
+      else{state.answers[question].push(value);el.classList.add('selected');}
+    }else{state.answers[question]=[value];}
+  }
+  function toggleOtherAllergy(el){
+    multi(el,'q9b','other');
+    const box=document.getElementById('q9b-other-input');
+    if(el.classList.contains('selected')){box.style.display='block';box.focus();}
+    else{box.style.display='none';box.value='';state.answers['allergyOtherText']='';}
+  }
+  function setOtherAllergy(v){state.answers['allergyOtherText']=v;}
+
+  // Gate 0, red flags
+  function checkRedFlags(){
+    const f=state.answers['redflag']||[];
+    (f.length>0)?goNext('redflag-exit'):goNext('q3');
+  }
+  // Hard exit for shingles / non-mechanical skin signs: any selection routes to in-person/ED assessment.
+  function checkShingles(){
+    const f=(state.answers['shingles']||[]).filter(v=>v!=='none');
+    (f.length>0)?goNext('shingles-exit'):goNext('q4d');
+  }
+  // Hard exit for non-spinal mimics (renal, abdominal, pelvic): any selection routes to in-person assessment.
+  function checkNonSpinal(){
+    const f=(state.answers['nonspinal']||[]).filter(v=>v!=='none');
+    (f.length>0)?goNext('nonspinal-exit'):goNext('q5');
+  }
+  function animateLoading(){
+    const checks=['lc1','lc2','lc3','lc4','lc5'];
+    checks.forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('done'),400+i*600));
+    setTimeout(()=>{const plan=generatePlan(state.answers);renderPlan(plan);goNext('plan');},4200);
+  }
+
+  // ===== PLAN GENERATION, formulary-only, hard-block, per Clara LBP algorithm =====
+  function generatePlan(a){
+    const plan={name:'',summary:'',components:[],reviewFlags:[],cream:null,creamNote:''};
+    const dur=(a.q1||[])[0];
+    const isAcute=dur==='acute', isSubacute=dur==='subacute', isChronic=(dur==='chronic'||dur==='recurrent');
+    const loc=(a.q3||[])[0];
+    const worse=a.q4||[];
+    const inflam=a.q4b||[];     // inflammatory back pain (axial spondyloarthritis) screen
+    const sev=(a.q5||[])[0];
+    const tried=a.q7||[];          // medications & procedures
+    const triedTherapy=a.q7b||[];  // physical & movement therapies
+    const topicals=a.q8||[];
+    const cond=a.q9||[];
+    const allergy=a.q9b||[];
+    const allergyOther=(a.allergyOtherText||'').trim();
+    const meds=a.q10||[];
+    const preg=a.q11||[];
+    const age=(a.q12||[])[0];
+    const age65plus=(age==='65-74'||age==='75plus'); // 65+ for Beers / muscle-relaxant logic
+    const age75plus=(age==='75plus');                // 75+ for fragility-fracture caution
+    const goal=(a.q13||[])[0];
+    const isPreg=preg.includes('pregnant')||preg.includes('breastfeed');
+
+    // ---- contraindications ----
+    const nsaidAllergy=cond.includes('asthma')||allergy.includes('nsaid'); // NSAID-exacerbated asthma OR a true NSAID/aspirin allergy: blocks oral NSAIDs and the diclofenac cream
+    const sulfaAllergy=allergy.includes('sulfa'); // celecoxib is a sulfonamide, held in sulfa allergy
+    const onRaas=meds.includes('acei-arb'), onDiuretic=meds.includes('diuretic');
+    const tripleWhammy=onRaas&&onDiuretic; // NSAID + ACE/ARB + diuretic = 'triple whammy' acute-kidney-injury risk
+    const nsaidHardBlock=cond.includes('kidney')||cond.includes('anticoag')||cond.includes('cv')||cond.includes('htn')||cond.includes('liver')||cond.includes('gi')||nsaidAllergy||isPreg||tripleWhammy; // gi: peptic ulcer / GI bleed = hard block on ALL oral NSAIDs incl. COX-2; htn: BP; liver: hepatic; tripleWhammy: renal
+    const giRisk=cond.includes('gi'); // retained for the GI review flag (no longer routes to celecoxib)
+    const cycloBlocked=age65plus||cond.includes('cv')||meds.includes('maoi')||isPreg;
+    const tizBlocked=cond.includes('liver')||isPreg;
+    const duloxBlocked=cond.includes('liver')||cond.includes('glaucoma-bph')||cond.includes('bipolar')||meds.includes('maoi')||isPreg||meds.includes('snri'); // bipolar: antidepressant can precipitate mania, held for review
+    const compoundBlocked=isPreg||nsaidAllergy; // C1/C2 contain diclofenac (an NSAID)
+
+    // Estimated pricing (source: Clara BACK PAIN Medications xlsx). acqMonth = acquisition/month,
+    // patientMonth = expected monthly cost to patient before insurance.
+    const PRICING={
+      ibuprofen:{acqMonth:5.62,patientMonth:17.28},
+      naproxen:{acqMonth:13.46,patientMonth:26.07},
+      diclofenac:{acqMonth:12.38,patientMonth:24.86},
+      celecoxib:{acqMonth:15.35,patientMonth:28.18},
+      meloxicam:{acqMonth:6.93,patientMonth:18.75},
+      cyclobenzaprine:{acqMonth:33.88,patientMonth:48.94},
+      tizanidine:{acqMonth:78.82,patientMonth:99.27},
+      duloxetine:{acqMonth:29.31,patientMonth:43.82},
+      lidocaine_patch:{acqMonth:84.59,patientMonth:105.74},
+      compound_diclofenac_patch:{acqMonth:120,patientMonth:230.99},
+      compound_lidocaine_patch:{acqMonth:120,patientMonth:230.99}
+    };
+    const TOPICAL_KEYS=['lidocaine_patch','compound_diclofenac_patch','compound_lidocaine_patch'];
+    const PRN_KEYS=['ibuprofen','naproxen','diclofenac','celecoxib','meloxicam'];
+    const money=n=>'$'+n.toFixed(2);
+
+    function comp(name,badge,cls,why,key){
+      const c={name,badge,badgeClass:cls,why,acqMonth:0,patientMonth:0,inTotals:false,priceDisplay:'',insured:false,prn:false};
+      if(key&&PRICING[key]){
+        c.acqMonth=PRICING[key].acqMonth;c.patientMonth=PRICING[key].patientMonth;
+        if(TOPICAL_KEYS.includes(key)){
+          // topical alternatives: shown with their own price + insurance note, billed separately
+          c.priceDisplay='≈ '+money(c.patientMonth)+' / month';c.insured=true;c.inTotals=false;
+        }else{
+          c.priceDisplay=money(c.patientMonth/30)+'/day';c.inTotals=true;
+        }
+      }
+      c.prn=PRN_KEYS.includes(key);
+      plan.components.push(c);
+    }
+    function section(label){plan.components.push({sectionLabel:label});}
+
+    // ---- 1. Education (always) ----
+    comp('Understanding Your Back Pain, primer & 4-pattern guide','INCLUDED','badge-included',
+      'Education is the single most effective first treatment. Your primer covers the four mechanical patterns of back pain, why imaging usually misleads, the importance of staying active (not bed rest), and what the evidence actually supports. Arrives in your account on day one.');
+
+    // ---- 2. Exercise / movement ----
+    if(isChronic){
+      comp('Movement plan, Pilates-led, with the Saskatchewan back exercises','INCLUDED','badge-included',
+        'Exercise is the only treatment with lasting benefit for chronic back pain, and Pilates ranks #1 across the largest trials (2–3×/week, ~50 min, 8–12 weeks). Your plan pairs Pilates and core-stability work with the Saskatchewan back exercises, a free, Canadian home program of safe, structured movements you can start right away. Tai chi and yoga are strong alternatives if you prefer them.');
+      comp('Physiotherapy referral guide','REFERRAL','badge-referral',
+        'Patients who see a physiotherapist early have an 89% lower rate of opioid prescriptions and far less unnecessary imaging. We\'ll help you find a physiotherapist, or you can use the Saskatchewan home program if access is limited.');
+    }else{
+      comp('Movement plan, stay active + Saskatchewan back exercises','INCLUDED','badge-included',
+        'For acute back pain, the best evidence is to keep moving (avoid bed rest) and apply superficial heat. The Saskatchewan back exercises, a free, Canadian home program, give you safe, structured movements to start with at home.');
+      if(isSubacute){
+        comp('Physiotherapy referral guide','REFERRAL','badge-referral',
+          'You\'re in the subacute window (4–12 weeks), the key time to prevent back pain from becoming chronic. Engaging a physiotherapist now is one of the highest-value steps you can take.');
+      }
+    }
+
+    // ---- 3. Targeted topical relief (compound cream featured), placed BEFORE oral meds ----
+    section('Targeted topical relief, gentler than pills, applied where it hurts');
+    const topicalDiclofenacSafe = !isPreg && !nsaidAllergy;
+    if(!compoundBlocked){
+      // When a compound cream is recommended it IS the topical, we deliberately do not add
+      // Voltaren gel or a lidocaine patch on top of it (the cream already contains diclofenac
+      // and lidocaine), so the plan stays clean and non-redundant.
+      plan.cream = topicals.includes('compound') ? 'C2' : 'C1';
+      const creamPositives='Why we lead with a topical instead of a pill: a cream goes straight to the painful area, with very little absorbed into the bloodstream. That means a far lower risk of the stomach ulcers, GI bleeding, kidney strain and cardiovascular effects that oral anti-inflammatories can cause, and far fewer interactions with your other medications. For localized back pain it can work as well as a pill with a much safer profile, and it is often the only anti-inflammatory route for people who cannot take NSAIDs by mouth. Apply to the affected area 3\u20134\u00d7 daily.';
+      let cc;
+      if(plan.cream==='C2'){
+        cc={name:'Clara Compound Cream, C2 (Mixed Pain)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C2',
+          whyShort:'You told us you\'ve used a compounded cream before, so we\'re starting you at C2 rather than the entry strength, it layers ketamine, gabapentin and amitriptyline on top of the C1 base (diclofenac + lidocaine + baclofen + menthol/camphor) for a stronger, multi-mechanism effect.',
+          whyMore:creamPositives};
+        plan.creamNote='You\'ve used a compounded cream before, so we started you at C2 (a step up from the C1 entry strength) to give you a stronger effect from the start. If C2 isn\'t enough, your physician can step you up to C3.';
+      }else{
+        cc={name:'Clara Compound Cream, C1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C1',
+          whyShort:'Our foundation cream pairs an anti-inflammatory (diclofenac) with lidocaine, baclofen and menthol/camphor in one custom formula, included in every Clara back-pain plan as the targeted, lower-risk first step.',
+          whyMore:creamPositives};
+        plan.creamNote='Everyone starts at C1, our foundation strength. It\'s a deliberately stepwise system: if C1 isn\'t enough after a fair trial, your physician can step you up to C2 (which adds nerve-pain ingredients), and C3 if needed. We start low and increase only if you need it.';
+      }
+      cc.note=plan.creamNote;
+      cc.priceDisplay='$340 / bottle';cc.priceValue=340;cc.insured=true;cc.inTotals=false;
+      plan.components.push(cc);
+      // When a Clara compound cream (C1–C3) is recommended it is the chosen compound topical,
+      // so we do NOT also list the compound diclofenac/lidocaine patches (avoids redundancy).
+    }else{
+      // No compound cream (pregnancy / NSAID sensitivity), offer the safest single-agent topical instead.
+      plan.reviewFlags.push('pregnancy/NSAID-sensitivity, the compound cream (contains diclofenac) is deferred to physician review');
+      comp('Lidocaine 5% patch, optional adjunct','RX','badge-rx',
+        'A numbing patch for a localized sore spot, with very low systemic absorption, a sensible topical option while a physician reviews anything stronger. 12 hours on / 12 hours off.','lidocaine_patch');
+    }
+
+    // ---- 4. Oral medication (step up only if topical + movement aren't enough) ----
+    section(isChronic?'Oral medication, second-line, if movement & topical aren\'t enough':'Oral medication, if you need more than topical');
+    if(!nsaidHardBlock){
+      comp('Naproxen 250\u2013500 mg twice daily (with food)','RX','badge-rx',
+        'If a topical isn\'t enough, an oral anti-inflammatory is the first-line pill for back pain. Naproxen is a sensible default, twice-daily dosing and a slightly better cardiovascular profile than other NSAIDs. Take with food; lowest dose, shortest time. No safety flags came up in your screen.','naproxen');
+    }
+    // A history of stomach ulcers or GI bleeding is a hard contraindication to ALL oral anti-inflammatories,
+    // including COX-2 selective agents (celecoxib), so no oral NSAID is offered; the plan relies on the
+    // cream, movement, and (for chronic pain) duloxetine, with physician review.
+    if((isAcute||isSubacute) && !isPreg && (sev==='severe'||sev==='disabling'||sev==='significant')){
+      if(!cycloBlocked){
+        comp('Cyclobenzaprine 5\u201310 mg at night (short course, max 2\u20133 weeks)','RX','badge-rx',
+          'A short course of muscle relaxant can help when spasm is significant in the first weeks. Causes drowsiness, take at night, don\'t drive on it. Strictly limited to 2\u20133 weeks; not for long-term or chronic use.','cyclobenzaprine');
+      }else if(!tizBlocked){
+        comp('Tizanidine 2\u20134 mg as needed (short course)','RX','badge-rx',
+          'A muscle relaxant alternative used when cyclobenzaprine isn\'t suitable. Causes drowsiness and can lower blood pressure; your physician may check liver function. Short-term use only.','tizanidine');
+      }else{
+        plan.reviewFlags.push('muscle-relaxant options limited by your health profile');
+      }
+    }
+    if(isChronic && !duloxBlocked){
+      const nsaidTriedOrBlocked = tried.includes('otc-nsaid')||tried.includes('rx-nsaid')||nsaidHardBlock;
+      if(nsaidTriedOrBlocked){
+        comp('Duloxetine 30 mg daily \u2192 60 mg after 1 week','RX','badge-rx',
+          'Duloxetine is the second-line oral medication for chronic back pain (the only antidepressant proven for chronic musculoskeletal pain). Recommended because you\'ve already tried anti-inflammatories or can\'t take them. Start 30 mg for a week, then 60 mg. Allow 4\u20136 weeks for full effect; don\'t stop abruptly.','duloxetine');
+      }
+    }
+    // serotonin-interaction check: SSRIs and triptans both add serotonergic load with duloxetine
+    const serotonergic=[];
+    if(meds.includes('ssri'))serotonergic.push('an SSRI');
+    if(meds.includes('triptan'))serotonergic.push('a triptan');
+    if(isChronic && serotonergic.length){plan.reviewFlags.push(serotonergic.join(' and ')+' on board, your physician will check for serotonin interactions before any duloxetine is started');}
+
+    // ---- review flags ----
+    if(cond.includes('htn'))plan.reviewFlags.push('uncontrolled high blood pressure, oral anti-inflammatories are being held for physician review because they can raise blood pressure and reduce the effect of blood-pressure medicines');
+    if(isChronic && cond.includes('bipolar'))plan.reviewFlags.push('bipolar disorder, duloxetine (the usual second-line oral option) is being held for physician review because starting an antidepressant can affect mood stability');
+    if(cond.includes('anticoag') && plan.cream)plan.reviewFlags.push('a blood thinner together with the diclofenac-containing compound cream, only a small amount is absorbed through the skin, but it can occasionally increase the effect of blood thinners like warfarin, so your physician will check whether your INR needs monitoring');
+    if(cond.includes('liver'))plan.reviewFlags.push('liver disease, oral anti-inflammatories are being held for physician review because they can be harder on the liver and kidneys and raise bleeding risk in significant liver disease; your physician will decide what is safe based on your liver function');
+    if(cond.includes('gi'))plan.reviewFlags.push('a history of stomach ulcers or GI bleeding, all oral anti-inflammatories (including the COX-2 option) are being held because they can irritate the stomach and raise bleeding risk; your plan relies on the topical cream and movement, with physician review');
+    if(tripleWhammy)plan.reviewFlags.push('both a blood-pressure medicine (ACE inhibitor or ARB) and a water pill (diuretic), adding an oral anti-inflammatory to that combination can strain the kidneys (the "triple whammy"), so the oral anti-inflammatory is being held for physician review');
+    else if((onRaas||onDiuretic) && !nsaidHardBlock)plan.reviewFlags.push('a blood-pressure medicine or a water pill on board, which can increase the kidney risk of oral anti-inflammatories, so your physician will keep any anti-inflammatory at the lowest dose for the shortest time and may check your kidney function');
+    if(isChronic && duloxBlocked && !cond.includes('bipolar') && !isPreg){ // transparency: explain why the second-line oral option was withheld
+      const dwhy=[];
+      if(meds.includes('maoi'))dwhy.push('you take an MAOI antidepressant, which cannot be combined with it');
+      if(meds.includes('snri'))dwhy.push('you already take an SNRI antidepressant');
+      if(cond.includes('liver'))dwhy.push('your liver disease');
+      if(cond.includes('glaucoma-bph'))dwhy.push('your narrow-angle glaucoma or trouble urinating');
+      if(dwhy.length)plan.reviewFlags.push('the usual second-line oral option (duloxetine) is not included because '+dwhy.join(' and ')+'; your physician will consider an alternative if an oral medication is needed');
+    }
+    if(age75plus && (isAcute||isSubacute))plan.reviewFlags.push('age 75 or older with new back pain, your physician will take extra care to rule out a fracture, because even a minor strain can cause one at this age');
+    if(isPreg)plan.reviewFlags.push('pregnancy or breastfeeding, your plan avoids anti-inflammatories and is built around movement, heat, and physician-reviewed safe options');
+    if(loc==='sciatica'||loc==='both-legs')plan.reviewFlags.push('leg/radicular symptoms, your physician will check whether nerve-targeted treatment or referral is warranted');
+    if(worse.includes('walking')||worse.includes('standing'))plan.reviewFlags.push('pain that is worse with standing or walking, your physician may check for spinal stenosis');
+    // inflammatory back pain (axial spondyloarthritis) screen: gradual onset, prolonged AM stiffness, better with movement, night waking, onset <45, SpA-associated condition
+    const inflamCount=inflam.filter(x=>x!=='none').length;
+    if(inflamCount>=3 || (inflamCount>=2 && inflam.includes('spa-assoc')))plan.reviewFlags.push('features of inflammatory back pain (such as gradual onset, prolonged morning stiffness, and improvement with movement rather than rest), your physician will consider a referral to rheumatology and inflammatory blood tests to check for axial spondyloarthritis');
+    if(tried.includes('opioid'))plan.reviewFlags.push('prior opioid use, flagged for careful prescriber attention');
+    if(tried.includes('surgery'))plan.reviewFlags.push('prior back surgery, flagged for physician review');
+    if(allergy.includes('other'))plan.reviewFlags.push('a drug allergy you told us about'+(allergyOther?' ('+allergyOther+')':'')+', your physician will review it before prescribing anything');
+
+    // ---- name + summary ----
+    if(isAcute)plan.name='Acute Back Pain Recovery Plan';
+    else if(isSubacute)plan.name='Subacute Back Pain Plan';
+    else plan.name='Chronic Back Pain Plan';
+
+    let s='';
+    const durMap={acute:'Acute back pain (under 4 weeks)',subacute:'Subacute back pain (4–12 weeks)',chronic:'Chronic back pain (over 12 weeks)',recurrent:'Recurring episodes of back pain over time'};
+    s+=durMap[dur]||'Back pain';
+    if(worse.includes('sitting')&&worse.includes('forward'))s+=', worse with sitting and bending forward';
+    else if(worse.includes('backward'))s+=', worse with leaning back';
+    else if(worse.includes('walking')&&worse.includes('standing'))s+=', worse with standing and walking';
+    const sevMap={mild:'mild',moderate:'moderate',significant:'moderate-to-significant',severe:'severe',disabling:'disabling'};
+    if(sevMap[sev])s+=', '+sevMap[sev]+' in intensity';
+    const triedMeds=tried.filter(x=>x!=='none');
+    const triedTher=triedTherapy.filter(x=>x!=='none');
+    if(triedMeds.length||triedTher.length){
+      const names=[];
+      if(tried.includes('otc-nsaid'))names.push('over-the-counter anti-inflammatories');
+      if(tried.includes('rx-nsaid'))names.push('prescription anti-inflammatories');
+      if(triedTherapy.includes('physio'))names.push('physiotherapy');
+      if(triedTherapy.includes('exercise'))names.push('structured exercise');
+      if(names.length)s+='. You\'ve tried '+names.slice(0,3).join(', ');
+    }else{s+='. You haven\'t tried prescription treatment yet';}
+    s+='. ';
+    if(isPreg)s+='Because you\'re pregnant or breastfeeding, your plan prioritizes movement and the safest options, with a physician personally reviewing it.';
+    else if(nsaidHardBlock)s+='Your plan safely avoids oral anti-inflammatories (due to a safety flag) and routes you to topical and movement-based options.';
+    else s+='No medication safety contraindications were flagged in your screening.';
+    plan.summary=s;
+    return plan;
+  }
+
+  function renderPlan(plan){
+    document.getElementById('plan-summary-text').textContent=plan.summary;
+    document.getElementById('kit-name-text').textContent='The '+plan.name;
+    const rf=document.getElementById('review-flag-block');
+    if(plan.reviewFlags.length){rf.style.display='block';document.getElementById('review-flag-text').textContent=' We flagged '+plan.reviewFlags.join('; ')+'. A physician licensed in Canada will look at your plan personally before anything is dispensed.';}
+    else{rf.style.display='none';}
+    const c=document.getElementById('plan-components');c.innerHTML='';
+    // pre-compute: oral meds stack into the running total; cream + insured topicals are summarized
+    let oralAcq=0,oralPatient=0,creamPrice=0;
+    const insuredTopicals=[];
+    plan.components.forEach(x=>{
+      if(x.sectionLabel)return;
+      if(x.inTotals){oralAcq+=x.acqMonth;oralPatient+=x.patientMonth;}
+      if(x.isCream)creamPrice=x.priceValue||340;
+      else if(x.insured&&x.patientMonth>0)insuredTopicals.push({name:x.name,amount:x.patientMonth});
+    });
+    // Per-day inline card is now superseded by the finance card at the end of the plan.
+    plan.components.forEach(x=>{
+      if(x.sectionLabel){
+        c.insertAdjacentHTML('beforeend','<div class="section-label">'+x.sectionLabel+'</div>');
+        return;
+      }
+      const priceHtml=x.priceDisplay?'<div class="comp-price-block"><div class="comp-price">'+x.priceDisplay+'</div>'+(x.insured?'<div class="comp-insurance">Usually covered by your insurance plan.</div>':'')+'</div>':'';
+      if(x.isCream){
+        const ladder=
+          '<div class="cream-step cream-step-inline">'+
+            '<div class="cream-step-label">About your compound cream, the stepwise approach</div>'+
+            '<p>'+x.note+'</p>'+
+            '<div class="cream-ladder">'+
+              '<div class="cream-tier'+(x.tier==='C1'?' active':'')+'"><b>C1 · Foundation</b>Diclofenac + lidocaine + baclofen + menthol/camphor. The everyday starting strength.</div>'+
+              '<div class="cream-tier'+(x.tier==='C2'?' active':'')+'"><b>C2 · Mixed Pain</b>Adds ketamine, gabapentin &amp; amitriptyline for nerve-related pain. A genuine step up.</div>'+
+              '<div class="cream-tier'+(x.tier==='C3'?' active':'')+'"><b>C3 · Neuropathic</b>Our strongest formula for severe nerve pain. Reserved for refractory cases.</div>'+
+            '</div>'+
+          '</div>';
+        // Cream price is shown prominently in the finance card below; keep this header price-free for cleaner hierarchy.
+        c.insertAdjacentHTML('beforeend',
+          '<div class="component">'+
+            '<div class="comp-header"><div class="comp-name">'+x.name+' <span class="comp-badge '+x.badgeClass+'">'+x.badge+'</span></div></div>'+
+            ladder+
+            '<div class="comp-why"><strong>Why this is in your plan:</strong> '+x.whyShort+
+              ' <span class="cream-more" hidden>'+x.whyMore+'</span>'+
+              '<button class="read-more-btn" onclick="toggleMore(this)">Read more</button></div>'+
+            '<div class="cream-howto"><div class="cream-howto-title">How to use your cream</div><ul class="cream-howto-list">'+
+              '<li>Apply a thin layer to the sore area, 2 to 3 times a day (or as your plan says).</li>'+
+              '<li>Wash your hands after, so none gets in your eyes or mouth (unless your hands are the area being treated).</li>'+
+              '<li class="warn">Never put it on broken, cut, raw, or wounded skin. Too much medicine can get into your body that way.</li>'+
+              '<li>Do not wrap it tightly or cover it with a bandage unless we tell you to, and keep heating pads and electric blankets off the area.</li>'+
+              '<li>Let it dry before it touches your clothes.</li>'+
+              '<li>Give it a fair try. Most people get partial relief, not zero pain, and it can take a few days to a few weeks. A 4 to 6 week trial is reasonable.</li>'+
+              '<li>A little warmth, tingling, or mild stinging at first is normal and usually settles. Stop and message us if you get a bad rash, blistering, or any sign of an allergic reaction.</li>'+
+              '<li>Tell us right away if you feel drowsy, dizzy, lightheaded, confused, or your heart is racing.</li>'+
+              '<li>Keep it out of reach of children and pets. Even a small amount swallowed can be dangerous.</li>'+
+            '</ul></div>'+
+          '</div>');
+        return;
+      }
+      const prnHtml=x.prn?'<div class="comp-prn">As needed (PRN), you only take it when the pain flares, so some weeks you\'ll use more, some less.</div>':'';
+      c.insertAdjacentHTML('beforeend',
+        '<div class="component"><div class="comp-header"><div class="comp-name">'+x.name+' <span class="comp-badge '+x.badgeClass+'">'+x.badge+'</span></div>'+priceHtml+'</div>'+
+        '<div class="comp-why"><strong>Why this is in your plan:</strong> '+x.why+'</div>'+prnHtml+'</div>');
+    });
+    // ---- finance card: compound cream is the hero; oral + insured topicals shown beneath ----
+    const fin=document.getElementById('finance-card');
+    const oralBlock=document.getElementById('fin-oral-block');
+    if(creamPrice>0){
+      // Show full cream finance card and initialise the supply selector.
+      fin.style.display='block';
+      setFin(1);
+    }else{
+      // No compound cream in this plan (e.g., pregnancy or NSAID allergy hard block).
+      // Hide the cream-centric finance card and let the kit-card carry the message.
+      fin.style.display='none';
+    }
+    // Populate the small oral / insured-topical block under the supply selector.
+    let oralHtml='';
+    if(oralPatient>0){
+      oralHtml+='<div class="fin-oral-note"><b>Plus your oral medication.</b> Your plan also includes an oral prescription billed separately, estimated at <span class="oral-amt">$'+oralPatient.toFixed(2)+'</span> per month before insurance (about $'+(oralPatient/30).toFixed(2)+' a day).</div>';
+    }
+    insuredTopicals.forEach(t=>{
+      oralHtml+='<div class="fin-oral-note"><b>Plus '+t.name+'.</b> Estimated at <span class="oral-amt">$'+t.amount.toFixed(2)+'</span> per month, usually covered by your insurance plan.</div>';
+    });
+    oralBlock.innerHTML=oralHtml;
+  }
+
+  // ---- finance logic: supply selector for the compound cream ----
+  function setFin(months){
+    ['fin1','fin3','fin6'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});
+    const active=document.getElementById('fin'+months);
+    if(active)active.classList.add('active');
+    const total=PRICE*months;
+    const label=months===1?'1 bottle, one month supply':months+' bottles, '+months+' month supply';
+    const lab=document.getElementById('fin-total-lab');
+    const val=document.getElementById('fin-total-val');
+    if(lab)lab.textContent=label;
+    if(val)val.textContent='$'+total.toLocaleString();
+  }
+
+  function toggleMore(btn){
+    const more=btn.parentNode.querySelector('.cream-more');
+    if(more.hasAttribute('hidden')){more.removeAttribute('hidden');btn.textContent='Show less';}
+    else{more.setAttribute('hidden','');btn.textContent='Read more';}
+  }
+</script>
+
+<style id="clara-gate-style">
+#clara-gate-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#1F3329 0%,#2F473B 100%);z-index:99999;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif}
+#clara-gate-box{background:#F7F5F0;border-radius:24px;padding:48px 44px;box-shadow:0 30px 80px rgba(0,0,0,.4);max-width:420px;width:90%;text-align:center}
+#clara-gate-box .logo{font-family:Georgia,serif;font-weight:700;font-size:38px;color:#4A6B5B;margin-bottom:6px}
+#clara-gate-box .sub{font-family:Georgia,serif;font-style:italic;color:#5A615D;margin-bottom:32px;font-size:14px;line-height:1.5}
+#clara-gate-box input{width:100%;padding:14px 18px;border:1.5px solid #D9D4CA;border-radius:14px;font-size:15px;font-family:Arial,sans-serif;background:#fff;color:#1F2421;margin-bottom:14px;outline:none;transition:border-color .15s}
+#clara-gate-box input:focus{border-color:#4A6B5B}
+#clara-gate-box button{width:100%;padding:14px;background:#4A6B5B;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:Arial,sans-serif;transition:background .15s}
+#clara-gate-box button:hover{background:#2F473B}
+#clara-gate-err{color:#A35540;font-size:12.5px;margin-top:10px;height:18px;font-family:Arial,sans-serif}
+#clara-gate-foot{margin-top:24px;font-size:11.5px;color:#8A908B;font-family:Arial,sans-serif;font-style:italic}
+</style>
+<div id="clara-gate-overlay">
+  <div id="clara-gate-box">
+    <div class="logo">clara</div>
+    <div class="sub">This wireframe is for the Clara internal team and trusted advisors. Enter the password to continue.</div>
+    <input id="clara-gate-input" type="password" placeholder="Password" autofocus />
+    <button onclick="claraGateCheck()">Continue</button>
+    <div id="clara-gate-err"></div>
+    <div id="clara-gate-foot">clara · Clara Relief Inc. · confidential</div>
+  </div>
+</div>
+<script>
+(function(){
+  var PW = "clara2026";
+  if (localStorage.getItem("claraGateOpen") === "yes") {
+    document.getElementById("clara-gate-overlay").style.display = "none";
+    return;
+  }
+  document.body.style.overflow = "hidden";
+  window.claraGateCheck = function(){
+    var v = document.getElementById("clara-gate-input").value;
+    if (v === PW){
+      localStorage.setItem("claraGateOpen","yes");
+      document.getElementById("clara-gate-overlay").remove();
+      document.body.style.overflow = "";
+    } else {
+      document.getElementById("clara-gate-err").textContent = "Incorrect password. Try again.";
+      document.getElementById("clara-gate-input").value = "";
+    }
+  };
+  document.getElementById("clara-gate-input").addEventListener("keydown", function(e){
+    if (e.key === "Enter") claraGateCheck();
+  });
+})();
+</script>
+</body>
+</html>
