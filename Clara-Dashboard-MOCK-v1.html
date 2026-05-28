@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>clara · your dashboard</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --cream-deep:#ECE8DF;
+  --line:#E8E4DC; --line-strong:#D4CFC4;
+  --rose:#D88A7A; --gold:#C8A875; --plum:#7A5C7E;
+  --shadow-sm:0 1px 2px rgba(31,51,41,.06);
+  --shadow:0 4px 14px rgba(31,51,41,.07);
+  --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+.serif{font-family:Georgia,'Cormorant Garamond',serif}
+
+/* ============== TOP NAV ============== */
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--grey);transition:all .15s;position:relative}
+.nav-tab:hover{color:var(--ink);background:var(--cream-soft)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-icon{width:38px;height:38px;border-radius:50%;background:var(--cream);display:grid;place-items:center;cursor:pointer;transition:background .15s;position:relative;font-size:16px}
+.nav-icon:hover{background:var(--cream-deep)}
+.nav-icon .badge{position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--terra);border-radius:50%;border:2px solid #fff}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+
+/* ============== PAGE WRAP ============== */
+.page{max-width:1180px;margin:0 auto;padding:32px 36px 80px}
+.view{display:none}
+.view.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ============== GREETING ============== */
+.greet{margin-bottom:8px}
+.greet-eyebrow{font-size:11px;font-weight:600;color:var(--terra);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.greet-title{font-family:Georgia,serif;font-size:38px;font-weight:700;color:var(--ink);line-height:1.1;letter-spacing:-.5px}
+.greet-title em{font-style:italic;color:var(--sage)}
+.greet-sub{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--grey);margin-top:10px;line-height:1.45}
+
+/* ============== SECTION LABEL ============== */
+.section-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.6px;text-transform:uppercase;margin:36px 0 14px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* ============== CARDS ============== */
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:var(--shadow)}
+.card-row{display:flex;align-items:center;gap:16px}
+.card-title{font-family:Georgia,serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.card-sub{font-size:13.5px;color:var(--grey);line-height:1.5}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px}
+@media (max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+/* ============== HOME, HERO PAIN WIDGET ============== */
+.hero-pain{background:linear-gradient(135deg,#fff 0%,var(--sage-pale) 100%);border:1px solid var(--sage-soft);border-radius:24px;padding:30px 32px;margin-top:24px;position:relative;overflow:hidden}
+.hero-pain::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--terra-soft) 0%,transparent 70%);opacity:.5;border-radius:50%}
+.hero-pain-inner{position:relative;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:center}
+@media (max-width:800px){.hero-pain-inner{grid-template-columns:1fr}}
+.hero-pain h2{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark);margin-bottom:8px}
+.hero-pain p{font-size:13.5px;color:var(--grey);margin-bottom:18px;line-height:1.55}
+.pain-trend{display:flex;align-items:flex-end;gap:8px;height:80px;margin-top:4px}
+.trend-bar{flex:1;background:linear-gradient(180deg,var(--terra) 0%,var(--rose) 100%);border-radius:6px 6px 2px 2px;min-height:8px;display:flex;align-items:flex-end;justify-content:center;color:#fff;font-size:10px;font-weight:600;padding-bottom:4px;transition:transform .15s}
+.trend-bar:hover{transform:scaleY(1.05)}
+.trend-bar.low{background:linear-gradient(180deg,var(--sage) 0%,#7CA890 100%)}
+.trend-bar.mid{background:linear-gradient(180deg,var(--gold) 0%,#E0C58E 100%)}
+.trend-labels{display:flex;gap:8px;margin-top:6px}
+.trend-labels span{flex:1;text-align:center;font-size:10.5px;color:var(--muted);font-weight:500}
+.btn-track{background:var(--sage);color:#fff;padding:11px 22px;border-radius:24px;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
+.btn-track:hover{background:var(--sage-dark)}
+
+.hero-pain-aside{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center}
+.pain-score{font-family:Georgia,serif;font-size:48px;font-weight:700;color:var(--terra);line-height:1;margin:8px 0}
+.pain-score-label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.pain-score-sub{font-size:12px;color:var(--grey);margin-top:8px;font-family:Georgia,serif;font-style:italic}
+.delta{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:12px;margin-top:8px}
+.delta.down{background:var(--sage-pale);color:var(--sage-dark)}
+.delta.up{background:var(--terra-soft);color:var(--terra-deep)}
+
+/* ============== HOME, ACTION ROW ============== */
+.action-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;align-items:center;gap:18px;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.action-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.action-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.action-icon.sage{background:var(--sage-soft);color:var(--sage-dark)}
+.action-icon.terra{background:var(--terra-soft);color:var(--terra-deep)}
+.action-icon.gold{background:#F5EBD8;color:#8A6F2F}
+.action-icon.plum{background:#EAE0EC;color:var(--plum)}
+.action-content{flex:1;min-width:0}
+.action-title{font-weight:600;font-size:14px;color:var(--ink);margin-bottom:2px}
+.action-meta{font-size:12.5px;color:var(--grey)}
+.action-arrow{color:var(--muted);font-size:18px;flex-shrink:0}
+
+/* ============== GET CARE CARDS ============== */
+.care-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:900px){.care-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.care-grid{grid-template-columns:1fr}}
+.care-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden}
+.care-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--terra-soft)}
+.care-card-icon{width:46px;height:46px;border-radius:14px;background:var(--cream);display:grid;place-items:center;font-size:22px;margin-bottom:14px}
+.care-card h3{font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.care-card p{font-size:12.5px;color:var(--grey);line-height:1.45;margin-bottom:16px;min-height:36px}
+.care-card-cta{margin-top:auto;display:inline-flex;align-items:center;gap:6px;color:var(--terra);font-size:12.5px;font-weight:600}
+.care-card .active-badge{position:absolute;top:14px;right:14px;background:var(--sage);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px;letter-spacing:.5px;text-transform:uppercase}
+
+/* ============== PAIN TRACKER VIEW ============== */
+.pain-checkin{background:linear-gradient(135deg,var(--sage-pale) 0%,#fff 100%);border:1px solid var(--sage-soft);border-radius:24px;padding:32px;margin:24px 0}
+.pain-checkin h2{font-family:Georgia,serif;font-size:24px;font-weight:700;color:var(--sage-dark);margin-bottom:6px}
+.pain-checkin .lead{color:var(--grey);font-size:14px;margin-bottom:24px;font-family:Georgia,serif;font-style:italic}
+.scale-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.scale-num{flex:1;min-width:54px;aspect-ratio:1;border:2px solid var(--line);border-radius:14px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-weight:700;font-size:18px;color:var(--ink)}
+.scale-num:hover{border-color:var(--sage);transform:translateY(-2px)}
+.scale-num.selected{background:var(--sage);color:#fff;border-color:var(--sage-dark);transform:scale(1.05);box-shadow:0 6px 18px rgba(74,107,91,.3)}
+.scale-num .face{font-size:18px;margin-top:2px;opacity:.7}
+.scale-num.selected .face{opacity:1}
+/* color gradient on selected */
+.scale-num[data-val="0"].selected,.scale-num[data-val="1"].selected,.scale-num[data-val="2"].selected{background:#7CA890;border-color:var(--sage)}
+.scale-num[data-val="3"].selected,.scale-num[data-val="4"].selected{background:#A8B582;border-color:#8B9C6A}
+.scale-num[data-val="5"].selected,.scale-num[data-val="6"].selected{background:var(--gold);border-color:#A88747}
+.scale-num[data-val="7"].selected,.scale-num[data-val="8"].selected{background:var(--rose);border-color:#B86A5A}
+.scale-num[data-val="9"].selected,.scale-num[data-val="10"].selected{background:var(--terra-deep);border-color:#7A3F2E}
+
+.scale-labels{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:24px;font-weight:500}
+.checkin-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.meta-input{display:flex;flex-direction:column;gap:6px}
+.meta-input label{font-size:11.5px;color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.meta-input select,.meta-input input,.meta-input textarea{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-family:inherit;color:var(--ink)}
+.meta-input textarea{resize:vertical;min-height:60px}
+.btn-primary{background:var(--sage);color:#fff;padding:12px 28px;border-radius:24px;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
+.btn-primary:hover{background:var(--sage-dark)}
+
+.weekly-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:14px}
+.day-cell{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;position:relative}
+.day-name{font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.day-num{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--ink);line-height:1}
+.day-num.empty{color:var(--line-strong)}
+.day-dot{width:8px;height:8px;border-radius:50%;margin:6px auto 0;background:var(--line-strong)}
+.day-dot.s1,.day-dot.s2{background:#7CA890}
+.day-dot.s3,.day-dot.s4{background:var(--gold)}
+.day-dot.s5,.day-dot.s6{background:var(--rose)}
+.day-dot.s7,.day-dot.s8,.day-dot.s9,.day-dot.s10{background:var(--terra-deep)}
+.day-cell.today{border-color:var(--terra);border-width:2px;background:var(--terra-pale)}
+
+.chart{height:240px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 28px 16px;position:relative}
+.chart-svg{width:100%;height:100%}
+.insight-card{background:var(--terra-pale);border:1px solid var(--terra-soft);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+.insight-icon{font-size:22px;flex-shrink:0}
+.insight-card h4{font-weight:700;font-size:14px;color:var(--terra-deep);margin-bottom:4px}
+.insight-card p{font-size:13px;color:var(--ink);line-height:1.5}
+
+/* ============== EDUCATION ============== */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:24px}
+@media (max-width:900px){.edu-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.edu-grid{grid-template-columns:1fr}}
+.edu-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.edu-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.edu-hero{height:120px;background:linear-gradient(135deg,var(--sage-pale),var(--sage-soft));display:grid;place-items:center;font-size:48px;color:var(--sage-dark);position:relative}
+.edu-hero.terra{background:linear-gradient(135deg,var(--terra-pale),var(--terra-soft));color:var(--terra-deep)}
+.edu-hero.gold{background:linear-gradient(135deg,#FDF7E8,#F5EBD8);color:#8A6F2F}
+.edu-hero.plum{background:linear-gradient(135deg,#F3EEF4,#EAE0EC);color:var(--plum)}
+.edu-tag{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.9);font-size:10.5px;font-weight:700;color:var(--ink);padding:4px 10px;border-radius:10px;letter-spacing:.4px;text-transform:uppercase}
+.edu-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.edu-body h3{font-family:Georgia,serif;font-size:16px;font-weight:700;margin-bottom:6px;color:var(--ink)}
+.edu-body p{font-size:12.5px;color:var(--grey);line-height:1.5;margin-bottom:12px;flex:1}
+.edu-meta{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--muted);font-weight:500}
+.edu-meta .duration{display:inline-flex;align-items:center;gap:4px}
+
+/* ============== MY RX ============== */
+.rx-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:16px;transition:box-shadow .2s}
+.rx-card:hover{box-shadow:var(--shadow)}
+.rx-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.rx-name{font-family:Georgia,serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.rx-name .tier{display:inline-block;background:var(--terra);color:#fff;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:8px;letter-spacing:.6px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
+.rx-dose{font-size:13px;color:var(--grey);font-family:Georgia,serif;font-style:italic}
+.rx-price{text-align:right;flex-shrink:0}
+.rx-price-amount{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark)}
+.rx-price-period{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+.rx-status{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.rx-pill{font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:14px;display:inline-flex;align-items:center;gap:5px}
+.rx-pill.active{background:var(--sage-pale);color:var(--sage-dark)}
+.rx-pill.refill{background:#F5EBD8;color:#8A6F2F}
+.rx-pill.flag{background:var(--terra-pale);color:var(--terra-deep)}
+.rx-divider{height:1px;background:var(--line);margin:14px 0}
+.rx-howto h4{font-size:11.5px;color:var(--terra);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.rx-howto p{font-size:13px;color:var(--ink);line-height:1.55;margin-bottom:8px}
+.rx-actions{display:flex;gap:10px;margin-top:18px}
+.btn-secondary{background:#fff;color:var(--sage-dark);border:1px solid var(--sage);padding:9px 18px;border-radius:22px;font-size:12.5px;font-weight:600;transition:all .15s}
+.btn-secondary:hover{background:var(--sage-pale)}
+.btn-ghost{background:transparent;color:var(--grey);padding:9px 14px;border-radius:22px;font-size:12.5px;font-weight:500;transition:color .15s}
+.btn-ghost:hover{color:var(--ink)}
+.cream-ladder{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+.cream-step{background:var(--cream-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12px}
+.cream-step b{display:block;color:var(--ink);margin-bottom:3px;font-size:13px;font-family:Georgia,serif}
+.cream-step.active{background:var(--terra-pale);border-color:var(--terra);border-width:2px}
+.cream-step.active b{color:var(--terra-deep)}
+.cream-step .step-detail{color:var(--grey);line-height:1.4;font-size:11.5px}
+
+/* ============== MESSAGES ============== */
+.msg-wrap{display:grid;grid-template-columns:340px 1fr;gap:0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:24px;height:560px}
+@media (max-width:800px){.msg-wrap{grid-template-columns:1fr;height:auto}.msg-thread{display:none}}
+.msg-list{border-right:1px solid var(--line);overflow-y:auto}
+.msg-search{padding:16px;border-bottom:1px solid var(--line)}
+.msg-search input{width:100%;padding:9px 14px;border:1px solid var(--line);border-radius:24px;font-size:13px;background:var(--cream-soft);font-family:inherit;color:var(--ink)}
+.msg-item{padding:16px 18px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:12px;transition:background .15s}
+.msg-item:hover{background:var(--cream-soft)}
+.msg-item.active{background:var(--sage-pale);border-left:3px solid var(--sage)}
+.msg-item.unread .msg-name{font-weight:700}
+.msg-item.unread::after{content:'';width:7px;height:7px;background:var(--terra);border-radius:50%;align-self:center}
+.msg-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));display:grid;place-items:center;color:#fff;font-weight:600;font-size:13px;flex-shrink:0}
+.msg-avatar.terra{background:linear-gradient(135deg,var(--terra),var(--terra-deep))}
+.msg-info{flex:1;min-width:0}
+.msg-name{font-size:13.5px;color:var(--ink);margin-bottom:2px}
+.msg-name .role{color:var(--muted);font-weight:500;font-size:11.5px;margin-left:5px}
+.msg-preview{font-size:12.5px;color:var(--grey);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msg-time{font-size:11px;color:var(--muted);align-self:flex-start;flex-shrink:0}
+.msg-thread{display:flex;flex-direction:column}
+.msg-thread-header{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.msg-thread-body{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px;background:var(--cream-soft)}
+.bubble{max-width:75%;padding:12px 16px;border-radius:18px;font-size:13.5px;line-height:1.5}
+.bubble.them{background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px;align-self:flex-start}
+.bubble.you{background:var(--sage);color:#fff;border-bottom-right-radius:6px;align-self:flex-end}
+.bubble-meta{font-size:10.5px;color:var(--muted);margin-top:6px;padding:0 4px}
+.bubble.you ~ .bubble-meta{align-self:flex-end}
+.msg-compose{padding:16px 18px;border-top:1px solid var(--line);background:#fff;display:flex;gap:10px;align-items:center}
+.msg-compose input{flex:1;padding:11px 16px;border:1px solid var(--line);border-radius:24px;background:var(--cream-soft);font-size:13.5px;font-family:inherit;color:var(--ink)}
+.msg-send{background:var(--terra);color:#fff;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:18px}
+
+/* ============== ORDERS ============== */
+.order-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 24px;margin-bottom:14px;transition:box-shadow .2s}
+.order-card:hover{box-shadow:var(--shadow)}
+.order-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}
+.order-num{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--ink)}
+.order-date{font-size:12.5px;color:var(--grey);margin-top:2px}
+.order-status{font-size:11px;font-weight:700;padding:4px 11px;border-radius:11px;letter-spacing:.5px;text-transform:uppercase}
+.order-status.delivered{background:var(--sage-pale);color:var(--sage-dark)}
+.order-status.shipped{background:#E7F1F5;color:#3B6E80}
+.order-status.processing{background:#F5EBD8;color:#8A6F2F}
+.order-items{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.order-item{font-size:12.5px;color:var(--grey);background:var(--cream);padding:6px 12px;border-radius:8px}
+.order-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--line)}
+.order-total{font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--ink)}
+.order-actions a{font-size:12.5px;color:var(--sage-dark);font-weight:600;display:inline-flex;align-items:center;gap:5px;margin-left:14px}
+.order-actions a:hover{color:var(--terra-deep);text-decoration:underline}
+
+/* ============== PROFILE ============== */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+@media (max-width:800px){.profile-grid{grid-template-columns:1fr}}
+.profile-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.profile-card h3{font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.profile-card h3 .edit-link{font-family:Inter,sans-serif;font-size:12px;color:var(--terra);font-weight:600;cursor:pointer}
+.profile-row{display:flex;justify-content:space-between;padding:10px 0;font-size:13.5px;border-bottom:1px dashed var(--line)}
+.profile-row:last-child{border-bottom:none}
+.profile-label{color:var(--grey);font-weight:500}
+.profile-val{color:var(--ink);font-weight:500;text-align:right}
+
+/* ============== AVATAR DROPDOWN ============== */
+.dropdown{position:relative}
+.dropdown-menu{position:absolute;right:0;top:48px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:8px;min-width:200px;display:none;z-index:100}
+.dropdown.open .dropdown-menu{display:block}
+.dropdown-item{padding:10px 14px;border-radius:8px;font-size:13.5px;color:var(--ink);display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .15s;width:100%;text-align:left}
+.dropdown-item:hover{background:var(--cream-soft)}
+.dropdown-item.muted{color:var(--grey);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px;font-weight:600;cursor:default}
+.dropdown-divider{height:1px;background:var(--line);margin:6px 0}
+
+/* footer banner */
+.mock-footer{text-align:center;margin-top:48px;padding:18px;color:var(--muted);font-size:11.5px;font-style:italic;border-top:1px dashed var(--line)}
+</style>
+</head>
+<body>
+
+<!-- ============== TOP NAV ============== -->
+<nav class="nav">
+  <div class="nav-logo">clara</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-tab="home">Home</button>
+    <button class="nav-tab" data-tab="pain">Pain Tracker</button>
+    <button class="nav-tab" data-tab="education">Education</button>
+    <button class="nav-tab" data-tab="rx">My Rx</button>
+    <button class="nav-tab" data-tab="messages">Messages</button>
+    <button class="nav-tab" data-tab="orders">Orders</button>
+    <button class="nav-tab" data-tab="care">Get Care</button>
+  </div>
+  <div class="nav-right">
+    <div class="nav-icon" title="Notifications">🔔<span class="badge"></span></div>
+    <div class="dropdown" id="avatarDrop">
+      <div class="nav-avatar" onclick="document.getElementById('avatarDrop').classList.toggle('open')">SK</div>
+      <div class="dropdown-menu">
+        <div class="dropdown-item muted">Signed in as</div>
+        <div class="dropdown-item" style="padding-top:0">
+          <div>
+            <div style="font-weight:600">Sarah Kim</div>
+            <div style="font-size:11.5px;color:var(--muted)">sarah.kim@gmail.com</div>
+          </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item" data-tab="profile">👤 Profile and account</button>
+        <button class="dropdown-item">💳 Payment methods</button>
+        <button class="dropdown-item">⚙ Settings</button>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item">↗ Sign out</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ===================== HOME VIEW ===================== -->
+<div class="view active" id="view-home">
+  <div class="greet">
+    <div class="greet-eyebrow">Wednesday  ·  May 28</div>
+    <h1 class="greet-title">Good morning, <em>Sarah</em></h1>
+    <p class="greet-sub">Your knee has been calming down over the last week. Keep going, you are doing the right things.</p>
+  </div>
+
+  <!-- HERO PAIN WIDGET -->
+  <div class="hero-pain">
+    <div class="hero-pain-inner">
+      <div>
+        <h2>This week in your knee</h2>
+        <p>Your average daily pain has dropped from 6 to 4 over the past 7 days. Your strengthening routine is the most likely reason. Log today's reading to keep your trend accurate.</p>
+        <div class="pain-trend">
+          <div class="trend-bar mid" style="height:55%">5</div>
+          <div class="trend-bar" style="height:65%">6</div>
+          <div class="trend-bar mid" style="height:50%">4</div>
+          <div class="trend-bar mid" style="height:50%">4</div>
+          <div class="trend-bar low" style="height:40%">3</div>
+          <div class="trend-bar low" style="height:45%">3</div>
+          <div class="trend-bar low" style="height:35%;background:var(--cream-deep);color:var(--muted)">?</div>
+        </div>
+        <div class="trend-labels">
+          <span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span><span>Mon</span><span>Tue</span><span>Today</span>
+        </div>
+        <div style="margin-top:18px"><button class="btn-track" data-tab="pain">→  Log today's pain</button></div>
+      </div>
+      <div class="hero-pain-aside">
+        <div class="pain-score-label">7-day average</div>
+        <div class="pain-score">4.2</div>
+        <div class="delta down">↓ 1.8 vs last week</div>
+        <div class="pain-score-sub">Knee osteoarthritis, right knee</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION ITEMS -->
+  <div class="section-label">For you, today</div>
+  <div class="grid-2">
+    <div class="action-card" data-tab="rx">
+      <div class="action-icon terra">💊</div>
+      <div class="action-content">
+        <div class="action-title">Apply your Clara cream this morning</div>
+        <div class="action-meta">C2 Standard  ·  thin layer to right knee  ·  reminder in 30 min</div>
+      </div>
+      <div class="action-arrow">→</div>
+    </div>
+    <div class="action-card" data-tab="education">
+      <div class="action-icon sage">🧘</div>
+      <div class="action-content">
+        <div class="action-title">15-minute knee strengthening routine</div>
+        <div class="action-meta">Week 4 of 8  ·  3 of 4 sessions done this week</div>
+      </div>
+      <div class="action-arrow">→</div>
+    </div>
+    <div class="action-card" data-tab="rx">
+      <div class="action-icon gold">⏳</div>
+      <div class="action-content">
+        <div class="action-title">Cream refill ships in 6 days</div>
+        <div class="action-meta">No action needed  ·  arriving June 3</div>
+      </div>
+      <div class="action-arrow">→</div>
+    </div>
+    <div class="action-card" data-tab="messages">
+      <div class="action-icon plum">✉</div>
+      <div class="action-content">
+        <div class="action-title">Dr. Nguyen replied to your message</div>
+        <div class="action-meta">about naproxen timing  ·  2 hours ago</div>
+      </div>
+      <div class="action-arrow">→</div>
+    </div>
+  </div>
+
+  <!-- GET CARE SECTION -->
+  <div class="section-label">Get care for something else</div>
+  <div class="care-grid">
+    <div class="care-card" data-tab="care">
+      <div class="care-card-icon" style="background:var(--terra-pale);color:var(--terra-deep)">🦵</div>
+      <h3>Knee Osteoarthritis</h3>
+      <p>Your current plan. View or update your assessment.</p>
+      <span class="active-badge">Active</span>
+      <div class="care-card-cta">Manage plan  →</div>
+    </div>
+    <div class="care-card" data-tab="care">
+      <div class="care-card-icon" style="background:var(--sage-pale);color:var(--sage-dark)">🧠</div>
+      <h3>Migraine</h3>
+      <p>Triggered, severe, or frequent headaches.</p>
+      <div class="care-card-cta">Start assessment  →</div>
+    </div>
+    <div class="care-card" data-tab="care">
+      <div class="care-card-icon" style="background:#F5EBD8;color:#8A6F2F">🪑</div>
+      <h3>Low Back Pain</h3>
+      <p>Acute or chronic mechanical back pain.</p>
+      <div class="care-card-cta">Start assessment  →</div>
+    </div>
+    <div class="care-card" data-tab="care">
+      <div class="care-card-icon" style="background:#EAE0EC;color:var(--plum)">⚡</div>
+      <h3>Neuropathic Pain</h3>
+      <p>Nerve pain, burning, tingling, shooting pain.</p>
+      <div class="care-card-cta">Start assessment  →</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAIN TRACKER VIEW ===================== -->
+<div class="view" id="view-pain">
+  <div class="greet">
+    <div class="greet-eyebrow">Pain tracker  ·  knee osteoarthritis</div>
+    <h1 class="greet-title">How are your knees <em>today?</em></h1>
+    <p class="greet-sub">A quick daily check-in helps us see what is working and catch trouble early. Your data stays private to you and your Clara physician.</p>
+  </div>
+
+  <div class="pain-checkin">
+    <h2>Tap the number that best matches your pain today</h2>
+    <p class="lead">0 means no pain at all. 10 means the worst pain you can imagine.</p>
+    <div class="scale-row" id="scale">
+      <div class="scale-num" data-val="0"><span>0</span><span class="face">😌</span></div>
+      <div class="scale-num" data-val="1"><span>1</span><span class="face">🙂</span></div>
+      <div class="scale-num" data-val="2"><span>2</span><span class="face">🙂</span></div>
+      <div class="scale-num" data-val="3"><span>3</span><span class="face">😐</span></div>
+      <div class="scale-num selected" data-val="4"><span>4</span><span class="face">😐</span></div>
+      <div class="scale-num" data-val="5"><span>5</span><span class="face">😣</span></div>
+      <div class="scale-num" data-val="6"><span>6</span><span class="face">😖</span></div>
+      <div class="scale-num" data-val="7"><span>7</span><span class="face">😖</span></div>
+      <div class="scale-num" data-val="8"><span>8</span><span class="face">😫</span></div>
+      <div class="scale-num" data-val="9"><span>9</span><span class="face">😫</span></div>
+      <div class="scale-num" data-val="10"><span>10</span><span class="face">😭</span></div>
+    </div>
+    <div class="scale-labels"><span>No pain</span><span>Mild</span><span>Moderate</span><span>Severe</span><span>Worst imaginable</span></div>
+    <div class="checkin-meta">
+      <div class="meta-input">
+        <label>What helped today (optional)</label>
+        <select>
+          <option>Select one or more</option>
+          <option>Rest</option><option>Walking</option><option>Cream applied</option><option>Heat or cold</option><option>Naproxen</option>
+        </select>
+      </div>
+      <div class="meta-input">
+        <label>What made it worse (optional)</label>
+        <select>
+          <option>Select one or more</option>
+          <option>Stairs</option><option>Long sitting</option><option>Weather change</option><option>Standing</option><option>Lifted something</option>
+        </select>
+      </div>
+    </div>
+    <div class="meta-input" style="margin-bottom:24px">
+      <label>A note for yourself or your physician (optional)</label>
+      <textarea placeholder="e.g., right knee was stiff this morning, got better after my walk..."></textarea>
+    </div>
+    <button class="btn-primary">Save today's check-in  →</button>
+  </div>
+
+  <div class="section-label">This week at a glance</div>
+  <div class="weekly-grid">
+    <div class="day-cell"><div class="day-name">Thu</div><div class="day-num">22</div><div class="day-dot s5"></div></div>
+    <div class="day-cell"><div class="day-name">Fri</div><div class="day-num">23</div><div class="day-dot s6"></div></div>
+    <div class="day-cell"><div class="day-name">Sat</div><div class="day-num">24</div><div class="day-dot s4"></div></div>
+    <div class="day-cell"><div class="day-name">Sun</div><div class="day-num">25</div><div class="day-dot s4"></div></div>
+    <div class="day-cell"><div class="day-name">Mon</div><div class="day-num">26</div><div class="day-dot s3"></div></div>
+    <div class="day-cell"><div class="day-name">Tue</div><div class="day-num">27</div><div class="day-dot s3"></div></div>
+    <div class="day-cell today"><div class="day-name">Today</div><div class="day-num">28</div><div class="day-dot s4"></div></div>
+  </div>
+
+  <div class="section-label">Last 30 days</div>
+  <div class="chart">
+    <svg class="chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#C97257" stop-opacity=".25"/>
+          <stop offset="100%" stop-color="#C97257" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- horizontal grid lines -->
+      <line x1="0" y1="40" x2="600" y2="40" stroke="#E8E4DC" stroke-dasharray="3,4"/>
+      <line x1="0" y1="100" x2="600" y2="100" stroke="#E8E4DC" stroke-dasharray="3,4"/>
+      <line x1="0" y1="160" x2="600" y2="160" stroke="#E8E4DC" stroke-dasharray="3,4"/>
+      <text x="6" y="36" fill="#8A908B" font-size="10">8</text>
+      <text x="6" y="96" fill="#8A908B" font-size="10">5</text>
+      <text x="6" y="156" fill="#8A908B" font-size="10">2</text>
+      <!-- area fill under line -->
+      <path d="M30,80 L60,90 L90,70 L120,60 L150,80 L180,70 L210,100 L240,90 L270,110 L300,100 L330,120 L360,110 L390,130 L420,120 L450,140 L480,130 L510,140 L540,150 L570,140 L570,200 L30,200 Z" fill="url(#grad)"/>
+      <!-- line -->
+      <path d="M30,80 L60,90 L90,70 L120,60 L150,80 L180,70 L210,100 L240,90 L270,110 L300,100 L330,120 L360,110 L390,130 L420,120 L450,140 L480,130 L510,140 L540,150 L570,140" fill="none" stroke="#C97257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- data points -->
+      <g fill="#C97257" stroke="#fff" stroke-width="2">
+        <circle cx="30" cy="80" r="4"/><circle cx="120" cy="60" r="4"/><circle cx="210" cy="100" r="4"/>
+        <circle cx="300" cy="100" r="4"/><circle cx="390" cy="130" r="4"/><circle cx="480" cy="130" r="4"/>
+        <circle cx="570" cy="140" r="4"/>
+      </g>
+      <!-- x labels -->
+      <text x="30" y="195" fill="#8A908B" font-size="10">Apr 28</text>
+      <text x="200" y="195" fill="#8A908B" font-size="10">May 7</text>
+      <text x="380" y="195" fill="#8A908B" font-size="10">May 17</text>
+      <text x="540" y="195" fill="#8A908B" font-size="10">Today</text>
+    </svg>
+  </div>
+
+  <div class="section-label">What Clara is seeing in your data</div>
+  <div class="grid-2">
+    <div class="insight-card">
+      <div class="insight-icon">📉</div>
+      <div>
+        <h4>Pain trending down, 30 percent</h4>
+        <p>Your average pain dropped from 6.0 to 4.2 over 4 weeks. The strengthening exercises and consistent cream use are doing the work.</p>
+      </div>
+    </div>
+    <div class="insight-card" style="background:var(--sage-pale);border-color:var(--sage-soft)">
+      <div class="insight-icon">📍</div>
+      <div>
+        <h4 style="color:var(--sage-dark)">Stairs are your worst trigger</h4>
+        <p>4 of your 5 worst pain days this month happened after climbing stairs. Try the rail or alternating feet on harder days.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EDUCATION & EXERCISE VIEW ===================== -->
+<div class="view" id="view-education">
+  <div class="greet">
+    <div class="greet-eyebrow">Education and exercise</div>
+    <h1 class="greet-title">Your <em>plan</em> in one place</h1>
+    <p class="greet-sub">Everything you need to understand your condition, do your exercises, and stay on track. Tailored to your assessment.</p>
+  </div>
+
+  <div class="section-label">Your active plans</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-hero terra"><span style="position:absolute;top:12px;left:12px;background:var(--terra);color:#fff;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:10px;letter-spacing:.4px;text-transform:uppercase">Your plan</span>📘</div>
+      <div class="edu-body">
+        <h3>Understanding Your Knee Osteoarthritis</h3>
+        <p>The 14-page primer that walks you through what OA is, what helps, what does not, and why movement matters more than rest.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ 15 min read</span>
+          <span>Updated last week</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-hero"><span class="edu-tag">8-week plan</span>🦵</div>
+      <div class="edu-body">
+        <h3>Knee Strengthening Routine</h3>
+        <p>Quadriceps, hip, and glute work. 4 sessions per week, 15 to 20 minutes each. Currently in week 4 of 8.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ Week 4 of 8</span>
+          <span>3 of 4 done this week</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-hero gold"><span class="edu-tag">Free</span>🚶</div>
+      <div class="edu-body">
+        <h3>Walk With Ease, Aerobic Foundation</h3>
+        <p>Low impact walking program built for sore knees. 3 to 4 times per week, 30 minutes per session.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ Ongoing</span>
+          <span>Just getting started</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Recommended for you</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-hero plum">🧘</div>
+      <div class="edu-body">
+        <h3>Tai Chi for Knee Pain</h3>
+        <p>An unsupervised online program (RETREAT 2026 trial, NNT 4) that reduces knee pain in 12 weeks.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ 12 weeks</span>
+          <span>Free</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-hero terra">🧊</div>
+      <div class="edu-body">
+        <h3>Your Flare Plan</h3>
+        <p>The one-page guide to when ice, when heat, and when to message your physician. Print or save to your phone.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ 3 min</span>
+          <span>One-pager PDF</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-hero"><span class="edu-tag">New</span>⚖</div>
+      <div class="edu-body">
+        <h3>Weight and Your Knees</h3>
+        <p>Why every 1 pound off the scale is 4 pounds off the knee. A practical, non-judgmental guide.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ 8 min read</span>
+          <span>New this week</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Sleep, stress, and self-care</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-hero gold">😴</div>
+      <div class="edu-body">
+        <h3>Sleep Positions for a Sore Knee</h3>
+        <p>Side, back, and pillow placement to wake up with less stiffness.</p>
+        <div class="edu-meta"><span class="duration">⏱ 5 min</span><span>Free</span></div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-hero"><span class="edu-tag">Audio</span>🎧</div>
+      <div class="edu-body">
+        <h3>5-Minute Breathing for Pain Flares</h3>
+        <p>A guided audio you can use the next time a flare hits. Saves to your phone.</p>
+        <div class="edu-meta"><span class="duration">⏱ 5 min</span><span>Audio</span></div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-hero plum">📊</div>
+      <div class="edu-body">
+        <h3>The 70 Percent Rule for Pacing</h3>
+        <p>How to avoid the boom-and-bust cycle that most knee patients fall into.</p>
+        <div class="edu-meta"><span class="duration">⏱ 6 min</span><span>Article</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MY RX VIEW ===================== -->
+<div class="view" id="view-rx">
+  <div class="greet">
+    <div class="greet-eyebrow">My prescriptions</div>
+    <h1 class="greet-title">What you are <em>taking,</em> and how</h1>
+    <p class="greet-sub">Your current medications, applied creams, and how to use each one. Tap any card for the full guide.</p>
+  </div>
+
+  <!-- CREAM -->
+  <div class="rx-card" style="margin-top:24px">
+    <div class="rx-header">
+      <div>
+        <div class="rx-name">Clara Compound Cream <span class="tier">C2 Standard</span></div>
+        <div class="rx-dose">Ketoprofen 15% + Lidocaine 5% + Menthol 0.5% + Camphor 0.5%</div>
+      </div>
+      <div class="rx-price">
+        <div class="rx-price-amount">$250</div>
+        <div class="rx-price-period">per 30-day bottle</div>
+      </div>
+    </div>
+    <div class="rx-status">
+      <span class="rx-pill active">● Active subscription</span>
+      <span class="rx-pill refill">⟳ Next refill June 3</span>
+      <span class="rx-pill flag">⚠ Avoid on broken skin</span>
+    </div>
+    <div class="cream-ladder">
+      <div class="cream-step"><b>C1 Base</b><span class="step-detail">Ketoprofen 10% + Lidocaine 5% + Menthol 2%</span></div>
+      <div class="cream-step active"><b>C2 Standard</b><span class="step-detail">You are here. Step up from C1.</span></div>
+      <div class="cream-step"><b>C3 Hero</b><span class="step-detail">Physician step-up only. Adds capsaicin.</span></div>
+    </div>
+    <div class="rx-divider"></div>
+    <div class="rx-howto">
+      <h4>How to use this cream</h4>
+      <p>Apply a thin layer to the right knee, 2 to 3 times a day. Wash hands after applying. Do not put on broken skin, cuts, or wounds. Let it dry before clothing touches it.</p>
+      <p style="color:var(--terra-deep);font-weight:600">Give it a fair 4 to 6 week trial. Most people get partial relief, not zero pain.</p>
+    </div>
+    <div class="rx-actions">
+      <button class="btn-secondary">Full how-to guide</button>
+      <button class="btn-ghost">Pause subscription</button>
+      <button class="btn-ghost">Ask a question</button>
+    </div>
+  </div>
+
+  <!-- NAPROXEN -->
+  <div class="rx-card">
+    <div class="rx-header">
+      <div>
+        <div class="rx-name">Naproxen 500 mg</div>
+        <div class="rx-dose">Oral anti-inflammatory, twice daily with food</div>
+      </div>
+      <div class="rx-price">
+        <div class="rx-price-amount">$41.38</div>
+        <div class="rx-price-period">per 30-day supply</div>
+      </div>
+    </div>
+    <div class="rx-status">
+      <span class="rx-pill active">● Active</span>
+      <span class="rx-pill refill">⟳ Next refill June 12</span>
+    </div>
+    <div class="rx-divider"></div>
+    <div class="rx-howto">
+      <h4>How to take it</h4>
+      <p>Take one 500 mg tablet by mouth twice a day, with food, for as long as your physician recommends. Avoid taking on an empty stomach.</p>
+      <p style="color:var(--terra-deep);font-weight:600">Stop and message Clara if you have stomach pain, dark stools, or unusual bruising.</p>
+    </div>
+    <div class="rx-actions">
+      <button class="btn-secondary">Full guide</button>
+      <button class="btn-ghost">Pause</button>
+      <button class="btn-ghost">Ask a question</button>
+    </div>
+  </div>
+
+  <!-- EDUCATION ADD-ON -->
+  <div class="rx-card" style="background:var(--sage-pale);border-color:var(--sage-soft)">
+    <div class="rx-header">
+      <div>
+        <div class="rx-name" style="color:var(--sage-dark)">Movement and physiotherapy plan</div>
+        <div class="rx-dose">Included with your plan, foundation of knee OA care</div>
+      </div>
+      <div class="rx-price">
+        <div class="rx-price-amount" style="color:var(--sage-dark)">Free</div>
+        <div class="rx-price-period">always</div>
+      </div>
+    </div>
+    <p style="font-size:13.5px;color:var(--ink);line-height:1.6">Six components, all free: weight management, walking, swimming, leg strengthening, tai chi or yoga, and a physiotherapy referral guide. Open the Education tab for your week-by-week plan.</p>
+    <div class="rx-actions" style="margin-top:14px">
+      <button class="btn-secondary" data-tab="education">Open your plan  →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MESSAGES VIEW ===================== -->
+<div class="view" id="view-messages">
+  <div class="greet">
+    <div class="greet-eyebrow">Messages  ·  secure inbox</div>
+    <h1 class="greet-title">Talk to your <em>care team</em></h1>
+    <p class="greet-sub">Message your physician, pharmacist, or coach. Replies typically within 24 hours.</p>
+  </div>
+
+  <div class="msg-wrap">
+    <div class="msg-list">
+      <div class="msg-search"><input placeholder="🔍  Search messages..."/></div>
+      <div class="msg-item unread active">
+        <div class="msg-avatar">CN</div>
+        <div class="msg-info">
+          <div class="msg-name">Dr. Collin Nguyen <span class="role">Physician</span></div>
+          <div class="msg-preview">Yes, taking naproxen with breakfast is fine. The food helps your stomach...</div>
+        </div>
+        <div class="msg-time">2h</div>
+      </div>
+      <div class="msg-item">
+        <div class="msg-avatar terra">JR</div>
+        <div class="msg-info">
+          <div class="msg-name">Jenny R. <span class="role">Pharmacist</span></div>
+          <div class="msg-preview">Your cream is being prepared and will ship June 3. Tracking link to follow.</div>
+        </div>
+        <div class="msg-time">Mon</div>
+      </div>
+      <div class="msg-item">
+        <div class="msg-avatar">EM</div>
+        <div class="msg-info">
+          <div class="msg-name">Emma M. <span class="role">Care coach</span></div>
+          <div class="msg-preview">Quick check-in, how is the strengthening routine going this week?</div>
+        </div>
+        <div class="msg-time">May 20</div>
+      </div>
+      <div class="msg-item">
+        <div class="msg-avatar terra">CN</div>
+        <div class="msg-info">
+          <div class="msg-name">Dr. Collin Nguyen <span class="role">Physician</span></div>
+          <div class="msg-preview">Your plan is approved. Welcome to Clara, here is what to expect over the first 4 weeks.</div>
+        </div>
+        <div class="msg-time">May 1</div>
+      </div>
+    </div>
+
+    <div class="msg-thread">
+      <div class="msg-thread-header">
+        <div class="msg-avatar">CN</div>
+        <div>
+          <div style="font-weight:700;font-size:14px">Dr. Collin Nguyen</div>
+          <div style="font-size:12px;color:var(--muted)">Family physician, Clara  ·  Online now</div>
+        </div>
+      </div>
+      <div class="msg-thread-body">
+        <div class="bubble you">Hi Dr. Nguyen, quick question. Should I take the naproxen with breakfast or wait until after my walk?</div>
+        <div class="bubble-meta">You  ·  3:42 PM</div>
+        <div class="bubble them">Great question, Sarah. Yes, taking naproxen with breakfast is fine. The food helps protect your stomach from irritation, which is the main concern with anti-inflammatories like naproxen.</div>
+        <div class="bubble them">If you can take it about 30 minutes before your walk, that timing is ideal. The medication will be at peak effect by the time you finish walking, which is when most people notice the most knee discomfort.</div>
+        <div class="bubble them">Let me know how it goes this week.</div>
+        <div class="bubble-meta">Dr. Collin Nguyen  ·  5:14 PM  ·  Read</div>
+      </div>
+      <div class="msg-compose">
+        <input placeholder="Type a message..."/>
+        <button class="msg-send">→</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ORDERS VIEW ===================== -->
+<div class="view" id="view-orders">
+  <div class="greet">
+    <div class="greet-eyebrow">Orders</div>
+    <h1 class="greet-title">Your <em>history,</em> shipments, and receipts</h1>
+    <p class="greet-sub">Every order you have ever placed with Clara, with a PDF receipt for your records.</p>
+  </div>
+
+  <div class="section-label">In flight</div>
+  <div class="order-card">
+    <div class="order-top">
+      <div>
+        <div class="order-num">Order #CL-2606-0341</div>
+        <div class="order-date">Placed May 26, 2026  ·  Subscription refill</div>
+      </div>
+      <span class="order-status shipped">Shipped</span>
+    </div>
+    <div class="order-items">
+      <span class="order-item">Clara Compound Cream C2 × 1</span>
+      <span class="order-item">Naproxen 500 mg × 60</span>
+    </div>
+    <div class="order-bottom">
+      <span class="order-total">$291.38 CAD</span>
+      <div class="order-actions">
+        <a href="#">📦 Track shipment</a>
+        <a href="#">📄 Download receipt PDF</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Past orders</div>
+  <div class="order-card">
+    <div class="order-top">
+      <div>
+        <div class="order-num">Order #CL-2604-1187</div>
+        <div class="order-date">April 28, 2026  ·  Monthly subscription</div>
+      </div>
+      <span class="order-status delivered">Delivered</span>
+    </div>
+    <div class="order-items">
+      <span class="order-item">Clara Compound Cream C2 × 1</span>
+      <span class="order-item">Naproxen 500 mg × 60</span>
+    </div>
+    <div class="order-bottom">
+      <span class="order-total">$291.38 CAD</span>
+      <div class="order-actions">
+        <a href="#">↻ Reorder</a>
+        <a href="#">📄 Receipt PDF</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-card">
+    <div class="order-top">
+      <div>
+        <div class="order-num">Order #CL-2603-0902</div>
+        <div class="order-date">March 28, 2026  ·  Monthly subscription</div>
+      </div>
+      <span class="order-status delivered">Delivered</span>
+    </div>
+    <div class="order-items">
+      <span class="order-item">Clara Compound Cream C2 × 1</span>
+      <span class="order-item">Naproxen 500 mg × 60</span>
+    </div>
+    <div class="order-bottom">
+      <span class="order-total">$291.38 CAD</span>
+      <div class="order-actions">
+        <a href="#">↻ Reorder</a>
+        <a href="#">📄 Receipt PDF</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-card">
+    <div class="order-top">
+      <div>
+        <div class="order-num">Order #CL-2603-0001</div>
+        <div class="order-date">March 1, 2026  ·  Initial plan</div>
+      </div>
+      <span class="order-status delivered">Delivered</span>
+    </div>
+    <div class="order-items">
+      <span class="order-item">Clara Compound Cream C1 × 1</span>
+      <span class="order-item">Naproxen 500 mg × 60</span>
+      <span class="order-item">Welcome kit</span>
+    </div>
+    <div class="order-bottom">
+      <span class="order-total">$291.38 CAD</span>
+      <div class="order-actions">
+        <a href="#">📄 Receipt PDF</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== GET CARE VIEW ===================== -->
+<div class="view" id="view-care">
+  <div class="greet">
+    <div class="greet-eyebrow">Get care</div>
+    <h1 class="greet-title">What else can we <em>help</em> with?</h1>
+    <p class="greet-sub">Clara treats a growing list of chronic pain conditions. Start a quick assessment for any of these.</p>
+  </div>
+
+  <div class="section-label">Your current condition</div>
+  <div class="care-grid">
+    <div class="care-card">
+      <div class="care-card-icon" style="background:var(--terra-pale);color:var(--terra-deep)">🦵</div>
+      <h3>Knee Osteoarthritis</h3>
+      <p>Right knee, moderate severity. Currently on C2 cream and naproxen, 4 weeks into your plan.</p>
+      <span class="active-badge">Active</span>
+      <div class="care-card-cta">View or update plan  →</div>
+    </div>
+  </div>
+
+  <div class="section-label">Start a new assessment</div>
+  <div class="care-grid">
+    <div class="care-card">
+      <div class="care-card-icon" style="background:var(--sage-pale);color:var(--sage-dark)">🧠</div>
+      <h3>Migraine</h3>
+      <p>Triggered, severe, or frequent headaches. 12-question assessment, takes 5 minutes.</p>
+      <div class="care-card-cta">Start assessment  →</div>
+    </div>
+    <div class="care-card">
+      <div class="care-card-icon" style="background:#F5EBD8;color:#8A6F2F">🪑</div>
+      <h3>Low Back Pain</h3>
+      <p>Acute strain, sciatica, chronic mechanical pain. We will help identify your pattern.</p>
+      <div class="care-card-cta">Start assessment  →</div>
+    </div>
+    <div class="care-card">
+      <div class="care-card-icon" style="background:#EAE0EC;color:var(--plum)">⚡</div>
+      <h3>Neuropathic Pain</h3>
+      <p>Nerve pain, burning, tingling, post-shingles, diabetic, post-surgical neuropathy.</p>
+      <div class="care-card-cta">Start assessment  →</div>
+    </div>
+    <div class="care-card">
+      <div class="care-card-icon" style="background:#EAF1ED;color:var(--sage-dark)">💪</div>
+      <h3>Fibromyalgia</h3>
+      <p>Widespread pain, fatigue, sleep disturbance, sensitivity. Coming soon.</p>
+      <div class="care-card-cta" style="color:var(--muted)">Coming soon  ·</div>
+    </div>
+  </div>
+
+  <div class="section-label">Other ways to get care</div>
+  <div class="grid-3">
+    <div class="action-card">
+      <div class="action-icon sage">↻</div>
+      <div class="action-content">
+        <div class="action-title">Request a refill</div>
+        <div class="action-meta">Skip the wait, refill an existing prescription</div>
+      </div>
+      <div class="action-arrow">→</div>
+    </div>
+    <div class="action-card">
+      <div class="action-icon terra">❓</div>
+      <div class="action-content">
+        <div class="action-title">Ask a Clara clinician</div>
+        <div class="action-meta">Quick question, no full assessment needed</div>
+      </div>
+      <div class="action-arrow">→</div>
+    </div>
+    <div class="action-card">
+      <div class="action-icon gold">📅</div>
+      <div class="action-content">
+        <div class="action-title">Schedule a follow-up</div>
+        <div class="action-meta">3-month check-in on your knee plan</div>
+      </div>
+      <div class="action-arrow">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PROFILE VIEW ===================== -->
+<div class="view" id="view-profile">
+  <div class="greet">
+    <div class="greet-eyebrow">Profile and account</div>
+    <h1 class="greet-title">Your <em>information</em></h1>
+    <p class="greet-sub">Keep your details current so your physician and pharmacist always have what they need.</p>
+  </div>
+
+  <div class="profile-grid">
+    <div class="profile-card">
+      <h3>Personal information <span class="edit-link">Edit</span></h3>
+      <div class="profile-row"><span class="profile-label">Full legal name</span><span class="profile-val">Sarah Elizabeth Kim</span></div>
+      <div class="profile-row"><span class="profile-label">Preferred name</span><span class="profile-val">Sarah</span></div>
+      <div class="profile-row"><span class="profile-label">Date of birth</span><span class="profile-val">March 14, 1981  ·  age 45</span></div>
+      <div class="profile-row"><span class="profile-label">Sex assigned at birth</span><span class="profile-val">Female</span></div>
+      <div class="profile-row"><span class="profile-label">Pronouns</span><span class="profile-val">she / her</span></div>
+      <div class="profile-row"><span class="profile-label">Phone</span><span class="profile-val">(416) 555-0182</span></div>
+      <div class="profile-row"><span class="profile-label">Email</span><span class="profile-val">sarah.kim@gmail.com</span></div>
+    </div>
+
+    <div class="profile-card">
+      <h3>Shipping address <span class="edit-link">Edit</span></h3>
+      <div class="profile-row"><span class="profile-label">Street</span><span class="profile-val">142 Roncesvalles Avenue, Unit 4B</span></div>
+      <div class="profile-row"><span class="profile-label">City</span><span class="profile-val">Toronto</span></div>
+      <div class="profile-row"><span class="profile-label">Province</span><span class="profile-val">Ontario</span></div>
+      <div class="profile-row"><span class="profile-label">Postal code</span><span class="profile-val">M6R 2L7</span></div>
+      <div class="profile-row"><span class="profile-label">Country</span><span class="profile-val">Canada</span></div>
+      <div style="margin-top:14px;padding:10px 12px;background:var(--sage-pale);border-radius:10px;font-size:12.5px;color:var(--sage-dark)">Free Canada-wide shipping with your subscription.</div>
+    </div>
+
+    <div class="profile-card">
+      <h3>Health card and ID <span class="edit-link">Edit</span></h3>
+      <div class="profile-row"><span class="profile-label">Province</span><span class="profile-val">Ontario (OHIP)</span></div>
+      <div class="profile-row"><span class="profile-label">Health card number</span><span class="profile-val">1234-567-890-AB</span></div>
+      <div class="profile-row"><span class="profile-label">Version code</span><span class="profile-val">AB</span></div>
+      <div class="profile-row"><span class="profile-label">Expiry</span><span class="profile-val">March 14, 2028</span></div>
+      <div style="margin-top:14px;padding:10px 12px;background:var(--cream-soft);border:1px dashed var(--line);border-radius:10px;font-size:12px;color:var(--grey)">Health card on file is used only to verify Ontario residency. Clara does not bill OHIP directly.</div>
+    </div>
+
+    <div class="profile-card">
+      <h3>Insurance <span class="edit-link">Edit</span></h3>
+      <div class="profile-row"><span class="profile-label">Provider</span><span class="profile-val">Manulife</span></div>
+      <div class="profile-row"><span class="profile-label">Plan / policy</span><span class="profile-val">12345-678</span></div>
+      <div class="profile-row"><span class="profile-label">Member ID</span><span class="profile-val">ABC-987654321</span></div>
+      <div class="profile-row"><span class="profile-label">Group</span><span class="profile-val">SKEY Corp Benefits</span></div>
+      <div style="margin-top:14px;padding:10px 12px;background:var(--sage-pale);border-radius:10px;font-size:12.5px;color:var(--sage-dark)">Your Clara pharmacist works directly with Manulife to maximize coverage on your prescriptions. Most plans cover the cream and oral medications.</div>
+    </div>
+
+    <div class="profile-card">
+      <h3>Allergies and medication history <span class="edit-link">Edit</span></h3>
+      <div class="profile-row"><span class="profile-label">Drug allergies</span><span class="profile-val">None reported</span></div>
+      <div class="profile-row"><span class="profile-label">Other medications</span><span class="profile-val">Vitamin D 1000 IU daily</span></div>
+      <div class="profile-row"><span class="profile-label">Conditions</span><span class="profile-val">Knee osteoarthritis (right)</span></div>
+      <div class="profile-row"><span class="profile-label">Family physician</span><span class="profile-val">Dr. Jane Smith, Toronto</span></div>
+    </div>
+
+    <div class="profile-card">
+      <h3>Account and security <span class="edit-link">Manage</span></h3>
+      <div class="profile-row"><span class="profile-label">Sign-in</span><span class="profile-val">Google  ·  sarah.kim@gmail.com</span></div>
+      <div class="profile-row"><span class="profile-label">Two-step verification</span><span class="profile-val" style="color:var(--sage-dark);font-weight:700">✓ On (SMS)</span></div>
+      <div class="profile-row"><span class="profile-label">Member since</span><span class="profile-val">March 1, 2026</span></div>
+      <div class="profile-row"><span class="profile-label">Data and privacy</span><span class="profile-val">Download my data</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<div class="mock-footer">
+  clara · patient dashboard · MOCK v1 · May 2026 · first pass mockup, not the live product
+</div>
+
+</div><!-- /page -->
+
+<script>
+// Tab switching
+const tabs = document.querySelectorAll('.nav-tab, [data-tab]');
+tabs.forEach(t => {
+  t.addEventListener('click', e => {
+    const id = t.dataset.tab;
+    if (!id) return;
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
+    const view = document.getElementById('view-' + id);
+    if (view) view.classList.add('active');
+    const navtab = document.querySelector('.nav-tab[data-tab="' + id + '"]');
+    if (navtab) navtab.classList.add('active');
+    document.getElementById('avatarDrop').classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+// Pain scale
+document.querySelectorAll('#scale .scale-num').forEach(n => {
+  n.addEventListener('click', () => {
+    document.querySelectorAll('#scale .scale-num').forEach(x => x.classList.remove('selected'));
+    n.classList.add('selected');
+  });
+});
+
+// Close dropdown on outside click
+document.addEventListener('click', e => {
+  const drop = document.getElementById('avatarDrop');
+  if (!drop.contains(e.target)) drop.classList.remove('open');
+});
+</script>
+
+</body>
+</html>
