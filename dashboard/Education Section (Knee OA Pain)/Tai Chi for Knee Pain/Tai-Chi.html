@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Tai Chi for Knee Pain — clara</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,'Cormorant Garamond',serif}
+a{color:inherit;text-decoration:none}
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+/* page */
+.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:13.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:700;color:var(--ink);letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:18px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.byline{font-size:13.5px;color:var(--grey);font-weight:600}
+.chip{font-size:12px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.hero-img{width:100%;border-radius:20px;display:block;box-shadow:var(--shadow-lg);margin-bottom:8px}
+.cap{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:26px}
+/* article */
+.article{font-size:17px;line-height:1.72;color:#2b302c}
+.article h2{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:40px 0 12px;line-height:1.2}
+.article h3{font-size:18px;font-weight:700;color:var(--ink);margin:22px 0 4px}
+.article p{margin-bottom:16px}
+.article .quietnote{color:var(--grey);font-style:italic;font-size:16px}
+.article ul{list-style:none;margin:6px 0 18px}
+.article li{position:relative;padding-left:26px;margin-bottom:10px}
+.article li::before{content:'';position:absolute;left:6px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.article li b{color:var(--ink)}
+.section-img{width:100%;border-radius:16px;display:block;box-shadow:var(--shadow);margin:8px 0 6px}
+/* callouts */
+.callout{border-radius:16px;padding:20px 22px;margin:22px 0}
+.callout.sage{background:var(--sage-pale);border:1px solid var(--sage-soft)}
+.callout.terra{background:var(--terra-pale);border:1px solid var(--terra-soft)}
+.callout h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.callout.sage h4{color:var(--sage-dark)}
+.callout.terra h4{color:var(--terra-deep)}
+.callout p{font-size:15px;line-height:1.6;margin-bottom:8px}
+.callout p:last-child{margin-bottom:0}
+.warn{background:var(--terra-pale);border-left:4px solid var(--terra);border-radius:10px;padding:14px 18px;margin:6px 0 14px}
+.warn b{color:var(--terra-deep)}
+.disclaimer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+.endnote{background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:16px;padding:22px 24px;margin-top:30px}
+.endnote p{font-family:Georgia,serif;font-size:18px;line-height:1.55;color:var(--sage-deep);margin:0}
+@media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+
+.dual{display:flex;gap:26px;align-items:center;margin:14px 0 30px;flex-wrap:wrap}
+.dual .fig{flex:0 0 58%;min-width:300px;margin:0}
+.dual .txt{flex:1;min-width:260px}
+.dual .txt p{margin:0 0 14px}
+.knee-card{background:#F5F1E7;border-radius:18px;padding:4px;box-shadow:var(--shadow-lg);overflow:hidden}
+.knee-card svg{width:100%;height:auto;display:block}
+.fig-cap{margin-top:10px;font-size:13px;line-height:1.45;color:var(--grey);text-align:center;font-style:italic}
+.keyline{background:var(--sage-pale);border-left:4px solid var(--sage);border-radius:10px;padding:14px 18px}
+@media(max-width:720px){.dual{flex-direction:column}.dual .fig{flex:1 1 100%;width:100%}}
+
+.stat-banner{display:flex;align-items:center;gap:12px;background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:14px;padding:18px 22px;font-size:22px;line-height:1.45;color:var(--ink);margin:6px 0 22px}
+.stat-banner .sb-text{flex:1}
+.stat-banner .sb-dot{flex:0 0 auto;width:12px;height:12px;border-radius:50%;background:var(--terra)}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:0 0 24px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;text-align:center;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.stat-icons{min-height:64px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:0 auto 10px}
+.stat-num{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--sage-dark);line-height:1.1;margin-bottom:6px}
+.stat-cap{font-size:14.5px;line-height:1.5;color:var(--grey)}
+.cmp{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;margin-bottom:22px}
+.cmp-row{display:flex;align-items:center;gap:14px}
+.cmp-lab{font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sage-dark);width:74px;text-align:right}
+.cmp-fig{display:flex;gap:6px}
+.cmp-fig svg{width:44px;height:44px}
+@media(max-width:720px){.stat-grid{grid-template-columns:1fr}}
+
+.wrap-fig{float:right;width:55%;max-width:494px;margin:4px 0 18px 28px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.wrap-fig img{display:block;width:100%;height:auto}
+.band-fig{display:block;width:100%;margin:6px 0 20px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.band-fig img{display:block;width:100%;height:auto}
+.wrap-fig.wrap-left{float:left;margin:4px 28px 18px 0}
+@media(max-width:720px){.wrap-fig{float:none;width:100%;max-width:none;margin:6px 0 18px}}
+.article ol.refs li{padding-left:0}
+.article ol.refs li::before{content:none;display:none}
+.article ol.refs{margin:6px 0 18px}
+.article ol.refs li{padding-left:0}
+.article ol.refs li::before{content:none;display:none}
+</style>
+<style>
+.wrap p{margin:0 0 1.15em;line-height:1.75}
+.wrap h2{margin-top:1.9em;margin-bottom:.55em}
+.wrap h3{margin-top:1.4em;margin-bottom:.4em}
+.wrap ul{margin:0 0 1.25em}
+.wrap .lede{margin-bottom:1em}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">clara</div>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home" style="text-decoration:none;color:inherit">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain" style="text-decoration:none;color:inherit">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx" style="text-decoration:none;color:inherit">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education" style="text-decoration:none;color:inherit">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages" style="text-decoration:none;color:inherit">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders" style="text-decoration:none;color:inherit">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care" style="text-decoration:none;color:inherit">Get Care</a>
+  </div>
+  <div class="nav-avatar">SK</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education">&larr;  Back to Education</a>
+  <div class="eyebrow">Education &middot; Knee osteoarthritis</div>
+  <h1 class="title serif">Tai Chi for Knee Pain: gentle movement that calms the joint</h1>
+  <p class="lede">Slow, flowing, low impact movement that builds strength and balance while easing knee pain. One of the few therapies a major guideline strongly recommends, and you can do it at home.</p>
+  <div class="meta">
+    <span class="byline">From your Clara care team</span>
+    <span class="chip">12 week program</span>
+    <span class="chip">Free</span>
+    <span class="chip">Checked against current guidelines</span>
+  </div>
+
+  <img class="hero-img" src="ellie-taichi-hero.png" alt="A woman practicing tai chi outdoors in a green park" style="width:100%;height:auto;border-radius:14px;display:block;margin:18px 0 6px;box-shadow:0 6px 24px rgba(0,0,0,.08)">
+  <p class="cap">Slow, flowing movement in the open air. Gentle on the knee, calming for the mind.</p>
+
+  <div class="article">
+
+  <h2>Start here: slow movement, real relief</h2>
+  <p>Tai chi is a gentle practice of slow, flowing movements, weight shifts, and steady breathing. It looks calm, almost like moving meditation, but it quietly trains the things a sore knee needs most: the muscles that support the joint, your balance, and a calmer relationship with pain. It is low impact, easy on the knee, and one of the very few treatments that a major arthritis guideline <strong>strongly</strong> recommends for knee osteoarthritis<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(1)</a></sup>.</p>
+  <img src="taichi-calm-blend.png" alt="A calm woman practicing tai chi, with small vignettes of balance, steady breathing, and a healthy knee" style="display:block;width:100%;height:auto;border-radius:14px;margin:16px 0 4px">
+  <p class="cap">Slow weight shifts, steady breathing, balance, and a calmer knee, all in one practice.</p>
+
+  <h2>Why it helps your knee</h2>
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin:16px 0;">
+    <div style="flex:0 0 38%;min-width:250px;"><img src="Ellie-yoga-pose.png" alt="A woman holding a Warrior 1 yoga pose in a sunlit garden, thigh and hip muscles engaged" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08)"></div>
+    <div style="flex:1;min-width:280px;">
+      <p>Tai chi works on several fronts at once. The slow stances gently strengthen the thigh and hip muscles that share load with the knee. The constant weight shifting trains balance and confidence, and balance focused movement like tai chi is associated with a lower falls risk in older adults with knee OA<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(2)</a></sup>. And the breathing and focus calm the nervous system, which helps with the way pain is felt, along with mood and sleep.</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin:16px 0;">
+    <div style="flex:0 0 38%;min-width:250px;"><img src="Ellie-yoga-pose2.png" alt="A woman balancing in a tree pose on a yoga mat in a garden" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08)"></div>
+    <div style="flex:1;min-width:280px;">
+      <p>The American College of Rheumatology strongly recommends tai chi for knee osteoarthritis, one of its highest level movement recommendations<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(1)</a></sup>. The research behind that is direct: in a head to head randomized trial, 12 weeks of tai chi was as effective as physical therapy for knee pain and function, with a greater improvement in mood<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(3)</a></sup>. A meta-analysis of randomized trials found the same pattern for pain, stiffness, and function<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(4)</a></sup>. In other words, it is not a soft alternative, it holds its own against conventional exercise.</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:64px">2026 RETREAT trial</h2>
+  <img src="retreat-trial-clean.png" alt="Illustration of the RETREAT trial: a woman follows an online tai chi program at home, 12 weeks at 3 sessions per week, with about 1 in 4 gaining a clear benefit" style="display:block;width:100%;height:auto;border-radius:14px;margin:18px 0 10px">
+  <div class="callout sage">
+    <h4 style="font-size:21px;margin-bottom:10px">You can do it at <span style="font-size:24px;font-weight:800">HOME</span>, on your own</h4>
+    <p>In the 2026 RETREAT trial, 178 people with knee osteoarthritis followed a 12 week unsupervised online tai chi program at home, about three times a week. Compared with health education alone, it meaningfully improved knee pain on walking and day to day function, along with quality of life and balance confidence. The number needed to treat was about 4 for a meaningful improvement in pain, <strong>so roughly one in four people gained a clear benefit</strong>, from a free program with no class to attend<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(5)</a></sup>.</p>
+  </div>
+
+  <h2>The evidence, in plain terms</h2>
+  <ul>
+    <li><b>Strongly recommended.</b> Tai chi is a top tier, strongly recommended movement therapy for knee OA in the ACR guideline<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(1)</a></sup>.</li>
+    <li><b>As good as standard exercise.</b> In a randomized trial, 12 weeks of tai chi matched physical therapy for knee pain and function, and beat it for mood<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(3)</a></sup>.</li>
+    <li><b>It works even unsupervised and online.</b> The RETREAT trial showed real pain and function gains from a free, at home, online program, number needed to treat about 4 for pain<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(5)</a></sup>.</li>
+    <li><b>Better balance and smoother walking.</b> A 2025 pilot trial found tai chi improved pain, stiffness, function, balance, and the mechanics of how people walked<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(6)</a></sup>.</li>
+  </ul>
+
+  <h2>What it looks like, and how to start</h2>
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin:16px 0;">
+    <div style="flex:0 0 46%;min-width:280px;"><img src="bill-at-peace.png" alt="A man sitting cross legged on a mat at home, calm and at ease" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08)"></div>
+    <div style="flex:1;min-width:280px;">
+      <p>You do not need special equipment or a studio. A beginner online tai chi program or a gentle local class is plenty. Aim for short, regular sessions:</p>
+  <ul>
+    <li><b>How often.</b> About 3 sessions a week, 20 to 30 minutes each, the pattern used in the trials.</li>
+    <li><b>How hard.</b> Slow and comfortable. You should be able to breathe easily and talk. Never push into sharp pain.</li>
+    <li><b>Stay safe and steady.</b> Keep a chair or counter within reach for balance when you are starting out, and practice on a level, uncluttered floor.</li>
+    <li><b>Give it time.</b> The trials ran 12 weeks. Benefits build gradually with steady practice, not in a single session.</li>
+  </ul>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:14px;align-items:flex-start;background:#EEF3EF;border:1px solid #E8E4DC;border-left:4px solid #4A6B5B;border-radius:12px;padding:16px 18px;margin:34px 0 6px;">
+    <span style="font-size:22px;line-height:1.2">&#8505;&#65039;</span>
+    <p style="margin:0;font-size:15px;line-height:1.65;color:#2b302c;"><b>A note on instruction:</b> clara does not teach the tai chi movements themselves yet, so pick any gentle beginner program and use this tracker alongside it. <strong>A class at your local community centre works well</strong>, and if there is none near you, an online course you can follow at home is just as good, for example <a href="https://pll.harvard.edu/course/introduction-tai-chi" target="_blank" rel="noopener" style="color:#4A6B5B;font-weight:600;text-decoration:underline">An Introduction to Tai Chi</a> from Harvard Medical School, a self paced video course you can do in the comfort of home.</p>
+  </div>
+  <h2>Your 12 week practice</h2>
+  <p>A gentle, steady build. Each stage covers three weeks. Tick a stage when you finish it, and your progress is saved on this device.</p>
+  <div style="margin:10px 0 2px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span id="tcLabel" style="font-weight:700;color:#2f473b">Your progress: 0 of 4 stages</span><span id="tcMsg" style="color:#c97257;font-weight:700"></span></div><div style="height:12px;background:#e8e4dc;border-radius:8px;overflow:hidden"><div id="tcBar" style="height:100%;width:0%;background:#4A6B5B;border-radius:8px;transition:width .35s"></div></div></div>
+  <table id="tcTable" style="width:100%;border-collapse:collapse;margin:16px 0;font-size:17px">
+    <thead><tr style="text-align:left;border-bottom:2px solid #d9d4c8"><th style="padding:13px 10px">Weeks</th><th style="padding:13px 10px">Your practice</th><th style="padding:13px 10px;text-align:center">Done</th></tr></thead>
+    <tbody>
+      <tr data-i="0" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">1 to 3</td><td style="padding:13px 10px">Learn the basics. 2 to 3 short sessions a week, holding a chair for balance. Focus on slow weight shifts and breathing.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="tc-check" data-i="0" aria-label="Mark weeks 1 to 3 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr>
+      <tr data-i="1" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">4 to 6</td><td style="padding:13px 10px">Build the habit. 3 sessions a week, 20 minutes. Let go of the chair when you feel steady.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="tc-check" data-i="1" aria-label="Mark weeks 4 to 6 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr>
+      <tr data-i="2" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">7 to 9</td><td style="padding:13px 10px">Flow. 3 sessions a week, 25 to 30 minutes. Link the movements together more smoothly.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="tc-check" data-i="2" aria-label="Mark weeks 7 to 9 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr>
+      <tr data-i="3" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">10 to 12</td><td style="padding:13px 10px">Make it yours. 3 sessions a week. Notice the change in pain, balance, and ease of walking, and keep going.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="tc-check" data-i="3" aria-label="Mark weeks 10 to 12 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Pair it with your plan</h2>
+  <p>Tai chi counts as both gentle strengthening and balance work, so it fits naturally alongside the rest of your plan. Use it on its own, or weave it in with your <a href="../Walk%20With%20Ease/Walk-With-Ease.html" style="color:#4A6B5B;font-weight:600;text-decoration:underline">Walk With Ease</a> walks and your <a href="../Knee%20Strengthening%20Routine/Knee-Strengthening-Routine.html" style="color:#4A6B5B;font-weight:600;text-decoration:underline">Knee Strengthening Routine</a>. Variety keeps it interesting, and all of it points the same way: a stronger, calmer, steadier knee.</p>
+
+  <h2>If your knee complains</h2>
+  <p>Tai chi is very gentle and injuries are rare, but listen to your knee. Mild tiredness in the legs is fine. Sharp joint pain is a sign to ease the depth of your stances or shorten the session. Keep support nearby until your balance is solid.</p>
+  <div class="warn"><b>Stop and get care in person</b> if your knee suddenly becomes hot, red, or very swollen, if you cannot put weight on it, if it locks or gives way, or if you develop a fever. Please see your family doctor or an urgent clinic.</div>
+
+  <div class="endnote"><p>Tai chi asks for very little and gives back a lot: less pain, better balance, a calmer mind. A few slow, steady sessions a week is all it takes to begin.</p></div>
+
+  <h2 id="sources">Sources</h2>
+  <ol class="refs" style="font-size:14px;color:#5f5f57;line-height:1.75;padding-left:20px">
+    <li>Kolasinski SL, Neogi T, Hochberg MC, et al. 2019 American College of Rheumatology / Arthritis Foundation guideline for the management of osteoarthritis of the hand, hip, and knee. Arthritis &amp; Rheumatology. 2020;72(2):220-233.</li>
+    <li>Mat S, Tan MP, Kamaruzzaman SB, Ng CT. Physical therapies for improving balance and reducing falls risk in osteoarthritis of the knee: a systematic review. Age and Ageing. 2015;44(1):16-24.</li>
+    <li>Wang C, Schmid CH, Iversen MD, et al. Comparative effectiveness of tai chi versus physical therapy for knee osteoarthritis: a randomized trial. Annals of Internal Medicine. 2016;165:77-86.</li>
+    <li>Yan JH, Gu WJ, Sun J, et al. Efficacy of tai chi on pain, stiffness and function in patients with osteoarthritis: a meta-analysis. PLoS One. 2013;8(4):e61672.</li>
+    <li>Zhu SJ, Hinman RS, Nelligan RK, et al. Online unsupervised tai chi intervention for knee pain and function in people with knee osteoarthritis: the RETREAT randomized clinical trial. JAMA Internal Medicine. 2026;186(1):15-25.</li>
+    <li>Pan J, Xie Z, Ye S, et al. The effects of tai chi on clinical outcomes and gait biomechanics in knee osteoarthritis patients: a pilot randomized controlled trial. Scientific Reports. 2025;15(1):18495.</li>
+    <li>Lawford BJ, Hall M, Hinman RS, et al. Exercise for osteoarthritis of the knee. Cochrane Database of Systematic Reviews. 2024;12:CD004376.</li>
+  </ol>
+
+  <p class="disclaimer">This guide is for education and is not a substitute for your Clara physician&#8217;s advice. Your plan is personalized to you.</p>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY="clara-taichi-practice-v1", n=4, state;
+  try{ state=JSON.parse(localStorage.getItem(KEY))||[]; }catch(e){ state=[]; }
+  while(state.length<n) state.push(false);
+  var checks=document.querySelectorAll(".tc-check");
+  var bar=document.getElementById("tcBar"), label=document.getElementById("tcLabel"), msg=document.getElementById("tcMsg");
+  var msgs=["","A calm start","Finding your flow","Steady and strong","Twelve weeks done. Beautiful work."];
+  function row(i){ return document.querySelector('#tcTable tr[data-i="'+i+'"]'); }
+  function render(){
+    var done=state.filter(Boolean).length;
+    if(bar) bar.style.width=(done/n*100)+"%";
+    if(label) label.textContent="Your progress: "+done+" of "+n+" stages";
+    if(msg) msg.textContent=msgs[done]||"";
+    checks.forEach(function(c){ var i=+c.dataset.i; c.checked=!!state[i]; var r=row(i); if(r) r.style.background=state[i]?"#EEF3EF":""; });
+  }
+  checks.forEach(function(c){ c.addEventListener("change",function(){ state[+c.dataset.i]=c.checked; try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} render(); }); });
+  render();
+})();
+</script>
+
+</body>
+</html>

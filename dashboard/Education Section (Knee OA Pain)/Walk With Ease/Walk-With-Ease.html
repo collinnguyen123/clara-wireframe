@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Walk With Ease — clara</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,'Cormorant Garamond',serif}
+a{color:inherit;text-decoration:none}
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+/* page */
+.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:13.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:700;color:var(--ink);letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:18px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.byline{font-size:13.5px;color:var(--grey);font-weight:600}
+.chip{font-size:12px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.hero-img{width:100%;border-radius:20px;display:block;box-shadow:var(--shadow-lg);margin-bottom:8px}
+.cap{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:26px}
+/* article */
+.article{font-size:17px;line-height:1.72;color:#2b302c}
+.article h2{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:40px 0 12px;line-height:1.2}
+.article h3{font-size:18px;font-weight:700;color:var(--ink);margin:22px 0 4px}
+.article p{margin-bottom:16px}
+.article .quietnote{color:var(--grey);font-style:italic;font-size:16px}
+.article ul{list-style:none;margin:6px 0 18px}
+.article li{position:relative;padding-left:26px;margin-bottom:10px}
+.article li::before{content:'';position:absolute;left:6px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.article li b{color:var(--ink)}
+.section-img{width:100%;border-radius:16px;display:block;box-shadow:var(--shadow);margin:8px 0 6px}
+/* callouts */
+.callout{border-radius:16px;padding:20px 22px;margin:22px 0}
+.callout.sage{background:var(--sage-pale);border:1px solid var(--sage-soft)}
+.callout.terra{background:var(--terra-pale);border:1px solid var(--terra-soft)}
+.callout h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.callout.sage h4{color:var(--sage-dark)}
+.callout.terra h4{color:var(--terra-deep)}
+.callout p{font-size:15px;line-height:1.6;margin-bottom:8px}
+.callout p:last-child{margin-bottom:0}
+.warn{background:var(--terra-pale);border-left:4px solid var(--terra);border-radius:10px;padding:14px 18px;margin:6px 0 14px}
+.warn b{color:var(--terra-deep)}
+.disclaimer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+.endnote{background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:16px;padding:22px 24px;margin-top:30px}
+.endnote p{font-family:Georgia,serif;font-size:18px;line-height:1.55;color:var(--sage-deep);margin:0}
+@media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+
+.dual{display:flex;gap:26px;align-items:center;margin:14px 0 30px;flex-wrap:wrap}
+.dual .fig{flex:0 0 58%;min-width:300px;margin:0}
+.dual .txt{flex:1;min-width:260px}
+.dual .txt p{margin:0 0 14px}
+.knee-card{background:#F5F1E7;border-radius:18px;padding:4px;box-shadow:var(--shadow-lg);overflow:hidden}
+.knee-card svg{width:100%;height:auto;display:block}
+.fig-cap{margin-top:10px;font-size:13px;line-height:1.45;color:var(--grey);text-align:center;font-style:italic}
+.keyline{background:var(--sage-pale);border-left:4px solid var(--sage);border-radius:10px;padding:14px 18px}
+@media(max-width:720px){.dual{flex-direction:column}.dual .fig{flex:1 1 100%;width:100%}}
+
+.stat-banner{display:flex;align-items:center;gap:12px;background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:14px;padding:18px 22px;font-size:22px;line-height:1.45;color:var(--ink);margin:6px 0 22px}
+.stat-banner .sb-text{flex:1}
+.stat-banner .sb-dot{flex:0 0 auto;width:12px;height:12px;border-radius:50%;background:var(--terra)}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:0 0 24px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;text-align:center;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.stat-icons{min-height:64px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:0 auto 10px}
+.stat-num{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--sage-dark);line-height:1.1;margin-bottom:6px}
+.stat-cap{font-size:14.5px;line-height:1.5;color:var(--grey)}
+.cmp{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;margin-bottom:22px}
+.cmp-row{display:flex;align-items:center;gap:14px}
+.cmp-lab{font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sage-dark);width:74px;text-align:right}
+.cmp-fig{display:flex;gap:6px}
+.cmp-fig svg{width:44px;height:44px}
+@media(max-width:720px){.stat-grid{grid-template-columns:1fr}}
+
+.wrap-fig{float:right;width:55%;max-width:494px;margin:4px 0 18px 28px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.wrap-fig img{display:block;width:100%;height:auto}
+.band-fig{display:block;width:100%;margin:6px 0 20px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.band-fig img{display:block;width:100%;height:auto}
+.wrap-fig.wrap-left{float:left;margin:4px 28px 18px 0}
+@media(max-width:720px){.wrap-fig{float:none;width:100%;max-width:none;margin:6px 0 18px}}
+.article ol.refs li{padding-left:0}
+.article ol.refs li::before{content:none;display:none}
+</style>
+<style>
+.wrap p{margin:0 0 1.15em;line-height:1.75}
+.wrap h2{margin-top:1.9em;margin-bottom:.55em}
+.wrap h3{margin-top:1.4em;margin-bottom:.4em}
+.wrap ul{margin:0 0 1.25em}
+.wrap .lede{margin-bottom:1em}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">clara</div>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home" style="text-decoration:none;color:inherit">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain" style="text-decoration:none;color:inherit">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx" style="text-decoration:none;color:inherit">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education" style="text-decoration:none;color:inherit">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages" style="text-decoration:none;color:inherit">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders" style="text-decoration:none;color:inherit">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care" style="text-decoration:none;color:inherit">Get Care</a>
+  </div>
+  <div class="nav-avatar">SK</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education">&larr;  Back to Education</a>
+  <div class="eyebrow">Education &middot; Knee osteoarthritis</div>
+  <h1 class="title serif">Walk With Ease: your aerobic foundation</h1>
+  <p class="lede">A simple, evidence based walking plan. Aerobic exercise is the most studied and top ranked movement for knee osteoarthritis.</p>
+  <div class="meta">
+    <span class="byline">From your Clara care team</span>
+    <span class="chip">Free program</span>
+    <span class="chip">Checked against current guidelines</span>
+  </div>
+  <img class="hero-img" src="kimandjane-walkwithease.jpeg" alt="Two women walking together on a green forest path" style="width:100%;height:auto;border-radius:14px;display:block;margin:18px 0;box-shadow:0 6px 24px rgba(0,0,0,.08)">
+
+  <p>Exercise is one of the most effective treatments we have for knee osteoarthritis. Across every major guideline it is the most strongly recommended first step, ahead of medication<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(1, 2)</a></sup>, and its benefit lasts: in the largest reviews, the pain relief from exercise keeps working for two to six months after a program ends<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(3)</a></sup>. Of all the ways to move, walking is the most studied and the top ranked.</p>
+
+  <h2>Why walking comes first</h2>
+  <p>Across the evidence, aerobic activity like walking is the top ranked exercise for knee OA. In a 2025 network meta-analysis of 217 trials, aerobic exercise had the highest probability of being the best treatment across pain, function, gait, and quality of life<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(4)</a></sup>. A structured walking program reduced knee pain by 1.4 points on a 0 to 10 scale, compared with 0.1 in people who did not walk.</p>
+  <p>More broadly, the largest review to date (139 trials) found that exercise eases knee pain about as much as an oral anti inflammatory taken together with acetaminophen, the benefit keeps going for 2 to 6 months after a program ends, and low impact activity does <b>not</b> speed up joint damage on imaging<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(3)</a></sup>. Walking is also the most accessible option, which is why the Arthritis Foundation built a program around it.</p>
+
+  <h2>Your walking prescription</h2>
+  <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:16px 0;">
+    <div style="flex:0 0 48%;min-width:260px;position:relative;"><img src="Walking-rx-people2-blend.png" alt="Two people walking and chatting at a talk not sing pace" style="display:block;width:100%;height:auto"><div style="position:absolute;top:12px;left:12px;background:#fff;border:1.5px solid #4A6B5B;border-radius:10px;padding:6px 13px;box-shadow:0 2px 8px rgba(0,0,0,.10);font-weight:800;letter-spacing:.5px;font-size:16px;color:#C97257">Rx Walk</div></div>
+    <div style="flex:1;min-width:280px;"><ul>
+    <li><b>How often:</b> 3 to 4 times a week.</li>
+    <li><b>How long:</b> 30 to 60 minutes per session as you build up.</li>
+    <li><b>How hard:</b> low to moderate effort. A good gauge is &ldquo;I can talk but I would not be able to sing.&rdquo;</li>
+    <li><b>Minimum that still helps:</b> even 45 total minutes a week of moderate activity improves or maintains function.</li>
+    <li><b>Steps are safe:</b> walking up to roughly 10,000 steps a day has not been shown to accelerate OA on imaging.</li>
+  </ul></div>
+  </div>
+
+  <h2>Your 8 week ramp</h2>
+  <p>This is a gentle, doable build for someone who has not been active. If you already walk regularly, start around week 5. Stay at low to moderate effort the whole way.</p>
+  <div style="margin:10px 0 2px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span id="rampProgressLabel" style="font-weight:700;color:#2f473b">Your progress: 0 of 4 stages</span><span id="rampProgressMsg" style="color:#c97257;font-weight:700"></span></div><div style="height:12px;background:#e8e4dc;border-radius:8px;overflow:hidden"><div id="rampProgressBar" style="height:100%;width:0%;background:#4A6B5B;border-radius:8px;transition:width .35s"></div></div><p style="font-size:13px;color:#7a7a72;margin:6px 0 0">Tick each stage as you finish it. Your progress saves on this device, so it is here when you come back.</p></div>
+  <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:16px 0;">
+    <div style="flex:0 0 50%;min-width:260px;"><img src="Walk-with-ease(woman)-blend.png" alt="An illustrated path showing steady week by week progress" style="display:block;width:100%;height:auto"></div>
+    <div style="flex:1;min-width:300px;"><table id="rampTable" style="width:100%;border-collapse:collapse;margin:16px 0;font-size:18px"><thead><tr style="text-align:left;border-bottom:2px solid #d9d4c8"><th style="padding:13px 10px">Weeks</th><th style="padding:13px 10px">Walking</th><th style="padding:13px 10px;text-align:center">Done</th></tr></thead><tbody><tr data-i="0" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">1 to 2</td><td style="padding:13px 10px">Walk 10 minutes, 3 days a week, on flat ground.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="ramp-check" data-i="0" aria-label="Mark weeks 1 to 2 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr><tr data-i="1" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">3 to 4</td><td style="padding:13px 10px">Walk 15 to 20 minutes, 3 to 4 days a week.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="ramp-check" data-i="1" aria-label="Mark weeks 3 to 4 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr><tr data-i="2" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">5 to 6</td><td style="padding:13px 10px">Walk 25 to 30 minutes, 4 days a week. Add modest hills if comfortable.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="ramp-check" data-i="2" aria-label="Mark weeks 5 to 6 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr><tr data-i="3" style="border-bottom:1px solid #e8e4dc;transition:background .25s"><td style="padding:13px 10px;font-weight:700">7 to 8</td><td style="padding:13px 10px">30 to 45 minutes, 4 days a week. Mix walking with cycling or the pool if available.</td><td style="padding:13px 10px;text-align:center"><input type="checkbox" class="ramp-check" data-i="3" aria-label="Mark weeks 7 to 8 complete" style="width:22px;height:22px;accent-color:#4A6B5B;cursor:pointer"></td></tr></tbody></table></div>
+    </div>
+
+  <h2>Other aerobic options for a sore knee</h2>
+  <p>Walking is the most studied, but any of these give the same kind of aerobic benefit with low joint load<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(4)</a></sup>. Pick what you will actually keep doing:</p>
+  <ul>
+    <li><b>Swimming or deep water walking.</b> Almost no joint load, ideal during a flare<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(5)</a></sup>.</li>
+    <li><b>Stationary or recumbent cycling.</b> Low joint load, easy to control intensity.</li>
+    <li><b>Rowing.</b> Full body aerobic work that stays gentle on the knee.</li>
+    <li><b>Elliptical or cross trainer.</b> A low impact stand in for walking on harder days.</li>
+  </ul>
+
+  <img src="Kim-waterwalk-landscape.png" alt="A woman water walking in a pool, a gentle aerobic option" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);margin:6px 0 22px">
+
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin:16px 0;">
+    <div style="flex:1;min-width:280px;"><h2 style="margin-top:0">If you already run</h2>
+      <p>Recreational running has not been shown to increase the risk of developing knee OA in healthy runners, so you do not need to stop. Use a load management approach: more rest days, and attention to surface, distance, speed, and footwear, alongside lower limb strength work. Stop the run if you get knee swelling that lasts more than 24 hours, or pain that worsens day over day.</p></div>
+    <div style="flex:0 0 50%;min-width:280px;"><img src="If-you-run1-blend.png" alt="A person resting on a bench along the path" style="display:block;width:100%;height:auto"></div>
+  </div>
+
+  <div class="callout terra">
+    <h4>A small nudge goes a long way</h4>
+    <p>In a 2026 trial, simple step goals and rewards added about 771 steps a day<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(6)</a></sup>. Streaks and small targets are not gimmicks, they reliably increase activity in knee OA.</p>
+  </div>
+
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin:16px 0;">
+    <div style="flex:0 0 42%;min-width:260px;"><img src="knee-flare-blend.png" alt="A woman gently holding her knee during a mild flare" style="display:block;width:100%;height:auto"></div>
+    <div style="flex:1;min-width:280px;"><h2 style="margin-top:0">Walking through a flare</h2>
+      <p>Flares happen. You do not have to stop moving. For a few days, cut your usual walking by about half and switch to the pool or a stationary bike, which carry the load for you. Ease back in: aim for about 50 percent of your routine, then 70 percent, then full, over roughly a week.</p></div>
+  </div>
+
+  <h2>How to know it is working</h2>
+  <ul>
+    <li>You can walk for 20 minutes without stopping.</li>
+    <li>Your pain score drops by 2 or more points on a 0 to 10 scale.</li>
+    <li>You can climb a flight of stairs without gripping the rail every step.</li>
+  </ul>
+  <p>If none of these have moved by week 8, message Clara. We will look at next steps together, whether that is the compound cream, a medication review, or a physiotherapy referral.</p>
+
+  <div class="warn"><b>Stop and get care in person</b> if your knee suddenly becomes hot, red, or very swollen, if you develop a fever, if you cannot put weight on the knee after a fall, or if the knee locks or gives way. Please see your family doctor or an urgent care clinic.</div>
+
+  <div class="endnote"><p>Walking is the easiest first step in your plan, and one of the most powerful. Start where you are, keep it gentle and steady, and let the weeks add up.</p></div>
+
+  <h2 id="sources">Sources</h2>
+  <ol class="refs" style="font-size:14px;color:#5f5f57;line-height:1.75;padding-left:20px">
+    <li>Management of osteoarthritis of the knee (non-arthroplasty): evidence-based clinical practice guideline. American Academy of Orthopaedic Surgeons (AAOS). 2021.</li>
+    <li>Kolasinski SL, Neogi T, Hochberg MC, et al. 2019 American College of Rheumatology / Arthritis Foundation guideline for the management of osteoarthritis of the hand, hip, and knee. Arthritis &amp; Rheumatology. 2020;72(2):220-233.</li>
+    <li>Lawford BJ, Hall M, Hinman RS, et al. Exercise for osteoarthritis of the knee. Cochrane Database of Systematic Reviews. 2024;12:CD004376.</li>
+    <li>Yan L, Li D, Xing D, et al. Comparative efficacy and safety of exercise modalities in knee osteoarthritis: systematic review and network meta-analysis. BMJ. 2025;391:e085242.</li>
+    <li>Bartels EM, Juhl CB, Christensen R, et al. Aquatic exercise for the treatment of knee and hip osteoarthritis. Cochrane Database of Systematic Reviews. 2016;3:CD005523.</li>
+    <li>Baker JF, Wysham KD, Quinones M, et al. Behavioral incentives for exercise and intra-articular glucocorticoids for knee osteoarthritis: a factorially designed pragmatic randomized clinical trial. Arthritis &amp; Rheumatology. 2026.</li>
+    <li>Kraus VB, Sprow K, Powell KE, et al. Effects of physical activity in knee and hip osteoarthritis: a systematic umbrella review. Medicine and Science in Sports and Exercise. 2019;51(6):1324-1339.</li>
+    <li>Hu HY, Jia LN, Zhao WY, et al. Clinical effect and mechanism of aerobic exercise for knee osteoarthritis: a mini review. Frontiers in Physiology. 2025;16:1708750.</li>
+  </ol>
+
+  <p class="disclaimer">This guide is for education and is not a substitute for your Clara physician's advice. Your plan is personalized to you. Information here reflects your on file Clara knee OA evidence, drawn from AAOS, the American College of Rheumatology, OARSI, NICE, UpToDate, and recent Cochrane and BMJ reviews.</p>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY="clara-walk-ramp-v1", n=4, state;
+  try{ state=JSON.parse(localStorage.getItem(KEY))||[]; }catch(e){ state=[]; }
+  while(state.length<n) state.push(false);
+  var checks=document.querySelectorAll(".ramp-check");
+  var bar=document.getElementById("rampProgressBar");
+  var label=document.getElementById("rampProgressLabel");
+  var msg=document.getElementById("rampProgressMsg");
+  var msgs=["","Nice start, keep it going","Building the habit","Almost there","Foundation built. Well done."];
+  function row(i){ return document.querySelector('#rampTable tr[data-i="'+i+'"]'); }
+  function render(){
+    var done=state.filter(Boolean).length;
+    if(bar) bar.style.width=(done/n*100)+"%";
+    if(label) label.textContent="Your progress: "+done+" of "+n+" stages";
+    if(msg) msg.textContent=msgs[done]||"";
+    checks.forEach(function(c){ var i=+c.dataset.i; c.checked=!!state[i]; var r=row(i); if(r) r.style.background=state[i]?"#EEF3EF":""; });
+  }
+  checks.forEach(function(c){ c.addEventListener("change",function(){ state[+c.dataset.i]=c.checked; try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} render(); }); });
+  render();
+})();
+</script>
+</body>
+</html>

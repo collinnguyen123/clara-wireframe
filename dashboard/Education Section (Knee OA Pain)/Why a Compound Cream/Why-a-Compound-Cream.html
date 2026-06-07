@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Why a Compound Cream — clara</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,'Cormorant Garamond',serif}
+a{color:inherit;text-decoration:none}
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+/* page */
+.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:13.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:700;color:var(--ink);letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:18px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.byline{font-size:13.5px;color:var(--grey);font-weight:600}
+.chip{font-size:12px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.hero-img{width:100%;border-radius:20px;display:block;box-shadow:var(--shadow-lg);margin-bottom:8px}
+.cap{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:26px}
+/* article */
+.article{font-size:17px;line-height:1.72;color:#2b302c}
+.article h2{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:40px 0 12px;line-height:1.2}
+.article h3{font-size:18px;font-weight:700;color:var(--ink);margin:22px 0 4px}
+.article p{margin-bottom:16px}
+.article .quietnote{color:var(--grey);font-style:italic;font-size:16px}
+.article ul{list-style:none;margin:6px 0 18px}
+.article li{position:relative;padding-left:26px;margin-bottom:10px}
+.article li::before{content:'';position:absolute;left:6px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.article li b{color:var(--ink)}
+.section-img{width:100%;border-radius:16px;display:block;box-shadow:var(--shadow);margin:8px 0 6px}
+/* callouts */
+.callout{border-radius:16px;padding:20px 22px;margin:22px 0}
+.callout.sage{background:var(--sage-pale);border:1px solid var(--sage-soft)}
+.callout.terra{background:var(--terra-pale);border:1px solid var(--terra-soft)}
+.callout h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.callout.sage h4{color:var(--sage-dark)}
+.callout.terra h4{color:var(--terra-deep)}
+.callout p{font-size:15px;line-height:1.6;margin-bottom:8px}
+.callout p:last-child{margin-bottom:0}
+.warn{background:var(--terra-pale);border-left:4px solid var(--terra);border-radius:10px;padding:14px 18px;margin:6px 0 14px}
+.warn b{color:var(--terra-deep)}
+.disclaimer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+.endnote{background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:16px;padding:22px 24px;margin-top:30px}
+.endnote p{font-family:Georgia,serif;font-size:18px;line-height:1.55;color:var(--sage-deep);margin:0}
+@media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+
+.dual{display:flex;gap:26px;align-items:center;margin:14px 0 30px;flex-wrap:wrap}
+.dual .fig{flex:0 0 58%;min-width:300px;margin:0}
+.dual .txt{flex:1;min-width:260px}
+.dual .txt p{margin:0 0 14px}
+.knee-card{background:#F5F1E7;border-radius:18px;padding:4px;box-shadow:var(--shadow-lg);overflow:hidden}
+.knee-card svg{width:100%;height:auto;display:block}
+.fig-cap{margin-top:10px;font-size:13px;line-height:1.45;color:var(--grey);text-align:center;font-style:italic}
+.keyline{background:var(--sage-pale);border-left:4px solid var(--sage);border-radius:10px;padding:14px 18px}
+@media(max-width:720px){.dual{flex-direction:column}.dual .fig{flex:1 1 100%;width:100%}}
+
+.stat-banner{display:flex;align-items:center;gap:12px;background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:14px;padding:18px 22px;font-size:22px;line-height:1.45;color:var(--ink);margin:6px 0 22px}
+.stat-banner .sb-text{flex:1}
+.stat-banner .sb-dot{flex:0 0 auto;width:12px;height:12px;border-radius:50%;background:var(--terra)}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:0 0 24px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;text-align:center;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.stat-icons{min-height:64px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:0 auto 10px}
+.stat-num{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--sage-dark);line-height:1.1;margin-bottom:6px}
+.stat-cap{font-size:14.5px;line-height:1.5;color:var(--grey)}
+.cmp{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;margin-bottom:22px}
+.cmp-row{display:flex;align-items:center;gap:14px}
+.cmp-lab{font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sage-dark);width:74px;text-align:right}
+.cmp-fig{display:flex;gap:6px}
+.cmp-fig svg{width:44px;height:44px}
+@media(max-width:720px){.stat-grid{grid-template-columns:1fr}}
+
+.wrap-fig{float:right;width:55%;max-width:494px;margin:4px 0 18px 28px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.wrap-fig img{display:block;width:100%;height:auto}
+.band-fig{display:block;width:100%;margin:6px 0 20px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.band-fig img{display:block;width:100%;height:auto}
+.wrap-fig.wrap-left{float:left;margin:4px 28px 18px 0}
+@media(max-width:720px){.wrap-fig{float:none;width:100%;max-width:none;margin:6px 0 18px}}
+.article ol.refs li{padding-left:0}
+.article ol.refs li::before{content:none;display:none}
+.article ol.refs{margin:6px 0 18px}
+.article ol.refs li{padding-left:0}
+.article ol.refs li::before{content:none;display:none}
+.benefit{display:flex;gap:14px;align-items:flex-start;margin:18px 0}
+.benefit-ic{flex:0 0 44px;height:44px;border-radius:12px;background:var(--sage-soft);display:grid;place-items:center;font-size:21px}
+.benefit-num{flex:0 0 48px;height:48px;border-radius:50%;background:var(--sage);color:#fff;display:grid;place-items:center;font-family:Georgia,serif;font-weight:700;font-size:23px}
+.benefit-head{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+.benefit-head h3{margin:0 !important;font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--sage-dark);line-height:1.2}
+.benefit h3{margin:0 0 4px;font-size:17.5px;color:var(--ink)}
+.benefit p{margin:0;font-size:15.5px;line-height:1.6;color:#3a403c}
+</style>
+<style>
+.wrap p{margin:0 0 1.15em;line-height:1.75}
+.wrap h2{margin-top:1.9em;margin-bottom:.55em}
+.wrap h3{margin-top:1.4em;margin-bottom:.4em}
+.wrap ul{margin:0 0 1.25em}
+.wrap .lede{margin-bottom:1em}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">clara</div>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home" style="text-decoration:none;color:inherit">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain" style="text-decoration:none;color:inherit">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx" style="text-decoration:none;color:inherit">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education" style="text-decoration:none;color:inherit">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages" style="text-decoration:none;color:inherit">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders" style="text-decoration:none;color:inherit">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care" style="text-decoration:none;color:inherit">Get Care</a>
+  </div>
+  <div class="nav-avatar">SK</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education">&larr;  Back to Education</a>
+  <div class="eyebrow">Your treatment &middot; Knee osteoarthritis</div>
+  <h1 class="title serif">Why a compound cream? Relief, right where it hurts</h1>
+  <div class="meta">
+    <span class="byline">From your Clara care team</span>
+    <span class="chip">4 min read</span>
+    <span class="chip">Works with your exercise plan</span>
+    <span class="chip">Checked against current guidelines</span>
+  </div>
+
+  <img class="hero-img" src="creame-hero.png" alt="A woman applying clara compound cream to her knee at home, with the cream bottle and box on her bedside table" style="width:100%;height:auto;border-radius:14px;display:block;margin:18px 0 6px;box-shadow:0 6px 24px rgba(0,0,0,.08)">
+  <p class="cap">Relief applied right where the pain lives, in the comfort of home.</p>
+
+  <p style="font-family:Georgia,serif;font-size:22px;line-height:1.55;color:var(--sage-dark);margin:26px 0 8px">Your movement plan does the heavy lifting. A compound cream is the teammate that makes the work more comfortable, without asking the rest of your body to come along.</p>
+
+  <div class="article">
+
+  <p>Everything you have read above, the walking, the strengthening, the tai chi, the weight work, is the foundation of treating knee osteoarthritis. Nothing on this page replaces it. But on the days your knee complains, pain itself becomes the obstacle: it is hard to keep walking when walking hurts. That is exactly where a <b>topical compound cream</b> earns its place: it eases the pain enough to keep you moving, and the moving is what gets you better.</p>
+
+  <h2>What is a compound cream?</h2>
+  <div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin:18px 0;">
+    <div style="flex:0 0 40%;min-width:250px;"><img src="What-is-compound-cream.png" alt="The clara compound cream bottle on a kitchen table beside a smartwatch showing heart rate and a chronic pain pamphlet" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);" /></div>
+    <div style="flex:1;min-width:280px;">
+      <p>A compound cream is prepared by a pharmacy <b>to your physician&#8217;s exact specification</b>, combining several medicines into one cream that is delivered through the skin, directly over the painful joint. Your knee sits close to the surface, which makes it an ideal joint to treat this way: the medicine concentrates where the pain lives instead of travelling through your whole body first.</p>
+      <p style="margin-bottom:0">What makes a compound cream different from a single drugstore gel is that <b>a knee does not hurt in just one way, so it is not treated with just one ingredient</b>. The cream blends a few different kinds of medicine, each aimed at a different source of your pain.</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:77px">Why a cream instead of a pill?</h2>
+
+  <div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin:18px 0;">
+    <div style="flex:0 0 38%;min-width:240px;"><img src="cream-on-knee.png" alt="A hand spreading white cream across the skin of a knee" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);" /></div>
+    <div style="flex:1;min-width:280px;">
+      <div class="benefit" style="margin:0"><div><h3>It goes only where it is needed</h3>
+      <p>A pill has to pass through your stomach and bloodstream to reach one knee. A topical anti-inflammatory is absorbed through the skin at the joint itself; studies measuring blood levels found 5 to 17 times less medicine circulating in the body compared with the same drug taken by mouth<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(1, 2)</a></sup>.</p></div></div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin:18px 0;">
+    <div style="flex:1;min-width:280px;">
+      <div class="benefit" style="margin:0"><div><h3>Comparable relief at the knee</h3>
+      <p>For knee osteoarthritis, topical anti-inflammatories deliver pain relief comparable to oral versions of the same medicines<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(3)</a></sup>. In pooled trials, 6 in 10 people using a topical anti-inflammatory achieved at least half their pain gone, versus 5 in 10 with a placebo cream<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(4)</a></sup>.</p></div></div>
+    </div>
+    <div style="flex:0 0 38%;min-width:240px;"><img src="comparable%20relief.png" alt="The clara cream applied to a knee" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);" /></div>
+  </div>
+
+  <div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin:18px 0;">
+    <div style="flex:0 0 38%;min-width:240px;"><img src="Fewer%20side%20affects.png" alt="The clara cream shown gently, representing fewer body-wide side effects" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);" /></div>
+    <div style="flex:1;min-width:280px;">
+      <div class="benefit" style="margin:0"><div><h3>Far fewer body-wide risks</h3>
+      <p>Oral anti-inflammatories, taken regularly, carry real risks for the stomach, kidneys, heart, and blood pressure, especially over months and years<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(5, 6)</a></sup>. Because so little of a topical reaches the bloodstream, the risk of those problems is much lower<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(1, 3)</a></sup>. That is why major guidelines recommend trying a topical anti-inflammatory before, or instead of, pills for knee osteoarthritis<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(7, 8)</a></sup>.</p></div></div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin:18px 0;">
+    <div style="flex:1;min-width:280px;">
+      <div class="benefit" style="margin:0"><div><h3>It plays well with the rest of your plan</h3>
+      <p>The cream does not interact with your exercises, your walking program, or your weight plan; it supports them. Less pain means more steps, more sessions completed, more strength built. Think of it as one more teammate, not a replacement for the team.</p></div></div>
+    </div>
+    <div style="flex:0 0 38%;min-width:240px;"><img src="cozy-rest-of-plan%20.png" alt="A woman in a cozy sweater smiling while holding the clara compound cream" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);" /></div>
+  </div>
+
+  <h2>What is inside, and why</h2>
+  <p>Remember from <a href="../Understanding Your Knee Osetoarthritis/Understanding-Knee-OA.html" style="color:var(--sage-dark);font-weight:600;text-decoration:underline">Understanding Your Knee Osteoarthritis</a> that the cartilage itself has no nerves: your pain actually comes from the parts that do, the bone beneath the cartilage, the inflamed joint lining, and the muscles and tissues around the knee. And when pain has been around a while, the surrounding nerves themselves can become more sensitive and fire too easily. A knee that hurts in several ways is best calmed in several ways, and that is exactly how the cream is built. Each group below targets a different one of those pain sources. Here is what is in it, and what each part is doing.</p>
+
+  <div class="benefit" style="display:block;margin:30px 0">
+    <div class="benefit-head"><div class="benefit-num">1</div><h3>Anti-inflammatories: the workhorse</h3></div>
+    <p style="margin:0;padding-left:64px">Ingredients like <b>ketoprofen</b> and <b>diclofenac</b> are the same family as ibuprofen, working right at the joint to calm the inflammation that drives most osteoarthritis pain. This is the anchor of the cream and the part with the strongest evidence: topical anti-inflammatories give relief comparable to the pills for knee OA<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(3, 4)</a></sup>.</p>
+  </div>
+
+  <div class="benefit" style="display:block;margin:30px 0">
+    <div class="benefit-head"><div class="benefit-num">2</div><h3>Numbing agents: quiet the signal</h3></div>
+    <p style="margin:0;padding-left:64px"><b>Lidocaine</b> (and a small amount of long-acting <b>bupivacaine</b>) are local anaesthetics, the same idea as the numbing your dentist uses. They gently turn down the pain signals travelling along the nerves right under the skin at your knee, so the joint simply sends fewer &ldquo;ouch&rdquo; messages<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(9)</a></sup>.</p>
+  </div>
+
+  <div class="benefit" style="display:block;margin:30px 0">
+    <div class="benefit-head"><div class="benefit-num">3</div><h3>Nerve-calming medicines: for the sensitized knee</h3></div>
+    <p style="margin:0;padding-left:64px">This is where the cream meets that sensitized-nerve idea head on. Small amounts of <b>amitriptyline</b> and <b>gabapentin</b>, medicines normally used for nerve pain, are added to help settle nerves that have learned to over-fire after months of aching. They target a part of knee pain that an anti-inflammatory alone does not reach<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(10)</a></sup>.</p>
+  </div>
+
+  <div class="benefit" style="display:block;margin:30px 0">
+    <div class="benefit-head"><div class="benefit-num">4</div><h3>A muscle relaxant: ease the guarding</h3></div>
+    <p style="margin:0;padding-left:64px">A sore knee makes the muscles around it tense up and brace, which adds its own ache. A touch of <b>baclofen</b>, a muscle relaxant, helps those muscles let go, easing the tightness that builds up around a painful joint<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(10)</a></sup>.</p>
+  </div>
+
+  <div class="benefit" style="display:block;margin:30px 0">
+    <div class="benefit-head"><div class="benefit-num">5</div><h3>Cooling comfort: menthol and camphor</h3></div>
+    <p style="margin:0;padding-left:64px">Finally, small amounts of <b>menthol</b> and <b>camphor</b> give that familiar cooling, soothing sensation. They are not the main event, but they bring quick comfort you can feel right away and make the cream pleasant to use day after day<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(11)</a></sup>.</p>
+  </div>
+
+  <p>Put together, that is the idea behind a compound cream: one cream, several gentle tools, each aimed at a different way your knee hurts, all delivered right where you need them and very little anywhere else. Your physician chooses the exact recipe and strength for you, and can adjust it over time.</p>
+
+  <h2>What to expect, honestly</h2>
+  <p>A topical is not a magic eraser. For most people it brings partial relief, about a third to half less pain, not zero pain, and that is a real, meaningful win when it keeps you active. Give it a fair trial of 4 to 6 weeks before judging<sup style="font-size:0.72em;line-height:0"><a href="#sources" style="color:#4A6B5B;font-style:italic;font-weight:600;text-decoration:none">(4)</a></sup>. If it has not helped by then, tell your care team and we will adjust the plan.</p>
+
+  <img src="what-to-expect.png" alt="Four soft cream streaks beside the clara cream bottle with a hand reaching to pick it up" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);margin:18px 0 6px;">
+
+  <h2>How to use it safely</h2>
+  <ul>
+    <li><b>Apply a thin layer</b> to the painful area, usually 2 to 3 times a day, or as directed.</li>
+    <li><b>Wash your hands after applying</b> (unless your hands are the area being treated).</li>
+    <li><b>Never apply it to broken, cut, or wounded skin.</b> Damaged skin can let too much medicine into your body. This one matters most.</li>
+    <li><b>Let it dry</b> before it touches clothing, and do not use a heating pad over the area.</li>
+    <li><b>Give it a fair 4 to 6 week trial</b> and track how your knee responds.</li>
+  </ul>
+
+  <h3 style="font-family:Georgia,serif;font-size:21px;font-weight:700;color:var(--sage-dark);margin:28px 0 10px !important">Watch: how to apply your cream</h3>
+  <video controls preload="metadata" style="display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);margin:0 0 6px;background:#000">
+    <source src="How-to-apply-demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <p class="cap">A 15 second walkthrough: thin layer on the knee, 2 to 3 times a day, wash your hands, and let it dry.</p>
+
+  <div class="warn"><b>Check in with your care team</b> if you notice a rash, itching, or skin irritation where you apply the cream, or if you are pregnant, breastfeeding, or already take an oral anti-inflammatory or blood thinner. We will make sure the cream is right for you.</div>
+
+  <div class="endnote"><p>Keep moving, keep building, and let the cream quiet the knee while you do. The exercises change your knee&#8217;s future; the cream makes the present more comfortable. They work best together.</p></div>
+
+  <h2 id="sources">Sources</h2>
+  <ol class="refs" style="font-size:14px;color:#5f5f57;line-height:1.75;padding-left:20px">
+    <li>Kienzler JL, Gold M, Nollevaux F. Systemic bioavailability of topical diclofenac sodium gel 1% versus oral diclofenac sodium in healthy volunteers. Journal of Clinical Pharmacology. 2010;50(1):50-61.</li>
+    <li>Roth SH, Fuller P. Diclofenac topical solution compared with oral diclofenac: a pooled safety analysis. Journal of Pain Research. 2011;4:159-167.</li>
+    <li>Katz JN, Arant KR, Loeser RF. Diagnosis and treatment of hip and knee osteoarthritis: a review. JAMA. 2021;325(6):568-578.</li>
+    <li>Derry S, Conaghan P, Da Silva JA, et al. Topical NSAIDs for chronic musculoskeletal pain in adults. Cochrane Database of Systematic Reviews. 2016;4:CD007400.</li>
+    <li>da Costa BR, Pereira TV, Saadat P, et al. Effectiveness and safety of non-steroidal anti-inflammatory drugs and opioid treatment for knee and hip osteoarthritis: network meta-analysis. BMJ. 2021;375:n2321.</li>
+    <li>Nissen SE, Yeomans ND, Solomon DH, et al. Cardiovascular safety of celecoxib, naproxen, or ibuprofen for arthritis (PRECISION trial). New England Journal of Medicine. 2016;375(26):2519-2529.</li>
+    <li>Kolasinski SL, Neogi T, Hochberg MC, et al. 2019 American College of Rheumatology / Arthritis Foundation guideline for the management of osteoarthritis of the hand, hip, and knee. Arthritis &amp; Rheumatology. 2020;72(2):220-233.</li>
+    <li>Bannuru RR, Osani MC, Vaysbrot EE, et al. OARSI guidelines for the non-surgical management of knee, hip, and polyarticular osteoarthritis. Osteoarthritis and Cartilage. 2019;27(11):1578-1589.</li>
+    <li>Derry S, Wiffen PJ, Moore RA, Quinlan J. Topical lidocaine for neuropathic pain in adults. Cochrane Database of Systematic Reviews. 2014;7:CD010958.</li>
+    <li>Cline AE, Turrentine JE. Compounded topical analgesics for chronic pain. Dermatitis. 2016;27(5):263-271.</li>
+    <li>Pergolizzi JV, Taylor R, LeQuang JA, Raffa RB. The role and mechanism of action of menthol in topical analgesic products. Journal of Clinical Pharmacy and Therapeutics. 2018;43(3):313-319.</li>
+  </ol>
+
+  <p class="disclaimer">This guide is for education and is not a substitute for your Clara physician&#8217;s advice. Whether a compound cream fits your plan, and what goes in it, is a decision you and your Clara physician make together.</p>
+
+  </div>
+</div>
+
+</body>
+</html>

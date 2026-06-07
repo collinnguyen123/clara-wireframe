@@ -30,6 +30,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .nav-tab:hover{color:var(--ink);background:var(--cream-soft)}
 .nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600}
 .nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-tab .tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;margin-left:7px;background:var(--terra);color:#fff;font-size:11px;font-weight:700;border-radius:9px;vertical-align:middle}
 .nav-right{display:flex;align-items:center;gap:14px}
 .nav-icon{width:38px;height:38px;border-radius:50%;background:var(--cream);display:grid;place-items:center;cursor:pointer;transition:background .15s;position:relative;font-size:16px}
 .nav-icon:hover{background:var(--cream-deep)}
@@ -50,7 +51,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .greet-sub{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--grey);margin-top:10px;line-height:1.45}
 
 /* ============== SECTION LABEL ============== */
-.section-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.6px;text-transform:uppercase;margin:36px 0 14px;display:flex;align-items:center;gap:10px}
+.section-label{font-size:16px;font-weight:800;color:#3a352e;letter-spacing:1.8px;text-transform:uppercase;margin:40px 0 16px;display:flex;align-items:center;gap:10px}
 .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* ============== CARDS ============== */
@@ -120,10 +121,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .pain-checkin h2{font-family:Georgia,serif;font-size:24px;font-weight:700;color:var(--sage-dark);margin-bottom:6px}
 .pain-checkin .lead{color:var(--grey);font-size:14px;margin-bottom:24px;font-family:Georgia,serif;font-style:italic}
 .scale-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.scale-num{flex:1;min-width:54px;aspect-ratio:1;border:2px solid var(--line);border-radius:14px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-weight:700;font-size:18px;color:var(--ink)}
+.scale-num{flex:1;min-width:54px;aspect-ratio:1;border:2px solid var(--line);border-radius:14px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-weight:700;font-size:21px;color:var(--ink);line-height:1}
 .scale-num:hover{border-color:var(--sage);transform:translateY(-2px)}
 .scale-num.selected{background:var(--sage);color:#fff;border-color:var(--sage-dark);transform:scale(1.05);box-shadow:0 6px 18px rgba(74,107,91,.3)}
-.scale-num .face{font-size:18px;margin-top:2px;opacity:.7}
+.scale-num .face{font-size:21px;margin-top:4px;opacity:.7;line-height:1}
 .scale-num.selected .face{opacity:1}
 /* color gradient on selected */
 .scale-num[data-val="0"].selected,.scale-num[data-val="1"].selected,.scale-num[data-val="2"].selected{background:#7CA890;border-color:var(--sage)}
@@ -153,8 +154,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .day-dot.s7,.day-dot.s8,.day-dot.s9,.day-dot.s10{background:var(--terra-deep)}
 .day-cell.today{border-color:var(--terra);border-width:2px;background:var(--terra-pale)}
 
-.chart{height:240px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 28px 16px;position:relative}
-.chart-svg{width:100%;height:100%}
+.chart{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 28px 16px;position:relative}
+.chart-head{display:flex;align-items:center;justify-content:flex-start;gap:18px;margin-bottom:10px;flex-wrap:wrap}
+.avg-readout{display:flex;align-items:baseline;gap:8px}
+.avg-readout .avg-label{font-size:13.5px;color:var(--ink);font-weight:700}
+.avg-value{font-family:Georgia,serif;font-size:34px;font-weight:700;color:var(--sage-deep);line-height:1}
+.avg-period{font-size:12px;color:var(--grey);font-weight:600}
+.avg-toggle{display:flex;gap:3px;background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:3px}
+.avg-chip{padding:6px 13px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--grey);transition:all .15s}
+.avg-chip:hover{color:var(--ink)}
+.avg-chip.active{background:var(--sage);color:#fff;box-shadow:0 2px 6px rgba(74,107,91,.25)}
+.chart-svg{width:100%;height:190px;display:block}
+.pain-tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line-strong);border-radius:10px;padding:7px 11px;font-size:12.5px;color:var(--ink);box-shadow:var(--shadow);white-space:nowrap;opacity:0;transform:translate(-50%,-130%);transition:opacity .1s}
+.pain-tip b{font-size:14px;color:var(--sage-dark)}
+.pain-tip .tip-date{color:var(--muted);margin-left:6px}
+.journal-input{display:none;margin-top:8px;width:100%}
 .insight-card{background:var(--terra-pale);border:1px solid var(--terra-soft);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:flex-start}
 .insight-icon{font-size:22px;flex-shrink:0}
 .insight-card h4{font-weight:700;font-size:14px;color:var(--terra-deep);margin-bottom:4px}
@@ -180,6 +194,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ============== MY RX ============== */
 .rx-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:16px;transition:box-shadow .2s}
 .rx-card:hover{box-shadow:var(--shadow)}
+.rx-cat{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--ink);margin:30px 0 12px}
+.rx-card-product{display:flex;gap:28px;align-items:center}
+.rx-photo{flex:0 0 215px;display:flex;align-items:center;justify-content:center;align-self:stretch;background:linear-gradient(160deg,#F2F6F3,#E4ECE6);border:1px solid var(--line);border-radius:16px;padding:16px}
+.rx-photo-img{width:100%;height:auto;max-height:300px;object-fit:contain;display:block;filter:drop-shadow(0 8px 18px rgba(31,51,41,.18))}
+.rx-photo-wide{flex:0 0 266px}
+.rx-photo-wide .rx-photo-img{max-height:306px}
+.rx-photo-zoom{overflow:hidden}
+.rx-photo-zoom .rx-photo-img{transform:scale(1.17);transform-origin:center}
+.rx-body{flex:1;min-width:0}
+@media (max-width:760px){.rx-card-product{flex-direction:column}.rx-photo{flex-basis:auto;width:215px}}
 .rx-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
 .rx-name{font-family:Georgia,serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px}
 .rx-name .tier{display:inline-block;background:var(--terra);color:#fff;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:8px;letter-spacing:.6px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
@@ -220,6 +244,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .msg-item.unread::after{content:'';width:7px;height:7px;background:var(--terra);border-radius:50%;align-self:center}
 .msg-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));display:grid;place-items:center;color:#fff;font-weight:600;font-size:13px;flex-shrink:0}
 .msg-avatar.terra{background:linear-gradient(135deg,var(--terra),var(--terra-deep))}
+.msg-avatar.gold{background:linear-gradient(135deg,var(--gold),#A88747)}
+.msg-avatar.plum{background:linear-gradient(135deg,var(--plum),#5E4663)}
+.msg-avatar.teal{background:linear-gradient(135deg,#5B8C8A,#3E6360)}
 .msg-info{flex:1;min-width:0}
 .msg-name{font-size:13.5px;color:var(--ink);margin-bottom:2px}
 .msg-name .role{color:var(--muted);font-weight:500;font-size:11.5px;margin-left:5px}
@@ -286,9 +313,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="nav-tabs">
     <button class="nav-tab active" data-tab="home">Home</button>
     <button class="nav-tab" data-tab="pain">Pain Tracker</button>
-    <button class="nav-tab" data-tab="education">Education</button>
     <button class="nav-tab" data-tab="rx">My Rx</button>
-    <button class="nav-tab" data-tab="messages">Messages</button>
+    <button class="nav-tab" data-tab="education">Education</button>
+    <button class="nav-tab" data-tab="messages">Messages<span class="tab-badge" id="msgBadge">2</span></button>
     <button class="nav-tab" data-tab="orders">Orders</button>
     <button class="nav-tab" data-tab="care">Get Care</button>
   </div>
@@ -365,14 +392,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       </div>
       <div class="action-arrow">→</div>
     </div>
-    <div class="action-card" data-tab="education">
-      <div class="action-icon sage">🧘</div>
+    <a href="Education%20Section%20(Knee%20OA%20Pain)/Understanding%20Your%20Knee%20Osetoarthritis/Understanding-Knee-OA.html" class="action-card" style="text-decoration:none;color:inherit">
+      <div class="action-icon sage">📘</div>
       <div class="action-content">
-        <div class="action-title">15-minute knee strengthening routine</div>
-        <div class="action-meta">Week 4 of 8  ·  3 of 4 sessions done this week</div>
+        <div class="action-title">Understanding your knee osteoarthritis</div>
+        <div class="action-meta">Your 8 minute guide  ·  what helps, and why movement matters</div>
       </div>
       <div class="action-arrow">→</div>
-    </div>
+    </a>
     <div class="action-card" data-tab="rx">
       <div class="action-icon gold">⏳</div>
       <div class="action-content">
@@ -453,14 +480,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <select>
           <option>Select one or more</option>
           <option>Rest</option><option>Walking</option><option>Cream applied</option><option>Heat or cold</option><option>Naproxen</option>
+          <option>Write your own...</option>
         </select>
+        <textarea class="journal-input" rows="2" placeholder="Type your note here. Your Clara physician can review it later."></textarea>
       </div>
       <div class="meta-input">
         <label>What made it worse (optional)</label>
         <select>
           <option>Select one or more</option>
           <option>Stairs</option><option>Long sitting</option><option>Weather change</option><option>Standing</option><option>Lifted something</option>
+          <option>Write your own...</option>
         </select>
+        <textarea class="journal-input" rows="2" placeholder="Type your note here. Your Clara physician can review it later."></textarea>
       </div>
     </div>
     <div class="meta-input" style="margin-bottom:24px">
@@ -481,8 +512,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     <div class="day-cell today"><div class="day-name">Today</div><div class="day-num">28</div><div class="day-dot s4"></div></div>
   </div>
 
-  <div class="section-label">Last 30 days</div>
+  <div class="section-label" id="chartRangeLabel">Last 7 days</div>
   <div class="chart">
+    <div class="chart-head">
+      <div class="avg-readout">
+        <span class="avg-label">Average Pain =</span>
+        <span class="avg-value" id="avgValue">4.2</span>
+        <span class="avg-period" id="avgPeriod">this week</span>
+      </div>
+      <div class="avg-toggle" id="avgToggle">
+        <button class="avg-chip active" data-avg="4.2" data-period="this week">Week</button>
+        <button class="avg-chip" data-avg="4.8" data-period="past month">Month</button>
+        <button class="avg-chip" data-avg="5.5" data-period="past 6 months">6M</button>
+        <button class="avg-chip" data-avg="6.1" data-period="past year">1Y</button>
+      </div>
+    </div>
     <svg class="chart-svg" viewBox="0 0 600 200" preserveAspectRatio="none">
       <defs>
         <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
@@ -494,25 +538,26 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <line x1="0" y1="40" x2="600" y2="40" stroke="#E8E4DC" stroke-dasharray="3,4"/>
       <line x1="0" y1="100" x2="600" y2="100" stroke="#E8E4DC" stroke-dasharray="3,4"/>
       <line x1="0" y1="160" x2="600" y2="160" stroke="#E8E4DC" stroke-dasharray="3,4"/>
-      <text x="6" y="36" fill="#8A908B" font-size="10">8</text>
-      <text x="6" y="96" fill="#8A908B" font-size="10">5</text>
-      <text x="6" y="156" fill="#8A908B" font-size="10">2</text>
-      <!-- area fill under line -->
-      <path d="M30,80 L60,90 L90,70 L120,60 L150,80 L180,70 L210,100 L240,90 L270,110 L300,100 L330,120 L360,110 L390,130 L420,120 L450,140 L480,130 L510,140 L540,150 L570,140 L570,200 L30,200 Z" fill="url(#grad)"/>
-      <!-- line -->
-      <path d="M30,80 L60,90 L90,70 L120,60 L150,80 L180,70 L210,100 L240,90 L270,110 L300,100 L330,120 L360,110 L390,130 L420,120 L450,140 L480,130 L510,140 L540,150 L570,140" fill="none" stroke="#C97257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- data points -->
-      <g fill="#C97257" stroke="#fff" stroke-width="2">
-        <circle cx="30" cy="80" r="4"/><circle cx="120" cy="60" r="4"/><circle cx="210" cy="100" r="4"/>
-        <circle cx="300" cy="100" r="4"/><circle cx="390" cy="130" r="4"/><circle cx="480" cy="130" r="4"/>
-        <circle cx="570" cy="140" r="4"/>
-      </g>
-      <!-- x labels -->
-      <text x="30" y="195" fill="#8A908B" font-size="10">Apr 28</text>
-      <text x="200" y="195" fill="#8A908B" font-size="10">May 7</text>
-      <text x="380" y="195" fill="#8A908B" font-size="10">May 17</text>
-      <text x="540" y="195" fill="#8A908B" font-size="10">Today</text>
+      <text x="6" y="36" fill="#3F4540" font-size="10" font-weight="600">8</text>
+      <text x="6" y="96" fill="#3F4540" font-size="10" font-weight="600">5</text>
+      <text x="6" y="156" fill="#3F4540" font-size="10" font-weight="600">2</text>
+      <!-- area fill under line (rendered by JS per range) -->
+      <path id="areaPath" d="M30,80 L570,140 L570,200 L30,200 Z" fill="url(#grad)"/>
+      <!-- line (rendered by JS per range) -->
+      <path id="linePath" d="M30,80 L570,140" fill="none" stroke="#C97257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- data point markers (rendered by JS per range) -->
+      <g id="markers" fill="#C97257" stroke="#fff" stroke-width="2"></g>
+      <!-- today's reading: bigger green dot, stands out from the curve -->
+      <circle id="todayHalo" cx="570" cy="140" r="12" fill="#4A6B5B" opacity="0.16"/>
+      <circle id="todayDot" cx="570" cy="140" r="7.5" fill="#4A6B5B" stroke="#fff" stroke-width="2.5"/>
+      <!-- hover scrubber (stock-chart style) -->
+      <line id="hoverLine" x1="30" y1="20" x2="30" y2="182" stroke="#C97257" stroke-width="1" stroke-dasharray="3,3" opacity="0"/>
+      <circle id="hoverDot" cx="30" cy="80" r="6" fill="#fff" stroke="#C97257" stroke-width="3" opacity="0"/>
+      <!-- x labels (rendered by JS per range) -->
+      <g id="xLabels"></g>
+      <rect id="hoverCapture" x="0" y="0" width="600" height="200" fill="transparent" pointer-events="all" style="cursor:crosshair"/>
     </svg>
+    <div class="pain-tip" id="painTip"></div>
   </div>
 
   <div class="section-label">What Clara is seeing in your data</div>
@@ -539,35 +584,24 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="greet">
     <div class="greet-eyebrow">Education and exercise</div>
     <h1 class="greet-title">Your <em>plan</em> in one place</h1>
-    <p class="greet-sub">Everything you need to understand your condition, do your exercises, and stay on track. Tailored to your assessment.</p>
+    <p class="greet-sub">Everything you need to understand your condition, do your exercises, and stay on track.<br>Tailored to your assessment.</p>
   </div>
 
   <div class="section-label">Your active plans</div>
   <div class="edu-grid">
-    <div class="edu-card">
-      <div class="edu-hero terra"><span style="position:absolute;top:12px;left:12px;background:var(--terra);color:#fff;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:10px;letter-spacing:.4px;text-transform:uppercase">Your plan</span>📘</div>
+    <a class="edu-card" href="Education%20Section%20(Knee%20OA%20Pain)/Understanding%20Your%20Knee%20Osetoarthritis/Understanding-Knee-OA.html" style="text-decoration:none;color:inherit">
+      <div class="edu-hero terra" style="height:240px"><img src="Education%20Section%20(Knee%20OA%20Pain)/Understanding%20Your%20Knee%20Osetoarthritis/images%20to%20use%20for%20Knee%20Pain/bill-cover.png" alt="Understanding your knee osteoarthritis" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%" /><span style="position:absolute;top:12px;left:12px;background:var(--terra);color:#fff;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:10px;letter-spacing:.4px;text-transform:uppercase;z-index:1">Your plan</span></div>
       <div class="edu-body">
         <h3>Understanding Your Knee Osteoarthritis</h3>
-        <p>The 14-page primer that walks you through what OA is, what helps, what does not, and why movement matters more than rest.</p>
+        <p>A quick, helpful guide to understanding your knee pain, what helps, what doesn't, and why moving matters more than resting.</p>
         <div class="edu-meta">
-          <span class="duration">⏱ 15 min read</span>
+          <span class="duration">⏱ 8 min read</span>
           <span>Updated last week</span>
         </div>
       </div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-hero"><span class="edu-tag">8-week plan</span>🦵</div>
-      <div class="edu-body">
-        <h3>Knee Strengthening Routine</h3>
-        <p>Quadriceps, hip, and glute work. 4 sessions per week, 15 to 20 minutes each. Currently in week 4 of 8.</p>
-        <div class="edu-meta">
-          <span class="duration">⏱ Week 4 of 8</span>
-          <span>3 of 4 done this week</span>
-        </div>
-      </div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-hero gold"><span class="edu-tag">Free</span>🚶</div>
+    </a>
+    <a class="edu-card" href="Education%20Section%20(Knee%20OA%20Pain)/Walk%20With%20Ease/Walk-With-Ease.html" style="text-decoration:none;color:inherit">
+      <div class="edu-hero gold" style="height:240px"><img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/kim-walkcover.jpeg" alt="Kim walking outdoors on a green path" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" /><span class="edu-tag" style="z-index:1">Free</span></div>
       <div class="edu-body">
         <h3>Walk With Ease, Aerobic Foundation</h3>
         <p>Low impact walking program built for sore knees. 3 to 4 times per week, 30 minutes per session.</p>
@@ -576,13 +610,35 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           <span>Just getting started</span>
         </div>
       </div>
-    </div>
+    </a>
+    <a class="edu-card" href="Education%20Section%20(Knee%20OA%20Pain)/Weight%20and%20Your%20Knees/Weight-and-Your-Knees.html" style="text-decoration:none;color:inherit">
+      <div class="edu-hero" style="height:240px"><img src="Education%20Section%20(Knee%20OA%20Pain)/Weight%20and%20Your%20Knees/weight-card-hero.png" alt="Nadia in a gentle low impact exercise class" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%" /><span class="edu-tag" style="z-index:1">New</span></div>
+      <div class="edu-body">
+        <h3>Weight and Your Knees</h3>
+        <p>Why every 1 pound off the scale is 4 pounds off the knee. A practical, nonjudgemental guide.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ 8 min read</span>
+          <span>New this week</span>
+        </div>
+      </div>
+    </a>
   </div>
 
   <div class="section-label">Recommended for you</div>
   <div class="edu-grid">
-    <div class="edu-card">
-      <div class="edu-hero plum">🧘</div>
+    <a class="edu-card" href="Education%20Section%20(Knee%20OA%20Pain)/Knee%20Strengthening%20Routine/Knee-Strengthening-Routine.html" style="text-decoration:none;color:inherit">
+      <div class="edu-hero" style="height:240px"><img src="Education%20Section%20(Knee%20OA%20Pain)/Knee%20Strengthening%20Routine/strength-card-hero.png" alt="A man doing a lunge outdoors, working the thigh and knee muscles" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%" /><span class="edu-tag" style="z-index:1">8-week plan</span></div>
+      <div class="edu-body">
+        <h3>Knee Strengthening Routine</h3>
+        <p>Quadriceps, hip, and glute work, the muscles that support your knee. 2 to 3 sessions per week, 15 to 20 minutes each, with an 8 week build.</p>
+        <div class="edu-meta">
+          <span class="duration">⏱ 8 week plan</span>
+          <span>Quads, hips, glutes</span>
+        </div>
+      </div>
+    </a>
+    <a class="edu-card" href="Education%20Section%20(Knee%20OA%20Pain)/Tai%20Chi%20for%20Knee%20Pain/Tai-Chi.html" style="text-decoration:none;color:inherit">
+      <div class="edu-hero" style="height:240px"><img src="Education%20Section%20(Knee%20OA%20Pain)/Tai%20Chi%20for%20Knee%20Pain/taichi-card-hero.png" alt="A woman practicing tai chi in a bright studio" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" /><span class="edu-tag" style="z-index:1">12-week plan</span></div>
       <div class="edu-body">
         <h3>Tai Chi for Knee Pain</h3>
         <p>An unsupervised online program (RETREAT 2026 trial, NNT 4) that reduces knee pain in 12 weeks.</p>
@@ -591,58 +647,38 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           <span>Free</span>
         </div>
       </div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-hero terra">🧊</div>
+    </a>
+    <a class="edu-card" href="Education%20Section%20(Knee%20OA%20Pain)/Your%20Flare%20Plan/Flare-Plan.html" style="text-decoration:none;color:inherit">
+      <div class="edu-hero" style="height:240px"><img src="Education%20Section%20(Knee%20OA%20Pain)/Your%20Flare%20Plan/jane-flare-hero%202.png" alt="A woman on her couch at home looking down at her knee" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" /><span class="edu-tag" style="z-index:1">3-min plan</span></div>
       <div class="edu-body">
         <h3>Your Flare Plan</h3>
         <p>The one-page guide to when ice, when heat, and when to message your physician. Print or save to your phone.</p>
         <div class="edu-meta">
           <span class="duration">⏱ 3 min</span>
-          <span>One-pager PDF</span>
+          <span>One pager</span>
         </div>
       </div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-hero"><span class="edu-tag">New</span>⚖</div>
-      <div class="edu-body">
-        <h3>Weight and Your Knees</h3>
-        <p>Why every 1 pound off the scale is 4 pounds off the knee. A practical, non-judgmental guide.</p>
-        <div class="edu-meta">
-          <span class="duration">⏱ 8 min read</span>
-          <span>New this week</span>
-        </div>
-      </div>
-    </div>
+    </a>
   </div>
 
-  <div class="section-label">Sleep, stress, and self-care</div>
-  <div class="edu-grid">
-    <div class="edu-card">
-      <div class="edu-hero gold">😴</div>
-      <div class="edu-body">
-        <h3>Sleep Positions for a Sore Knee</h3>
-        <p>Side, back, and pillow placement to wake up with less stiffness.</p>
-        <div class="edu-meta"><span class="duration">⏱ 5 min</span><span>Free</span></div>
+  <div class="section-label">Treating the pain itself</div>
+  <a href="Education%20Section%20(Knee%20OA%20Pain)/Why%20a%20Compound%20Cream/Why-a-Compound-Cream.html" style="text-decoration:none;color:inherit;display:block">
+    <div class="edu-card" style="flex-direction:row;flex-wrap:wrap;align-items:stretch;">
+      <div style="flex:0 0 42%;min-width:280px;position:relative;overflow:hidden;">
+        <img src="Education%20Section%20(Knee%20OA%20Pain)/Why%20a%20Compound%20Cream/cream-card-hero.png" alt="The clara cream bottle and box on a coffee table with a man resting his creamed knee behind" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%" />
+      </div>
+      <div class="edu-body" style="flex:1;min-width:300px;padding:28px 30px;">
+        <h3 style="font-size:23px;">Why a compound cream?</h3>
+        <p style="margin-top:8px;">Your exercises do the heavy lifting. A compound cream applied right at the knee is the teammate that makes the work more comfortable: relief comparable to pills, with far less medicine reaching the rest of your body.</p>
+        <ul style="list-style:none;padding:0;margin:14px 0 4px;font-size:14.5px;color:#3a403c;line-height:2">
+          <li>✓ &nbsp;Works alongside your movement plan, not instead of it</li>
+          <li>✓ &nbsp;Recommended by major guidelines before oral medication</li>
+          <li>✓ &nbsp;Applied where it hurts, gentler on stomach, heart, and kidneys</li>
+        </ul>
+        <div class="edu-meta" style="margin-top:10px;"><span class="duration">⏱ 4 min</span><span style="color:#4A6B5B;font-weight:700;">Learn how it fits your plan →</span></div>
       </div>
     </div>
-    <div class="edu-card">
-      <div class="edu-hero"><span class="edu-tag">Audio</span>🎧</div>
-      <div class="edu-body">
-        <h3>5-Minute Breathing for Pain Flares</h3>
-        <p>A guided audio you can use the next time a flare hits. Saves to your phone.</p>
-        <div class="edu-meta"><span class="duration">⏱ 5 min</span><span>Audio</span></div>
-      </div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-hero plum">📊</div>
-      <div class="edu-body">
-        <h3>The 70 Percent Rule for Pacing</h3>
-        <p>How to avoid the boom-and-bust cycle that most knee patients fall into.</p>
-        <div class="edu-meta"><span class="duration">⏱ 6 min</span><span>Article</span></div>
-      </div>
-    </div>
-  </div>
+  </a>
 </div>
 
 <!-- ===================== MY RX VIEW ===================== -->
@@ -653,12 +689,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     <p class="greet-sub">Your current medications, applied creams, and how to use each one. Tap any card for the full guide.</p>
   </div>
 
-  <!-- CREAM -->
-  <div class="rx-card" style="margin-top:24px">
+  <!-- CREAMS -->
+  <div class="rx-cat" style="margin-top:24px">Creams</div>
+  <div class="rx-card rx-card-product">
+    <div class="rx-photo rx-photo-wide" style="flex:0 0 304px;padding:18px;overflow:hidden;min-height:256px;background:#fff"><img class="rx-photo-img" src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20Front%20Page/Clara-bottle1.png" alt="Clara Compound Cream bottle and box" style="width:100%;height:100%;max-height:none;object-fit:contain;transform:none;border-radius:16px;filter:none"></div>
+    <div class="rx-body">
     <div class="rx-header">
       <div>
         <div class="rx-name">Clara Compound Cream <span class="tier">C2 Standard</span></div>
-        <div class="rx-dose">Ketoprofen 15% + Lidocaine 5% + Menthol 0.5% + Camphor 0.5%</div>
+        <div class="rx-dose">Ketoprofen 10% + Diclofenac 5% + Lidocaine 5% + Bupivacaine 0.25% + Baclofen 5% + Amitriptyline 5% + Gabapentin 5% + Menthol 0.25% + Camphor 0.25%</div>
       </div>
       <div class="rx-price">
         <div class="rx-price-amount">$250</div>
@@ -671,9 +710,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <span class="rx-pill flag">⚠ Avoid on broken skin</span>
     </div>
     <div class="cream-ladder">
-      <div class="cream-step"><b>C1 Base</b><span class="step-detail">Ketoprofen 10% + Lidocaine 5% + Menthol 2%</span></div>
+      <div class="cream-step"><b>C1 Base</b><span class="step-detail">Ketoprofen 7% + Diclofenac 3% + Lidocaine 5% + Bupivacaine 0.25% + Amitriptyline 3% + Baclofen 5% + Menthol 0.25% + Camphor 0.25%</span></div>
       <div class="cream-step active"><b>C2 Standard</b><span class="step-detail">You are here. Step up from C1.</span></div>
-      <div class="cream-step"><b>C3 Hero</b><span class="step-detail">Physician step-up only. Adds capsaicin.</span></div>
+      <div class="cream-step"><b>C3 Hero</b><span class="step-detail">Physician step-up only. Adds capsaicin 0.05%, ketoprofen to 15%.</span></div>
     </div>
     <div class="rx-divider"></div>
     <div class="rx-howto">
@@ -686,10 +725,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <button class="btn-ghost">Pause subscription</button>
       <button class="btn-ghost">Ask a question</button>
     </div>
+    </div>
   </div>
 
-  <!-- NAPROXEN -->
-  <div class="rx-card">
+  <!-- ORAL MEDICATIONS -->
+  <div class="rx-cat">Oral medications</div>
+  <div class="rx-card rx-card-product">
+    <div class="rx-photo rx-photo-wide" style="flex:0 0 304px;padding:18px;overflow:hidden;min-height:256px;background:#fff"><img class="rx-photo-img" src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20Front%20Page/Naproxe-r1.png" alt="Clara Naproxen 500 mg" style="width:100%;height:100%;max-height:none;object-fit:contain;transform:scale(1.20);filter:none"></div>
+    <div class="rx-body">
     <div class="rx-header">
       <div>
         <div class="rx-name">Naproxen 500 mg</div>
@@ -715,10 +758,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <button class="btn-ghost">Pause</button>
       <button class="btn-ghost">Ask a question</button>
     </div>
+    </div>
   </div>
 
-  <!-- EDUCATION ADD-ON -->
-  <div class="rx-card" style="background:var(--sage-pale);border-color:var(--sage-soft)">
+  <!-- EXERCISE AND MOVEMENT -->
+  <div class="rx-cat">Exercise and movement</div>
+  <div class="rx-card rx-card-product" style="background:var(--sage-pale);border-color:var(--sage-soft)">
+    <div class="rx-photo rx-photo-wide" style="background:#EFE3D7;flex:0 0 304px;padding:0;overflow:hidden;min-height:256px"><img class="rx-photo-img" src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20Front%20Page/jane-movement-flipped.png" alt="Jane in a calm seated movement pose" style="width:100%;height:100%;max-height:none;object-fit:cover;transform:none;border-radius:16px;filter:none"></div>
+    <div class="rx-body">
     <div class="rx-header">
       <div>
         <div class="rx-name" style="color:var(--sage-dark)">Movement and physiotherapy plan</div>
@@ -732,6 +779,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     <p style="font-size:13.5px;color:var(--ink);line-height:1.6">Six components, all free: weight management, walking, swimming, leg strengthening, tai chi or yoga, and a physiotherapy referral guide. Open the Education tab for your week-by-week plan.</p>
     <div class="rx-actions" style="margin-top:14px">
       <button class="btn-secondary" data-tab="education">Open your plan  →</button>
+    </div>
     </div>
   </div>
 </div>
@@ -747,7 +795,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="msg-wrap">
     <div class="msg-list">
       <div class="msg-search"><input placeholder="🔍  Search messages..."/></div>
-      <div class="msg-item unread active">
+      <div class="msg-item active" data-thread="cn1">
         <div class="msg-avatar">CN</div>
         <div class="msg-info">
           <div class="msg-name">Dr. Collin Nguyen <span class="role">Physician</span></div>
@@ -755,7 +803,23 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         </div>
         <div class="msg-time">2h</div>
       </div>
-      <div class="msg-item">
+      <div class="msg-item unread" data-thread="sally">
+        <div class="msg-avatar gold">SR</div>
+        <div class="msg-info">
+          <div class="msg-name">Sally R. <span class="role">Nurse</span></div>
+          <div class="msg-preview">Your average pain dropped from 5.0 to 4.2 over two weeks, real progress...</div>
+        </div>
+        <div class="msg-time">5h</div>
+      </div>
+      <div class="msg-item unread" data-thread="kelly">
+        <div class="msg-avatar plum">KT</div>
+        <div class="msg-info">
+          <div class="msg-name">Kelly T. <span class="role">Coordinator</span></div>
+          <div class="msg-preview">Good news, your compound cream shipped today and is on its way...</div>
+        </div>
+        <div class="msg-time">Tue</div>
+      </div>
+      <div class="msg-item" data-thread="jenny">
         <div class="msg-avatar terra">JR</div>
         <div class="msg-info">
           <div class="msg-name">Jenny R. <span class="role">Pharmacist</span></div>
@@ -763,16 +827,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         </div>
         <div class="msg-time">Mon</div>
       </div>
-      <div class="msg-item">
-        <div class="msg-avatar">EM</div>
+      <div class="msg-item" data-thread="emma">
+        <div class="msg-avatar teal">EM</div>
         <div class="msg-info">
           <div class="msg-name">Emma M. <span class="role">Care coach</span></div>
           <div class="msg-preview">Quick check-in, how is the strengthening routine going this week?</div>
         </div>
         <div class="msg-time">May 20</div>
       </div>
-      <div class="msg-item">
-        <div class="msg-avatar terra">CN</div>
+      <div class="msg-item" data-thread="cn2">
+        <div class="msg-avatar">CN</div>
         <div class="msg-info">
           <div class="msg-name">Dr. Collin Nguyen <span class="role">Physician</span></div>
           <div class="msg-preview">Your plan is approved. Welcome to Clara, here is what to expect over the first 4 weeks.</div>
@@ -782,21 +846,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     </div>
 
     <div class="msg-thread">
-      <div class="msg-thread-header">
-        <div class="msg-avatar">CN</div>
-        <div>
-          <div style="font-weight:700;font-size:14px">Dr. Collin Nguyen</div>
-          <div style="font-size:12px;color:var(--muted)">Family physician, Clara  ·  Online now</div>
-        </div>
-      </div>
-      <div class="msg-thread-body">
-        <div class="bubble you">Hi Dr. Nguyen, quick question. Should I take the naproxen with breakfast or wait until after my walk?</div>
-        <div class="bubble-meta">You  ·  3:42 PM</div>
-        <div class="bubble them">Great question, Sarah. Yes, taking naproxen with breakfast is fine. The food helps protect your stomach from irritation, which is the main concern with anti-inflammatories like naproxen.</div>
-        <div class="bubble them">If you can take it about 30 minutes before your walk, that timing is ideal. The medication will be at peak effect by the time you finish walking, which is when most people notice the most knee discomfort.</div>
-        <div class="bubble them">Let me know how it goes this week.</div>
-        <div class="bubble-meta">Dr. Collin Nguyen  ·  5:14 PM  ·  Read</div>
-      </div>
+      <div class="msg-thread-header" id="threadHeader"></div>
+      <div class="msg-thread-body" id="threadBody"></div>
       <div class="msg-compose">
         <input placeholder="Type a message..."/>
         <button class="msg-send">→</button>
@@ -1067,6 +1118,16 @@ tabs.forEach(t => {
   });
 });
 
+// Open a specific tab when arriving via URL hash (e.g. ...#education)
+function openTabFromHash(){
+  const h=(location.hash||'').replace('#','');
+  if(!h) return;
+  const tab=document.querySelector('.nav-tab[data-tab="'+h+'"]');
+  if(tab) tab.click();
+}
+window.addEventListener('hashchange', openTabFromHash);
+openTabFromHash();
+
 // Pain scale
 document.querySelectorAll('#scale .scale-num').forEach(n => {
   n.addEventListener('click', () => {
@@ -1075,6 +1136,180 @@ document.querySelectorAll('#scale .scale-num').forEach(n => {
   });
 });
 
+// Pain chart: data-driven curve that redraws per range, plus hover scrubber (stock-chart style)
+(function(){
+  const svg = document.querySelector('#view-pain .chart-svg');
+  if (!svg) return;
+  const chart = svg.closest('.chart');
+  const line = document.getElementById('hoverLine');
+  const dot  = document.getElementById('hoverDot');
+  const tip  = document.getElementById('painTip');
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const TODAY = new Date(2026, 4, 28); // May 28, 2026
+  // Mock datasets, oldest to newest. In production these come from the patient's own check-ins.
+  const RANGES = {
+    'Week':  {label:'Last 7 days',    avg:'4.2', period:'this week',
+      pains:[5.0,5.0,4.5,4.0,4.0,3.5,3.0], days:6},
+    'Month': {label:'Last 30 days',   avg:'4.8', period:'past month',
+      pains:[6.0,5.5,6.5,7.0,6.0,6.5,5.0,5.5,4.5,5.0,4.0,4.5,3.5,4.0,3.0,3.5,3.0,2.5,3.0], days:30},
+    '6M':    {label:'Last 6 months',  avg:'5.5', period:'past 6 months',
+      pains:[7.0,6.5,7.0,6.5,6.0,6.5,6.0,5.5,6.0,5.5,5.5,5.0,5.5,5.0,4.5,5.0,4.5,4.0,4.5,4.0,3.5,4.0,3.5,3.0], days:182},
+    '1Y':    {label:'Last 12 months', avg:'6.1', period:'past year',
+      pains:[7.5,7.0,7.5,7.0,6.5,6.5,6.0,5.5,5.0,4.5,4.0,3.0], days:365}
+  };
+  let xs = [], ys = [], pains = [], dates = [];
+  const fmt = d => d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+
+  function render(key){
+    const cfg = RANGES[key], N = cfg.pains.length, x0 = 30, x1 = 570;
+    xs = []; ys = []; pains = cfg.pains.slice(); dates = [];
+    for (let i = 0; i < N; i++){
+      xs.push(+(x0 + (x1 - x0) * (N > 1 ? i/(N-1) : 0)).toFixed(2));
+      ys.push(+(200 - 20 * cfg.pains[i]).toFixed(2));
+      const d = new Date(TODAY); d.setDate(TODAY.getDate() - Math.round(cfg.days * (N-1-i) / (N-1 || 1)));
+      dates.push(i === N-1 ? 'Today' : fmt(d));
+    }
+    let p = 'M' + xs[0] + ',' + ys[0];
+    for (let i = 1; i < N; i++) p += ' L' + xs[i] + ',' + ys[i];
+    document.getElementById('linePath').setAttribute('d', p);
+    document.getElementById('areaPath').setAttribute('d', p + ' L' + xs[N-1] + ',200 L' + xs[0] + ',200 Z');
+    const mk = document.getElementById('markers'); mk.textContent = '';
+    const step = Math.max(1, Math.round(N/6));
+    for (let i = 0; i < N-1; i++){
+      if (i % step !== 0) continue;
+      const c = document.createElementNS(SVGNS, 'circle');
+      c.setAttribute('cx', xs[i]); c.setAttribute('cy', ys[i]); c.setAttribute('r', '4'); mk.appendChild(c);
+    }
+    ['todayHalo','todayDot'].forEach(id => {
+      const el = document.getElementById(id); el.setAttribute('cx', xs[N-1]); el.setAttribute('cy', ys[N-1]);
+    });
+    const xl = document.getElementById('xLabels'); xl.textContent = '';
+    [...new Set([0, Math.round((N-1)/3), Math.round(2*(N-1)/3), N-1])].forEach(i => {
+      const t = document.createElementNS(SVGNS, 'text');
+      t.setAttribute('x', Math.min(xs[i], 552)); t.setAttribute('y', '195');
+      t.setAttribute('fill', '#3F4540'); t.setAttribute('font-size', '10'); t.setAttribute('font-weight', '600');
+      t.textContent = dates[i]; xl.appendChild(t);
+    });
+    document.getElementById('chartRangeLabel').textContent = cfg.label;
+    document.getElementById('avgValue').textContent = cfg.avg;
+    document.getElementById('avgPeriod').textContent = cfg.period;
+    hideHover();
+  }
+
+  function showHover(i){
+    line.setAttribute('x1', xs[i]); line.setAttribute('x2', xs[i]); line.setAttribute('opacity','0.5');
+    dot.setAttribute('cx', xs[i]); dot.setAttribute('cy', ys[i]); dot.setAttribute('opacity','1');
+    const sr = svg.getBoundingClientRect(), cr = chart.getBoundingClientRect();
+    tip.style.left = ((sr.left - cr.left) + (xs[i]/600)*sr.width) + 'px';
+    tip.style.top  = ((sr.top  - cr.top ) + (ys[i]/200)*sr.height) + 'px';
+    tip.innerHTML = '<b>Pain ' + pains[i].toFixed(1) + '</b><span class="tip-date">' + dates[i] + '</span>';
+    tip.style.opacity = '1';
+  }
+  function hideHover(){ line.setAttribute('opacity','0'); dot.setAttribute('opacity','0'); tip.style.opacity='0'; }
+
+  svg.addEventListener('mousemove', e => {
+    if (!xs.length) return;
+    const r = svg.getBoundingClientRect();
+    const sx = ((e.clientX - r.left) / r.width) * 600;
+    let best = 0, bd = 1e9;
+    for (let i = 0; i < xs.length; i++){ const d = Math.abs(xs[i]-sx); if (d < bd){ bd = d; best = i; } }
+    showHover(best);
+  });
+  svg.addEventListener('mouseleave', hideHover);
+
+  document.querySelectorAll('#avgToggle .avg-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#avgToggle .avg-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      render(chip.textContent.trim());
+    });
+  });
+
+  render('Week');
+})();
+
+// Reason dropdowns: reveal the free-text note only when "Write your own..." is picked
+document.querySelectorAll('.checkin-meta .meta-input select').forEach(sel => {
+  const note = sel.parentElement.querySelector('.journal-input');
+  if (!note) return;
+  sel.addEventListener('change', () => {
+    if (sel.value === 'Write your own...') { note.style.display = 'block'; note.focus(); }
+    else { note.style.display = 'none'; }
+  });
+});
+
+// Messages: clickable conversations with their own threads
+(function(){
+  const THREADS = {
+    cn1:{name:'Dr. Collin Nguyen', sub:'Family physician, Clara  ·  Online now', av:'CN', cls:'', body:[
+      ['you','Hi Dr. Nguyen, quick question. Should I take the naproxen with breakfast or wait until after my walk?'],
+      ['meta','You  ·  3:42 PM'],
+      ['them','Great question, Sarah. Yes, taking naproxen with breakfast is fine. The food helps protect your stomach from irritation, which is the main concern with anti-inflammatories like naproxen.'],
+      ['them','If you can take it about 30 minutes before your walk, that timing is ideal. The medication will be at peak effect by the time you finish walking, which is when most people notice the most knee discomfort.'],
+      ['them','Let me know how it goes this week.'],
+      ['meta','Dr. Collin Nguyen  ·  5:14 PM  ·  Read']]},
+    sally:{name:'Sally R.', sub:'Registered nurse, Clara  ·  Online now', av:'SR', cls:'gold', body:[
+      ['them','Hi Sarah, this is Sally, your Clara nurse. I reviewed your pain check-ins from the past two weeks.'],
+      ['them','Your average pain dropped from 5.0 to 4.2, that is real progress and right on track for week 4. Keep logging daily, even on the good days, it helps Dr. Nguyen see the full picture.'],
+      ['meta','Sally R., RN  ·  9:10 AM'],
+      ['you','Thank you Sally! Mornings are still a bit stiff but walking helps.'],
+      ['meta','You  ·  9:32 AM'],
+      ['them','That is very common with knee OA. Try the gentle range of motion stretches in your Education tab before you get out of bed, and message me anytime.'],
+      ['meta','Sally R., RN  ·  9:40 AM  ·  Read']]},
+    kelly:{name:'Kelly T.', sub:'Patient coordinator, Clara  ·  Replies within a day', av:'KT', cls:'plum', body:[
+      ['them','Hi Sarah, Kelly here from the Clara care desk. Good news, your compound cream shipped today and is on its way.'],
+      ['them','Your tracking number is CLR-4471829. Most Ontario deliveries arrive in 2 to 3 business days.'],
+      ['meta','Kelly T.  ·  Tue 11:05 AM'],
+      ['you','Great, thank you! Will the next refill ship automatically?'],
+      ['meta','You  ·  Tue 2:18 PM'],
+      ['them','Yes. Your subscription auto ships every 30 days, and we email you 3 days before each shipment so you can pause or adjust. No action needed on your end.'],
+      ['meta','Kelly T.  ·  Tue 2:40 PM  ·  Read']]},
+    jenny:{name:'Jenny R.', sub:'Pharmacist, Clara  ·  Replies within a day', av:'JR', cls:'terra', body:[
+      ['them','Hi Sarah, Jenny from the Clara pharmacy. Your compound cream is being prepared now.'],
+      ['them','It will ship June 3 and I will send the tracking link here. A quick reminder, apply a thin layer and wash your hands after.'],
+      ['meta','Jenny R., Pharmacist  ·  Mon 10:02 AM'],
+      ['you','Sounds good, thanks Jenny.'],
+      ['meta','You  ·  Mon 10:20 AM  ·  Read']]},
+    emma:{name:'Emma M.', sub:'Care coach, Clara', av:'EM', cls:'teal', body:[
+      ['them','Quick check-in, how is the strengthening routine going this week?'],
+      ['meta','Emma M., Care coach  ·  May 20'],
+      ['you','Did the leg lifts 4 days so far. The wall sits are tough!'],
+      ['meta','You  ·  May 20'],
+      ['them','That is great consistency. Wall sits get easier fast, hold for 10 seconds and build up from there. Proud of you.'],
+      ['meta','Emma M., Care coach  ·  May 20  ·  Read']]},
+    cn2:{name:'Dr. Collin Nguyen', sub:'Family physician, Clara', av:'CN', cls:'', body:[
+      ['them','Your plan is approved. Welcome to Clara, Sarah. Here is what to expect over the first 4 weeks.'],
+      ['them','Weeks 1 to 2, start the cream and naproxen and begin gentle movement. Weeks 3 to 4, we review your pain trend together and adjust anything that needs it.'],
+      ['meta','Dr. Collin Nguyen  ·  May 1  ·  Read']]}
+  };
+  function renderThread(key){
+    const t = THREADS[key]; if (!t) return;
+    document.getElementById('threadHeader').innerHTML =
+      '<div class="msg-avatar ' + t.cls + '">' + t.av + '</div>' +
+      '<div><div style="font-weight:700;font-size:14px">' + t.name + '</div>' +
+      '<div style="font-size:12px;color:var(--muted)">' + t.sub + '</div></div>';
+    document.getElementById('threadBody').innerHTML = t.body.map(b =>
+      b[0] === 'meta' ? '<div class="bubble-meta">' + b[1] + '</div>'
+                      : '<div class="bubble ' + b[0] + '">' + b[1] + '</div>'
+    ).join('');
+  }
+  const badge = document.getElementById('msgBadge');
+  function refreshBadge(){
+    const n = document.querySelectorAll('#view-messages .msg-item.unread').length;
+    if (badge){ badge.textContent = n; badge.style.display = n ? 'inline-flex' : 'none'; }
+  }
+  document.querySelectorAll('#view-messages .msg-item').forEach(it => {
+    it.addEventListener('click', () => {
+      document.querySelectorAll('#view-messages .msg-item').forEach(x => x.classList.remove('active'));
+      it.classList.add('active'); it.classList.remove('unread');
+      renderThread(it.dataset.thread);
+      refreshBadge();
+    });
+  });
+  renderThread('cn1');
+  refreshBadge();
+})();
+
 // Close dropdown on outside click
 document.addEventListener('click', e => {
   const drop = document.getElementById('avatarDrop');
@@ -1082,52 +1317,5 @@ document.addEventListener('click', e => {
 });
 </script>
 
-
-<style id="clara-gate-style">
-#clara-gate-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#1F3329 0%,#2F473B 100%);z-index:99999;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif}
-#clara-gate-box{background:#F7F5F0;border-radius:24px;padding:48px 44px;box-shadow:0 30px 80px rgba(0,0,0,.4);max-width:420px;width:90%;text-align:center}
-#clara-gate-box .logo{font-family:Georgia,serif;font-weight:700;font-size:38px;color:#4A6B5B;margin-bottom:6px}
-#clara-gate-box .sub{font-family:Georgia,serif;font-style:italic;color:#5A615D;margin-bottom:32px;font-size:14px;line-height:1.5}
-#clara-gate-box input{width:100%;padding:14px 18px;border:1.5px solid #D9D4CA;border-radius:14px;font-size:15px;font-family:Arial,sans-serif;background:#fff;color:#1F2421;margin-bottom:14px;outline:none;transition:border-color .15s}
-#clara-gate-box input:focus{border-color:#4A6B5B}
-#clara-gate-box button{width:100%;padding:14px;background:#4A6B5B;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:Arial,sans-serif;transition:background .15s}
-#clara-gate-box button:hover{background:#2F473B}
-#clara-gate-err{color:#A35540;font-size:12.5px;margin-top:10px;height:18px;font-family:Arial,sans-serif}
-#clara-gate-foot{margin-top:24px;font-size:11.5px;color:#8A908B;font-family:Arial,sans-serif;font-style:italic}
-</style>
-<div id="clara-gate-overlay">
-  <div id="clara-gate-box">
-    <div class="logo">clara</div>
-    <div class="sub">This wireframe is for the Clara internal team and trusted advisors. Enter the password to continue.</div>
-    <input id="clara-gate-input" type="password" placeholder="Password" autofocus />
-    <button onclick="claraGateCheck()">Continue</button>
-    <div id="clara-gate-err"></div>
-    <div id="clara-gate-foot">clara · Clara Relief Inc. · confidential</div>
-  </div>
-</div>
-<script>
-(function(){
-  var PW = "clara2026";
-  if (localStorage.getItem("claraGateOpen") === "yes") {
-    document.getElementById("clara-gate-overlay").style.display = "none";
-    return;
-  }
-  document.body.style.overflow = "hidden";
-  window.claraGateCheck = function(){
-    var v = document.getElementById("clara-gate-input").value;
-    if (v === PW){
-      localStorage.setItem("claraGateOpen","yes");
-      document.getElementById("clara-gate-overlay").remove();
-      document.body.style.overflow = "";
-    } else {
-      document.getElementById("clara-gate-err").textContent = "Incorrect password. Try again.";
-      document.getElementById("clara-gate-input").value = "";
-    }
-  };
-  document.getElementById("clara-gate-input").addEventListener("keydown", function(e){
-    if (e.key === "Enter") claraGateCheck();
-  });
-})();
-</script>
 </body>
 </html>
