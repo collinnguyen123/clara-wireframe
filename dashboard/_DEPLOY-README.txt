@@ -1,4 +1,5 @@
-clara dashboard deploy bundle, rebuilt June 10, 2026 (Session 18)
-Built from Technology/Wireframes working files. Contents: index.html (the dashboard), the seven education pages with web sized images (1600px) and the compressed how to apply video, the three condition assessment quizzes (Migraine, Back Pain, Neuropathic) with Back to your dashboard links, and the card photo folders (Pain Tracker, Home (dashboard), Get Care).
-New since the June 7 deploy: check-in save and resume, treatment start date gate with calendar, percent complete, required answers, monthly summary, key word highlights, photo heroes on check-in and condition cards everywhere, custom icon set on Get Care, quiz round trip navigation.
-Deploy: drag the CONTENTS of this folder into Documents/GitHub/clara-wireframe/dashboard (Replace when asked), then GitHub Desktop: commit to main, push origin. Live in about a minute at collinnguyen123.github.io/clara-wireframe/dashboard/
+clara deploy bundle, rebuilt June 10, 2026 (Session 18, second push)
+Contents: index.html (patient dashboard), outcomes.html (clinician outcomes console, NEW), seven education pages (1600px images, compressed video), three assessment quizzes with back links, card photo folders.
+New since the morning push: daily check-in split to one question per screen, redesigned For you today icons (clara bottle, knee, refill, doctor) with Clara Clinician retitle, larger icons site wide, How to Use video lightbox on the cream card, Movement plan card clickable, save progress polish, and the clinician outcomes console at outcomes.html (V1 toolkit scope, info popovers, color coded comparisons, structured clinical summary).
+Deploy: drag CONTENTS into Documents/GitHub/clara-wireframe/dashboard (Replace), GitHub Desktop commit + push.
+Live: collinnguyen123.github.io/clara-wireframe/dashboard/ and .../dashboard/outcomes.html

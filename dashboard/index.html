@@ -99,7 +99,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .action-icon.terra{background:var(--terra-soft);color:var(--terra-deep)}
 .action-icon.gold{background:#F5EBD8;color:#8A6F2F}
 .action-icon.plum{background:#EAE0EC;color:var(--plum)}
-.action-icon.illus{background:none;width:70px;height:70px}
+.action-icon.illus{background:none;width:100px;height:100px}
+.action-icon.illus.sm{width:82px;height:82px}
 .action-icon.illus svg{width:100%;height:100%;display:block}
 .action-content{flex:1;min-width:0}
 .action-title{font-weight:600;font-size:14px;color:var(--ink);margin-bottom:2px}
@@ -198,6 +199,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ============== MY RX ============== */
 .rx-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:16px;transition:box-shadow .2s}
 .rx-card:hover{box-shadow:var(--shadow)}
+.rx-card-link{cursor:pointer;transition:all .15s}
+.rx-actions [data-video]{transition:all .15s;cursor:pointer}
+.rx-actions [data-video]:hover{box-shadow:0 0 0 3px var(--sage),0 14px 30px rgba(47,71,59,.24);transform:translateY(-3px);background:var(--sage) !important;border-color:var(--sage) !important}
+.rx-card-link:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
 .rx-cat{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--ink);margin:30px 0 12px}
 .rx-card-product{display:flex;gap:28px;align-items:center}
 .rx-photo{flex:0 0 215px;display:flex;align-items:center;justify-content:center;align-self:stretch;background:linear-gradient(160deg,#F2F6F3,#E4ECE6);border:1px solid var(--line);border-radius:16px;padding:16px}
@@ -227,6 +232,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .btn-secondary{background:#fff;color:var(--sage-dark);border:1px solid var(--sage);padding:9px 18px;border-radius:22px;font-size:12.5px;font-weight:600;transition:all .15s}
 .btn-secondary:hover{background:var(--sage-pale)}
 .btn-ghost{background:transparent;color:var(--grey);padding:9px 14px;border-radius:22px;font-size:12.5px;font-weight:500;transition:color .15s}
+.vid-overlay{position:fixed;inset:0;background:rgba(31,36,33,.66);display:none;align-items:center;justify-content:center;z-index:300;padding:24px}
+.vid-overlay.open{display:flex}
+.vid-box{background:#fff;border-radius:20px;padding:18px;max-width:880px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative}
+.vid-box video{width:100%;border-radius:12px;display:block;background:#000}
+.vid-close{position:absolute;top:-14px;right:-14px;width:40px;height:40px;border-radius:50%;background:var(--sage-dark);color:#fff;font-size:21px;line-height:1;border:none;cursor:pointer;box-shadow:var(--shadow)}
+.vid-close:hover{background:var(--terra)}
+.vid-caption{margin-top:10px;font-size:14.5px;font-weight:600;color:var(--sage-dark);text-align:center}
 .btn-ghost:hover{color:var(--ink)}
 .cream-ladder{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
 .cream-step{background:var(--cream-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12px}
@@ -389,7 +401,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="section-label">For you, today</div>
   <div class="grid-2">
     <div class="action-card" data-tab="rx">
-      <div class="action-icon terra">💊</div>
+      <div class="action-icon illus sm"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M7 44 V28 C7 18.6 14.6 11 24 11 s17 7.6 17 17 v16 z" fill="#EFE9DD"/><rect x="22.6" y="6.5" width="2.8" height="5" fill="#5E8270"/><path d="M18.5 6.5 h7 a1.6 1.6 0 0 1 0 3.2 h-1.5 z" fill="#5E8270"/><rect x="20.8" y="11" width="6.4" height="3.4" rx="1" fill="#8FAE9B"/><path d="M16.5 17.5 a4 4 0 0 1 4-4 h7 a4 4 0 0 1 4 4 l.5 18 a4.5 4.5 0 0 1-4.5 4.5 h-7 a4.5 4.5 0 0 1-4.5-4.5 z" fill="#FBF8F1" stroke="#E3DCCB" stroke-width=".8"/><rect x="17.8" y="22" width="12.4" height="10" rx="2" fill="#F7F5F0" stroke="#E8E2D2" stroke-width=".6"/><text x="24" y="28.6" font-family="Georgia, serif" font-style="italic" font-weight="bold" font-size="4.6" fill="#2F473B" text-anchor="middle">clara</text></svg></div>
       <div class="action-content">
         <div class="action-title">Apply your Clara cream this morning</div>
         <div class="action-meta">C2 Standard  ·  thin layer to right knee  ·  reminder in 30 min</div>
@@ -397,7 +409,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="action-arrow">→</div>
     </div>
     <a href="Education%20Section%20(Knee%20OA%20Pain)/Understanding%20Your%20Knee%20Osetoarthritis/Understanding-Knee-OA.html" class="action-card" style="text-decoration:none;color:inherit">
-      <div class="action-icon sage">📘</div>
+      <div class="action-icon illus sm"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="h2s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B4CABB"/><stop offset="1" stop-color="#6F947F"/></linearGradient><linearGradient id="h2t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D98E6F"/><stop offset="1" stop-color="#B25F45"/></linearGradient></defs><path d="M7 44 V28 C7 18.6 14.6 11 24 11 s17 7.6 17 17 v16 z" fill="#EFE9DD"/><path d="M11 17 L25 26.5 L20.5 41" stroke="url(#h2s)" stroke-width="9.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="27.5" cy="27" r="5" fill="url(#h2t)"/><circle cx="29.2" cy="25.2" r="1.3" fill="#fff"/><path d="M35.5 21.5 l3-3 M37 27 h4 M35.5 32.5 l3 3" stroke="#C97257" stroke-width="1.7" stroke-linecap="round"/></svg></div>
       <div class="action-content">
         <div class="action-title">Understanding your knee osteoarthritis</div>
         <div class="action-meta">Your 8 minute guide  ·  what helps, and why movement matters</div>
@@ -405,7 +417,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="action-arrow">→</div>
     </a>
     <div class="action-card" data-tab="rx">
-      <div class="action-icon gold">⏳</div>
+      <div class="action-icon illus sm"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="h3s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B4CABB"/><stop offset="1" stop-color="#6F947F"/></linearGradient><linearGradient id="h3t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D98E6F"/><stop offset="1" stop-color="#B25F45"/></linearGradient></defs><path d="M7 44 V28 C7 18.6 14.6 11 24 11 s17 7.6 17 17 v16 z" fill="#EFE9DD"/><rect x="15" y="17" width="16" height="23" rx="5" fill="url(#h3s)"/><rect x="17" y="12" width="12" height="7" rx="2.5" fill="#5E8270"/><rect x="18" y="25" width="10" height="9" rx="2" fill="#F7F5F0" opacity=".92"/><circle cx="35" cy="13" r="8.5" fill="url(#h3t)"/><path d="M35 8.8 a4.2 4.2 0 1 0 4.2 4.2" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round"/><path d="M37.4 6.6 l3.8 1.7 -1.9 3.6 z" fill="#fff"/><circle cx="40.4" cy="7.6" r="1.5" fill="#fff"/></svg></div>
       <div class="action-content">
         <div class="action-title">Cream refill ships in 6 days</div>
         <div class="action-meta">No action needed  ·  arriving June 3</div>
@@ -413,9 +425,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="action-arrow">→</div>
     </div>
     <div class="action-card" data-tab="messages">
-      <div class="action-icon plum">✉</div>
+      <div class="action-icon illus sm"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="h4s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B4CABB"/><stop offset="1" stop-color="#6F947F"/></linearGradient><linearGradient id="h4t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D98E6F"/><stop offset="1" stop-color="#B25F45"/></linearGradient></defs><path d="M7 44 V28 C7 18.6 14.6 11 24 11 s17 7.6 17 17 v16 z" fill="#EFE9DD"/><path d="M11 44 c0-7.6 5.8-11.6 13-11.6 s13 4 13 11.6 z" fill="#FBF8F1"/><path d="M19.5 33.2 L24 40 l4.5-6.8 c-1.4-.5-2.9-.8-4.5-.8 s-3.1.3-4.5.8 z" fill="url(#h4s)"/><circle cx="24" cy="23" r="7.6" fill="#EFD3B3"/><path d="M16.4 22.6 a7.6 7.6 0 0 1 15.2 0 c0-.8-.3-7-7.6-7 s-7.6 6.2-7.6 7 z" fill="#5A5247"/><path d="M18.6 37 c0 3.4 2.3 5.4 5.4 5.4 2.6 0 4.6-1.5 5.2-3.9" stroke="#3E5A4B" stroke-width="1.7" fill="none" stroke-linecap="round"/><circle cx="29.6" cy="38" r="2" fill="#3E5A4B"/><circle cx="29.6" cy="38" r=".9" fill="#FBF8F1"/><path d="M33.5 3.5 h7 a4.3 4.3 0 0 1 4.3 4.3 v3 a4.3 4.3 0 0 1-4.3 4.3 h-3.2 l-4.6 4.2 .6-4.4 a4.3 4.3 0 0 1-4.1-4.1 v-3 a4.3 4.3 0 0 1 4.3-4.3 z" fill="url(#h4t)"/><circle cx="34.6" cy="9.3" r="1.35" fill="#fff"/><circle cx="38.4" cy="9.3" r="1.35" fill="#fff"/><circle cx="42.2" cy="9.3" r="1.35" fill="#fff"/><circle cx="44" cy="4.6" r="1.4" fill="#fff"/></svg></div>
       <div class="action-content">
-        <div class="action-title">Dr. Nguyen replied to your message</div>
+        <div class="action-title">New message from your Clara Clinician</div>
         <div class="action-meta">about naproxen timing  ·  2 hours ago</div>
       </div>
       <div class="action-arrow">→</div>
@@ -728,7 +740,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <p style="color:var(--terra-deep);font-weight:600">Give it a fair 4 to 6 week trial. Most people get partial relief, not zero pain.</p>
     </div>
     <div class="rx-actions">
-      <button class="btn-secondary">Full guide</button>
+      <button class="btn-secondary" data-video style="background:var(--sage-dark);color:#fff;border-color:var(--sage-dark)">▶&nbsp; How to Use</button>
+      <button class="btn-secondary" onclick="location.href='Education%20Section%20(Knee%20OA%20Pain)/Why%20a%20Compound%20Cream/Why-a-Compound-Cream.html'">Full guide</button>
       <button class="btn-ghost">Pause subscription</button>
       <button class="btn-ghost">Ask a question</button>
     </div>
@@ -770,7 +783,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
   <!-- EXERCISE AND MOVEMENT -->
   <div class="rx-cat">Exercise and movement</div>
-  <div class="rx-card rx-card-product" style="background:var(--sage-pale);border-color:var(--sage-soft)">
+  <div class="rx-card rx-card-product rx-card-link" data-tab="education" style="background:var(--sage-pale);border-color:var(--sage-soft)">
     <div class="rx-photo rx-photo-wide" style="background:#EFE3D7;flex:0 0 304px;padding:0;overflow:hidden;min-height:256px"><img class="rx-photo-img" src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20Front%20Page/jane-movement-flipped.png" alt="Jane in a calm seated movement pose" style="width:100%;height:100%;max-height:none;object-fit:cover;transform:none;border-radius:16px;filter:none"></div>
     <div class="rx-body">
     <div class="rx-header">
@@ -1401,6 +1414,15 @@ document.addEventListener('click', e => {
 });
 </script>
 
+<!-- ===================== HOW TO USE VIDEO (lightbox) ===================== -->
+<div class="vid-overlay" id="vidOverlay" aria-hidden="true">
+  <div class="vid-box">
+    <button class="vid-close" id="vidClose" aria-label="Close video">&times;</button>
+    <video id="howtoVideo" controls preload="none" src="Education%20Section%20(Knee%20OA%20Pain)/Why%20a%20Compound%20Cream/How-to-apply-demo.mp4"></video>
+    <div class="vid-caption">How to apply your clara compound cream</div>
+  </div>
+</div>
+
 <!-- ===================== OUTCOMES CHECK-IN (integrated modal) ===================== -->
 <style>
 .checkin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
@@ -1557,7 +1579,9 @@ document.addEventListener('click', e => {
   {t:'welcome'},
   {t:'stage',stage:'daily',kv:'Under 1 minute',title:'Your daily check-in',body:'A few seconds today builds the picture your care team needs. The most useful thing you can do is tell us your pain each day. Your exercise and cream are logged for you automatically.'},
   {t:'tool',stage:'daily',id:'nprs',kind:'slider',max:10,ask:'What is your <span class="ct-key">knee pain</span> today?',sub:'0 = no pain at all, 10 = the worst pain you can imagine',lo:'No pain',mid:'Moderate',hi:'Worst pain',why:'One tap a day draws the trend line your doctor watches. It is the clearest signal of what is actually helping you.'},
-  {t:'tool',stage:'daily',id:'logday',kind:'checkoff',ask:'Log <span class="ct-key">your plan</span> for today',sub:'A quick tap to record what you did. It takes a few seconds and powers your progress tracking.',why:'Checking these off each day shows your team you are doing the plan, and doing the plan is the strongest predictor of feeling better.'},
+  {t:'tool',stage:'daily',id:'exercise',kind:'segq',ask:'Did you do your knee <span class="ct-key">exercises</span> today?',sub:'A quick tap to record what you did. It takes a few seconds and powers your progress tracking.',opts:[['yes','Yes, done'],['no','Not yet']],why:'Checking these off each day shows your team you are doing the plan, and doing the plan is the strongest predictor of feeling better.'},
+  {t:'tool',stage:'daily',id:'cream',kind:'segq',ask:'Did you apply your compound <span class="ct-key">cream</span> today?',opts:[['0','Not yet'],['1','1 time'],['2','2 times'],['3','3 times']]},
+  {t:'tool',stage:'daily',id:'medsTaken',kind:'segq',ask:'Did you take your <span class="ct-key">medications</span> today?',opts:[['yes','Yes'],['no','Not yet'],['none','None prescribed']]},
   {t:'tool',stage:'daily',id:'eng',kind:'auto',why:'Here is your plan logged for today. Your team sees this snapshot, so they know you are sticking with it.'},
   {t:'celebrate',stage:'daily',end:true,streak:'28 days in a row',headline:'You showed up for yourself today',body:'Every check-in adds another detail to the picture your doctor uses to personalise your care. The more you track, the more precisely your team can fine tune your plan, spot exactly what is helping, and keep your pain heading the right way. Small taps today, a clearer path tomorrow.',closer:'Same time tomorrow? Your future self will thank you.'},
   {t:'stage',stage:'monthly',kv:'About 2 minutes',title:'Your monthly check-in',body:'Once a month we ask a little more, so your doctor can see not just your pain, but how it affects your life, your sleep, your medications, and how you feel overall.'},
@@ -1632,11 +1656,25 @@ document.addEventListener('click', e => {
  function open(stage){const sv=localStorage.getItem(SAVEK(stage));if(sv){try{const s=JSON.parse(sv);Object.assign(ans,s.ans||{});openAt(s.i0??(stageStart[stage]??0),s.i);return;}catch(e){}}openAt(stageStart[stage]??0);}
  function close(){const s=FLOW[i];if(!(s&&(s.end||i===FLOW.length-1)))saveProgress();ov.classList.remove('open');ov.setAttribute('aria-hidden','true');document.body.style.overflow='';cardStates();}
  document.querySelectorAll('.checkin-card').forEach(c=>{const go=()=>open(c.dataset.checkin);c.addEventListener('click',go);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});
- const sd=document.getElementById('startDaily');if(sd)sd.addEventListener('click',()=>{const sel=document.querySelector('#scale .scale-num.selected');if(sel)ans.nprs=+sel.dataset.val;openAt(FLOW.findIndex(s=>s.id==='logday'));});
+ const sd=document.getElementById('startDaily');if(sd)sd.addEventListener('click',()=>{const sel=document.querySelector('#scale .scale-num.selected');if(sel)ans.nprs=+sel.dataset.val;openAt(FLOW.findIndex(s=>s.id==='exercise'));});
  document.getElementById('ctClose').addEventListener('click',close);
  ov.addEventListener('click',e=>{if(e.target===ov)close();});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('open'))close();});
  cardStates();
+})();
+
+// How to Use video lightbox (runs after the overlay markup exists)
+(function(){
+ const vidOv = document.getElementById('vidOverlay'), vidEl = document.getElementById('howtoVideo'), vidX = document.getElementById('vidClose');
+ if (!vidOv || !vidEl || !vidX) return;
+ document.querySelectorAll('[data-video]').forEach(b => b.addEventListener('click', e => {
+   e.stopPropagation();
+   vidOv.classList.add('open'); vidOv.setAttribute('aria-hidden','false'); vidEl.play();
+ }));
+ function vidShut(){ vidOv.classList.remove('open'); vidOv.setAttribute('aria-hidden','true'); vidEl.pause(); }
+ vidX.addEventListener('click', vidShut);
+ vidOv.addEventListener('click', e => { if (e.target === vidOv) vidShut(); });
+ document.addEventListener('keydown', e => { if (e.key === 'Escape' && vidOv.classList.contains('open')) vidShut(); });
 })();
 </script>
 
