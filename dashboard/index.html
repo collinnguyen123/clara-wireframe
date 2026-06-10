@@ -1649,11 +1649,11 @@ document.addEventListener('click', e => {
  }
  const SAVEK=st=>'claraCheckinSave_'+st;
  function runStage(){const s=FLOW[i0];return s?s.stage:null;}
- function saveProgress(){const st=runStage();if(st==='monthly'||st==='quarterly')localStorage.setItem(SAVEK(st),JSON.stringify({i:i,i0:i0,ans:ans}));}
+ function saveProgress(){const st=runStage();if(st==='monthly'||st==='quarterly')localStorage.setItem(SAVEK(st),JSON.stringify({v:2,id:FLOW[i]&&FLOW[i].id||null,ans:ans}));}
  function clearProgress(){const st=runStage();if(st)localStorage.removeItem(SAVEK(st));}
  function cardStates(){if(window.claraRefreshDue)window.claraRefreshDue();['monthly','quarterly'].forEach(st=>{const card=document.querySelector('[data-checkin="'+st+'"]');if(!card)return;const pill=card.querySelector('.ci-pill'),go=card.querySelector('.ci-go');if(localStorage.getItem(SAVEK(st))){if(pill){pill.textContent='In progress';pill.classList.add('ci-now');}if(go)go.textContent='Resume →';}else{if(go)go.textContent='Start →';}});}
  function openAt(idx,at){i0=idx;i=(at==null?idx:at);ov.classList.add('open');ov.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';render();}
- function open(stage){const sv=localStorage.getItem(SAVEK(stage));if(sv){try{const s=JSON.parse(sv);Object.assign(ans,s.ans||{});openAt(s.i0??(stageStart[stage]??0),s.i);return;}catch(e){}}openAt(stageStart[stage]??0);}
+ function open(stage){const sv=localStorage.getItem(SAVEK(stage));if(sv){try{const s=JSON.parse(sv);if(s&&s.v===2){Object.assign(ans,s.ans||{});const base=stageStart[stage]??0;let at=base;if(s.id){const k=FLOW.findIndex(x=>x.stage===stage&&x.id===s.id);if(k>=0)at=k;}openAt(base,at);return;}localStorage.removeItem(SAVEK(stage));}catch(e){localStorage.removeItem(SAVEK(stage));}}openAt(stageStart[stage]??0);}
  function close(){const s=FLOW[i];if(!(s&&(s.end||i===FLOW.length-1)))saveProgress();ov.classList.remove('open');ov.setAttribute('aria-hidden','true');document.body.style.overflow='';cardStates();}
  document.querySelectorAll('.checkin-card').forEach(c=>{const go=()=>open(c.dataset.checkin);c.addEventListener('click',go);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});
  const sd=document.getElementById('startDaily');if(sd)sd.addEventListener('click',()=>{const sel=document.querySelector('#scale .scale-num.selected');if(sel)ans.nprs=+sel.dataset.val;openAt(FLOW.findIndex(s=>s.id==='exercise'));});
