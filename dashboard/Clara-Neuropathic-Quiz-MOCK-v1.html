@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>clara: Neuropathic Pain Quiz · MOCK v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f7f5f0; --cream-soft:#fbf9f4; --cream-deep:#ece8df;
+  --ink:#1f2421; --ink-soft:#5a615d; --ink-muted:#8a908b;
+  --accent:#4a6b5b; --accent-soft:#d9e4dc; --accent-pale:#eef3ee;
+  --warm:#c97257; --warm-soft:#f4dfd5; --warm-pale:#fbf2ed; --warm-deep:#a35540;
+  --line:#e8e4dc; --line-strong:#d4cfc4;
+  --shadow:0 1px 2px rgba(31,36,33,0.04),0 4px 16px rgba(31,36,33,0.06);
+  --shadow-hover:0 2px 4px rgba(31,36,33,0.06),0 8px 24px rgba(31,36,33,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--cream);color:var(--ink);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;min-height:100vh;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.95);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1100px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+.dash-back{margin-left:18px;margin-right:auto;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:#4A6B5B;text-decoration:none;border:1.5px solid #DDE5DF;background:#fff;padding:7px 14px;border-radius:20px;position:relative;top:3px;transition:all .15s}
+.dash-back:hover{border-color:#4A6B5B;box-shadow:0 0 0 3px #4A6B5B,0 14px 30px rgba(47,71,59,.22);transform:translateY(-2px);background:#EAF1ED;color:#2F473B}
+.logo{font-family:'Inter',sans-serif;font-weight:800;font-size:32px;letter-spacing:-0.045em;color:var(--ink);text-transform:lowercase;text-decoration:none;cursor:pointer;transition:color 0.15s;}
+.logo:hover{color:var(--accent);}
+.progress-pill{display:flex;align-items:center;gap:16px;background:var(--cream-soft);border:1px solid var(--line);border-radius:999px;padding:6px 18px;font-size:14px;color:var(--ink-soft);}
+.back-btn{width:32px;height:32px;background:var(--cream-deep);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink);transition:background 0.15s;}
+.back-btn:hover{background:var(--line-strong);}
+.progress-step{font-weight:500;color:var(--ink);}
+.progress-divider{color:var(--ink-muted);}
+.progress-percent{display:flex;align-items:center;gap:8px;color:var(--ink-muted);font-size:13px;}
+.progress-circle{width:18px;height:18px;border:2px solid var(--line-strong);border-top-color:var(--accent);border-radius:50%;}
+.help-link{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-soft);text-decoration:none;}
+.help-link:hover{color:var(--ink);}
+
+.hero{max-width:1100px;margin:0 auto;padding:80px 32px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.hero-content{padding:24px 0;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--warm-deep);font-size:14px;font-weight:600;margin-bottom:18px;}
+.hero-eyebrow-mark{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--warm);}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:500;line-height:1.08;letter-spacing:-0.02em;margin-bottom:24px;}
+.hero h1 .t-nw{white-space:nowrap;}
+.hero p{font-size:18px;color:var(--ink-soft);margin-bottom:18px;max-width:480px;}
+.hero-note{background:var(--warm-pale);border-left:3px solid var(--warm);border-radius:8px;padding:14px 18px;font-size:14px;line-height:1.55;color:var(--ink-soft);max-width:480px;margin-bottom:30px;}
+.hero-note strong{color:var(--warm-deep);}
+.btn-primary{background:var(--ink);color:var(--cream);padding:16px 36px;border-radius:999px;font-size:16px;font-weight:500;display:inline-flex;align-items:center;gap:10px;transition:all 0.2s;}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-hover);}
+.hero-visual{height:480px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.pillpack-svg{width:100%;height:auto;display:block;max-width:480px;}
+.hero-caption{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:30px;color:#2c4234;text-align:center;margin-top:14px;}
+.hero-subcaption{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:26px;color:var(--ink-soft);text-align:center;margin-top:-4px;}
+
+.quiz-screen{display:none;}
+.quiz-screen.active{display:block;animation:fadeIn 0.25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.quiz-container{max-width:720px;margin:0 auto;padding:48px 32px 80px;}
+.quiz-question{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;line-height:1.15;letter-spacing:-0.01em;margin-bottom:16px;color:var(--ink);}
+.quiz-question-sub{font-size:16px;color:var(--ink-soft);margin-bottom:32px;}
+.why-ask{background:var(--accent-pale);border-left:3px solid var(--accent);border-radius:8px;padding:16px 20px;margin-bottom:28px;font-size:14px;line-height:1.6;color:var(--ink-soft);}
+.why-ask-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--accent);margin-bottom:6px;margin-right:10px;text-transform:uppercase;}
+.opt-stack{display:flex;flex-direction:column;gap:10px;}
+.opt{background:var(--cream-soft);border:1.5px solid var(--line);border-radius:14px;padding:20px 24px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:16px;color:var(--ink);}
+.opt:hover{border-color:var(--accent);background:var(--accent-pale);}
+.opt.selected{border-color:var(--accent);background:var(--accent-pale);box-shadow:inset 0 0 0 1.5px var(--accent);}
+.opt-arrow{color:var(--ink-muted);font-size:18px;flex-shrink:0;}
+.opt:hover .opt-arrow{color:var(--accent);}
+.opt.multi{padding-left:56px;position:relative;}
+.opt.multi::before{content:"";position:absolute;left:24px;top:50%;transform:translateY(-50%);width:22px;height:22px;border:1.5px solid var(--line-strong);border-radius:6px;background:white;transition:all 0.15s;}
+.opt.multi.selected::before{background:var(--accent);border-color:var(--accent);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path d='M6 11L3 8l1-1 2 2 5-5 1 1z'/></svg>");background-size:16px;background-repeat:no-repeat;background-position:center;}
+.opt-sub{font-size:13px;color:var(--ink-muted);margin-top:4px;line-height:1.4;}
+.opt-content{flex:1;}
+.opt-escape{margin-top:24px;width:100%;background:var(--ink);color:var(--cream);border-radius:14px;padding:20px 24px;font-size:16px;cursor:pointer;transition:all 0.15s;font-family:inherit;}
+.opt-escape:hover{background:var(--accent);}
+.other-allergy-input{width:100%;box-sizing:border-box;padding:14px 18px;border:1.5px solid var(--line-strong);border-radius:12px;font-family:inherit;font-size:15px;color:var(--ink);background:#fff;margin-top:2px;}
+.other-allergy-input:focus{outline:none;border-color:var(--accent);}
+.other-allergy-input::placeholder{color:var(--ink-muted);}
+.continue-row{margin-top:32px;display:flex;justify-content:space-between;align-items:center;}
+.btn-continue{background:var(--ink);color:var(--cream);padding:14px 32px;border:1.5px solid var(--ink);border-radius:999px;font-size:15px;font-weight:500;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:180px;}
+.btn-continue:hover{background:var(--accent);}
+.btn-back{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:180px;font-size:15px;font-weight:500;color:var(--accent);background:#cce1d5;border:1.5px solid #a9c6b5;border-radius:999px;padding:14px 32px;transition:all 0.2s;}
+.btn-back:hover{background:#bcd6c8;border-color:var(--accent);transform:translateX(-2px);}
+.btn-secondary{font-size:14px;color:var(--ink-soft);text-decoration:underline;text-underline-offset:4px;}
+.btn-secondary:hover{color:var(--ink);}
+
+.alert-screen{max-width:640px;margin:0 auto;padding:80px 32px;text-align:center;}
+.alert-icon{width:72px;height:72px;background:var(--warm-soft);color:var(--warm-deep);border-radius:50%;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;font-size:32px;}
+.alert-icon.info{background:var(--accent-soft);color:var(--accent);}
+.alert-screen h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;margin-bottom:16px;}
+.alert-screen p{color:var(--ink-soft);font-size:16px;margin-bottom:24px;max-width:520px;margin-left:auto;margin-right:auto;}
+.alert-actions{margin-top:32px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+.loading-wrap{max-width:640px;margin:0 auto;padding:80px 32px;text-align:center;}
+.loading-mark{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:36px;color:var(--warm);margin-bottom:20px;}
+.loading-wrap h2{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:500;margin-bottom:32px;}
+.loading-checks{display:flex;flex-direction:column;gap:16px;max-width:420px;margin:0 auto 36px;text-align:left;}
+.loading-check{display:flex;align-items:center;gap:14px;font-size:16px;color:var(--ink-muted);opacity:0;transition:opacity 0.4s,color 0.4s;}
+.loading-check.done{opacity:1;color:var(--ink);}
+.loading-check .check-icon{width:22px;height:22px;border:2px solid var(--line-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.3s;}
+.loading-check.done .check-icon{background:var(--accent);border-color:var(--accent);color:white;}
+.loading-edu{margin-top:40px;padding:20px 24px;background:var(--cream-soft);border:1px solid var(--line);border-radius:14px;font-size:14px;line-height:1.6;color:var(--ink-soft);text-align:left;max-width:520px;margin-left:auto;margin-right:auto;}
+.loading-edu-label{font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--warm-deep);text-transform:uppercase;display:block;margin-bottom:8px;}
+
+.plan-container{max-width:820px;margin:0 auto;padding:48px 32px 80px;}
+.plan-eyebrow{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+.plan-title{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:500;line-height:1.1;letter-spacing:-0.02em;margin-bottom:20px;}
+.edu-card{background:linear-gradient(180deg,var(--accent-pale),var(--cream-soft));border:1px solid var(--accent-soft);border-radius:16px;padding:26px 28px;margin-bottom:28px;}
+.edu-label{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.edu-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;line-height:1.2;margin-bottom:12px;color:var(--ink);}
+.edu-body{font-size:15px;line-height:1.7;color:var(--ink);}
+.edu-body p{margin-bottom:12px;}
+.edu-evidence{margin-top:14px;background:white;border:1px solid var(--accent-soft);border-left:3px solid var(--accent);border-radius:10px;padding:14px 18px;font-size:13.5px;line-height:1.6;color:var(--ink-soft);}
+.edu-evidence strong{color:var(--accent);}
+.plan-oa-note{background:var(--warm-pale);border-left:3px solid var(--warm);border-radius:8px;padding:16px 20px;margin-bottom:24px;font-size:14px;line-height:1.6;color:var(--ink-soft);}
+.plan-oa-note strong{color:var(--warm-deep);}
+.plan-summary{background:var(--accent-pale);border-left:4px solid var(--accent);border-radius:12px;padding:20px 24px;margin-bottom:32px;font-size:15px;line-height:1.6;color:var(--ink);}
+.plan-summary-label{font-weight:600;display:block;margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);}
+.review-flag{background:var(--warm-pale);border:1px solid var(--warm-soft);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:14px;line-height:1.6;color:var(--warm-deep);}
+.review-flag strong{color:var(--warm-deep);}
+.kit-card{background:var(--cream-soft);border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:24px;}
+.kit-header{margin-bottom:8px;}
+.kit-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--ink);}
+.kit-tagline{color:var(--ink-soft);margin-bottom:24px;font-size:15px;}
+.section-label{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-deep);margin:20px 0 12px;}
+.section-note{font-size:13px;color:var(--ink-soft);margin:-4px 0 12px;line-height:1.5;}
+.component{background:white;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:12px;}
+.comp-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.comp-name{font-weight:600;font-size:16px;color:var(--ink);flex:1 1 auto;min-width:0;}
+.comp-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:0.06em;margin-left:8px;}
+.badge-rx{background:var(--warm);color:white;}
+.badge-included{background:var(--accent);color:white;}
+.badge-free{background:#5f7d6b;color:white;}
+.badge-otc{background:var(--cream-deep);color:var(--ink-soft);}
+.badge-referral{background:var(--ink);color:var(--cream);}
+.comp-why{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-top:4px;}
+.comp-why strong{color:var(--ink);}
+.comp-flag{margin-top:10px;background:var(--warm-pale);border:1px solid var(--warm-soft);border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.5;color:var(--warm-deep);}
+.comp-flag strong{color:var(--warm-deep);}
+.cream-step{margin-top:24px;background:var(--warm-pale);border:1px solid var(--warm-soft);border-radius:12px;padding:20px 22px;}
+.cream-step-label{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--warm-deep);margin-bottom:8px;}
+.cream-step p{font-size:14px;line-height:1.65;color:var(--ink);}
+.cream-ladder{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.cream-tier{flex:1;min-width:150px;border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;background:white;font-size:12.5px;color:var(--ink-soft);}
+.cream-tier.active{border-color:var(--warm);background:var(--warm-soft);}
+.cream-tier b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px;}
+.cream-step-inline{margin:14px 0 4px;}
+.read-more-btn{display:block;margin-top:8px;background:none;border:none;color:var(--warm-deep);font-weight:700;font-size:13px;cursor:pointer;padding:0;font-family:inherit;text-decoration:underline;}
+.cream-howto{margin-top:16px;background:var(--accent-pale);border:1px solid #cfe0d5;border-left:3px solid var(--accent);border-radius:12px;padding:15px 18px;}
+.cream-howto-title{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:9px;}
+.cream-howto-list{margin:0;padding-left:18px;}
+.cream-howto-list li{font-size:13.5px;line-height:1.55;color:var(--ink);margin-bottom:7px;}
+.cream-howto-list li.warn{font-weight:700;color:var(--warm-deep);}
+.cream-more{display:block;margin-top:12px;}
+.cream-more[hidden]{display:none;}
+
+.finance-card{background:var(--cream-soft);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-bottom:24px;}
+.finance-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:4px;color:var(--ink);}
+.finance-sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:18px;}
+.fin-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.fin-price{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--ink);}
+.fin-price small{font-size:15px;color:var(--ink-soft);font-family:'Inter',sans-serif;font-weight:500;}
+.fin-perday{font-size:13.5px;color:var(--ink-soft);background:var(--accent-pale);border-radius:999px;padding:5px 14px;}
+.fin-seg-label{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.fin-seg{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.fin-opt{flex:1;min-width:120px;border:1.5px solid var(--line-strong);border-radius:12px;padding:13px 14px;background:white;cursor:pointer;transition:all 0.15s;text-align:center;}
+.fin-opt:hover{border-color:var(--accent);}
+.fin-opt.active{border-color:var(--accent);background:var(--accent-pale);box-shadow:inset 0 0 0 1.5px var(--accent);}
+.fin-opt b{display:block;font-size:15px;color:var(--ink);}
+.fin-opt span{font-size:12px;color:var(--ink-muted);}
+.fin-total{display:flex;justify-content:space-between;align-items:center;background:white;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:10px;}
+.fin-total .lab{font-size:13px;color:var(--ink-soft);}
+.fin-total .val{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--accent);}
+.fin-covered{display:flex;align-items:center;gap:10px;background:#fdeceb;border:1.5px solid #e6b0aa;border-left:5px solid #c0392b;border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:18px;font-weight:800;color:#c0392b;line-height:1.35;}
+.fin-covered .cov-ico{font-size:20px;flex-shrink:0;}
+.fin-includes{font-size:13px;line-height:1.6;color:var(--ink-soft);}
+.fin-includes b{color:var(--ink);}
+.fin-includes ul{margin:8px 0 0;padding-left:18px;}
+.fin-includes li{margin-bottom:5px;}
+.fin-insurance{margin-top:16px;background:var(--accent-pale);border-left:3px solid var(--accent);border-radius:8px;padding:14px 18px;font-size:13px;line-height:1.6;color:var(--ink-soft);}
+.fin-insurance strong{color:var(--accent);}
+
+.plan-insurance{margin-top:16px;background:var(--accent-pale);border-left:3px solid var(--accent);border-radius:8px;padding:16px 20px;font-size:13.5px;line-height:1.6;color:var(--ink-soft);}
+.plan-insurance strong{color:var(--accent);font-weight:700;}
+.plan-ctas{margin-top:28px;display:flex;flex-direction:column;gap:10px;}
+.cta-primary{background:var(--ink);color:var(--cream);padding:18px 24px;border-radius:14px;font-size:16px;font-weight:500;text-align:center;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.cta-primary:hover{background:var(--accent);}
+.cta-secondary{background:white;color:var(--ink);border:1.5px solid var(--line-strong);padding:18px 24px;border-radius:14px;font-size:15px;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.cta-secondary:hover{border-color:var(--accent);background:var(--accent-pale);}
+.plan-disclaimer{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-muted);line-height:1.6;}
+.mock-footer{text-align:center;padding:32px 24px 48px;font-size:12px;color:var(--ink-muted);border-top:1px solid var(--line);margin-top:48px;}
+
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding:48px 24px;gap:32px;}.hero h1{font-size:40px;}.hero h1 .t-nw{white-space:normal;}.hero-visual{height:320px;}.quiz-question{font-size:32px;}.plan-title{font-size:36px;}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="goHome(); return false;" title="Back to start">clara</a>
+    <a href="index.html#care" class="dash-back">← Back to your dashboard</a>
+    <div class="progress-pill" id="progress-bar" style="display:none;">
+      <button class="back-btn" onclick="goBack()">&larr;</button>
+      <span class="progress-step">Step 1 of 3</span><span class="progress-divider">&middot;</span>
+      <span class="progress-step">Get care</span><span class="progress-divider">&middot;</span>
+      <span class="progress-percent"><span class="progress-circle"></span><span id="progress-percent-text">0% complete</span></span>
+    </div>
+    <a href="#" class="help-link">&#128172; Help</a>
+  </div>
+</nav>
+
+<!-- LANDING -->
+<section class="quiz-screen active" id="landing">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="hero-eyebrow-mark">clara</span> &middot; Nerve (neuropathic) pain care</div>
+      <h1><span class="t-nw">Targeted relief for</span><br><span class="t-nw">your <em style="color:var(--warm-deep);font-style:italic;">nerve pain.</em></span></h1>
+      <p>If a doctor has already diagnosed you with a nerve pain condition, clara builds you a personalized compounded cream plan that goes straight to the painful area, with very little absorbed into the body.</p>
+      <div class="hero-note"><strong>This is treatment, not diagnosis.</strong> clara is only for adults whose doctor has already diagnosed them with a nerve pain condition. We will confirm this on the next page.</div>
+      <button class="btn-primary" onclick="startQuiz()">Get started &rarr;</button>
+    </div>
+    <div class="hero-visual">
+      <svg class="pillpack-svg" viewBox="0 0 460 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A close up of a person holding their neck and shoulder, the nerve pain area highlighted in red, with a clara compounded cream bottle beside it">
+        <defs>
+          <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#1f2421" flood-opacity="0.16"/></filter>
+          <filter id="bs2" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#1f2421" flood-opacity="0.22"/></filter>
+          <filter id="tg" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#ffffff" flood-opacity="0.95"/></filter>
+          <clipPath id="nerveClip"><circle cx="180" cy="195" r="168"/></clipPath>
+          <linearGradient id="bottleg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d8270"/><stop offset="1" stop-color="#3c5a4c"/></linearGradient>
+          <linearGradient id="capg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c3a32"/><stop offset="1" stop-color="#1f2a24"/></linearGradient>
+        </defs>
+        <circle cx="180" cy="195" r="176" fill="#93ab9c" filter="url(#bs)"/>
+        <image href="data:image/jpeg;base64,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" x="12" y="27" width="336" height="336" preserveAspectRatio="xMidYMid slice" clip-path="url(#nerveClip)"/>
+        <circle cx="180" cy="195" r="168" fill="none" stroke="#3c5a4c" stroke-width="2.5" opacity="0.3"/>
+        <g filter="url(#tg)">
+          <circle cx="150" cy="304" r="7" fill="#c0392b"/>
+          <text x="166" y="309" font-family="Inter, sans-serif" font-weight="800" font-size="16" fill="#1f2421">Nerve pain</text>
+        </g>
+        <g filter="url(#bs2)">
+          <rect x="336" y="206" width="96" height="170" rx="18" fill="url(#bottleg)"/>
+          <rect x="356" y="178" width="56" height="32" rx="9" fill="url(#capg)"/>
+          <rect x="375" y="158" width="18" height="24" rx="5" fill="url(#capg)"/>
+          <rect x="360" y="152" width="44" height="12" rx="6" fill="#2c3a32"/>
+          <rect x="350" y="252" width="68" height="92" rx="10" fill="#f7f5f0" opacity="0.97"/>
+        </g>
+        <text x="384" y="286" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="19" fill="#1f2421" letter-spacing="-0.8">clara</text>
+        <text x="384" y="310" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="8" fill="#5a615d" letter-spacing="1">NEUROPATHIC</text>
+        <text x="384" y="329" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#a35540" letter-spacing="3">HERO</text>
+      </svg>
+      <div class="hero-caption">"Calm angry nerves."</div>
+      <div class="hero-subcaption">Right where it hurts.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Q1 DIAGNOSIS + CONDITION SELECT (hard gate) -->
+<section class="quiz-screen" id="q1" data-progress="8">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Has a doctor diagnosed you with one of these nerve pain conditions?</h1>
+    <p class="quiz-question-sub">Pick the one a doctor has confirmed. clara treats these four conditions with compounded creams. We do not diagnose nerve pain, we help you treat a diagnosis you already have.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>By choosing your condition you are confirming a doctor has diagnosed it. This program is built to treat, not to diagnose. Your answer also lets us tailor your education and your cream to your specific condition.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q1','phn'); goNext('q2');"><div class="opt-content">Post-herpetic neuralgia (the nerve pain after shingles)<div class="opt-sub">Burning or stabbing pain that lingered once your shingles rash healed. Also called PHN.</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q1','dpn'); goNext('q2');"><div class="opt-content">Diabetic peripheral neuropathy (diabetic foot and nerve pain)<div class="opt-sub">Burning, tingling, or numbness from diabetes, most often in the feet. Also called DPN.</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q1','crps'); goNext('q2');"><div class="opt-content">Complex regional pain syndrome (CRPS)<div class="opt-sub">Severe, lasting pain in a limb after an injury, surgery, or fracture</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q1','psnp'); goNext('q2');"><div class="opt-content">Post-surgical or post-traumatic nerve pain<div class="opt-sub">Nerve pain around a scar or injured area that lasted after healing</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q1','none'); goNext('diagnosis-exit');"><div class="opt-content">None of these, or I am not sure<div class="opt-sub">I have nerve type pain but no confirmed diagnosis of one of the above</div></div><span class="opt-arrow">&rarr;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS EXIT (hard) -->
+<section class="quiz-screen" id="diagnosis-exit">
+  <div class="alert-screen">
+    <div class="alert-icon info">&#9432;</div>
+    <h2>Let's get the right diagnosis first.</h2>
+    <p>clara's nerve pain program is built for adults who already have a confirmed diagnosis of one of four conditions: post-herpetic neuralgia, diabetic neuropathy, complex regional pain syndrome, or post-surgical or post-traumatic nerve pain. Nerve type pain has many causes, and the right treatment depends on the right diagnosis.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>Please see your family doctor, a neurologist, or a pain specialist to have the pain assessed. Once you have a diagnosis of one of these conditions, come back and we will build your plan.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q2 AGE (under-18 hard gate) -->
+<section class="quiz-screen" id="q2" data-progress="16">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How old are you?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>clara cares for adults 18 and older. Age also affects how we dose and monitor, so we take extra care after 65, and particular care with thinner skin and absorption in people 75 and older.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q2','18-64'); goNext('q3');"><div class="opt-content">18 to 64<div class="opt-sub">Standard adult care</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q2','65-74'); goNext('q3');"><div class="opt-content">65 to 74<div class="opt-sub">We take extra care with dosing and monitoring</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q2','75plus'); goNext('q3');"><div class="opt-content">75 or older<div class="opt-sub">Skin can absorb a little more, so we are especially careful</div></div><span class="opt-arrow">&rarr;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Q3 RED FLAGS (hard exit) -->
+<section class="quiz-screen" id="q3" data-progress="26">
+  <div class="quiz-container">
+    <h1 class="quiz-question">A few important safety questions.</h1>
+    <p class="quiz-question-sub">Please check anything that applies to you right now, even if it seems unrelated. If none apply, use the green button.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>These signs are uncommon in stable nerve pain, but when they are present they can point to something that needs to be seen in person quickly rather than treated with a cream.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'redflag','weakness')"><div class="opt-content">New or rapidly worsening weakness, or numbness that is spreading fast<div class="opt-sub">For example a limb that is suddenly giving way or going dead</div></div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','bladder')"><div class="opt-content">New loss of control of your bladder or bowels, or numbness around the groin or saddle area<div class="opt-sub">This can be an emergency that needs same day care</div></div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','infection')"><div class="opt-content">Fever with spreading redness, warmth, or pus over the painful area<div class="opt-sub">Possible skin or deeper infection</div></div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','clot')"><div class="opt-content">A red, hot, swollen, tender calf or limb<div class="opt-sub">Especially after surgery, a long trip, or being off your feet, this can signal a blood clot</div></div></div>
+      <div class="opt multi" onclick="multi(this,'redflag','newsevere')"><div class="opt-content">Sudden, severe, brand new pain that feels different from your usual nerve pain<div class="opt-sub">Or new pain with unexplained weight loss or night sweats</div></div></div>
+    </div>
+    <button class="opt-escape" onclick="checkRedFlags()">None of the above apply to me</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">&larr; Back</button><button class="btn-continue" onclick="checkRedFlags()">Continue &rarr;</button></div>
+  </div>
+</section>
+
+<!-- RED FLAG EXIT (hard) -->
+<section class="quiz-screen" id="redflag-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">&#9888;</div>
+    <h2>We need to make sure you're seen in person first.</h2>
+    <p>Based on what you told us, your symptoms could be more than stable nerve pain. clara provides safe online care for diagnosed nerve pain conditions, and your situation deserves a hands on evaluation we cannot safely do online.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>If you have new loss of bladder or bowel control, fast spreading weakness or numbness, a fever with spreading redness, or a hot swollen calf, please seek urgent or emergency care today. Otherwise, book promptly with your doctor.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q4 SKIN INTEGRITY (hard exit, key contraindication) -->
+<section class="quiz-screen" id="q4" data-progress="36">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Is the skin where you would apply the cream healthy and unbroken?</h1>
+    <p class="quiz-question-sub">Look at the area you would treat. We mean the skin surface itself, not the pain underneath.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>This is the single most important safety check for any compounded cream. Applying it to broken, open, blistered, ulcerated, raw, or infected skin lets far too much medicine into the body and has caused serious reactions. If your skin is not intact right now, we wait until it heals.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q4','intact'); goNext('q5');"><div class="opt-content">Yes, the skin is intact and healthy<div class="opt-sub">No open wounds, blisters, ulcers, raw patches, or active rash on the area</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q4','broken'); goNext('skin-exit');"><div class="opt-content">No, the skin is broken, open, blistered, ulcerated, raw, or infected<div class="opt-sub">For example an active shingles rash, a wound, or an ulcer over the area</div></div><span class="opt-arrow">&rarr;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKIN EXIT (hard, but invite back) -->
+<section class="quiz-screen" id="skin-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">&#9888;</div>
+    <h2>Let's wait until your skin has healed.</h2>
+    <p>Compounded creams must only go on healthy, unbroken skin. On broken, open, blistered, or infected skin, far too much of the medicine is absorbed into the body, which can cause serious side effects. This is the most important rule for using these creams safely.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>If you have an active shingles rash, a wound, or an ulcer over the area, let it fully heal first, and have any infection treated by your doctor. Once the skin is intact, come back and we will build your plan. If you are unsure, your clara physician is happy to advise.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q5 SEVERITY -->
+<section class="quiz-screen" id="q5" data-progress="48">
+  <div class="quiz-container">
+    <h1 class="quiz-question">On most days, how bad is your nerve pain?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Your usual pain level helps us choose a sensible starting strength on the cream ladder. We start low and step up only if you need it.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q5','mild'); goNext('q6');"><div class="opt-content">Mild<div class="opt-sub">Noticeable, but it does not really limit my day</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q5','moderate'); goNext('q6');"><div class="opt-content">Moderate<div class="opt-sub">It bothers me often and limits some activities</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q5','significant'); goNext('q6');"><div class="opt-content">Significant<div class="opt-sub">It limits a lot of what I do and disturbs my sleep</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q5','severe'); goNext('q6');"><div class="opt-content">Severe<div class="opt-sub">It is hard to function and it dominates my day</div></div><span class="opt-arrow">&rarr;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Q6 PRIOR TREATMENT -->
+<section class="quiz-screen" id="q6" data-progress="58">
+  <div class="quiz-container">
+    <h1 class="quiz-question">What have you already tried for this nerve pain?</h1>
+    <p class="quiz-question-sub">Check anything that applies. This helps us pick the right starting point.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>If you have already used a compounded cream, we can start you a step up the ladder. What you have tried also helps your physician understand your history.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'tried','otc')"><div class="opt-content">Over the counter options<div class="opt-sub">For example a lidocaine patch or cream, or a capsaicin cream</div></div></div>
+      <div class="opt multi" onclick="multi(this,'tried','oral')"><div class="opt-content">Prescription pills for nerve pain<div class="opt-sub">For example gabapentin, pregabalin, amitriptyline, nortriptyline, or duloxetine</div></div></div>
+      <div class="opt multi" onclick="multi(this,'tried','compound')"><div class="opt-content">A compounded pain cream before<div class="opt-sub">A custom cream made by a pharmacy with more than one active ingredient</div></div></div>
+      <div class="opt multi" onclick="multi(this,'tried','specialist')"><div class="opt-content">A specialist, nerve block, or pain clinic<div class="opt-sub">For example a neurologist, pain specialist, or an injection or block</div></div></div>
+    </div>
+    <button class="opt-escape" onclick="goNext('q7')">I have not really tried anything structured yet</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">&larr; Back</button><button class="btn-continue" onclick="goNext('q7')">Continue &rarr;</button></div>
+  </div>
+</section>
+
+<!-- Q7 ALLERGIES -->
+<section class="quiz-screen" id="q7" data-progress="68">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Do you have any of these allergies?</h1>
+    <p class="quiz-question-sub">Check anything that applies. These are the ingredients that can appear in our nerve pain creams. If none apply, use the green button.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our creams are built from a defined set of ingredients: a numbing agent, amitriptyline, ketamine, gabapentin, and an anti-inflammatory, among others. A true allergy to one of them changes which cream is safe for you, or means a physician chooses a safe alternative before anything is dispensed.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'allergy','lido')"><div class="opt-content">Numbing agents (local anesthetics)<div class="opt-sub">Lidocaine, prilocaine, bupivacaine, or any "caine" anesthetic</div></div></div>
+      <div class="opt multi" onclick="multi(this,'allergy','tca')"><div class="opt-content">Amitriptyline or other tricyclic antidepressants<div class="opt-sub">For example nortriptyline, doxepin</div></div></div>
+      <div class="opt multi" onclick="multi(this,'allergy','ketamine')"><div class="opt-content">Ketamine</div></div>
+      <div class="opt multi" onclick="multi(this,'allergy','gaba')"><div class="opt-content">Gabapentin or pregabalin</div></div>
+      <div class="opt multi" onclick="multi(this,'allergy','nsaid')"><div class="opt-content">Anti-inflammatory painkillers (NSAIDs) or aspirin<div class="opt-sub">Diclofenac, ibuprofen, naproxen, aspirin, or asthma that flares with these</div></div></div>
+      <div class="opt multi" id="q7-other-opt" onclick="toggleOtherAllergy(this)"><div class="opt-content">Another drug allergy<div class="opt-sub">Tell us what, so your physician can review it</div></div></div>
+    </div>
+    <input type="text" id="q7-other-input" class="other-allergy-input" style="display:none;margin-top:10px;" placeholder="Which medication or ingredient?" oninput="setOtherAllergy(this.value)">
+    <button class="opt-escape" onclick="goNext('q8')">None of these</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">&larr; Back</button><button class="btn-continue" onclick="goNext('q8')">Continue &rarr;</button></div>
+  </div>
+</section>
+
+<!-- Q8 COMORBIDITY / MEDICATION FLAGS -->
+<section class="quiz-screen" id="q8" data-progress="78">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Do any of these apply to your health?</h1>
+    <p class="quiz-question-sub">Check anything that applies. Most just tell your physician what to review; a couple mean we will have you seen in person instead. If none apply, use the green button.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our C1 and C2 creams include a numbing agent (lidocaine) and an anti-inflammatory (diclofenac). A few conditions and medicines change how these are handled, so a physician reviews them before anything ships.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'cond','liver')"><div class="opt-content">Severe liver disease<div class="opt-sub">The liver clears the numbing agent and the anti-inflammatory, so this needs a closer look</div></div></div>
+      <div class="opt multi" onclick="multi(this,'cond','g6pd')"><div class="opt-content">G6PD deficiency, or a history of methemoglobinemia<div class="opt-sub">A blood condition that affects how lidocaine is handled</div></div></div>
+      <div class="opt multi" id="q8-heart-opt" onclick="toggleHeartMed(this)"><div class="opt-content">I take heart medications<div class="opt-sub">Especially heart rhythm medicines such as mexiletine or tocainide. Add yours below so your physician can review them.</div></div></div>
+      <input type="text" id="q8-heart-input" class="other-allergy-input" style="display:none;margin-top:2px;" placeholder="Which heart medication(s)? For example metoprolol, mexiletine" oninput="setHeartMeds(this.value)">
+      <div class="opt multi" onclick="multi(this,'cond','anticoag')"><div class="opt-content">I take a blood thinner (anticoagulant)<div class="opt-sub">For example warfarin, apixaban, rivaroxaban, dabigatran</div></div></div>
+      <div class="opt multi" onclick="multi(this,'cond','htn')"><div class="opt-content">Poorly controlled or unstable high blood pressure</div></div>
+      <div class="opt multi" onclick="multi(this,'cond','hf')"><div class="opt-content">Severe heart failure<div class="opt-sub">An anti-inflammatory can make this worse, so this needs in person care</div></div></div>
+      <div class="opt multi" onclick="multi(this,'cond','renal')"><div class="opt-content">Advanced or severe kidney disease<div class="opt-sub">An anti-inflammatory can strain the kidneys, so this needs in person care</div></div></div>
+    </div>
+    <button class="opt-escape" onclick="checkComorbid()">None of these apply to me</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">&larr; Back</button><button class="btn-continue" onclick="checkComorbid()">Continue &rarr;</button></div>
+  </div>
+</section>
+
+<!-- NSAID EXIT (hard: severe heart failure / advanced renal disease + diclofenac) -->
+<section class="quiz-screen" id="nsaid-exit">
+  <div class="alert-screen">
+    <div class="alert-icon info">&#9432;</div>
+    <h2>Let's have a doctor manage this in person.</h2>
+    <p>Our starter creams, C1 and C2, contain an anti-inflammatory called diclofenac. With severe heart failure or advanced kidney disease, even a topical anti-inflammatory can make those conditions worse, so clara does not dispense these creams to you online.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>Please work with your doctor or specialist to manage your nerve pain safely alongside your heart or kidney condition. They can decide whether a different, anti-inflammatory free option is right for you.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q9 PREGNANCY / BREASTFEEDING -->
+<section class="quiz-screen" id="q9" data-progress="88">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Are you pregnant or breastfeeding?</h1>
+    <p class="quiz-question-sub">Check anything that applies. If neither applies, use the green button.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>There is not enough safety data for these cream ingredients in pregnancy, so we do not dispense them while you are pregnant. While breastfeeding, a physician reviews the plan personally before anything is dispensed.</div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this,'pregbf','pregnant')"><div class="opt-content">I am pregnant, or might be</div></div>
+      <div class="opt multi" onclick="multi(this,'pregbf','breastfeed')"><div class="opt-content">I am breastfeeding</div></div>
+    </div>
+    <button class="opt-escape" onclick="checkPreg()">Neither applies to me</button>
+    <div class="continue-row"><button class="btn-back" onclick="goBack()">&larr; Back</button><button class="btn-continue" onclick="checkPreg()">Continue &rarr;</button></div>
+  </div>
+</section>
+
+<!-- PREGNANCY EXIT (hard) -->
+<section class="quiz-screen" id="preg-exit">
+  <div class="alert-screen">
+    <div class="alert-icon info">&#9432;</div>
+    <h2>Let's hold off while you're pregnant.</h2>
+    <p>Our nerve pain creams contain amitriptyline, ketamine, gabapentin, and an anti-inflammatory (diclofenac), among other agents. There is not enough safety information for these applied to the skin during pregnancy, and anti-inflammatories are not used in later pregnancy, so clara does not dispense them while you are pregnant or might be.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>Please speak with your own doctor or obstetric provider about pain options that are right for pregnancy. After pregnancy, come back and we will build your plan. If you are breastfeeding rather than pregnant, you can return and choose that option for a physician reviewed plan.</p>
+    <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
+  </div>
+</section>
+
+<!-- Q10 GOAL -->
+<section class="quiz-screen" id="q10" data-progress="94">
+  <div class="quiz-container">
+    <h1 class="quiz-question">What matters most to you right now?</h1>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>This helps us frame your plan around what you care about. It does not change the medical safety checks.</div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this,'q10','pain'); goNext('loading');"><div class="opt-content">Lowering my daily pain<div class="opt-sub">Take the edge off so I can get through the day</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q10','avoid-systemic'); goNext('loading');"><div class="opt-content">Fewer pills and side effects<div class="opt-sub">I would rather treat the pain locally than add more oral medicine</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q10','sleep'); goNext('loading');"><div class="opt-content">Sleeping better<div class="opt-sub">The pain keeps me up or wakes me at night</div></div><span class="opt-arrow">&rarr;</span></div>
+      <div class="opt" onclick="single(this,'q10','function'); goNext('loading');"><div class="opt-content">Doing more of what I enjoy<div class="opt-sub">Walk, work, and move with less pain</div></div><span class="opt-arrow">&rarr;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOADING -->
+<section class="quiz-screen" id="loading" data-progress="99">
+  <div class="loading-wrap">
+    <div class="loading-mark">clara</div>
+    <h2>Building your personalized plan</h2>
+    <div class="loading-checks">
+      <div class="loading-check" id="lc1"><span class="check-icon">&#10003;</span><span>Reviewing your responses</span></div>
+      <div class="loading-check" id="lc2"><span class="check-icon">&#10003;</span><span>Running your safety &amp; interaction screen</span></div>
+      <div class="loading-check" id="lc3"><span class="check-icon">&#10003;</span><span>Matching your condition to the evidence</span></div>
+      <div class="loading-check" id="lc4"><span class="check-icon">&#10003;</span><span>Choosing your starting cream strength</span></div>
+      <div class="loading-check" id="lc5"><span class="check-icon">&#10003;</span><span>Wrapping up</span></div>
+    </div>
+    <div class="loading-edu"><span class="loading-edu-label">While we build this</span>Compounded creams send medicine straight to the painful area, with very little absorbed into the body. That means fewer of the side effects and drug interactions that come with pills, which is especially helpful if you already take several medicines.</div>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section class="quiz-screen" id="plan">
+  <div class="plan-container">
+    <div class="plan-eyebrow">Your personalized plan</div>
+    <h1 class="plan-title">Your <em style="font-style:italic;color:var(--warm-deep);">clara</em> nerve pain plan</h1>
+
+    <!-- EDUCATION FIRST -->
+    <div class="edu-card" id="edu-card">
+      <div class="edu-label">&#9788; Understanding your condition</div>
+      <div class="edu-title" id="edu-title">About your condition</div>
+      <div class="edu-body" id="edu-body"></div>
+      <div class="edu-evidence" id="edu-evidence"></div>
+    </div>
+
+    <div class="plan-oa-note"><strong>Please read first.</strong> This program is only for adults already diagnosed by a doctor with one of the four nerve pain conditions we treat. It is treatment, not a diagnosis, and it does not replace your specialist care. A physician licensed in Canada reviews and approves every plan before anything ships.</div>
+    <div class="review-flag" id="review-flag-block" style="display:none;"><strong>A physician will personally review your plan.</strong> <span id="review-flag-text"></span></div>
+    <div class="plan-summary" id="plan-summary-block"><span class="plan-summary-label">Based on what you told us</span><span id="plan-summary-text">Loading your summary&hellip;</span></div>
+
+    <div class="kit-card">
+      <div class="kit-header"><div class="kit-name" id="kit-name-text">Your clara Plan</div></div>
+      <p class="kit-tagline">An evidence based topical plan built around your specific condition and profile, reviewed by a physician licensed in Canada before anything ships.</p>
+      <div id="plan-components"></div>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="finance-card" id="finance-card">
+      <div class="finance-title">Your cost, made simple</div>
+      <div class="finance-sub">One clara compounded cream bottle is a 30 day supply for one treatment area, applied 2 to 3 times a day.</div>
+      <div class="fin-price-row">
+        <div class="fin-price">$340 <small>CAD / bottle</small></div>
+        <div class="fin-perday">About $11.33 a day</div>
+      </div>
+      <div class="fin-seg-label">Choose your supply</div>
+      <div class="fin-seg">
+        <div class="fin-opt active" id="fin1" onclick="setFin(1)"><b>1 month</b><span>1 bottle</span></div>
+        <div class="fin-opt" id="fin3" onclick="setFin(3)"><b>3 months</b><span>3 bottles</span></div>
+        <div class="fin-opt" id="fin6" onclick="setFin(6)"><b>6 months</b><span>6 bottles</span></div>
+      </div>
+      <div class="fin-total">
+        <span class="lab" id="fin-total-lab">1 bottle, one month supply</span>
+        <span class="val" id="fin-total-val">$340</span>
+      </div>
+      <div class="fin-covered"><span class="cov-ico">&#10003;</span><span>This is usually covered by most insurance plans</span></div>
+      <div class="fin-includes">
+        <b>Every order includes:</b>
+        <ul>
+          <li>A physician review and approval before anything is made or shipped</li>
+          <li>Your custom compounded cream from a licensed Canadian compounding pharmacy</li>
+          <li>A pharmacist consult and clear instructions for safe use</li>
+          <li>Discreet shipping and ongoing messaging with your care team</li>
+        </ul>
+      </div>
+      <div class="fin-insurance"><strong>About insurance.</strong> Good news: compounded creams are covered by most insurance and drug plans. Your dedicated clara pharmacist gives you an itemized receipt and submits the claim to your plan for you, so most patients pay little out of pocket. Monthly supply auto refills only if you choose a subscription, and you can pause or cancel anytime. Your exact coverage and final pricing are confirmed at checkout.</div>
+    </div>
+
+    <div class="plan-ctas">
+      <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a physician review queue. For the mock, this is where we stop.')">Add to cart, start my plan</button>
+      <button class="cta-secondary" onclick="alert('Plan saved. In the live version you would receive an email summary and a short primer on your condition.')">Save this plan and think about it</button>
+      <button class="cta-secondary" onclick="alert('In the live version, this would email a printable PDF of the plan to share with your doctor.')">Email me this plan</button>
+    </div>
+    <div class="plan-disclaimer">This plan is a recommendation generated from your assessment, not a prescription. A physician licensed in Canada reviews and approves (or modifies) every order before anything ships. You will get an SMS the moment your plan is reviewed. clara treats diagnosed nerve pain with compounded topical creams only. We do not diagnose nerve pain, we do not prescribe opioids, and for now we do not prescribe oral medications through this program. Compounded creams are not FDA approved products and their ingredients are used based on published evidence and physician judgement.</div>
+    <div class="mock-footer">clara &middot; Neuropathic Pain Quiz &middot; MOCK v1 &middot; May 2026 &middot; First pass demonstration, not the live product &middot; Clinical logic per the Clara Neuropathic Pain evidence set (AAPM topical guide 2025, AAN 2022, Harden CRPS 2022, Open Evidence syntheses) and the Clara Neuropathic C1 to C3 cream ladder (Sandbox V3 formulations, May 2026)</div>
+  </div>
+</section>
+
+<script>
+  const state={answers:{},currentStep:'landing',history:['landing']};
+  const PRICE=340;
+
+  function showStep(stepId){
+    document.querySelectorAll('.quiz-screen').forEach(s=>s.classList.remove('active'));
+    const el=document.getElementById(stepId);
+    if(el){
+      el.classList.add('active');state.currentStep=stepId;window.scrollTo({top:0,behavior:'smooth'});
+      const progress=el.getAttribute('data-progress');const bar=document.getElementById('progress-bar');
+      if(progress){bar.style.display='flex';document.getElementById('progress-percent-text').textContent=progress+'% complete';}
+      else{bar.style.display='none';}
+      if(stepId==='loading')animateLoading();
+    }
+  }
+  function goNext(stepId){state.history.push(stepId);showStep(stepId);}
+  function goBack(){if(state.history.length>1){state.history.pop();showStep(state.history[state.history.length-1]);}}
+  function startQuiz(){goNext('q1');}
+  function resetQuiz(){state.answers={};state.history=['landing'];document.querySelectorAll('.opt.selected').forEach(o=>o.classList.remove('selected'));showStep('landing');}
+  function goHome(){resetQuiz();}
+
+  function single(el,question,value){
+    state.answers[question]=[value];
+    if(el){const p=el.closest('.opt-stack');p.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');}
+  }
+  function multi(el,question,value){
+    if(!state.answers[question])state.answers[question]=[];
+    if(el){
+      if(state.answers[question].includes(value)){state.answers[question]=state.answers[question].filter(v=>v!==value);el.classList.remove('selected');}
+      else{state.answers[question].push(value);el.classList.add('selected');}
+    }else{state.answers[question]=[value];}
+  }
+  function toggleOtherAllergy(el){
+    multi(el,'allergy','other');
+    const box=document.getElementById('q7-other-input');
+    if(el.classList.contains('selected')){box.style.display='block';box.focus();}
+    else{box.style.display='none';box.value='';state.answers['allergyOtherText']='';}
+  }
+  function setOtherAllergy(v){state.answers['allergyOtherText']=v;}
+  function toggleHeartMed(el){
+    multi(el,'cond','heart');
+    const box=document.getElementById('q8-heart-input');
+    if(el.classList.contains('selected')){box.style.display='block';box.focus();}
+    else{box.style.display='none';box.value='';state.answers['heartMedsText']='';}
+  }
+  function setHeartMeds(v){state.answers['heartMedsText']=v;}
+
+  // ---- hard-exit safety gates ----
+  function checkRedFlags(){
+    const f=state.answers['redflag']||[];
+    (f.length>0)?goNext('redflag-exit'):goNext('q4');
+  }
+  // severe heart failure or advanced renal disease + diclofenac in C1/C2 = hard exit to in-person care
+  function checkComorbid(){
+    const f=state.answers['cond']||[];
+    (f.includes('hf')||f.includes('renal'))?goNext('nsaid-exit'):goNext('q9');
+  }
+  function checkPreg(){
+    const f=state.answers['pregbf']||[];
+    (f.includes('pregnant'))?goNext('preg-exit'):goNext('q10');
+  }
+  function animateLoading(){
+    const checks=['lc1','lc2','lc3','lc4','lc5'];
+    checks.forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('done'),400+i*600));
+    setTimeout(()=>{const plan=generatePlan(state.answers);renderPlan(plan);goNext('plan');},4200);
+  }
+
+  // ---- condition education content (Open Evidence neuropathic syntheses) ----
+  const EDU={
+    phn:{
+      title:'Post-herpetic neuralgia: the aftermath of shingles',
+      body:'<p>You had shingles, and this is the aftermath. Shingles happens when the chickenpox virus from childhood, which has been asleep in your nerves for years, wakes up and travels along a nerve to the skin, causing a painful, blistering rash.</p>'+
+           '<p>For most people the pain fades as the rash heals. But sometimes the virus damages the nerve fibres themselves. Those damaged nerves keep firing and send exaggerated, continuous pain signals even after the skin has healed. When burning, sharp, or throbbing pain lasts more than about 90 days after the rash clears, it is called post-herpetic neuralgia.</p>',
+      evidence:'<strong>Why a cream makes sense here:</strong> Of all the nerve pain conditions, PHN has the strongest evidence for compounded creams. The amitriptyline plus ketamine combination at the heart of your formula gave pain relief comparable to oral gabapentin in studies, with very little absorbed into the body.'
+    },
+    dpn:{
+      title:'Diabetic neuropathy: when high blood sugar irritates the nerves',
+      body:'<p>Over time, high blood sugar can damage the small nerve fibres, most often in the feet and hands. This is diabetic peripheral neuropathy.</p>'+
+           '<p>Because those nerves no longer signal normally, you can feel burning, stinging, tingling, pins and needles, or numbness, and it is often worse at night. Keeping your blood sugar well controlled remains the foundation, and a topical cream sits on top of that to calm the pain itself.</p>',
+      evidence:'<strong>Why a cream makes sense here:</strong> DPN has one of the strongest evidence bases for topical treatment. In a head to head study, topical amitriptyline worked as well as capsaicin with fewer side effects, and amitriptyline combined with ketamine showed a clear trend toward less pain. Bringing those agents straight to the area is especially helpful if you already take several medicines.'
+    },
+    crps:{
+      title:'Complex regional pain syndrome: a nervous system stuck in overdrive',
+      body:'<p>Complex regional pain syndrome usually starts after an injury, surgery, or fracture, but the pain is far out of proportion to what you would expect and does not settle the way it should. The nervous system stays in overdrive.</p>'+
+           '<p>You may notice burning pain, swelling, changes in skin colour or temperature, sweating changes, and skin so sensitive that light touch or clothing hurts. That last symptom is called allodynia.</p>',
+      evidence:'<strong>Why a cream makes sense here:</strong> The evidence for compounded creams in CRPS is more limited and comes mostly from case series, but topical lidocaine can calm the focal allodynia, and multi-agent creams like yours have helped a majority of patients in retrospective reports. Because CRPS is complex, your plan is built to be reviewed closely by a physician.'
+    },
+    psnp:{
+      title:'Post-surgical and post-traumatic nerve pain: a nerve that keeps signalling',
+      body:'<p>When a nerve is cut, stretched, or bruised during surgery or an injury, it can keep sending pain signals long after the wound has healed. This is post-surgical or post-traumatic nerve pain.</p>'+
+           '<p>You might feel burning, shooting, or electric pains, numbness, or extra sensitivity around the scar or injured area, often in a patch that follows where the nerve runs.</p>',
+      evidence:'<strong>Why a cream makes sense here:</strong> The evidence here comes mainly from case reports and observational studies: topical amitriptyline has helped in reported cases, and the agents in your cream target the over-firing nerves right where the pain is, with little absorbed into the body. A physician reviews your plan to make sure a topical is the right next step.'
+    }
+  };
+  const CONDNAME={phn:'Post-herpetic neuralgia',dpn:'Diabetic peripheral neuropathy',crps:'Complex regional pain syndrome',psnp:'Post-surgical or post-traumatic nerve pain'};
+
+  // ===== PLAN GENERATION, topical-only, per Clara Neuropathic ladder + Open Evidence contraindications =====
+  function generatePlan(a){
+    const plan={name:'',summary:'',components:[],reviewFlags:[],cream:null,creamNote:'',condition:null};
+    const cond=(a.q1||[])[0];
+    plan.condition=cond;
+    const age=(a.q2||[])[0];
+    const age65plus=(age==='65-74'||age==='75plus');
+    const age75plus=(age==='75plus');
+    const sev=(a.q5||[])[0];
+    const sevHigh=(sev==='significant'||sev==='severe');
+    const tried=a.tried||[];
+    const allergy=a.allergy||[];
+    const allergyOther=(a.allergyOtherText||'').trim();
+    const heartText=(a.heartMedsText||'').trim();
+    const conds=a.cond||[];
+    const pregbf=a.pregbf||[];
+    const breastfeeding=pregbf.includes('breastfeed');
+
+    // ingredient allergies. Sandbox V3 ladder ingredients:
+    //   C1 + C2: amitriptyline, ketamine, lidocaine, gabapentin, diclofenac, baclofen, camphor, menthol
+    //   C3: phenytoin, amitriptyline, ketamine, lidocaine, camphor, menthol (no diclofenac, no gabapentin)
+    const lidoAllergy=allergy.includes('lido');
+    const tcaAllergy=allergy.includes('tca');
+    const ketAllergy=allergy.includes('ketamine');
+    const gabaAllergy=allergy.includes('gaba');    // gabapentin is in C1 and C2
+    const nsaidAllergy=allergy.includes('nsaid');  // diclofenac (an NSAID) is in C1 and C2
+    const coreBlocked=lidoAllergy||tcaAllergy||ketAllergy;          // these three are in every tier
+    const entryBlocked=coreBlocked||gabaAllergy||nsaidAllergy;      // C1 and C2 also contain gabapentin and diclofenac
+
+    function comp(name,badge,cls,why,extra){
+      const c={name,badge,badgeClass:cls,why};
+      if(extra) Object.assign(c,extra);
+      plan.components.push(c);
+    }
+    function section(label,note){plan.components.push({sectionLabel:label,sectionNote:note||''});}
+
+    // ---- cream tier selection ----
+    section('Your targeted topical, applied right where it hurts','For nerve pain, clara starts with a compounded cream rather than a pill. It goes straight to the painful area with very little absorbed into the body. We start at a sensible strength and step up only if you need it.');
+    if(!entryBlocked){
+      // default C1; step to C2 if a compounded cream was used before, or significant/severe and tried oral/specialist
+      let tier='C1';
+      if(tried.includes('compound')) tier='C2';
+      else if(sevHigh && (tried.includes('oral')||tried.includes('specialist'))) tier='C2';
+      plan.cream=tier;
+
+      const creamPositives='Why we lead with a topical instead of a pill: a cream concentrates the medicine at the painful nerve, with much less reaching the bloodstream than a pill. That means far fewer of the side effects and drug interactions that oral nerve pain medicines can cause, which matters most in older adults and anyone taking several medications. Most people get partial relief rather than zero pain, so we set honest expectations and give it a fair 4 to 6 week trial before deciding whether to step up.';
+      let cc;
+      if(tier==='C2'){
+        cc={name:'clara Neuropathic Cream, C2 (Standard)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C2',
+          whyShort:(tried.includes('compound')
+            ? 'You told us you have used a compounded cream before, so we are starting you at C2 rather than the entry strength. C2 keeps the same multi-agent recipe as C1 but raises ketamine to 10% (and amitriptyline and gabapentin a little) for a stronger effect on an over-firing nerve.'
+            : 'Because your pain is significant and you have already tried oral medicine or a specialist, we are starting at C2. It keeps the same multi-agent recipe as C1 but raises ketamine to 10% (and amitriptyline and gabapentin a little) for a stronger effect on an over-firing nerve.'),
+          whyMore:creamPositives};
+        plan.creamNote='You are starting at C2 (a step up from the C1 entry strength). If C2 is not enough after a fair trial, your physician can step you up to C3, our phenytoin led maximum tier.';
+      }else{
+        cc={name:'clara Neuropathic Cream, C1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C1',
+          whyShort:'Our foundation cream layers several agents that calm an over-firing nerve from different directions at once: amitriptyline 3% and ketamine 5% (the most studied nerve pain pair), lidocaine 5% to numb, gabapentin 5%, the anti-inflammatory diclofenac 5%, and baclofen 3% to ease muscle over-activity, finished with a touch of camphor and menthol. It is your targeted first step, concentrated right where it hurts.',
+          whyMore:creamPositives};
+        plan.creamNote='Everyone starts at C1, our foundation strength. It is a deliberately stepwise system: if C1 is not enough after a fair trial, your physician can step you up to C2 (higher strengths of the same agents), and then C3 (our phenytoin led maximum) if needed. We start lower and increase only if you need it.';
+      }
+      cc.note=plan.creamNote;
+      plan.components.push(cc);
+    }else{
+      // an allergy to an ingredient in the entry tiers means no cream is auto-recommended; physician chooses an alternative
+      const reasons=[];
+      if(coreBlocked){
+        const al=[];
+        if(lidoAllergy)al.push('numbing agents (local anesthetics)');
+        if(tcaAllergy)al.push('amitriptyline or tricyclics');
+        if(ketAllergy)al.push('ketamine');
+        reasons.push('an allergy to '+al.join(' and ')+', which is in every strength of our cream');
+      }
+      if(gabaAllergy)reasons.push('a gabapentin allergy, and gabapentin is in our C1 and C2 creams');
+      if(nsaidAllergy)reasons.push('an anti-inflammatory (NSAID or aspirin) allergy, and the anti-inflammatory diclofenac is in our C1 and C2 creams');
+      plan.reviewFlags.push(reasons.join('; ')+', so a physician must choose a safe alternative before anything is dispensed');
+      comp('Topical plan held for physician review','RX','badge-rx',
+        'You told us about '+reasons.join('; ')+'. For your safety we are not auto recommending a cream. A clara physician will review your profile and decide whether a topical can be made safely for you, for example a version without that ingredient.');
+    }
+
+    // ---- physician review flags (relative contraindications, per Open Evidence safety doc) ----
+    if(conds.includes('liver'))plan.reviewFlags.push('severe liver disease, which affects how both the numbing agent (lidocaine) and the anti-inflammatory (diclofenac) are cleared, so your physician will confirm it is safe and may adjust the cream');
+    if(conds.includes('g6pd'))plan.reviewFlags.push('G6PD deficiency or a history of methemoglobinemia, the lidocaine in the cream is reviewed because it can rarely affect how your blood carries oxygen');
+    if(conds.includes('heart'))plan.reviewFlags.push('a heart medication you told us about'+(heartText?' ('+heartText+')':'')+', so your physician will review it and check for interactions with the cream before anything is dispensed (for example, heart rhythm medicines like mexiletine can add to the effect of the numbing agent, lidocaine)');
+    if(conds.includes('anticoag'))plan.reviewFlags.push('a blood thinner, the anti-inflammatory (diclofenac) in the C1 and C2 creams can add to bleeding risk, so your physician will confirm it is safe or choose a diclofenac free option');
+    if(conds.includes('htn'))plan.reviewFlags.push('poorly controlled high blood pressure, the anti-inflammatory (diclofenac) in the C1 and C2 creams can nudge blood pressure up, so your physician will review before dispensing');
+    if(breastfeeding)plan.reviewFlags.push('breastfeeding, the cream ingredients are reviewed by a physician personally before anything is dispensed, and we keep the strength and the area treated as low as possible');
+    if(age75plus)plan.reviewFlags.push('age 75 or older, your physician will take extra care with strength and the amount of skin treated, since skin can absorb a little more with age');
+    if(cond==='crps')plan.reviewFlags.push('complex regional pain syndrome, which is complex by nature, so a physician reviews your plan closely and may coordinate with your specialist');
+    if(allergy.includes('other'))plan.reviewFlags.push('a drug allergy you told us about'+(allergyOther?' ('+allergyOther+')':'')+', which your physician will review before prescribing anything');
+
+    // ---- name + summary ----
+    plan.name=(CONDNAME[cond]||'Nerve Pain')+' Plan';
+    let s=(CONDNAME[cond]||'Nerve pain');
+    const sevMap={mild:'mild',moderate:'moderate',significant:'significant',severe:'severe'};
+    if(sevMap[sev])s+=', '+sevMap[sev]+' on most days';
+    const triedReal=tried.filter(x=>x!=='none');
+    if(triedReal.length){
+      const names=[];
+      if(tried.includes('otc'))names.push('over the counter options');
+      if(tried.includes('oral'))names.push('prescription pills');
+      if(tried.includes('compound'))names.push('a compounded cream');
+      if(tried.includes('specialist'))names.push('a specialist or pain clinic');
+      if(names.length)s+='. You have tried '+names.slice(0,3).join(', ');
+    }else{s+='. You have not tried structured treatment yet';}
+    s+='. ';
+    if(entryBlocked)s+='Because of an ingredient allergy, your cream is held for a physician to choose a safe alternative.';
+    else s+='Your plan starts with the clara '+plan.cream+' compounded cream, applied right where it hurts, with a physician reviewing it before anything ships.';
+    if(breastfeeding)s+=' Because you are breastfeeding, a physician reviews and approves the plan personally before dispensing.';
+    plan.summary=s;
+    return plan;
+  }
+
+  function renderPlan(plan){
+    // education first
+    const edu=EDU[plan.condition];
+    if(edu){
+      document.getElementById('edu-title').textContent=edu.title;
+      document.getElementById('edu-body').innerHTML=edu.body;
+      document.getElementById('edu-evidence').innerHTML=edu.evidence;
+      document.getElementById('edu-card').style.display='block';
+    }else{document.getElementById('edu-card').style.display='none';}
+
+    document.getElementById('plan-summary-text').textContent=plan.summary;
+    document.getElementById('kit-name-text').textContent='The '+plan.name;
+    const rf=document.getElementById('review-flag-block');
+    if(plan.reviewFlags.length){rf.style.display='block';document.getElementById('review-flag-text').textContent=' We flagged '+plan.reviewFlags.join('; ')+'. A physician licensed in Canada will look at your plan personally before anything is dispensed.';}
+    else{rf.style.display='none';}
+
+    const c=document.getElementById('plan-components');c.innerHTML='';
+    plan.components.forEach(x=>{
+      if(x.sectionLabel){
+        c.insertAdjacentHTML('beforeend','<div class="section-label">'+x.sectionLabel+'</div>'+(x.sectionNote?'<div class="section-note">'+x.sectionNote+'</div>':''));
+        return;
+      }
+      if(x.isCream){
+        const ladder=
+          '<div class="cream-step cream-step-inline">'+
+            '<div class="cream-step-label">About your compound cream, the stepwise approach</div>'+
+            '<p>'+x.note+'</p>'+
+            '<div class="cream-ladder">'+
+              '<div class="cream-tier'+(x.tier==='C1'?' active':'')+'"><b>C1 &middot; Foundation</b>Amitriptyline 3% + ketamine 5% + lidocaine 5% + gabapentin 5% + diclofenac 5% + baclofen 3%, with camphor and menthol. The multi-agent foundation.</div>'+
+              '<div class="cream-tier'+(x.tier==='C2'?' active':'')+'"><b>C2 &middot; Standard</b>Amitriptyline 5% + ketamine 10% + lidocaine 5% + gabapentin 6% + diclofenac 5% + baclofen 3%, with camphor and menthol. Higher strengths.</div>'+
+              '<div class="cream-tier'+(x.tier==='C3'?' active':'')+'"><b>C3 &middot; Maximum</b>Phenytoin 10% + amitriptyline 5% + ketamine 10% + lidocaine 5%, with camphor and menthol. Phenytoin led, our strongest tier (specialist oversight).</div>'+
+            '</div>'+
+          '</div>';
+        c.insertAdjacentHTML('beforeend',
+          '<div class="component">'+
+            '<div class="comp-header"><div class="comp-name">'+x.name+' <span class="comp-badge '+x.badgeClass+'">'+x.badge+'</span></div></div>'+
+            ladder+
+            '<div class="comp-why"><strong>Why this is in your plan:</strong> '+x.whyShort+
+              ' <span class="cream-more" hidden>'+x.whyMore+'</span>'+
+              '<button class="read-more-btn" onclick="toggleMore(this)">Read more</button></div>'+
+            '<div class="cream-howto"><div class="cream-howto-title">How to use your cream</div><ul class="cream-howto-list">'+
+              '<li>Apply a thin layer to the painful area, 2 to 3 times a day (or as your plan says). A little goes a long way.</li>'+
+              '<li class="warn">Never put it on broken, cut, blistered, raw, ulcerated, or infected skin. Too much medicine can get into your body that way.</li>'+
+              '<li>Wash your hands well after, and keep it away from your eyes, lips, nose, and other mucous membranes.</li>'+
+              '<li>Do not cover it with a tight or airtight dressing, and keep heating pads and electric blankets off the area. Heat and wraps push more medicine into the body.</li>'+
+              '<li>Stay within the amount and the area your plan gives you. More cream over more skin means more gets absorbed.</li>'+
+              '<li>Let it dry before it touches your clothes, and do not put other creams on the same spot unless we tell you to.</li>'+
+              '<li>Give it a fair try. Most people get partial relief, not zero pain, and it can take a few days to a few weeks. A 4 to 6 week trial is reasonable.</li>'+
+              '<li>A little warmth, tingling, or mild stinging at first is normal and usually settles. Stop and message us if you get a bad rash, blistering, or any sign of an allergic reaction.</li>'+
+              '<li>Tell us right away if you feel drowsy, dizzy, lightheaded, confused, or your heart is racing. These can be signs that too much was absorbed.</li>'+
+              '<li>Keep it out of reach of children and pets. Even a small amount swallowed can be dangerous.</li>'+
+            '</ul></div>'+
+          '</div>');
+        return;
+      }
+      const flagHtml=x.physicianFlag?'<div class="comp-flag"><strong>Physician review:</strong> '+x.physicianFlag+'</div>':'';
+      c.insertAdjacentHTML('beforeend',
+        '<div class="component"><div class="comp-header"><div class="comp-name">'+x.name+' <span class="comp-badge '+x.badgeClass+'">'+x.badge+'</span></div></div>'+
+        '<div class="comp-why"><strong>Why this is in your plan:</strong> '+x.why+'</div>'+flagHtml+'</div>');
+    });
+    setFin(1);
+  }
+
+  function toggleMore(btn){
+    const more=btn.parentNode.querySelector('.cream-more');
+    if(more.hasAttribute('hidden')){more.removeAttribute('hidden');btn.textContent='Show less';}
+    else{more.setAttribute('hidden','');btn.textContent='Read more';}
+  }
+
+  // ---- finance logic ----
+  function setFin(months){
+    ['fin1','fin3','fin6'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    document.getElementById('fin'+months).classList.add('active');
+    const total=PRICE*months;
+    const label=months===1?'1 bottle, one month supply':months+' bottles, '+months+' month supply';
+    document.getElementById('fin-total-lab').textContent=label;
+    document.getElementById('fin-total-val').textContent='$'+total.toLocaleString();
+  }
+</script>
+</body>
+</html>

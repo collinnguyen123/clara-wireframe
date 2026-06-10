@@ -99,6 +99,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .action-icon.terra{background:var(--terra-soft);color:var(--terra-deep)}
 .action-icon.gold{background:#F5EBD8;color:#8A6F2F}
 .action-icon.plum{background:#EAE0EC;color:var(--plum)}
+.action-icon.illus{background:none;width:70px;height:70px}
+.action-icon.illus svg{width:100%;height:100%;display:block}
 .action-content{flex:1;min-width:0}
 .action-title{font-weight:600;font-size:14px;color:var(--ink);margin-bottom:2px}
 .action-meta{font-size:12.5px;color:var(--grey)}
@@ -109,7 +111,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 @media (max-width:900px){.care-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.care-grid{grid-template-columns:1fr}}
 .care-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden}
-.care-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--terra-soft)}
+.care-card:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
+.care-hero{margin:-22px -22px 14px;height:150px;overflow:hidden}
+.care-hero img{width:100%;height:100%;object-fit:cover;display:block}
 .care-card-icon{width:46px;height:46px;border-radius:14px;background:var(--cream);display:grid;place-items:center;font-size:22px;margin-bottom:14px}
 .care-card h3{font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px}
 .care-card p{font-size:12.5px;color:var(--grey);line-height:1.45;margin-bottom:16px;min-height:36px}
@@ -179,7 +183,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 @media (max-width:900px){.edu-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.edu-grid{grid-template-columns:1fr}}
 .edu-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
-.edu-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.edu-card:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
 .edu-hero{height:120px;background:linear-gradient(135deg,var(--sage-pale),var(--sage-soft));display:grid;place-items:center;font-size:48px;color:var(--sage-dark);position:relative}
 .edu-hero.terra{background:linear-gradient(135deg,var(--terra-pale),var(--terra-soft));color:var(--terra-deep)}
 .edu-hero.gold{background:linear-gradient(135deg,#FDF7E8,#F5EBD8);color:#8A6F2F}
@@ -421,27 +425,27 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <!-- GET CARE SECTION -->
   <div class="section-label">Get care for something else</div>
   <div class="care-grid">
-    <div class="care-card" data-tab="care">
-      <div class="care-card-icon" style="background:var(--terra-pale);color:var(--terra-deep)">🦵</div>
+    <div class="care-card" data-tab="rx">
+      <div class="care-hero"><img src="Home%20(dashboard)/knee-oa-home-1600.jpg" alt="Man at home seated on a sofa, hands resting on his knee"></div>
       <h3>Knee Osteoarthritis</h3>
       <p>Your current plan. View or update your assessment.</p>
       <span class="active-badge">Active</span>
       <div class="care-card-cta">Manage plan  →</div>
     </div>
-    <div class="care-card" data-tab="care">
-      <div class="care-card-icon" style="background:var(--sage-pale);color:var(--sage-dark)">🧠</div>
+    <div class="care-card" data-quiz="Clara-Migraine-Quiz-MOCK-v1.html">
+      <div class="care-hero"><img src="Home%20(dashboard)/migraine-home-1600.jpg" alt="Woman on a sofa resting fingertips at her temple in soft light"></div>
       <h3>Migraine</h3>
       <p>Triggered, severe, or frequent headaches.</p>
       <div class="care-card-cta">Start assessment  →</div>
     </div>
-    <div class="care-card" data-tab="care">
-      <div class="care-card-icon" style="background:#F5EBD8;color:#8A6F2F">🪑</div>
+    <div class="care-card" data-quiz="Clara-BackPain-Quiz-MOCK-v2.html">
+      <div class="care-hero"><img src="Home%20(dashboard)/back-pain-home-1600.jpg" alt="Man by a bright window easing upright with a hand on his lower back"></div>
       <h3>Low Back Pain</h3>
       <p>Acute or chronic mechanical back pain.</p>
       <div class="care-card-cta">Start assessment  →</div>
     </div>
-    <div class="care-card" data-tab="care">
-      <div class="care-card-icon" style="background:#EAE0EC;color:var(--plum)">⚡</div>
+    <div class="care-card" data-quiz="Clara-Neuropathic-Quiz-MOCK-v1.html">
+      <div class="care-hero"><img src="Home%20(dashboard)/neuropathic-home-1600.jpg" alt="Woman in an armchair gently holding her forearm"></div>
       <h3>Neuropathic Pain</h3>
       <p>Nerve pain, burning, tingling, shooting pain.</p>
       <div class="care-card-cta">Start assessment  →</div>
@@ -457,15 +461,30 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     <p class="greet-sub">A quick daily check-in helps us see what is working and catch trouble early. Your data stays private to you and your Clara physician.</p>
   </div>
 
+  <div id="dayLine" style="display:none;background:var(--sage-pale);border:1px solid var(--sage-soft);padding:14px 20px;border-radius:16px;margin:0 0 22px;align-items:center;gap:16px;flex-wrap:wrap"></div>
+
+  <div class="pain-checkin" id="treatSetup" style="display:none">
+    <h2>First, when did your clara treatment <span class="ct-key">start</span>?</h2>
+    <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;margin-top:18px">
+      <div class="ct-field" style="flex:0 1 430px;margin:0"><label>Treatment start date</label><div class="tcal" id="treatCal"></div></div>
+      <div style="flex:1 1 340px;min-width:280px;padding-top:64px">
+        <p class="lead" style="color:var(--ink);margin-bottom:18px;max-width:56ch">We count your progress from the day your treatment began.</p>
+        <p class="lead" style="color:var(--ink);margin-bottom:18px;max-width:56ch">Tracking from that day is what tunes your plan over time and gives your physician a clear picture of what is working, so they can make better clinical recommendations for you.</p>
+        <p class="lead" style="color:var(--ink);margin-bottom:26px;max-width:56ch">Your check-ins and reminders all count forward from this date.</p>
+        <button class="btn-primary" id="treatSave">Start tracking my progress  →</button>
+      </div>
+    </div>
+  </div>
+
   <div class="pain-checkin">
     <h2>Tap the number that best matches your pain today</h2>
     <p class="lead">0 means no pain at all. 10 means the worst pain you can imagine.</p>
     <div class="scale-row" id="scale">
-      <div class="scale-num" data-val="0"><span>0</span><span class="face">😌</span></div>
+      <div class="scale-num selected" data-val="0"><span>0</span><span class="face">😌</span></div>
       <div class="scale-num" data-val="1"><span>1</span><span class="face">🙂</span></div>
       <div class="scale-num" data-val="2"><span>2</span><span class="face">🙂</span></div>
       <div class="scale-num" data-val="3"><span>3</span><span class="face">😐</span></div>
-      <div class="scale-num selected" data-val="4"><span>4</span><span class="face">😐</span></div>
+      <div class="scale-num" data-val="4"><span>4</span><span class="face">😐</span></div>
       <div class="scale-num" data-val="5"><span>5</span><span class="face">😣</span></div>
       <div class="scale-num" data-val="6"><span>6</span><span class="face">😖</span></div>
       <div class="scale-num" data-val="7"><span>7</span><span class="face">😖</span></div>
@@ -474,42 +493,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="scale-num" data-val="10"><span>10</span><span class="face">😭</span></div>
     </div>
     <div class="scale-labels"><span>No pain</span><span>Mild</span><span>Moderate</span><span>Severe</span><span>Worst imaginable</span></div>
-    <div class="checkin-meta">
-      <div class="meta-input">
-        <label>What helped today (optional)</label>
-        <select>
-          <option>Select one or more</option>
-          <option>Rest</option><option>Walking</option><option>Cream applied</option><option>Heat or cold</option><option>Naproxen</option>
-          <option>Write your own...</option>
-        </select>
-        <textarea class="journal-input" rows="2" placeholder="Type your note here. Your Clara physician can review it later."></textarea>
-      </div>
-      <div class="meta-input">
-        <label>What made it worse (optional)</label>
-        <select>
-          <option>Select one or more</option>
-          <option>Stairs</option><option>Long sitting</option><option>Weather change</option><option>Standing</option><option>Lifted something</option>
-          <option>Write your own...</option>
-        </select>
-        <textarea class="journal-input" rows="2" placeholder="Type your note here. Your Clara physician can review it later."></textarea>
-      </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:10px">
+      <button class="btn-primary" id="savePain">Save today's pain score</button>
+      <button class="btn-secondary" id="startDaily" style="display:inline-flex;align-items:center;gap:9px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>Start your daily check-in  →</button>
     </div>
-    <div class="meta-input" style="margin-bottom:24px">
-      <label>A note for yourself or your physician (optional)</label>
-      <textarea placeholder="e.g., right knee was stiff this morning, got better after my walk..."></textarea>
-    </div>
-    <button class="btn-primary">Save today's check-in  →</button>
-  </div>
-
-  <div class="section-label">This week at a glance</div>
-  <div class="weekly-grid">
-    <div class="day-cell"><div class="day-name">Thu</div><div class="day-num">22</div><div class="day-dot s5"></div></div>
-    <div class="day-cell"><div class="day-name">Fri</div><div class="day-num">23</div><div class="day-dot s6"></div></div>
-    <div class="day-cell"><div class="day-name">Sat</div><div class="day-num">24</div><div class="day-dot s4"></div></div>
-    <div class="day-cell"><div class="day-name">Sun</div><div class="day-num">25</div><div class="day-dot s4"></div></div>
-    <div class="day-cell"><div class="day-name">Mon</div><div class="day-num">26</div><div class="day-dot s3"></div></div>
-    <div class="day-cell"><div class="day-name">Tue</div><div class="day-num">27</div><div class="day-dot s3"></div></div>
-    <div class="day-cell today"><div class="day-name">Today</div><div class="day-num">28</div><div class="day-dot s4"></div></div>
   </div>
 
   <div class="section-label" id="chartRangeLabel">Last 7 days</div>
@@ -575,6 +562,26 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <h4 style="color:var(--sage-dark)">Stairs are your worst trigger</h4>
         <p>4 of your 5 worst pain days this month happened after climbing stairs. Try the rail or alternating feet on harder days.</p>
       </div>
+    </div>
+  </div>
+
+  <hr class="checkin-sep">
+  <h3 class="checkin-heading">Your check-ins</h3>
+  <p class="checkin-intro">A few quick check-ins help your doctor understand your pain and prove what is working. The more we know about your day to day, the better we can tailor your plan. Tap one to begin.</p>
+  <div class="checkin-grid">
+    <div class="checkin-card" data-checkin="monthly" tabindex="0" role="button">
+      <div class="ci-hero"><img src="Pain%20Tracker/monthly-check-in-1600.jpg" alt="Woman at home reviewing her treatment plan on a tablet"></div>
+      <div class="ci-top"><span class="ci-pill">Due in 12 days</span><span class="ci-time">about 2 min</span></div>
+      <h4>Monthly check-in</h4>
+      <p>How pain affects your life, your sleep, your medications, and your overall sense of change.</p>
+      <div class="ci-foot"><span class="ci-tools">PEG-3 · Sleep · Meds · PGIC · NPS</span><span class="ci-go">Start →</span></div>
+    </div>
+    <div class="checkin-card" data-checkin="quarterly" tabindex="0" role="button">
+      <div class="ci-hero"><img src="Pain%20Tracker/quarterly-check-in-1600.jpg" alt="Woman walking comfortably on a sunny park path"></div>
+      <div class="ci-top"><span class="ci-pill ci-now">Due now</span><span class="ci-time">about 8 min</span></div>
+      <h4>Quarterly deep check-in</h4>
+      <p>The validated questionnaires your doctor recognises, the scores that prove your progress is real.</p>
+      <div class="ci-foot"><span class="ci-tools">Knee score · Milestones · Work · Mood · Sleep</span><span class="ci-go">Start →</span></div>
     </div>
   </div>
 </div>
@@ -652,7 +659,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="edu-hero" style="height:240px"><img src="Education%20Section%20(Knee%20OA%20Pain)/Your%20Flare%20Plan/jane-flare-hero%202.png" alt="A woman on her couch at home looking down at her knee" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%" /><span class="edu-tag" style="z-index:1">3-min plan</span></div>
       <div class="edu-body">
         <h3>Your Flare Plan</h3>
-        <p>The one-page guide to when ice, when heat, and when to message your physician. Print or save to your phone.</p>
+        <p>The one page guide to when ice, when heat, and when to message your physician. Print or save to your phone.</p>
         <div class="edu-meta">
           <span class="duration">⏱ 3 min</span>
           <span>One pager</span>
@@ -712,7 +719,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     <div class="cream-ladder">
       <div class="cream-step"><b>C1 Base</b><span class="step-detail">Ketoprofen 7% + Diclofenac 3% + Lidocaine 5% + Bupivacaine 0.25% + Amitriptyline 3% + Baclofen 5% + Menthol 0.25% + Camphor 0.25%</span></div>
       <div class="cream-step active"><b>C2 Standard</b><span class="step-detail">You are here. Step up from C1.</span></div>
-      <div class="cream-step"><b>C3 Hero</b><span class="step-detail">Physician step-up only. Adds capsaicin 0.05%, ketoprofen to 15%.</span></div>
+      <div class="cream-step"><b>C3 Hero</b><span class="step-detail">Physician step up only. Adds capsaicin 0.05%, ketoprofen to 15%.</span></div>
     </div>
     <div class="rx-divider"></div>
     <div class="rx-howto">
@@ -721,7 +728,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <p style="color:var(--terra-deep);font-weight:600">Give it a fair 4 to 6 week trial. Most people get partial relief, not zero pain.</p>
     </div>
     <div class="rx-actions">
-      <button class="btn-secondary">Full how-to guide</button>
+      <button class="btn-secondary">Full guide</button>
       <button class="btn-ghost">Pause subscription</button>
       <button class="btn-ghost">Ask a question</button>
     </div>
@@ -776,7 +783,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <div class="rx-price-period">always</div>
       </div>
     </div>
-    <p style="font-size:13.5px;color:var(--ink);line-height:1.6">Six components, all free: weight management, walking, swimming, leg strengthening, tai chi or yoga, and a physiotherapy referral guide. Open the Education tab for your week-by-week plan.</p>
+    <p style="font-size:13.5px;color:var(--ink);line-height:1.6">Six components, all free: weight management, walking, swimming, leg strengthening, tai chi or yoga, and a physiotherapy referral guide. Open the Education tab for your week by week plan.</p>
     <div class="rx-actions" style="margin-top:14px">
       <button class="btn-secondary" data-tab="education">Open your plan  →</button>
     </div>
@@ -961,8 +968,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
   <div class="section-label">Your current condition</div>
   <div class="care-grid">
-    <div class="care-card">
-      <div class="care-card-icon" style="background:var(--terra-pale);color:var(--terra-deep)">🦵</div>
+    <div class="care-card" data-tab="rx">
+      <div class="care-hero"><img src="Get%20Care/knee-oa-home-1600.jpg" alt="Man at home seated on a sofa, hands resting on his knee"></div>
       <h3>Knee Osteoarthritis</h3>
       <p>Right knee, moderate severity. Currently on C2 cream and naproxen, 4 weeks into your plan.</p>
       <span class="active-badge">Active</span>
@@ -972,26 +979,26 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
   <div class="section-label">Start a new assessment</div>
   <div class="care-grid">
-    <div class="care-card">
-      <div class="care-card-icon" style="background:var(--sage-pale);color:var(--sage-dark)">🧠</div>
+    <div class="care-card" data-quiz="Clara-Migraine-Quiz-MOCK-v1.html">
+      <div class="care-hero"><img src="Get%20Care/migraine-home-1600.jpg" alt="Woman on a sofa resting fingertips at her temple in soft light"></div>
       <h3>Migraine</h3>
       <p>Triggered, severe, or frequent headaches. 12-question assessment, takes 5 minutes.</p>
       <div class="care-card-cta">Start assessment  →</div>
     </div>
-    <div class="care-card">
-      <div class="care-card-icon" style="background:#F5EBD8;color:#8A6F2F">🪑</div>
+    <div class="care-card" data-quiz="Clara-BackPain-Quiz-MOCK-v2.html">
+      <div class="care-hero"><img src="Get%20Care/back-pain-home-1600.jpg" alt="Man by a bright window easing upright with a hand on his lower back"></div>
       <h3>Low Back Pain</h3>
       <p>Acute strain, sciatica, chronic mechanical pain. We will help identify your pattern.</p>
       <div class="care-card-cta">Start assessment  →</div>
     </div>
-    <div class="care-card">
-      <div class="care-card-icon" style="background:#EAE0EC;color:var(--plum)">⚡</div>
+    <div class="care-card" data-quiz="Clara-Neuropathic-Quiz-MOCK-v1.html">
+      <div class="care-hero"><img src="Get%20Care/neuropathic-home-1600.jpg" alt="Woman in an armchair gently holding her forearm"></div>
       <h3>Neuropathic Pain</h3>
-      <p>Nerve pain, burning, tingling, post-shingles, diabetic, post-surgical neuropathy.</p>
+      <p>Nerve pain, burning, tingling, whether from shingles, diabetes, or surgery.</p>
       <div class="care-card-cta">Start assessment  →</div>
     </div>
     <div class="care-card">
-      <div class="care-card-icon" style="background:#EAF1ED;color:var(--sage-dark)">💪</div>
+      <div class="care-hero"><img src="Get%20Care/fibromyalgia-home-1600.jpg" alt="Woman resting on a sofa with a knit throw, hand at her neck"></div>
       <h3>Fibromyalgia</h3>
       <p>Widespread pain, fatigue, sleep disturbance, sensitivity. Coming soon.</p>
       <div class="care-card-cta" style="color:var(--muted)">Coming soon  ·</div>
@@ -1001,7 +1008,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="section-label">Other ways to get care</div>
   <div class="grid-3">
     <div class="action-card">
-      <div class="action-icon sage">↻</div>
+      <div class="action-icon illus"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g1s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B4CABB"/><stop offset="1" stop-color="#6F947F"/></linearGradient><linearGradient id="g1t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D98E6F"/><stop offset="1" stop-color="#B25F45"/></linearGradient></defs><path d="M7 44 V28 C7 18.6 14.6 11 24 11 s17 7.6 17 17 v16 z" fill="#EFE9DD"/><rect x="15" y="17" width="16" height="23" rx="5" fill="url(#g1s)"/><rect x="17" y="12" width="12" height="7" rx="2.5" fill="#5E8270"/><rect x="18" y="25" width="10" height="9" rx="2" fill="#F7F5F0" opacity=".92"/><circle cx="35" cy="13" r="8.5" fill="url(#g1t)"/><path d="M35 8.8 a4.2 4.2 0 1 0 4.2 4.2" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round"/><path d="M37.4 6.6 l3.8 1.7 -1.9 3.6 z" fill="#fff"/><circle cx="40.4" cy="7.6" r="1.5" fill="#fff"/></svg></div>
       <div class="action-content">
         <div class="action-title">Request a refill</div>
         <div class="action-meta">Skip the wait, refill an existing prescription</div>
@@ -1009,7 +1016,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="action-arrow">→</div>
     </div>
     <div class="action-card">
-      <div class="action-icon terra">❓</div>
+      <div class="action-icon illus"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g2s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B4CABB"/><stop offset="1" stop-color="#6F947F"/></linearGradient><linearGradient id="g2t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D98E6F"/><stop offset="1" stop-color="#B25F45"/></linearGradient></defs><path d="M7 44 V28 C7 18.6 14.6 11 24 11 s17 7.6 17 17 v16 z" fill="#EFE9DD"/><path d="M11 44 c0-7.6 5.8-11.6 13-11.6 s13 4 13 11.6 z" fill="#FBF8F1"/><path d="M19.5 33.2 L24 40 l4.5-6.8 c-1.4-.5-2.9-.8-4.5-.8 s-3.1.3-4.5.8 z" fill="url(#g2s)"/><circle cx="24" cy="23" r="7.6" fill="#EFD3B3"/><path d="M16.4 22.6 a7.6 7.6 0 0 1 15.2 0 c0-.8-.3-7-7.6-7 s-7.6 6.2-7.6 7 z" fill="#5A5247"/><path d="M18.6 37 c0 3.4 2.3 5.4 5.4 5.4 2.6 0 4.6-1.5 5.2-3.9" stroke="#3E5A4B" stroke-width="1.7" fill="none" stroke-linecap="round"/><circle cx="29.6" cy="38" r="2" fill="#3E5A4B"/><circle cx="29.6" cy="38" r=".9" fill="#FBF8F1"/><path d="M33.5 3.5 h7 a4.3 4.3 0 0 1 4.3 4.3 v3 a4.3 4.3 0 0 1-4.3 4.3 h-3.2 l-4.6 4.2 .6-4.4 a4.3 4.3 0 0 1-4.1-4.1 v-3 a4.3 4.3 0 0 1 4.3-4.3 z" fill="url(#g2t)"/><circle cx="34.6" cy="9.3" r="1.35" fill="#fff"/><circle cx="38.4" cy="9.3" r="1.35" fill="#fff"/><circle cx="42.2" cy="9.3" r="1.35" fill="#fff"/><circle cx="44" cy="4.6" r="1.4" fill="#fff"/></svg></div>
       <div class="action-content">
         <div class="action-title">Ask a Clara clinician</div>
         <div class="action-meta">Quick question, no full assessment needed</div>
@@ -1017,9 +1024,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="action-arrow">→</div>
     </div>
     <div class="action-card">
-      <div class="action-icon gold">📅</div>
+      <div class="action-icon illus"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g3s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B4CABB"/><stop offset="1" stop-color="#6F947F"/></linearGradient><linearGradient id="g3t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D98E6F"/><stop offset="1" stop-color="#B25F45"/></linearGradient></defs><path d="M7 44 V28 C7 18.6 14.6 11 24 11 s17 7.6 17 17 v16 z" fill="#EFE9DD"/><rect x="10" y="14" width="28" height="26" rx="6" fill="url(#g3s)"/><path d="M10 22 v-2 a6 6 0 0 1 6-6 h16 a6 6 0 0 1 6 6 v2 z" fill="#5E8270"/><rect x="15.6" y="10" width="3.6" height="7" rx="1.8" fill="#3E5A4B"/><rect x="28.8" y="10" width="3.6" height="7" rx="1.8" fill="#3E5A4B"/><path d="M24 37.5 c-4.4-2.7-7-5.2-7-8.2 a4 4 0 0 1 7-2.7 a4 4 0 0 1 7 2.7 c0 3-2.6 5.5-7 8.2 z" fill="url(#g3t)"/><circle cx="27.6" cy="27.6" r="1.5" fill="#fff"/></svg></div>
       <div class="action-content">
-        <div class="action-title">Schedule a follow-up</div>
+        <div class="action-title">Schedule a follow up</div>
         <div class="action-meta">3-month check-in on your knee plan</div>
       </div>
       <div class="action-arrow">→</div>
@@ -1054,7 +1061,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="profile-row"><span class="profile-label">Province</span><span class="profile-val">Ontario</span></div>
       <div class="profile-row"><span class="profile-label">Postal code</span><span class="profile-val">M6R 2L7</span></div>
       <div class="profile-row"><span class="profile-label">Country</span><span class="profile-val">Canada</span></div>
-      <div style="margin-top:14px;padding:10px 12px;background:var(--sage-pale);border-radius:10px;font-size:12.5px;color:var(--sage-dark)">Free Canada-wide shipping with your subscription.</div>
+      <div style="margin-top:14px;padding:10px 12px;background:var(--sage-pale);border-radius:10px;font-size:12.5px;color:var(--sage-dark)">Free shipping across Canada with your subscription.</div>
     </div>
 
     <div class="profile-card">
@@ -1085,8 +1092,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
     <div class="profile-card">
       <h3>Account and security <span class="edit-link">Manage</span></h3>
-      <div class="profile-row"><span class="profile-label">Sign-in</span><span class="profile-val">Google  ·  sarah.kim@gmail.com</span></div>
-      <div class="profile-row"><span class="profile-label">Two-step verification</span><span class="profile-val" style="color:var(--sage-dark);font-weight:700">✓ On (SMS)</span></div>
+      <div class="profile-row"><span class="profile-label">Sign in</span><span class="profile-val">Google  ·  sarah.kim@gmail.com</span></div>
+      <div class="profile-row"><span class="profile-label">Two step verification</span><span class="profile-val" style="color:var(--sage-dark);font-weight:700">✓ On (SMS)</span></div>
       <div class="profile-row"><span class="profile-label">Member since</span><span class="profile-val">March 1, 2026</span></div>
       <div class="profile-row"><span class="profile-label">Data and privacy</span><span class="profile-val">Download my data</span></div>
     </div>
@@ -1136,7 +1143,84 @@ document.querySelectorAll('#scale .scale-num').forEach(n => {
   });
 });
 
-// Pain chart: data-driven curve that redraws per range, plus hover scrubber (stock-chart style)
+// Condition cards: open the matching assessment quiz wireframe (same tab; quizzes carry a back link)
+document.querySelectorAll('[data-quiz]').forEach(c => {
+  c.addEventListener('click', () => { location.href = c.dataset.quiz; });
+});
+
+// Save pain score: lock in saved state, then hand the spotlight to the daily check-in button
+const savePainBtn = document.getElementById('savePain');
+if (savePainBtn) savePainBtn.addEventListener('click', () => {
+  savePainBtn.textContent = '✓ Saved for today';
+  savePainBtn.classList.remove('btn-primary');
+  savePainBtn.classList.add('btn-secondary');
+  savePainBtn.disabled = true;
+  savePainBtn.style.opacity = '.65';
+  savePainBtn.style.cursor = 'default';
+  const st = document.getElementById('startDaily');
+  if (st) { st.classList.remove('btn-secondary'); st.classList.add('btn-primary', 'btn-nudge'); }
+});
+
+// Treatment start date: gate the Pain Tracker until set, then drive day count and due pills
+(function(){
+  const DAY = 86400000;
+  const view = document.getElementById('view-pain');
+  const setup = document.getElementById('treatSetup');
+  const dayLine = document.getElementById('dayLine');
+  if (!view || !setup) return;
+  const cal = document.getElementById('treatCal');
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let sel = new Date(today);
+  let vy = today.getFullYear(), vm = today.getMonth();
+  const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  function renderCal(){
+    const lead = (new Date(vy, vm, 1).getDay() + 6) % 7;
+    const atNow = (vy === today.getFullYear() && vm === today.getMonth());
+    let h = '<div class="tcal-head"><button class="tcal-nav" id="tcalPrev" aria-label="Previous month">&#8249;</button><span class="tcal-title">' + MN[vm] + ' ' + vy + '</span><button class="tcal-nav" id="tcalNext" aria-label="Next month"' + (atNow ? ' disabled' : '') + '>&#8250;</button></div><div class="tcal-grid">';
+    ['Mo','Tu','We','Th','Fr','Sa','Su'].forEach(d => h += '<span class="tcal-dow">' + d + '</span>');
+    for (let n = 0; n < 42; n++) {
+      const d = new Date(vy, vm, 1 - lead + n);
+      const out = d.getMonth() !== vm, dis = d > today, isSel = sel && d.getTime() === sel.getTime();
+      h += '<button class="tcal-day' + (out ? ' out' : '') + (dis ? ' dis' : '') + (isSel ? ' sel' : '') + '" data-d="' + iso(d) + '"' + (dis ? ' disabled' : '') + '>' + d.getDate() + '</button>';
+    }
+    cal.innerHTML = h + '</div>';
+    document.getElementById('tcalPrev').onclick = () => { vm--; if (vm < 0) { vm = 11; vy--; } renderCal(); };
+    if (!atNow) document.getElementById('tcalNext').onclick = () => { vm++; if (vm > 11) { vm = 0; vy++; } renderCal(); };
+    cal.querySelectorAll('.tcal-day:not(.dis)').forEach(b => b.onclick = () => { sel = new Date(b.dataset.d + 'T00:00:00'); vy = sel.getFullYear(); vm = sel.getMonth(); renderCal(); });
+  }
+  renderCal();
+  const gated = () => [...view.children].filter(el => el !== setup && el.id !== 'dayLine' && !el.classList.contains('greet'));
+  function dueIn(since, cycle){ if (since <= 0) return cycle; return (cycle - (since % cycle)) % cycle; }
+  function setPill(which, days){
+    const pill = view.querySelector('[data-checkin="' + which + '"] .ci-pill');
+    if (!pill) return;
+    pill.classList.remove('ci-now', 'ci-due');
+    if (days === 0) { pill.textContent = 'Due now'; pill.classList.add('ci-now'); }
+    else { pill.textContent = 'Due in ' + days + (days === 1 ? ' day' : ' days'); }
+  }
+  function refresh(){
+    const ds = localStorage.getItem('claraTreatStart');
+    if (!ds) { setup.style.display = ''; dayLine.style.display = 'none'; gated().forEach(el => el.style.display = 'none'); return; }
+    setup.style.display = 'none'; gated().forEach(el => el.style.display = '');
+    const start = new Date(ds + 'T00:00:00'); const today = new Date(); today.setHours(0, 0, 0, 0);
+    const since = Math.round((today - start) / DAY);
+    const pretty = start.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    dayLine.style.display = 'flex';
+    dayLine.innerHTML = '<div><div style="display:flex;align-items:center;gap:14px"><span style="font-size:18px;font-weight:800;color:var(--sage-dark)">Day ' + (since + 1) + ' of your plan</span><button id="treatEdit" class="btn-secondary" style="font-size:13px;padding:6px 14px">Change date</button></div><div style="font-size:14.5px;font-weight:500;color:var(--grey);margin-top:5px">Treatment started ' + pretty + '</div></div>';
+    document.getElementById('treatEdit').addEventListener('click', () => { localStorage.removeItem('claraTreatStart'); refresh(); });
+    setPill('monthly', dueIn(since, 30));
+    setPill('quarterly', dueIn(since, 90));
+  }
+  document.getElementById('treatSave').addEventListener('click', () => {
+    if (!sel) return;
+    localStorage.setItem('claraTreatStart', iso(sel));
+    refresh();
+  });
+  refresh();
+  window.claraRefreshDue = refresh;
+})();
+// Pain chart: data driven curve that redraws per range, plus hover scrubber (stock-chart style)
 (function(){
   const svg = document.querySelector('#view-pain .chart-svg');
   if (!svg) return;
@@ -1228,7 +1312,7 @@ document.querySelectorAll('#scale .scale-num').forEach(n => {
   render('Week');
 })();
 
-// Reason dropdowns: reveal the free-text note only when "Write your own..." is picked
+// Reason dropdowns: reveal the free text note only when "Write your own..." is picked
 document.querySelectorAll('.checkin-meta .meta-input select').forEach(sel => {
   const note = sel.parentElement.querySelector('.journal-input');
   if (!note) return;
@@ -1315,6 +1399,245 @@ document.addEventListener('click', e => {
   const drop = document.getElementById('avatarDrop');
   if (!drop.contains(e.target)) drop.classList.remove('open');
 });
+</script>
+
+<!-- ===================== OUTCOMES CHECK-IN (integrated modal) ===================== -->
+<style>
+.checkin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+@media (max-width:900px){.checkin-grid{grid-template-columns:1fr 1fr}}
+.checkin-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
+.ci-hero{margin:-20px -22px 16px;height:240px;border-radius:16px 16px 0 0;overflow:hidden}
+.ci-hero img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block}
+.checkin-card:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
+.checkin-card h4{font-size:18px;color:var(--sage-dark);margin:12px 0 6px}
+.checkin-card p{font-size:13.5px;color:var(--grey);margin:0 0 16px;line-height:1.5}
+.ci-top{display:flex;justify-content:space-between;align-items:center}
+.ci-pill{font-size:11.5px;font-weight:600;background:var(--cream-deep);color:var(--grey);padding:4px 10px;border-radius:12px}
+.ci-pill.ci-due{background:var(--terra-pale);color:var(--terra-deep)}
+.ci-pill.ci-now{background:var(--sage);color:#fff}
+.ci-time{font-size:12px;color:var(--muted)}
+.ci-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px}
+.ci-tools{font-size:11.5px;color:var(--muted)}
+.ci-go{font-size:13px;font-weight:600;color:var(--sage)}
+@media(max-width:880px){.checkin-grid{grid-template-columns:1fr}}
+.checkin-sep{border:none;border-top:2px solid var(--line-strong);margin:48px 0 26px}
+.checkin-heading{font-size:19px;font-weight:800;color:var(--sage-dark);letter-spacing:2px;text-transform:uppercase;margin:0 0 14px}
+.checkin-intro{color:var(--ink);font-size:16.5px;font-weight:500;line-height:1.6;margin:0 0 26px;max-width:820px}
+.ct-overlay{position:fixed;inset:0;background:rgba(31,51,41,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:40px 20px;overflow-y:auto}
+.ct-overlay.open{display:flex}
+.ct-modal{background:var(--cream);width:100%;max-width:820px;border-radius:22px;overflow:hidden;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;max-height:calc(100vh - 80px)}
+.ct-head{background:var(--sage-dark);color:#fff;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex:none}
+.ct-phases{display:flex;gap:22px}
+.ct-phase{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#9fb6aa;padding-bottom:6px;border-bottom:2px solid transparent}
+.ct-phase.active{color:#fff;border-bottom-color:var(--terra)}
+.ct-phase.done{color:#cfe0d7}
+.ct-close{background:rgba(255,255,255,.14);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;line-height:1}
+.ct-pct{margin-left:auto;margin-right:18px;font-size:26px;font-weight:700;letter-spacing:.04em;color:rgba(255,255,255,.85);white-space:nowrap}
+.tcal{max-width:430px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow-sm)}
+.tcal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.tcal-title{font-size:20px;font-weight:800;color:var(--ink)}
+.tcal-nav{width:44px;height:44px;border:1px solid var(--line-strong);border-radius:13px;background:#fff;cursor:pointer;font-size:22px;line-height:1;color:var(--grey);display:grid;place-items:center}
+.tcal-nav:hover:not(:disabled){border-color:var(--sage);color:var(--sage-dark)}
+.tcal-nav:disabled{opacity:.35;cursor:default}
+.tcal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.tcal-dow{font-size:14.5px;font-weight:700;color:var(--ink);padding:9px 0}
+.tcal-day{border:none;background:none;font-size:17px;font-weight:600;color:var(--ink);width:100%;aspect-ratio:1;border-radius:13px;cursor:pointer;display:grid;place-items:center;font-family:inherit}
+.tcal-day:hover:not(.dis):not(.sel){background:var(--sage-pale)}
+.tcal-day.out{color:#BDB8AC}
+.tcal-day.dis{color:#CFCABF;cursor:default}
+.tcal-day.sel{background:var(--sage-dark);color:#fff;font-weight:700}
+.btn-nudge{animation:btnNudge .9s ease 2}
+@keyframes btnNudge{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.ct-bubbles.miss,.ct-seg.miss{outline:2px solid var(--terra);outline-offset:8px;border-radius:10px}
+.ct-missnote{margin-top:20px;background:#FBF2ED;border-left:3px solid var(--terra);color:#6e2417;font-size:15px;font-weight:600;padding:12px 16px;border-radius:0 10px 10px 0}
+.ct-pbar{height:4px;background:rgba(0,0,0,.06);flex:none}
+.ct-pbar>i{display:block;height:100%;background:var(--terra);width:0;transition:width .35s}
+.ct-body{padding:34px 44px;overflow-y:auto}
+.ct-foot{padding:18px 44px 24px;display:flex;gap:14px;align-items:center;border-top:1px solid var(--line);flex:none}
+.ct-modal .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#6e2417;font-weight:700;margin:0 0 8px}
+.ct-modal h1{font-size:28px;color:var(--sage-dark);margin:0 0 14px;line-height:1.25;font-weight:700}
+.ct-cad{color:var(--terra);text-transform:capitalize}
+.ct-key{color:var(--terra-deep);font-weight:700}
+.ct-modal .lead{font-size:16.5px;line-height:1.7;color:var(--grey);max-width:660px}
+.ct-modal .why{background:var(--terra-pale);border-left:4px solid var(--terra);padding:16px 20px;border-radius:0 10px 10px 0;margin:0 0 26px;max-width:680px}
+.ct-modal .why .k{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6e2417;margin-bottom:5px;font-weight:700}
+.ct-modal .why p{margin:0;font-size:15.5px;line-height:1.6;color:#6e2417;font-weight:500}
+.ct-modal .ask{font-size:20px;font-weight:600;color:var(--ink);margin:0 0 4px}
+.ct-modal .sub{font-size:14.5px;color:var(--grey);font-weight:500;margin:8px 0 22px}
+.ct-modal .stagekv{display:inline-flex;align-items:center;gap:8px;background:var(--sage-pale);color:var(--sage-dark);font-size:13px;font-weight:600;padding:8px 16px;border-radius:20px;margin-bottom:16px}
+.ct-slide .num{font-size:54px;font-weight:700;color:var(--sage-dark);line-height:1}
+.ct-slide .of{font-size:18px;color:var(--muted)}
+.ct-slidehead{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:6px}
+.ct-modal input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:6px;background:linear-gradient(90deg,#7fae8e,#e3c14f,#d98a3d,#cf5a4a);outline:none;margin:8px 0}
+.ct-modal input[type=range].pos{background:linear-gradient(90deg,#cf5a4a,#d98a3d,#e3c14f,#7fae8e)}
+.ct-modal input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid var(--sage-dark);cursor:pointer;box-shadow:var(--shadow-sm)}
+.ct-modal input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;border:4px solid var(--sage-dark);cursor:pointer}
+.ct-ends{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:8px}
+.ct-anchors{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-top:12px}
+.ct-anchors span{flex:1;font-size:14.5px;font-weight:700;line-height:1.3}
+.ct-anchors .lo{text-align:left;color:var(--ink)}
+.ct-anchors .mid{text-align:center;color:var(--grey)}
+.ct-anchors .hi{text-align:right;color:var(--ink)}
+.ct-faces{display:flex;justify-content:space-between;margin-top:6px}
+.ct-bubbles{display:flex;gap:10px;margin:6px 0}
+.ct-bub{flex:1;min-width:0;border:2px solid var(--line-strong);background:#fff;border-radius:14px;padding:16px 6px 12px;text-align:center;cursor:pointer;transition:all .12s}
+.ct-bub:hover{border-color:var(--sage)}
+.ct-bub .dot{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--muted);margin:0 auto 9px}
+.ct-bub .lbl{font-size:12.5px;line-height:1.3;color:var(--grey)}
+.ct-bub.sel{border-color:var(--sage);background:var(--sage-pale)}
+.ct-bub.sel .dot{border-color:var(--sage);background:var(--sage)}
+.ct-bub.sel .lbl{color:var(--sage-dark);font-weight:600}
+.ct-row{margin:0 0 22px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.ct-row:last-child{border-bottom:none;padding-bottom:0}
+.ct-row .q{font-size:16px;font-weight:600;color:var(--ink);margin:0 0 12px}
+.ct-chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.ct-chip{font-size:15px;padding:12px 18px;border-radius:24px;border:2px solid var(--line-strong);background:#fff;color:var(--grey);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.ct-chip.sel{background:var(--sage);border-color:var(--sage);color:#fff}
+.ct-chip .ck{display:none}.ct-chip.sel .ck{display:inline}
+.ct-seg{display:flex;gap:10px;flex-wrap:wrap}
+.ct-seg button{flex:0 0 auto;width:168px;padding:14px 10px;border:2px solid var(--line-strong);background:#fff;border-radius:12px;font-size:14.5px;cursor:pointer;color:var(--grey)}
+.ct-seg button.sel{background:var(--sage);border-color:var(--sage);color:#fff}
+.ct-field{margin:0 0 18px}
+.ct-field label{display:block;font-size:15px;color:var(--ink);margin-bottom:8px;font-weight:600}
+.ct-field input[type=number]{width:120px;padding:12px;border:2px solid var(--line-strong);border-radius:10px;font-size:16px}
+.ct-auto{display:flex;gap:18px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
+.ct-auto .ring{width:64px;height:64px;flex:none}
+.ct-auto .t{font-size:16px;font-weight:600;color:var(--ink)}
+.ct-auto .d{font-size:14px;color:var(--muted);margin-top:3px}
+.ct-logged{font-size:13px;color:var(--sage);font-weight:600;display:inline-flex;align-items:center;gap:5px;margin-top:7px}
+.ct-pending{font-size:13px;color:var(--terra-deep);font-weight:600;display:inline-flex;align-items:center;gap:5px;margin-top:7px}
+.ct-btn{padding:16px 24px;border-radius:14px;border:none;font-size:16px;font-weight:600;cursor:pointer}
+.ct-btn.primary{flex:1;background:var(--sage-dark);color:#fff}
+.ct-btn.primary:hover{background:var(--sage-deep)}
+.ct-btn.ghost{background:transparent;color:var(--grey);font-weight:500;border:2px solid transparent;transition:all .15s}
+#ctSave{color:var(--sage-dark);font-weight:600}
+#ctSave:hover{background:var(--sage-pale);border-color:var(--sage);color:var(--sage-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(47,71,59,.16)}
+#ctBack:hover{background:var(--cream-soft,#F2EFE8);color:var(--ink)}
+.ct-esc{background:#FBF3D0;border:1px solid #ecd98a;border-radius:12px;padding:14px 16px;font-size:14px;color:#6b5a13;margin-top:14px}
+.ct-sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:8px 0 18px}
+.ct-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.ct-stat .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.ct-stat .v{font-size:27px;font-weight:700;color:var(--sage-dark);margin-top:4px}
+.ct-stat .s{font-size:13px;color:var(--muted);margin-top:2px}
+.ct-trend{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.ct-trend .k{font-size:14px;color:var(--ink);font-weight:600;margin-bottom:10px}
+.ct-pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.ct-pilltag{font-size:13px;background:var(--sage-pale);color:var(--sage-dark);border-radius:16px;padding:7px 13px}
+.ct-note{font-size:13px;color:var(--muted);text-align:center;line-height:1.6;margin-top:18px}
+.ct-celebrate{text-align:center;padding:8px 0}
+.ct-burst{width:128px;height:128px;margin:0 auto 14px;display:block}
+.ct-streak{display:inline-flex;align-items:center;gap:7px;background:var(--terra-pale);color:var(--terra-deep);font-size:14px;font-weight:700;padding:9px 18px;border-radius:22px;margin:0 0 16px}
+.ct-celebrate h1{font-size:30px;margin-bottom:14px}
+.ct-celebrate .lead{margin:0 auto 6px;max-width:560px;text-align:center}
+.ct-closer{font-size:15px;font-weight:600;color:var(--sage);margin-top:16px}
+.ct-bigicon{width:64px;height:64px;margin:4px 0 14px}
+@media(max-width:700px){.ct-body,.ct-foot,.ct-head{padding-left:22px;padding-right:22px}.ct-sumgrid{grid-template-columns:1fr 1fr}.ct-bub{padding:12px 3px 9px}}
+</style>
+
+<div class="ct-overlay" id="ctOverlay" aria-hidden="true">
+  <div class="ct-modal" role="dialog" aria-modal="true" aria-label="clara check-in">
+    <div class="ct-head">
+      <div class="ct-phases"><span class="ct-phase" data-p="daily">Daily</span><span class="ct-phase" data-p="monthly">Monthly</span><span class="ct-phase" data-p="quarterly">Quarterly</span></div>
+      <span class="ct-pct" id="ctPct"></span>
+      <button class="ct-close" id="ctClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="ct-pbar"><i id="ctBar"></i></div>
+    <div class="ct-body" id="ctBody"></div>
+    <div class="ct-foot" id="ctFoot"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+ const A5=["None","Mild","Moderate","Severe","Extreme"];
+ const A4=["Not at all","Several days","Over half the days","Nearly every day"];
+ const face=(i)=>{const m=["M8 15c1.2 1.2 2.6 1.8 4 1.8s2.8-.6 4-1.8","M8 15.5c1.1.6 2.5 1 4 1s2.9-.4 4-1","M8 15.8h8","M8 16.4c1.1-.6 2.5-1 4-1s2.9.4 4 1","M8 16.8c1.2-1.2 2.6-1.8 4-1.8s2.8.6 4 1.8"][i];const c=["#4a6b5b","#7d9c8d","#c9a23f","#cf8a3d","#cf5a4a"][i];return '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="'+c+'" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M9 10h0M15 10h0"/><path d="'+m+'"/></svg>';};
+ const ring=(p,col,lab)=>{const r=24,c=2*Math.PI*r,o=c*(1-p/100);return '<svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="none" stroke="#ECE8DF" stroke-width="6"/><circle cx="30" cy="30" r="24" fill="none" stroke="'+col+'" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+o+'" transform="rotate(-90 30 30)"/><text x="30" y="35" text-anchor="middle" font-size="15" font-weight="700" fill="#2F473B">'+lab+'</text></svg>';};
+ const FLOW=[
+  {t:'welcome'},
+  {t:'stage',stage:'daily',kv:'Under 1 minute',title:'Your daily check-in',body:'A few seconds today builds the picture your care team needs. The most useful thing you can do is tell us your pain each day. Your exercise and cream are logged for you automatically.'},
+  {t:'tool',stage:'daily',id:'nprs',kind:'slider',max:10,ask:'What is your <span class="ct-key">knee pain</span> today?',sub:'0 = no pain at all, 10 = the worst pain you can imagine',lo:'No pain',mid:'Moderate',hi:'Worst pain',why:'One tap a day draws the trend line your doctor watches. It is the clearest signal of what is actually helping you.'},
+  {t:'tool',stage:'daily',id:'logday',kind:'checkoff',ask:'Log <span class="ct-key">your plan</span> for today',sub:'A quick tap to record what you did. It takes a few seconds and powers your progress tracking.',why:'Checking these off each day shows your team you are doing the plan, and doing the plan is the strongest predictor of feeling better.'},
+  {t:'tool',stage:'daily',id:'eng',kind:'auto',why:'Here is your plan logged for today. Your team sees this snapshot, so they know you are sticking with it.'},
+  {t:'celebrate',stage:'daily',end:true,streak:'28 days in a row',headline:'You showed up for yourself today',body:'Every check-in adds another detail to the picture your doctor uses to personalise your care. The more you track, the more precisely your team can fine tune your plan, spot exactly what is helping, and keep your pain heading the right way. Small taps today, a clearer path tomorrow.',closer:'Same time tomorrow? Your future self will thank you.'},
+  {t:'stage',stage:'monthly',kv:'About 2 minutes',title:'Your monthly check-in',body:'Once a month we ask a little more, so your doctor can see not just your pain, but how it affects your life, your sleep, your medications, and how you feel overall.'},
+  {t:'tool',stage:'monthly',id:'nprs',kind:'slider',max:10,ask:'First, what is your <span class="ct-key">knee pain</span> today?',sub:'0 = no pain at all, 10 = the worst pain you can imagine',lo:'No pain',mid:'Moderate',hi:'Worst pain',why:'Your pain score today anchors everything else in this check-in, so your team reads every answer against how you feel right now.'},
+  {t:'tool',stage:'monthly',id:'pp',kind:'slider',max:10,ask:'Over the past week, your <span class="ct-key">average pain</span>',lo:'No pain',mid:'Moderate',hi:'Worst imaginable',why:'Pain is more than a number. The next three quick questions show how much it gets in the way of the things you care about.'},
+  {t:'tool',stage:'monthly',id:'pe',kind:'slider',max:10,ask:'Over the past week, how much did pain interfere with your <span class="ct-key">enjoyment of life</span>?',lo:'Did not interfere',mid:'Somewhat',hi:'Completely'},
+  {t:'tool',stage:'monthly',id:'pa',kind:'slider',max:10,ask:'Over the past week, how much did pain interfere with your <span class="ct-key">general activity</span>?',lo:'Did not interfere',mid:'Somewhat',hi:'Completely'},
+  {t:'tool',stage:'monthly',id:'sl',kind:'slider',pos:true,max:10,ask:'Overall, how was your <span class="ct-key">sleep quality</span> this past week?',sub:'0 = very poor, 10 = excellent',lo:'Very poor',mid:'Fair',hi:'Excellent',why:'Better sleep is one of the first wins people feel from good pain control, so we keep an eye on it.'},
+  {t:'tool',stage:'monthly',id:'md',kind:'slider',max:30,ask:'About <span class="ct-key">how many days</span> this month did you take an oral pain medication?',lo:'0 days',mid:'About 15 days',hi:'30 days',why:'Fewer pills, and especially zero opioids, is a real marker of progress. Tracking it helps your doctor safely step medications down over time.'},
+  {t:'tool',stage:'monthly',id:'op',kind:'segq',ask:'Are any of these <span class="ct-key">opioid</span> medications?',opts:[['no','No, zero opioids'],['yes','Yes']]},
+  {t:'tool',stage:'monthly',id:'pgic',kind:'bub1',ask:'Since starting with clara, how would you describe your knee pain <span class="ct-key">overall</span>?',anch:['Very much better','Much better','A little better','No change','A little worse','Much worse','Very much worse'],why:'Your own overall verdict in one tap. Doctors use this as the anchor that gives meaning to all the other scores.'},
+  {t:'tool',stage:'monthly',id:'nps',kind:'slider',pos:true,max:10,ask:'How likely are you to <span class="ct-key">recommend clara</span> to a friend with chronic pain?',sub:'0 = not at all likely, 10 = extremely likely',lo:'Not likely',mid:'Maybe',hi:'Extremely likely',why:'A quick gut check that tells us whether we are truly helping you.'},
+  {t:'summary',stage:'monthly'},
+  {t:'celebrate',stage:'monthly',end:true,streak:'3 months in a row',headline:'Another month, in the books',body:'Your monthly check gives your doctor the bigger picture: how your pain, sleep, mood, and medications are trending together. It is exactly what lets your team see what is truly working and fine tune your plan with confidence. You are building a story your care team can act on.',closer:'See you next month. Every check-in makes your care a little more yours.'},
+  {t:'stage',stage:'quarterly',kv:'About 8 minutes',title:'Your quarterly deep check-in',body:'Every few months we ask the validated questionnaires your doctor, and one day your insurer or employer, will recognise. These are the scores that prove your progress is real.'},
+  {t:'tool',stage:'quarterly',id:'nprs',kind:'slider',max:10,ask:'First, what is your <span class="ct-key">knee pain</span> today?',sub:'0 = no pain at all, 10 = the worst pain you can imagine',lo:'No pain',mid:'Moderate',hi:'Worst pain',why:'Your pain score today anchors everything else in this check-in, so your team reads every answer against how you feel right now.'},
+  {t:'tool',stage:'quarterly',id:'koos',kind:'bub5',ask:'Your <span class="ct-key">knee</span> over the last week',sub:'The KOOS-12 knee score. Tap one answer per row.',items:[{k:'k1',q:'How often do you feel knee pain?',a:['Never','Monthly','Weekly','Daily','Always']},{k:'k2',q:'Pain when sitting or lying',a:A5},{k:'k3',q:'Pain when walking on a flat surface',a:A5},{k:'k4',q:'Pain going up or down stairs',a:A5},{k:'k5',q:'Difficulty standing',a:A5},{k:'k6',q:'Difficulty rising from sitting',a:A5},{k:'k7',q:'Difficulty getting in or out of a car',a:A5},{k:'k8',q:'Difficulty twisting or pivoting on your knee',a:A5},{k:'k9',q:'How often are you aware of your knee problem?',a:['Never','Monthly','Weekly','Daily','Constantly']},{k:'k10',q:'Changed your lifestyle to avoid harming your knee?',a:['Not at all','Mildly','Moderately','Severely','Totally']},{k:'k11',q:'Troubled by lack of confidence in your knee?',a:['Not at all','Mildly','Moderately','Severely','Extremely']},{k:'k12',q:'In general, how much difficulty with your knee?',a:A5}],why:'The trusted knee score. It turns walking, stairs, and everyday life into one number your doctor and others recognise.'},
+  {t:'tool',stage:'quarterly',id:'ms',kind:'chips',ask:'Compared with <span class="ct-key">3 months ago</span>, which of these are true now?',sub:'Select all that apply.',opts:['Walking farther','Stairs without stopping','Housework is easier','Carrying groceries','Playing with kids or grandkids','Back to gym, yoga, or sport','Sleeping through the night'],why:'The everyday wins, like getting back on the floor with the grandkids. They keep you motivated and give your team your story in your own words.'},
+  {t:'tool',stage:'quarterly',id:'wk',kind:'segq',ask:'Your <span class="ct-key">work situation</span> right now',sub:'One tap is all it takes.',opts:[['Regular duties','Regular duties'],['Modified duties','Modified duties'],['Reduced hours','Reduced hours'],['Off work','Off work'],['Not employed','Not employed']],why:'Pain shows up at work too. Knowing your situation helps your team read the next answers in context.'},
+  {t:'tool',stage:'quarterly',id:'wpai',kind:'wpai',why:'This turns your pain into its real cost at work, the number employers and insurers understand. It is how clara will one day prove its value to the people who pay for your care.'},
+  {t:'tool',stage:'quarterly',id:'mood',kind:'bub5',ask:'Over the last 2 weeks, how often have you been <span class="ct-key">bothered</span> by...',sub:'A quick mood check (PHQ-2 and GAD-2).',items:[{k:'m1',q:'Little interest or pleasure in doing things',a:A4},{k:'m2',q:'Feeling down, depressed, or hopeless',a:A4},{k:'m3',q:'Feeling nervous, anxious, or on edge',a:A4},{k:'m4',q:'Not being able to stop or control worrying',a:A4}],why:'Pain and mood travel together. A quick check so nothing gets missed.',esc:'If these answers suggest you could use more support, we will ask a few more questions and your clinician will reach out. You are never on your own with this.'},
+  {t:'tool',stage:'quarterly',id:'pr',kind:'bub5',ask:'Your <span class="ct-key">sleep</span> in the past 7 days',sub:'The validated PROMIS sleep score.',items:[{k:'r1',q:'My sleep was restless',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']},{k:'r2',q:'I was satisfied with my sleep',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']},{k:'r3',q:'My sleep was refreshing',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']},{k:'r4',q:'I had difficulty falling asleep',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']}],why:'A validated sleep score that backs up your monthly check, so the improvement holds up to scrutiny.'}
+ ,{t:'summary'}];
+ const stageStart={daily:0, monthly:FLOW.findIndex(s=>s.t==='stage'&&s.stage==='monthly'), quarterly:FLOW.findIndex(s=>s.t==='stage'&&s.stage==='quarterly')};
+ let i=0,i0=0; const ans={cream:'2',medsTaken:'yes',exercise:'yes'};
+ const ov=document.getElementById('ctOverlay'),body=document.getElementById('ctBody'),foot=document.getElementById('ctFoot'),bar=document.getElementById('ctBar');
+ const clk='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+ function phases(stage){const o=['daily','monthly','quarterly'];document.querySelectorAll('.ct-phase').forEach(el=>{const p=el.dataset.p;el.classList.remove('active','done');if(!stage)return;if(p===stage)el.classList.add('active');else if(o.indexOf(p)<o.indexOf(stage))el.classList.add('done');});}
+ function slider(id,max,val,lo,hi,mid,pos){const f=(max===10)?'<div class="ct-faces">'+(pos?[4,3,2,1,0]:[0,1,2,3,4]).map(face).join('')+'</div>':'';const an='<div class="ct-anchors"><span class="lo">'+(lo||'0')+'</span><span class="mid">'+(mid||'')+'</span><span class="hi">'+(hi||max)+'</span></div>';return '<div class="ct-slide"><div class="ct-slidehead"><span class="num" id="cn-'+id+'">'+val+'</span><span class="of">/ '+max+'</span></div><input type="range"'+(pos?' class="pos"':'')+' min="0" max="'+max+'" step="1" value="'+val+'" data-s="'+id+'">'+f+an+'</div>';}
+ function bubs(id,anch){return '<div class="ct-bubbles" data-b="'+id+'">'+anch.map((a,n)=>'<div class="ct-bub '+(ans[id]===n?'sel':'')+'" data-i="'+n+'"><div class="dot"></div><div class="lbl">'+a+'</div></div>').join('')+'</div>';}
+ function tool(s){
+  if(s.kind==='slider')return slider(s.id,s.max,ans[s.id]??s.start??0,s.lo,s.hi,s.mid,s.pos);
+  if(s.kind==='sliders')return s.items.map(it=>'<div class="ct-row"><p class="q">'+it.q+'</p>'+slider(it.k,s.max,ans[it.k]??5,it.lo,it.hi,it.mid)+'</div>').join('');
+  if(s.kind==='bub1')return bubs(s.id,s.anch);
+  if(s.kind==='bub5')return s.items.map(it=>'<div class="ct-row"><p class="q">'+it.q+'</p>'+bubs(it.k,it.a)+'</div>').join('');
+  if(s.kind==='checkoff'){var cr=ans.cream!=null?ans.cream:'2',md=ans.medsTaken||'yes',xc=ans.exercise||'yes';return '<div class="ct-field"><label>Did you do your knee <span class="ct-key">exercises</span> today?</label><div class="ct-seg" data-seg="exercise"><button data-val="yes" class="'+(xc==='yes'?'sel':'')+'">Yes, done</button><button data-val="no" class="'+(xc==='no'?'sel':'')+'">Not yet</button></div></div><div class="ct-field"><label>Did you apply your compound <span class="ct-key">cream</span> today?</label><div class="ct-seg" data-seg="cream"><button data-val="0" class="'+(cr==='0'?'sel':'')+'">Not yet</button><button data-val="1" class="'+(cr==='1'?'sel':'')+'">1 time</button><button data-val="2" class="'+(cr==='2'?'sel':'')+'">2 times</button><button data-val="3" class="'+(cr==='3'?'sel':'')+'">3 times</button></div></div><div class="ct-field"><label>Did you take your <span class="ct-key">medications</span> today?</label><div class="ct-seg" data-seg="medsTaken"><button data-val="yes" class="'+(md==='yes'?'sel':'')+'">Yes</button><button data-val="no" class="'+(md==='no'?'sel':'')+'">Not yet</button><button data-val="none" class="'+(md==='none'?'sel':'')+'">None prescribed</button></div></div>';}
+  if(s.kind==='auto'){var ck='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>';var cr=parseInt(ans.cream!=null?ans.cream:'2',10);var pct=Math.round(cr/3*100);var md=ans.medsTaken||'yes';var exA=ans.exercise||'yes';var ex=(exA==='yes')?'<div class="ct-auto">'+ring(100,'#4A6B5B','✓')+'<div><div class="t">Today\'s exercise</div><div class="d">Knee strengthening routine</div><div class="ct-logged">'+ck+'Completed today</div></div></div>':'<div class="ct-auto">'+ring(12,'#C97257','0')+'<div><div class="t">Today\'s exercise</div><div class="d">Knee strengthening routine</div><div class="ct-pending">Not done yet</div></div></div>';var cream='<div class="ct-auto">'+ring(pct,'#C97257',cr+'/3')+'<div><div class="t">Cream applications</div><div class="d">Target: 2 to 3 per day</div>'+(cr>=2?'<div class="ct-logged">'+ck+cr+' of 3 logged today</div>':'<div class="ct-pending">'+cr+' of 3 logged so far</div>')+'</div></div>';var meds;if(md==='yes')meds='<div class="ct-auto">'+ring(100,'#4A6B5B','✓')+'<div><div class="t">Medications taken</div><div class="d">As prescribed today</div><div class="ct-logged">'+ck+'Taken today</div></div></div>';else if(md==='no')meds='<div class="ct-auto">'+ring(12,'#C97257','0')+'<div><div class="t">Medications taken</div><div class="d">As prescribed today</div><div class="ct-pending">Not taken yet</div></div></div>';else meds='<div class="ct-auto">'+ring(100,'#8A908B','-')+'<div><div class="t">Medications taken</div><div class="d">No medication prescribed</div><div class="ct-logged" style="color:var(--muted)">'+ck+'None to take</div></div></div>';return ex+cream+meds;}
+  if(s.kind==='segq')return '<div class="ct-seg" data-seg="'+s.id+'">'+s.opts.map(function(o){return '<button data-val="'+o[0]+'" class="'+(ans[s.id]===o[0]?'sel':'')+'">'+o[1]+'</button>';}).join('')+'</div>';
+  if(s.kind==='meds')return '<div class="ct-field"><label>About how many days this month did you take an oral pain medication?</label>'+slider('md',30,ans.md??6,'0 days','About 15 days','30 days')+'</div><div class="ct-field"><label>Are any of these opioid medications?</label><div class="ct-seg" data-seg="op"><button data-val="no" class="'+(ans.op==='no'?'sel':'')+'">No, zero opioids</button><button data-val="yes" class="'+(ans.op==='yes'?'sel':'')+'">Yes</button></div></div>';
+  if(s.kind==='chips')return '<div class="ct-chips">'+s.opts.map(o=>'<span class="ct-chip '+((ans.ms||[]).includes(o)?'sel':'')+'" data-chip="'+o+'"><svg class="ck" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>'+o+'</span>').join('')+'</div>';
+  if(s.kind==='wpai'){var work=(ans.we==='yes')?'<div class="ct-field"><label>Past 7 days, <span class="ct-key">hours missed</span> from work because of your knee</label><input type="number" min="0" max="80" value="'+(ans.wm??0)+'" data-num="wm"> hours</div><div class="ct-field"><label>Hours you <span class="ct-key">actually worked</span> in the past 7 days</label><input type="number" min="0" max="80" value="'+(ans.ww??32)+'" data-num="ww"> hours</div><div class="ct-row"><p class="q">While working, how much did your knee affect your <span class="ct-key">productivity</span>?</p>'+slider('wp',10,ans.wp??0,'No effect','Some','Completely')+'</div>':(ans.we==='no')?'<p class="sub" style="margin:14px 0 4px">Since you are not working for pay right now, we will skip the work questions.</p>':'';return '<div class="ct-field"><label>Are you currently <span class="ct-key">working for pay</span>?</label><div class="ct-seg" data-seg="we"><button data-val="yes" class="'+(ans.we==='yes'?'sel':'')+'">Yes</button><button data-val="no" class="'+(ans.we==='no'?'sel':'')+'">No</button></div></div>'+work+'<div class="ct-row"><p class="q">How much did your knee affect activities <span class="ct-key">outside work</span>?</p>'+slider('wa',10,ans.wa??0,'No effect','Some','Completely')+'</div>';}
+  return '';
+ }
+ function peg(){const a=ans.pp,b=ans.pe,c=ans.pa;if([a,b,c].some(x=>x==null))return null;return ((a+b+c)/3).toFixed(1);}
+ function koos(){const ks=['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10','k11','k12'];if(ks.some(k=>ans[k]==null))return null;const mn=a=>a.reduce((s,k)=>s+ans[k],0)/a.length;const sb=a=>Math.round(100-mn(a)*25);return Math.round((sb(['k1','k2','k3','k4'])+sb(['k5','k6','k7','k8'])+sb(['k9','k10','k11','k12']))/3);}
+ function mood(){const k=['m1','m2','m3','m4'];if(k.some(x=>ans[x]==null))return null;return {phq:ans.m1+ans.m2,gad:ans.m3+ans.m4};}
+ function summary(mode){const monthly=(mode==='monthly');const pain=ans.nprs,pg=peg(),ko=koos(),mo=mood(),ms=(ans.ms||[]).length;const pgt=ans.pgic!=null?['Very much better','Much better','A little better','No change','A little worse','Much worse','Very much worse'][ans.pgic]:'—';const st=(k,v,s)=>'<div class="ct-stat"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="s">'+s+'</div></div>';let c=st('Pain today',pain+'/10',pain<=3?'good range':'we are watching');if(pg!=null)c+=st('PEG-3',pg+'/10','pain interference');if(monthly){if(ans.sl!=null)c+=st('Sleep quality',ans.sl+'/10',ans.sl>=7?'sleeping well':'we are watching');if(ans.md!=null)c+=st('Medication days',ans.md+' / 30',ans.op==='no'?'zero opioids':(ans.op==='yes'?'includes an opioid':'oral pain medication'));c+=st('Overall',pgt,'since starting with clara');if(ans.nps!=null)c+=st('Would recommend',ans.nps+'/10','thank you for the signal');}else{if(ko!=null)c+=st('KOOS-12',ko+'/100',ko>=70?'good function':'room to improve');if(mo)c+=st('Mood',(mo.phq+mo.gad)+'/12',(mo.phq>=3||mo.gad>=3)?'we will check in':'no flags');c+=st('Milestones',ms+' / 7','everyday wins');c+=st('Overall',pgt,'since starting with clara');}const sr=[7,6,6,5,5,4,Number(pain)],W=720,H=120;const pts=sr.map((y,n)=>[24+n*((W-48)/(sr.length-1)),H-14-(y/10)*(H-32)]);const path=pts.map((p,n)=>(n?'L':'M')+p[0].toFixed(0)+' '+p[1].toFixed(0)).join(' ');const dots=pts.map((p,n)=>'<circle cx="'+p[0].toFixed(0)+'" cy="'+p[1].toFixed(0)+'" r="'+(n===pts.length-1?5:3)+'" fill="'+(n===pts.length-1?'#C97257':'#7d9c8d')+'"/>').join('');const li=[...new Set([0,Math.floor((sr.length-1)/2),sr.length-1])];const labs=li.map(n=>{const ly=(pts[n][1]-14<14)?pts[n][1]+26:pts[n][1]-14;return '<text x="'+pts[n][0].toFixed(0)+'" y="'+ly.toFixed(0)+'" text-anchor="middle" font-size="15" font-weight="700" fill="'+(n===sr.length-1?'#C97257':'#4a6b5b')+'">'+sr[n]+'</text>';}).join('');return '<p class="eyebrow">all done</p><h1>Here\'s what your care team sees</h1><p class="lead" style="margin-bottom:18px">Thank you. Every answer helps your doctor understand your pain and tailor your plan. Here is the snapshot your team gets, always compared with where you started.</p><div class="ct-trend"><div class="k">Your pain trend (last 7 check-ins)</div><svg viewBox="0 0 '+W+' '+H+'" width="100%"><path d="'+path+'" fill="none" stroke="#7d9c8d" stroke-width="3" stroke-linecap="round"/>'+dots+labs+'</svg></div><div class="ct-sumgrid">'+c+'</div>'+((!monthly&&ms)?'<div class="ct-trend"><div class="k">Milestones you have regained</div><div class="ct-pillrow">'+(ans.ms||[]).map(m=>'<span class="ct-pilltag">'+m+'</span>').join('')+'</div></div>':'')+'<p class="ct-note">Your data, shared only with your clara care team and used in de-identified, aggregate form for reporting. Review or pause sharing any time in Settings.</p>';}
+ function render(){const s=FLOW[i];let e=FLOW.length-1;for(let n=i0;n<FLOW.length;n++){if(FLOW[n].end||n===FLOW.length-1){e=n;break;}}const pct=e>i0?Math.round(((i-i0)/(e-i0))*100):100;bar.style.width=pct+'%';const pl=document.getElementById('ctPct');if(pl)pl.textContent=pct+'% complete';phases(s.stage||(s.t==='summary'?'quarterly':null));let h='';
+  if(s.t==='welcome')h='<svg class="ct-bigicon" viewBox="0 0 24 24" fill="none" stroke="#4A6B5B" stroke-width="1.6"><path d="M12 21s-7-4.6-9.2-9C1.3 8.9 3 5.5 6.4 5.5c2 0 3.2 1.2 3.9 2.2.4.6 1.2.6 1.6 0 .7-1 1.9-2.2 3.9-2.2 3.4 0 5.1 3.4 3.6 6.5C19 16.4 12 21 12 21z"/></svg><h1>Let\'s track how you\'re really doing</h1><p class="lead">A few simple check-ins help your doctor understand your chronic pain far better than a single rushed visit ever could. The more we know about your day to day, the better we can tailor your plan and prove what is working. It only takes a minute a day, with a little more once a month and each season.</p>';
+  else if(s.t==='stage')h='<div class="stagekv">'+clk+' '+s.kv+'</div><h1>'+s.title.replace(s.stage,'<span class="ct-cad">'+s.stage+'</span>')+'</h1><p class="lead">'+s.body+'</p>';
+  else if(s.t==='summary')h=summary(s.stage);
+  else if(s.t==='celebrate')h='<div class="ct-celebrate"><svg class="ct-burst" viewBox="0 0 120 120"><circle cx="20" cy="32" r="3" fill="#C97257"/><circle cx="100" cy="30" r="3" fill="#4A6B5B"/><circle cx="13" cy="72" r="2.5" fill="#C8A875"/><circle cx="107" cy="76" r="2.5" fill="#C97257"/><circle cx="60" cy="9" r="2.5" fill="#4A6B5B"/><rect x="30" y="16" width="4" height="9" rx="2" fill="#4A6B5B" transform="rotate(22 32 20)"/><rect x="86" y="16" width="4" height="9" rx="2" fill="#C8A875" transform="rotate(-26 88 20)"/><rect x="24" y="94" width="4" height="9" rx="2" fill="#C97257" transform="rotate(-16 26 98)"/><rect x="92" y="94" width="4" height="9" rx="2" fill="#4A6B5B" transform="rotate(18 94 98)"/><circle cx="60" cy="58" r="33" fill="#E8EFEA"/><g transform="translate(38,34) scale(1.85)" fill="#C97257"><path d="M12 21s-7-4.6-9.2-9C1.3 8.9 3 5.5 6.4 5.5c2 0 3.2 1.2 3.9 2.2.4.6 1.2.6 1.6 0 .7-1 1.9-2.2 3.9-2.2 3.4 0 5.1 3.4 3.6 6.5C19 16.4 12 21 12 21z"/></g></svg><div class="ct-streak"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C97257"><path d="M12 2c1 3 4 4 4 8a4 4 0 0 1-8 0c0-1 .3-2 .8-2.6C9.5 7 11 6 12 2z"/></svg>'+(s.streak||'')+'</div><h1>'+(s.headline||'')+'</h1><p class="lead">'+(s.body||'')+'</p>'+(s.closer?'<p class="ct-closer">'+s.closer+'</p>':'')+'</div>';
+  else{var wy=s.why;if(wy==null){for(var j=i-1;j>=0;j--){if(FLOW[j].t==='stage')break;if(FLOW[j].t==='tool'&&FLOW[j].why){wy=FLOW[j].why;break;}}}h='<p class="eyebrow">'+s.stage+' check-in</p>'+(wy?'<div class="why"><span class="k">Why this helps</span><p>'+wy+'</p></div>':'');if(s.ask)h+='<p class="ask">'+s.ask+'</p>';if(s.sub)h+='<p class="sub">'+s.sub+'</p>';h+=tool(s);if(s.esc)h+='<div class="ct-esc">'+s.esc+'</div>';}
+  body.innerHTML=h;body.scrollTop=0;nav(s);attach();}
+ function missing(s){if(s.t!=='tool')return[];if(s.kind==='bub5')return s.items.filter(it=>ans[it.k]==null).map(it=>it.k);if(s.kind==='bub1'||s.kind==='segq')return ans[s.id]==null?[s.id]:[];if(s.kind==='wpai')return ans.we==null?['we']:[];return[];}
+ function flagMiss(keys){body.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));let first=null;keys.forEach(k=>{const el=body.querySelector('[data-b="'+k+'"]')||body.querySelector('[data-seg="'+k+'"]');if(el){el.classList.add('miss');if(!first)first=el;}});let n=document.getElementById('ctMiss');if(!n){n=document.createElement('div');n.id='ctMiss';n.className='ct-missnote';body.appendChild(n);}n.textContent=keys.length>1?'Almost there. Please answer the highlighted questions before continuing.':'Almost there. Please answer the highlighted question before continuing.';if(first)first.scrollIntoView({behavior:'smooth',block:'center'});}
+ function nav(s){const last=!!s.end||i===FLOW.length-1;const lab=s.t==='welcome'?'Start my check-in':s.t==='stage'?"Let's go":last?'Done':'Continue';const rst=FLOW[i0]?FLOW[i0].stage:null;const canSave=(rst==='monthly'||rst==='quarterly')&&s.t==='tool';foot.innerHTML=(i>i0&&!last?'<button class="ct-btn ghost" id="ctBack">Back</button>':'')+(canSave?'<button class="ct-btn ghost" id="ctSave">Save progress</button>':'')+'<button class="ct-btn primary" id="ctNext">'+lab+'</button>';document.getElementById('ctNext').onclick=()=>{const mk=missing(s);if(mk.length){flagMiss(mk);return;}if(last){clearProgress();close();}else{i++;render();}};const svb=document.getElementById('ctSave');if(svb)svb.onclick=()=>{saveProgress();close();};const b=document.getElementById('ctBack');if(b)b.onclick=()=>{i=Math.max(i0,i-1);render();};}
+ function attach(){
+  body.querySelectorAll('input[type=range]').forEach(el=>{if(ans[el.dataset.s]==null)ans[el.dataset.s]=+el.value;el.addEventListener('input',e=>{const id=e.target.dataset.s,v=+e.target.value;ans[id]=v;const n=document.getElementById('cn-'+id);if(n)n.textContent=v;});});
+  const unmiss=el=>{el.classList.remove('miss');const nn=document.getElementById('ctMiss');if(nn&&!body.querySelector('.miss'))nn.remove();};
+  body.querySelectorAll('[data-b]').forEach(row=>row.querySelectorAll('.ct-bub').forEach(b=>b.addEventListener('click',()=>{ans[row.dataset.b]=+b.dataset.i;row.querySelectorAll('.ct-bub').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');unmiss(row);})));
+  body.querySelectorAll('[data-seg]').forEach(sg=>sg.querySelectorAll('button').forEach(bt=>bt.addEventListener('click',()=>{ans[sg.dataset.seg]=bt.dataset.val;sg.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));bt.classList.add('sel');unmiss(sg);if(sg.dataset.seg==='we'){if(bt.dataset.val==='no'){delete ans.wm;delete ans.ww;delete ans.wp;}render();}})));
+  body.querySelectorAll('[data-num]').forEach(inp=>inp.addEventListener('input',e=>ans[e.target.dataset.num]=+e.target.value||0));
+  body.querySelectorAll('[data-chip]').forEach(c=>c.addEventListener('click',()=>{ans.ms=ans.ms||[];const k=c.dataset.chip,n=ans.ms.indexOf(k);if(n>=0){ans.ms.splice(n,1);c.classList.remove('sel');}else{ans.ms.push(k);c.classList.add('sel');}}));
+ }
+ const SAVEK=st=>'claraCheckinSave_'+st;
+ function runStage(){const s=FLOW[i0];return s?s.stage:null;}
+ function saveProgress(){const st=runStage();if(st==='monthly'||st==='quarterly')localStorage.setItem(SAVEK(st),JSON.stringify({i:i,i0:i0,ans:ans}));}
+ function clearProgress(){const st=runStage();if(st)localStorage.removeItem(SAVEK(st));}
+ function cardStates(){if(window.claraRefreshDue)window.claraRefreshDue();['monthly','quarterly'].forEach(st=>{const card=document.querySelector('[data-checkin="'+st+'"]');if(!card)return;const pill=card.querySelector('.ci-pill'),go=card.querySelector('.ci-go');if(localStorage.getItem(SAVEK(st))){if(pill){pill.textContent='In progress';pill.classList.add('ci-now');}if(go)go.textContent='Resume →';}else{if(go)go.textContent='Start →';}});}
+ function openAt(idx,at){i0=idx;i=(at==null?idx:at);ov.classList.add('open');ov.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';render();}
+ function open(stage){const sv=localStorage.getItem(SAVEK(stage));if(sv){try{const s=JSON.parse(sv);Object.assign(ans,s.ans||{});openAt(s.i0??(stageStart[stage]??0),s.i);return;}catch(e){}}openAt(stageStart[stage]??0);}
+ function close(){const s=FLOW[i];if(!(s&&(s.end||i===FLOW.length-1)))saveProgress();ov.classList.remove('open');ov.setAttribute('aria-hidden','true');document.body.style.overflow='';cardStates();}
+ document.querySelectorAll('.checkin-card').forEach(c=>{const go=()=>open(c.dataset.checkin);c.addEventListener('click',go);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});
+ const sd=document.getElementById('startDaily');if(sd)sd.addEventListener('click',()=>{const sel=document.querySelector('#scale .scale-num.selected');if(sel)ans.nprs=+sel.dataset.val;openAt(FLOW.findIndex(s=>s.id==='logday'));});
+ document.getElementById('ctClose').addEventListener('click',close);
+ ov.addEventListener('click',e=>{if(e.target===ov)close();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('open'))close();});
+ cardStates();
+})();
 </script>
 
 </body>

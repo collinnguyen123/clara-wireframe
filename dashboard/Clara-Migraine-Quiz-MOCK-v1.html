@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>clara: Migraine Quiz · MOCK v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f7f5f0;
+  --cream-soft: #fbf9f4;
+  --cream-deep: #ece8df;
+  --ink: #1f2421;
+  --ink-soft: #5a615d;
+  --ink-muted: #8a908b;
+  --accent: #4a6b5b;       /* sage primary */
+  --accent-soft: #d9e4dc;
+  --accent-pale: #eef3ee;
+  --warm: #c97257;         /* terracotta accent */
+  --warm-soft: #f4dfd5;
+  --warm-pale: #fbf2ed;
+  --warm-deep: #a35540;
+  --line: #e8e4dc;
+  --line-strong: #d4cfc4;
+  --shadow: 0 1px 2px rgba(31,36,33,0.04), 0 4px 16px rgba(31,36,33,0.06);
+  --shadow-hover: 0 2px 4px rgba(31,36,33,0.06), 0 8px 24px rgba(31,36,33,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* === TOP NAV === */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,245,240,0.95);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding: 16px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dash-back{margin-left:18px;margin-right:auto;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:#4A6B5B;text-decoration:none;border:1.5px solid #DDE5DF;background:#fff;padding:7px 14px;border-radius:20px;position:relative;top:3px;transition:all .15s}
+.dash-back:hover{border-color:#4A6B5B;box-shadow:0 0 0 3px #4A6B5B,0 14px 30px rgba(47,71,59,.22);transform:translateY(-2px);background:#EAF1ED;color:#2F473B}
+.logo {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800; font-size: 32px;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  text-transform: lowercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.logo:hover { color: var(--accent); }
+.progress-pill {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--cream-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-size: 14px; color: var(--ink-soft);
+}
+.back-btn {
+  width: 32px; height: 32px;
+  background: var(--cream-deep);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--ink);
+  transition: background 0.15s;
+}
+.back-btn:hover { background: var(--line-strong); }
+.progress-step { font-weight: 500; color: var(--ink); }
+.progress-divider { color: var(--ink-muted); }
+.progress-percent {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--ink-muted); font-size: 13px;
+}
+.progress-circle {
+  width: 18px; height: 18px;
+  border: 2px solid var(--line-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+}
+.help-link {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--ink-soft);
+  text-decoration: none;
+}
+.help-link:hover { color: var(--ink); }
+
+/* === LANDING HERO === */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 80px 32px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center;
+}
+.hero-content { padding: 24px 0; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--warm-deep); font-size: 14px; font-weight: 600;
+  margin-bottom: 18px; letter-spacing: 0.02em;
+}
+.hero-eyebrow-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; color: var(--warm);
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px; font-weight: 500; line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 24px;
+}
+.hero p {
+  font-size: 18px; color: var(--ink-soft);
+  margin-bottom: 32px; max-width: 480px;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 16px 36px;
+  border-radius: 999px;
+  font-size: 16px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+.hero-visual {
+  height: 480px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-caption {
+  position: absolute; bottom: 8px; left: 0; right: 0;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--accent);
+}
+
+/* Back button, sits beside Continue, in a distinct sage tone (vs the dark Continue) */
+.btn-back {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-width: 180px;
+  font-size: 15px; font-weight: 500;
+  color: var(--accent);
+  background: #cce1d5;
+  border: 1.5px solid #a9c6b5;
+  border-radius: 999px;
+  padding: 14px 32px;
+  transition: all 0.2s;
+}
+.btn-back:hover { background: #bcd6c8; border-color: var(--accent); transform: translateX(-2px); }
+
+/* Side product decorations (desktop only, quiz screens only) */
+.side-decor {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  width: 184px; z-index: 1; pointer-events: none; display: none;
+}
+.side-decor.left  { left: 26px; }
+.side-decor.right { right: 26px; }
+body.show-side-decor .side-decor { display: block; }
+@media (max-width: 1320px) { body.show-side-decor .side-decor { display: none; } }
+
+.pillpack-svg { width: 100%; height: auto; display: block; }
+
+/* === QUIZ STEP === */
+.quiz-screen { display: none; }
+.quiz-screen.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.quiz-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+.quiz-question {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px; font-weight: 500; line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+.quiz-question-sub {
+  font-size: 16px; color: var(--ink-soft);
+  margin-bottom: 32px;
+}
+
+/* "Why we ask" callout: Clara's differentiator from Felix */
+.why-ask {
+  background: var(--accent-pale);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  font-size: 14px; line-height: 1.6;
+  color: var(--ink-soft);
+}
+.why-ask-label {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+/* Answer options */
+.opt-stack { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  background: var(--cream-soft);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  font-size: 16px; color: var(--ink);
+}
+.opt:hover {
+  border-color: var(--accent);
+  background: var(--accent-pale);
+}
+.opt.selected {
+  border-color: var(--accent);
+  background: var(--accent-pale);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+.opt-arrow {
+  color: var(--ink-muted);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.opt:hover .opt-arrow { color: var(--accent); }
+
+/* Multi-select with checkbox */
+.opt.multi {
+  padding-left: 56px;
+  position: relative;
+}
+.opt.multi::before {
+  content: "";
+  position: absolute;
+  left: 24px; top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 6px;
+  background: white;
+  transition: all 0.15s;
+}
+.opt.multi.selected::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path d='M6 11L3 8l1-1 2 2 5-5 1 1z'/></svg>");
+  background-size: 16px; background-repeat: no-repeat; background-position: center;
+}
+.opt-sub {
+  font-size: 13px; color: var(--ink-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.opt-content { flex: 1; }
+
+/* Bottom escape button"None of these apply" Felix-style */
+.opt-escape {
+  margin-top: 24px;
+  width: 100%;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 14px;
+  padding: 20px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.opt-escape:hover { background: var(--accent); }
+
+/* Continue button */
+.continue-row {
+  margin-top: 32px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.btn-continue {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 14px 32px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  font-size: 15px; font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-width: 180px;
+}
+.btn-continue:hover { background: var(--accent); }
+.btn-secondary {
+  font-size: 14px; color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.btn-secondary:hover { color: var(--ink); }
+
+/* === AUTO-REJECT / EXIT SCREENS === */
+.alert-screen {
+  max-width: 640px; margin: 0 auto;
+  padding: 80px 32px;
+  text-align: center;
+}
+.alert-icon {
+  width: 72px; height: 72px;
+  background: var(--warm-soft);
+  color: var(--warm-deep);
+  border-radius: 50%;
+  margin: 0 auto 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+}
+.alert-screen h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 500;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+.alert-screen p {
+  color: var(--ink-soft); font-size: 16px;
+  margin-bottom: 24px; max-width: 520px;
+  margin-left: auto; margin-right: auto;
+}
+.alert-actions {
+  margin-top: 32px;
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+
+/* === LOADING SCREEN === */
+.loading-wrap {
+  max-width: 640px; margin: 0 auto;
+  padding: 80px 32px;
+  text-align: center;
+}
+.loading-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 36px;
+  color: var(--warm);
+  margin-bottom: 20px;
+}
+.loading-wrap h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px; font-weight: 500;
+  margin-bottom: 32px;
+  letter-spacing: -0.01em;
+}
+.loading-checks {
+  display: flex; flex-direction: column; gap: 16px;
+  max-width: 380px; margin: 0 auto 36px;
+  text-align: left;
+}
+.loading-check {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 16px; color: var(--ink-muted);
+  opacity: 0;
+  transition: opacity 0.4s, color 0.4s;
+}
+.loading-check.done { opacity: 1; color: var(--ink); }
+.loading-check .check-icon {
+  width: 22px; height: 22px;
+  border: 2px solid var(--line-strong);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+.loading-check.done .check-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.loading-edu {
+  margin-top: 40px;
+  padding: 20px 24px;
+  background: var(--cream-soft);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-size: 14px; line-height: 1.6;
+  color: var(--ink-soft);
+  text-align: left;
+  max-width: 520px;
+  margin-left: auto; margin-right: auto;
+}
+.loading-edu-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--warm-deep);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* === PLAN REVEAL === */
+.plan-container {
+  max-width: 820px; margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+.plan-eyebrow {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.plan-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.plan-summary {
+  background: var(--accent-pale);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.plan-summary-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.kit-card {
+  background: var(--cream-soft);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.kit-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+  flex-wrap: wrap; gap: 8px;
+}
+.kit-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.kit-price { font-size: 18px; font-weight: 600; color: var(--ink); }
+.kit-price-sub { font-size: 13px; color: var(--ink-muted); font-weight: 400; }
+.kit-tagline { color: var(--ink-soft); margin-bottom: 24px; font-size: 15px; }
+.section-label {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--warm-deep);
+  margin: 20px 0 12px;
+}
+.component {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 12px;
+}
+.comp-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.comp-name { font-weight: 600; font-size: 16px; color: var(--ink); }
+.comp-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 9px; border-radius: 4px;
+  letter-spacing: 0.06em; margin-left: 8px;
+}
+.badge-rx { background: var(--warm); color: white; }
+.badge-included { background: var(--accent); color: white; }
+.badge-otc { background: var(--cream-deep); color: var(--ink-soft); }
+.badge-referral { background: var(--ink); color: var(--cream); }
+.comp-price { font-size: 14px; color: var(--ink); font-weight: 500; }
+.comp-why { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-top: 4px; }
+.comp-why strong { color: var(--ink); }
+.comp-prn { font-size: 12.5px; font-style: italic; color: var(--ink-muted); margin-top: 6px; }
+
+.plan-total {
+  margin-top: 24px;
+  padding: 22px 28px;
+  background: var(--accent-pale);
+  border: 1px solid var(--accent-soft);
+  border-radius: 12px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  flex-wrap: wrap; gap: 12px;
+}
+.plan-total-label { font-size: 16px; font-weight: 600; }
+.plan-total-amount { font-size: 26px; font-weight: 600; }
+.plan-total-sub { font-size: 13px; color: var(--ink-soft); margin-top: 6px; width: 100%; }
+
+.plan-insurance {
+  margin-top: 14px;
+  padding: 18px 22px;
+  background: var(--warm-pale);
+  border: 1px solid var(--warm-soft);
+  border-radius: 12px;
+  font-size: 14.5px; line-height: 1.65; color: var(--ink);
+}
+.plan-insurance strong { color: var(--warm-deep); font-weight: 700; }
+
+.plan-perday {
+  text-align: center;
+  background: var(--accent-pale);
+  border: 1px solid var(--accent-soft);
+  border-radius: 16px;
+  padding: 26px 24px;
+  margin-top: 24px;
+}
+.plan-perday-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.plan-perday-amount { font-family: 'Cormorant Garamond', serif; font-weight: 600; color: var(--ink); line-height: 1; margin: 10px 0 8px; }
+.plan-perday-amount #plan-perday { font-size: 72px; }
+.plan-perday-unit { font-size: 26px; color: var(--ink-soft); margin-left: 4px; }
+.plan-perday-sub { font-size: 13px; color: var(--ink-soft); }
+.plan-cost-detail { margin-top: 28px; }
+.perday-mini { text-align: center; font-size: 16px; color: var(--ink-soft); margin-bottom: 14px; }
+.perday-mini strong { color: var(--ink); font-weight: 600; }
+.cost-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 13px 4px; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink); }
+.cost-row span:last-child { font-weight: 600; white-space: nowrap; }
+.plan-cost-detail .plan-insurance { margin-top: 16px; }
+
+.plan-ctas { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+.cta-primary {
+  background: var(--ink); color: var(--cream);
+  padding: 18px 24px; border-radius: 14px;
+  font-size: 16px; font-weight: 500; text-align: center;
+  cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.cta-primary:hover { background: var(--accent); }
+.cta-secondary {
+  background: white; color: var(--ink);
+  border: 1.5px solid var(--line-strong);
+  padding: 18px 24px; border-radius: 14px;
+  font-size: 15px; cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.cta-secondary:hover { border-color: var(--accent); background: var(--accent-pale); }
+
+.plan-disclaimer {
+  margin-top: 28px; padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--ink-muted); line-height: 1.6;
+}
+
+/* Review flag banner */
+.review-flag {
+  background: var(--warm-pale);
+  border: 1px solid var(--warm-soft);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 14px; line-height: 1.6; color: var(--warm-deep);
+}
+.review-flag strong { color: var(--warm-deep); }
+
+/* Footer */
+.mock-footer {
+  text-align: center;
+  padding: 32px 24px 48px;
+  font-size: 12px; color: var(--ink-muted);
+  border-top: 1px solid var(--line);
+  margin-top: 48px;
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding: 48px 24px; gap: 32px; }
+  .hero h1 { font-size: 52px; }
+  .hero-visual { height: 280px; }
+  .quiz-question { font-size: 32px; }
+  .plan-title { font-size: 36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="goHome(); return false;" title="Back to start">clara</a>
+    <a href="index.html#care" class="dash-back">← Back to your dashboard</a>
+    <div class="progress-pill" id="progress-bar" style="display: none;">
+      <button class="back-btn" onclick="goBack()">←</button>
+      <span class="progress-step">Step 1 of 3</span>
+      <span class="progress-divider">·</span>
+      <span class="progress-step">Get care</span>
+      <span class="progress-divider">·</span>
+      <span class="progress-percent">
+        <span class="progress-circle"></span>
+        <span id="progress-percent-text">0% complete</span>
+      </span>
+    </div>
+    <a href="#" class="help-link">💬 Help</a>
+  </div>
+</nav>
+
+<!-- ============ LANDING ============ -->
+<section class="quiz-screen active" id="landing">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-mark">clara</span> · Migraine care
+      </div>
+      <h1>Find relief from your <em style="color:var(--warm-deep); font-style: italic;">migraines.</em></h1>
+      <p>Migraine is one of the most treatable neurological conditions, once you have the right plan. Take 5 minutes. We'll match you to evidence based migraine medication, screened for safety against your health history, and reviewed by a Canadian licensed physician before anything ships.</p>
+      <button class="btn-primary" onclick="startQuiz()">Get started →</button>
+    </div>
+    <div class="hero-visual">
+      <svg class="pillpack-svg" viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="clara daily pill packs">
+        <defs>
+          <filter id="hs" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="8" stdDeviation="13" flood-color="#1f2421" flood-opacity="0.13"/>
+          </filter>
+        </defs>
+        <circle cx="300" cy="250" r="200" fill="#93ab9c"/>
+        <!-- scattered pills -->
+        <rect x="470" y="118" width="27" height="13" rx="6.5" fill="#f3eee3" stroke="#e2dac9" stroke-width="1" transform="rotate(28 483 124)"/>
+        <circle cx="116" cy="298" r="10" fill="#e9ddc7"/>
+        <circle cx="150" cy="332" r="7.5" fill="#f3eee3"/>
+        <circle cx="470" cy="338" r="7" fill="#e9ddc7"/>
+        <rect x="446" y="362" width="25" height="12" rx="6" fill="#f3eee3" stroke="#e2dac9" stroke-width="1" transform="rotate(-16 458 368)"/>
+
+        <!-- Sachet A: Migraine Rx (sage) -->
+        <g transform="translate(58 54) rotate(-8)">
+          <rect width="212" height="174" rx="15" fill="#ffffff" filter="url(#hs)"/>
+          <rect x="24" y="24" width="74" height="5" rx="2.5" fill="#5f7d6b"/>
+          <text x="24" y="58" font-family="Inter,sans-serif" font-weight="800" font-size="23" fill="#3c3a31" letter-spacing="-0.5">Migraine</text>
+          <text x="24" y="82" font-family="Inter,sans-serif" font-weight="800" font-size="20" fill="#5f7d6b" letter-spacing="-0.3">Rx</text>
+          <g transform="translate(184 40) rotate(-32)" stroke="#c2b8a6" stroke-width="1.5" fill="none"><rect x="-9" y="-4.5" width="18" height="9" rx="4.5"/><line x1="0" y1="-4.5" x2="0" y2="4.5"/></g>
+          <line x1="24" y1="98" x2="188" y2="98" stroke="#ebe7df" stroke-width="1.4"/>
+          <rect x="24" y="110" width="15" height="9" rx="4.5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="118" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 sumatriptan 50 mg</text>
+          <rect x="24" y="128" width="15" height="9" rx="4.5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="136" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 naproxen 500 mg</text>
+          <circle cx="31.5" cy="150" r="5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="154" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 anti-nausea</text>
+          <text x="188" y="160" font-family="'Cormorant Garamond',serif" font-weight="600" font-size="20" fill="#3c3a31" text-anchor="end">clara</text>
+        </g>
+
+        <!-- Sachet B: Migraine Prevention (terracotta) -->
+        <g transform="translate(312 150) rotate(7)">
+          <rect width="212" height="174" rx="15" fill="#ffffff" filter="url(#hs)"/>
+          <rect x="24" y="24" width="74" height="5" rx="2.5" fill="#c97257"/>
+          <text x="24" y="58" font-family="Inter,sans-serif" font-weight="800" font-size="23" fill="#3c3a31" letter-spacing="-0.5">Migraine</text>
+          <text x="24" y="82" font-family="Inter,sans-serif" font-weight="800" font-size="20" fill="#c97257" letter-spacing="-0.3">Prevention</text>
+          <g transform="translate(184 40) rotate(-32)" stroke="#c2b8a6" stroke-width="1.5" fill="none"><rect x="-9" y="-4.5" width="18" height="9" rx="4.5"/><line x1="0" y1="-4.5" x2="0" y2="4.5"/></g>
+          <line x1="24" y1="98" x2="188" y2="98" stroke="#ebe7df" stroke-width="1.4"/>
+          <rect x="24" y="110" width="15" height="9" rx="4.5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="118" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 amitriptyline 25 mg</text>
+          <rect x="24" y="128" width="15" height="9" rx="4.5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="136" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 riboflavin 400 mg</text>
+          <circle cx="31.5" cy="150" r="5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="154" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 magnesium</text>
+          <text x="188" y="160" font-family="'Cormorant Garamond',serif" font-weight="600" font-size="20" fill="#3c3a31" text-anchor="end">clara</text>
+        </g>
+
+        <!-- Sachet C: Migraine Kit (sage) -->
+        <g transform="translate(150 256) rotate(-3)">
+          <rect width="212" height="174" rx="15" fill="#ffffff" filter="url(#hs)"/>
+          <rect x="24" y="24" width="74" height="5" rx="2.5" fill="#5f7d6b"/>
+          <text x="24" y="58" font-family="Inter,sans-serif" font-weight="800" font-size="23" fill="#3c3a31" letter-spacing="-0.5">Migraine</text>
+          <text x="24" y="82" font-family="Inter,sans-serif" font-weight="800" font-size="20" fill="#5f7d6b" letter-spacing="-0.3">Kit</text>
+          <g transform="translate(184 40) rotate(-32)" stroke="#c2b8a6" stroke-width="1.5" fill="none"><rect x="-9" y="-4.5" width="18" height="9" rx="4.5"/><line x1="0" y1="-4.5" x2="0" y2="4.5"/></g>
+          <line x1="24" y1="98" x2="188" y2="98" stroke="#ebe7df" stroke-width="1.4"/>
+          <rect x="24" y="110" width="15" height="9" rx="4.5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="118" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 sumatriptan 50 mg</text>
+          <rect x="24" y="128" width="15" height="9" rx="4.5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="136" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 amitriptyline 25 mg</text>
+          <circle cx="31.5" cy="150" r="5" fill="none" stroke="#8a908b" stroke-width="1.3"/>
+          <text x="48" y="154" font-family="Inter,sans-serif" font-size="11.5" fill="#5a615d">1 magnesium</text>
+          <text x="188" y="160" font-family="'Cormorant Garamond',serif" font-weight="600" font-size="20" fill="#3c3a31" text-anchor="end">clara</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q1: DIAGNOSIS STATUS (Gate 1) ============ -->
+<section class="quiz-screen" id="q1" data-progress="6">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Have you been diagnosed with migraine by a doctor?</h1>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      A prior diagnosis keeps you safe and keeps us on solid ground. If you have not been formally diagnosed with migraine, the right next step is a quick visit with your doctor to confirm it and rule out other causes, before we build a treatment plan.
+    </div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this, 'q1', 'diagnosed'); goNext('q2');">
+        <div class="opt-content">Yes, a doctor has diagnosed me with migraine</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q1', 'undiagnosed'); goNext('diag-refer');">
+        <div class="opt-content">No: I think I have migraines but haven't been formally diagnosed</div>
+        <span class="opt-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIAGNOSIS HARD EXIT (undiagnosed -> see a doctor for a formal diagnosis) ============ -->
+<section class="quiz-screen" id="diag-refer">
+  <div class="alert-screen">
+    <div class="alert-icon">🩺</div>
+    <h2>Let's get you a diagnosis first.</h2>
+    <p>Because you have not been formally diagnosed with migraine yet, the safest next step is an in person assessment with your family doctor or a walk in clinic, who can confirm migraine and rule out other causes before any treatment.</p>
+    <p>Once you have a diagnosis, we'd be glad to help you build a treatment plan.</p>
+    <div class="alert-actions">
+      <button class="btn-primary" onclick="resetQuiz()">Go back home</button>
+      <button class="btn-secondary" onclick="window.print()">Save this for later</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q2: RED FLAG SCREEN (Gate 0, SNNOOP10) ============ -->
+<section class="quiz-screen" id="q2" data-progress="18">
+  <div class="quiz-container">
+    <h1 class="quiz-question">A few important safety questions.</h1>
+    <p class="quiz-question-sub">Please check anything that applies to you, even if it seems unrelated.</p>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      These symptoms are uncommon with ordinary migraine, but when they're present they can signal something more serious that needs a hands on evaluation. This is the single most important screen we do.
+    </div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this, 'redflag', 'thunderclap')">
+        <div class="opt-content">A sudden, severe headache that peaked within seconds to minutes
+          <div class="opt-sub">"Worst headache of my life," came on like a thunderclap</div>
+        </div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'worst')">
+        <div class="opt-content">This is the first or worst headache I've ever had</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'neuro')">
+        <div class="opt-content">New weakness, numbness, vision loss, confusion, or trouble speaking
+          <div class="opt-sub">Beyond a typical aura that fully resolves</div>
+        </div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'older')">
+        <div class="opt-content">I'm 50 or older and this is a brand new headache (started in the last year)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'cancer')">
+        <div class="opt-content">I have a current or past history of cancer</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'systemic')">
+        <div class="opt-content">Fever, neck stiffness, unexplained weight loss, or night sweats with the headache</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'immune')">
+        <div class="opt-content">I'm immunocompromised (HIV, chemotherapy, transplant, long term steroids)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'trauma')">
+        <div class="opt-content">This headache started after a head injury in the last 3 months</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'positional')">
+        <div class="opt-content">The headache is clearly worse when I cough, strain, or change position</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'redflag', 'eye')">
+        <div class="opt-content">Headache with a red, painful eye or sudden vision change in one eye</div>
+      </div>
+    </div>
+    <button class="opt-escape" onclick="checkRedFlags()">None of the above apply to me</button>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-continue" onclick="checkRedFlags()">Continue →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RED FLAG AUTO-REJECT ============ -->
+<section class="quiz-screen" id="redflag-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">⚠</div>
+    <h2>We need to make sure you're seen in person first.</h2>
+    <p>Based on what you told us, your symptoms could point to something more than ordinary migraine. clara provides safe online care for routine migraine, and your situation deserves a hands on evaluation we can't safely do online.</p>
+    <p>
+      <strong style="color: var(--ink);">What to do now:</strong><br>
+      If you have a sudden "worst headache of your life," new weakness or trouble speaking, a stiff neck with fever, or a red painful eye, please go to the emergency room today.<br>
+      Otherwise, please see your family doctor or a walk in clinic within the next few days.
+    </p>
+    <div class="alert-actions">
+      <button class="btn-primary" onclick="resetQuiz()">Go back home</button>
+      <button class="btn-secondary" onclick="window.print()">Save this for later</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q3: MIGRAINE FREQUENCY (Gate 2, chronicity) ============ -->
+<section class="quiz-screen" id="q3" data-progress="30">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How many days per month do you get migraines?</h1>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Frequency decides whether you need acute treatment (to stop attacks) or also a preventive plan (to have fewer attacks in the first place). The American College of Physicians 2025 guideline says preventive therapy may be offered to anyone with two or more migraine days a month if attacks meaningfully disrupt daily life. We use that threshold here.
+    </div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this, 'q3', 'rare'); goNext('q4');">
+        <div class="opt-content">Fewer than 2 days a month
+          <div class="opt-sub">Rare attacks, acute treatment only</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q3', 'low'); goNext('q4');">
+        <div class="opt-content">2 to 3 days a month
+          <div class="opt-sub">May qualify for prevention if attacks disrupt your life</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q3', 'moderate'); goNext('q4');">
+        <div class="opt-content">4 to 7 days a month
+          <div class="opt-sub">We'll offer you a preventive option</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q3', 'high'); goNext('q4');">
+        <div class="opt-content">8 to 14 days a month
+          <div class="opt-sub">Prevention strongly recommended</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q3', 'chronic'); goNext('q3b');">
+        <div class="opt-content">15 or more days a month
+          <div class="opt-sub">This may meet criteria for chronic migraine</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+    </div>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q3b: TOTAL HEADACHE DAYS (chronic migraine confirm) ============ -->
+<section class="quiz-screen" id="q3b" data-progress="33">
+  <div class="quiz-container">
+    <h1 class="quiz-question">On how many days each month do you have <em style="font-style:italic;">any</em> headache?</h1>
+    <p class="quiz-question-sub">Including milder headaches that aren't full migraines.</p>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Chronic migraine has a specific definition: headache on 15 or more days a month, with at least 8 of those being migraine, for more than 3 months. This matters because it unlocks treatments, like Botox, that are only approved for chronic migraine.
+    </div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this, 'q3b', 'cm-yes'); goNext('q4');">
+        <div class="opt-content">15 or more headache days a month, for more than 3 months
+          <div class="opt-sub">Meets the chronic migraine definition</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q3b', 'cm-recent'); goNext('q4');">
+        <div class="opt-content">15+ headache days a month, but only recently (less than 3 months)</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q3b', 'cm-no'); goNext('q4');">
+        <div class="opt-content">Fewer than 15 total headache days a month</div>
+        <span class="opt-arrow">→</span>
+      </div>
+    </div>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q4: SEVERITY / MIDAS-LITE (Gate 2, acute tier) ============ -->
+<section class="quiz-screen" id="q4" data-progress="42">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How disabling are your migraines, typically?</h1>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      How much migraine interferes with your life tells us how strong your acute treatment needs to be. Milder attacks often respond to anti-inflammatories; moderate to severe attacks usually need migraine specific medication like a triptan.
+    </div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this, 'q4', 'mild'); goNext('q5');">
+        <div class="opt-content">Mild: I can usually push through and keep functioning</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q4', 'moderate'); goNext('q5');">
+        <div class="opt-content">Moderate: I can function but it's a real struggle</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q4', 'severe'); goNext('q5');">
+        <div class="opt-content">Severe: I usually have to stop what I'm doing and lie down</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q4', 'disabling'); goNext('q5');">
+        <div class="opt-content">Disabling: I'm in a dark room, often with nausea, unable to function</div>
+        <span class="opt-arrow">→</span>
+      </div>
+    </div>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q5: PATTERN CHANGE (red flag adjunct) ============ -->
+<section class="quiz-screen" id="q5" data-progress="50">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Have your migraines changed noticeably in the last year?</h1>
+    <p class="quiz-question-sub">A change in location, type of pain, intensity, or how often they happen.</p>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Stable, long standing migraines are reassuring. A clear recent change in pattern is worth a closer look in person before we treat, it's rarely serious, but we'd rather be careful.
+    </div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this, 'q5', 'stable'); goNext('q6');">
+        <div class="opt-content">No, they've been stable and consistent</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q5', 'changed'); goNext('q6');">
+        <div class="opt-content">Yes, they've changed in pattern, type, or frequency</div>
+        <span class="opt-arrow">→</span>
+      </div>
+    </div>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q6: MEDICATION OVERUSE SCREEN (Gate 2, MOH) ============ -->
+<section class="quiz-screen" id="q6" data-progress="58">
+  <div class="quiz-container">
+    <h1 class="quiz-question">How many days a month do you take something for headache pain?</h1>
+    <p class="quiz-question-sub">Any pain reliever, over-the-counter or prescription, including Tylenol, Advil, Aleve, or triptans.</p>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Taking acute pain medication too often can actually cause more headaches, a common, reversible problem called medication overuse headache. The tipping point depends on the medication: triptans, opioids, and combination painkillers can cause it at around 10 days a month, while plain Tylenol or anti-inflammatories take about 15. If you're over that line, more acute medication isn't the answer, a reset paired with a preventive plan is.
+    </div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this, 'q6', 'low'); goNext('q7');">
+        <div class="opt-content">Fewer than 10 days a month</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q6', 'simple-ok'); goNext('q7');">
+        <div class="opt-content">10–14 days a month, and it's mostly Tylenol, Advil, or Aleve
+          <div class="opt-sub">Over-the-counter pain relievers only, no triptans or stronger painkillers</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q6', 'triptan-overuse'); goNext('moh-exit');">
+        <div class="opt-content">10–14 days a month, including triptans or combination painkillers
+          <div class="opt-sub">e.g. Imitrex, Maxalt, or pills combining caffeine or codeine</div>
+        </div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q6', 'analgesic-overuse'); goNext('moh-exit');">
+        <div class="opt-content">15 or more days a month, any pain medication</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q6', 'opioid'); goNext('opioid-exit');">
+        <div class="opt-content">I regularly use opioids (Tylenol 3, Percocet, Tramadol) for headaches</div>
+        <span class="opt-arrow">→</span>
+      </div>
+    </div>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q7: TREATMENT HISTORY ============ -->
+<section class="quiz-screen" id="q7" data-progress="66">
+  <div class="quiz-container">
+    <h1 class="quiz-question">What have you already tried for your migraines?</h1>
+    <p class="quiz-question-sub">Select all that apply, brand or generic, whatever you remember.</p>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      What's worked and what hasn't is the single most useful thing for choosing your next step. If you've already tried simple painkillers without enough relief, we'll move you up to migraine specific medication.
+    </div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this, 'q7', 'otc')">
+        <div class="opt-content">Over-the-counter painkillers (Advil/Ibuprofen, Aleve/Naproxen, Tylenol)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'rx-nsaid')">
+        <div class="opt-content">Prescription anti-inflammatories (Celebrex/Celecoxib, Voltaren/Diclofenac)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'triptan')">
+        <div class="opt-content">Triptans (Imitrex/Sumatriptan, Maxalt/Rizatriptan, Relpax/Eletriptan)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'gepant')">
+        <div class="opt-content">Newer migraine pills, gepants (Ubrelvy/Ubrogepant, Nurtec/Rimegepant)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'tca')">
+        <div class="opt-content">Amitriptyline (Elavil) or nortriptyline for prevention</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'snri')">
+        <div class="opt-content">Venlafaxine (Effexor) or duloxetine (Cymbalta) for prevention</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'betablocker')">
+        <div class="opt-content">A beta blocker for prevention (Propranolol/Inderal, Metoprolol)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'topiramate')">
+        <div class="opt-content">Topiramate (Topamax) or valproate for prevention</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'botox')">
+        <div class="opt-content">Botox injections for migraine</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q7', 'cgrp')">
+        <div class="opt-content">CGRP injections (Aimovig, Ajovy, Emgality)</div>
+      </div>
+    </div>
+    <button class="opt-escape" onclick="multi(null, 'q7', 'nothing'); goNext('q8')">I haven't really tried anything yet</button>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-continue" onclick="goNext('q8')">Continue →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q8: HEALTH CONDITIONS (Gate 3, CV + contraindications) ============ -->
+<section class="quiz-screen" id="q8" data-progress="74">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Do you have any of these health conditions?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Some migraine medications aren't safe with certain conditions. Triptans, for example, narrow blood vessels, so we don't use them in people with heart disease. This is the same safety check any prescriber would do, and it's how we keep you safe.
+    </div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this, 'q8', 'cad')">
+        <div class="opt-content">Heart disease, coronary artery disease, or angina</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'mi')">
+        <div class="opt-content">A prior heart attack</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'stroke')">
+        <div class="opt-content">A prior stroke or mini-stroke (TIA)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'pad')">
+        <div class="opt-content">Peripheral artery disease or Raynaud's phenomenon</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'arrhythmia')">
+        <div class="opt-content">An irregular heartbeat or heart rhythm problem</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'htn')">
+        <div class="opt-content">Uncontrolled high blood pressure</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'hemiplegic')">
+        <div class="opt-content">Hemiplegic migraine or migraine with brainstem aura
+          <div class="opt-sub">One sided weakness, or aura with vertigo/double vision/slurred speech</div>
+        </div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'kidney')">
+        <div class="opt-content">Kidney disease or reduced kidney function</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'liver')">
+        <div class="opt-content">Liver disease</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'gi')">
+        <div class="opt-content">History of stomach ulcers or gastrointestinal bleeding</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'seizure')">
+        <div class="opt-content">Epilepsy or a seizure disorder</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q8', 'glaucoma')">
+        <div class="opt-content">Narrow angle glaucoma, or an enlarged prostate (trouble urinating)</div>
+      </div>
+    </div>
+    <button class="opt-escape" onclick="multi(null, 'q8', 'none'); goNext('q9')">None of these apply</button>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-continue" onclick="goNext('q9')">Continue →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q9: CURRENT MEDICATIONS (Gate 3, drug interactions) ============ -->
+<section class="quiz-screen" id="q9" data-progress="82">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Are you currently taking any of these medications?</h1>
+    <p class="quiz-question-sub">Select all that apply.</p>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Some common medications interact with migraine treatments. For example, the COVID antiviral Paxlovid blocks the way some newer migraine pills are cleared from the body. We always check, it's quick and it prevents real problems.
+    </div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this, 'q9', 'maoi')">
+        <div class="opt-content">An MAOI antidepressant (Nardil/phenelzine, Parnate/tranylcypromine, selegiline)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q9', 'ergot')">
+        <div class="opt-content">An ergot medication for migraine (Cafergot, DHE, Migranal) in the last 24 hours</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q9', 'cyp3a4inhibitor')">
+        <div class="opt-content">A strong interacting medication
+          <div class="opt-sub">Paxlovid, ketoconazole or itraconazole (antifungals), clarithromycin (antibiotic), ritonavir (HIV), nefazodone</div>
+        </div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q9', 'cyp3a4inducer')">
+        <div class="opt-content">An enzyme-inducing medication
+          <div class="opt-sub">Rifampin, carbamazepine, phenytoin, phenobarbital, or St. John's Wort</div>
+        </div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q9', 'propranolol')">
+        <div class="opt-content">Propranolol (a beta blocker)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q9', 'qtdrugs')">
+        <div class="opt-content">A medication that affects heart rhythm (QT)
+          <div class="opt-sub">Citalopram over 20mg, methadone, ondansetron daily, quetiapine, amiodarone, sotalol</div>
+        </div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q9', 'ssrisnri')">
+        <div class="opt-content">An SSRI or SNRI antidepressant (Prozac, Zoloft, Cipralex, Effexor, Cymbalta)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q9', 'anticoag')">
+        <div class="opt-content">A blood thinner (Warfarin, Eliquis, Xarelto, Pradaxa, daily aspirin)</div>
+      </div>
+    </div>
+    <button class="opt-escape" onclick="multi(null, 'q9', 'none'); goNext('q10')">None of these apply</button>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-continue" onclick="goNext('q10')">Continue →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q10: ALLERGIES ============ -->
+<section class="quiz-screen" id="q10" data-progress="88">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Do you have any of these allergies?</h1>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      A known drug allergy rules a medication out entirely. We'd rather know now than recommend something you can't take.
+    </div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this, 'q10', 'nsaid')">
+        <div class="opt-content">Allergy to aspirin, ibuprofen, or other anti-inflammatories (NSAIDs)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q10', 'sulfa')">
+        <div class="opt-content">Allergy to sulfa drugs (sulfonamide antibiotics like Bactrim)</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q10', 'triptan')">
+        <div class="opt-content">A previous bad reaction to a triptan</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q10', 'aspirin-asthma')">
+        <div class="opt-content">Asthma that gets worse when I take anti-inflammatories</div>
+      </div>
+    </div>
+    <button class="opt-escape" onclick="multi(null, 'q10', 'none'); goNext('q11')">No known drug allergies</button>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-continue" onclick="goNext('q11')">Continue →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q11: PREGNANCY ============ -->
+<section class="quiz-screen" id="q11" data-progress="93">
+  <div class="quiz-container">
+    <h1 class="quiz-question">Are you currently pregnant or breastfeeding?</h1>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Pregnancy and breastfeeding change which migraine medications are safe. If this applies to you, your plan will be built around the safest options and a physician will personally review it.
+    </div>
+    <div class="opt-stack">
+      <div class="opt multi" onclick="multi(this, 'q11', 'pregnant')">
+        <div class="opt-content">I'm pregnant or trying to conceive</div>
+      </div>
+      <div class="opt multi" onclick="multi(this, 'q11', 'breastfeed')">
+        <div class="opt-content">I'm breastfeeding</div>
+      </div>
+    </div>
+    <button class="opt-escape" onclick="multi(null, 'q11', 'neither'); goNext('q12')">Neither of these apply</button>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-continue" onclick="goNext('q12')">Continue →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Q12: GOAL SEGMENTATION ============ -->
+<section class="quiz-screen" id="q12" data-progress="97">
+  <div class="quiz-container">
+    <h1 class="quiz-question">What are you most hoping for from clara?</h1>
+    <div class="why-ask">
+      <span class="why-ask-label">Why we ask</span>
+      Different goals lead to different plans. There's no wrong answer, this just helps us tailor what we recommend and how we follow up with you.
+    </div>
+    <div class="opt-stack">
+      <div class="opt" onclick="single(this, 'q12', 'acute'); goNext('loading');">
+        <div class="opt-content">Something that reliably stops a migraine when it hits</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q12', 'prevention'); goNext('loading');">
+        <div class="opt-content">Fewer migraines overall, a preventive plan</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q12', 'both'); goNext('loading');">
+        <div class="opt-content">Both, stop attacks and reduce how often they happen</div>
+        <span class="opt-arrow">→</span>
+      </div>
+      <div class="opt" onclick="single(this, 'q12', 'refill'); goNext('loading');">
+        <div class="opt-content">A refill of a migraine medication that already works for me</div>
+        <span class="opt-arrow">→</span>
+      </div>
+    </div>
+    <div class="continue-row">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOADING TRANSITION ============ -->
+<section class="quiz-screen" id="loading" data-progress="99">
+  <div class="loading-wrap">
+    <div class="loading-mark">clara</div>
+    <h2>Building your personalized plan</h2>
+    <div class="loading-checks">
+      <div class="loading-check" id="lc1">
+        <span class="check-icon">✓</span>
+        <span>Reviewing your responses</span>
+      </div>
+      <div class="loading-check" id="lc2">
+        <span class="check-icon">✓</span>
+        <span>Running your safety &amp; drug interaction screen</span>
+      </div>
+      <div class="loading-check" id="lc3">
+        <span class="check-icon">✓</span>
+        <span>Matching to the evidence based migraine ladder</span>
+      </div>
+      <div class="loading-check" id="lc4">
+        <span class="check-icon">✓</span>
+        <span>Checking the medication overuse threshold</span>
+      </div>
+      <div class="loading-check" id="lc5">
+        <span class="check-icon">✓</span>
+        <span>Wrapping up</span>
+      </div>
+    </div>
+    <div class="loading-edu">
+      <span class="loading-edu-label">While we build this</span>
+      The best migraine outcomes come from treating early, taking the right medication while the pain is still mild, before the attack fully takes hold. Your plan is built around that principle, with a treatment matched to your safety profile.
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOH EXIT (medication overuse) ============ -->
+<section class="quiz-screen" id="moh-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">🔄</div>
+    <h2>Let's break the cycle first.</h2>
+    <p>From what you told us, you're taking acute pain medication often enough that it may be <em>causing</em> some of your headaches, a common, reversible problem called medication overuse headache. Prescribing more acute medication right now would likely make it worse.</p>
+    <p>The right next step is a supervised reset with your family doctor, usually paired with a preventive medication to reduce how often you need acute relief. Once that's underway, clara can help you maintain your plan.</p>
+    <div class="alert-actions">
+      <button class="btn-primary" onclick="resetQuiz()">Go back home</button>
+      <button class="btn-secondary" onclick="window.print()">Save this for later</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPIOID EXIT (Clara does not prescribe opioids for migraine) ============ -->
+<section class="quiz-screen" id="opioid-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">&#129658;</div>
+    <h2>This one's better handled with your doctor.</h2>
+    <p>You told us you use opioids, like Tylenol 3, Percocet, or Tramadol, for your headaches. We want to be straight with you: opioids aren't recommended for migraine. They tend to work less well over time, and they're one of the fastest ways to slip into medication overuse headache.</p>
+    <p>clara doesn't prescribe opioids for migraine. The right next step is an in person visit with your family doctor to move toward a safer, more effective plan, and once you're on that path, we'd be glad to help you maintain it.</p>
+    <div class="alert-actions">
+      <button class="btn-primary" onclick="resetQuiz()">Go back home</button>
+      <button class="btn-secondary" onclick="window.print()">Save this for later</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NO-OPTION REFERRAL EXIT (all drugs blocked) ============ -->
+<section class="quiz-screen" id="refer-exit">
+  <div class="alert-screen">
+    <div class="alert-icon">🩺</div>
+    <h2>Your migraine care is better handled in person.</h2>
+    <p id="refer-exit-text">Based on your health history, the migraine medications we offer online aren't a safe match for you, and you deserve a treatment plan, not a dead end. The right next step is an in person visit with your family doctor or a headache specialist who can consider options that need closer monitoring.</p>
+    <div class="alert-actions">
+      <button class="btn-primary" onclick="resetQuiz()">Go back home</button>
+      <button class="btn-secondary" onclick="window.print()">Save this for later</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLAN REVEAL ============ -->
+<section class="quiz-screen" id="plan">
+  <div class="plan-container">
+    <div class="plan-eyebrow">Your personalized plan</div>
+    <h1 class="plan-title">Your <em style="font-style: italic; color: var(--warm-deep);">clara</em> migraine plan</h1>
+
+    <div class="review-flag" id="review-flag-block" style="display:none;">
+      <strong>A physician will personally review your plan.</strong>
+      <span id="review-flag-text"></span>
+    </div>
+
+    <div class="plan-summary" id="plan-summary-block">
+      <span class="plan-summary-label">Based on what you told us</span>
+      <span id="plan-summary-text">Loading your summary…</span>
+    </div>
+
+    <div class="kit-card">
+      <div class="kit-header">
+        <div class="kit-name" id="kit-name-text">Your clara Plan</div>
+      </div>
+      <p class="kit-tagline" id="kit-tagline-text">A clara curated, evidence based plan built around your specific profile, reviewed by a Canadian licensed physician before anything ships.</p>
+
+      <div class="plan-perday">
+        <div class="plan-perday-label">Your estimated cost</div>
+        <div class="plan-perday-amount"><span id="plan-perday">$0</span><span class="plan-perday-unit">/ day</span></div>
+        <div class="plan-perday-sub">for all your recommended medications · pause or cancel anytime · free shipping in Canada</div>
+      </div>
+
+      <div id="plan-components"></div>
+
+      <div class="plan-cost-detail">
+        <div class="perday-mini">Your estimated cost: <strong><span id="plan-perday-mini">$0</span> / day</strong></div>
+        <div class="cost-row"><span>Medication cost (monthly)</span><span id="cost-acq">$0</span></div>
+        <div class="cost-row"><span>Estimated cost to you before insurance (monthly)</span><span id="cost-patient">$0</span></div>
+        <div class="plan-insurance">
+          <strong>Most insurance plans cover the full cost of these medications.</strong> Your dedicated clara pharmacist works directly with your insurer to maximize your coverage, handling the paperwork for you. With most plans, what you actually pay out of pocket is little to nothing.
+        </div>
+      </div>
+
+      <div class="plan-ctas">
+        <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a physician review queue, for the mock, this is where we stop.')">
+          Add to cart, start my plan
+        </button>
+        <button class="cta-secondary" onclick="alert('Plan saved. In the live version you would receive an email summary and a short primer on living with migraine.')">
+          Save this plan and think about it
+        </button>
+        <button class="cta-secondary" onclick="alert('In the live version, this would email a printable PDF of the plan to share with your GP.')">
+          Email me this plan (I want to show my doctor)
+        </button>
+      </div>
+
+      <div class="plan-disclaimer">
+        This plan is a recommendation generated from your assessment, not a prescription. A Canadian licensed physician reviews and approves (or modifies) every order before any medication ships. You'll receive an SMS the moment your plan is reviewed. We do not prescribe opioids, butalbital, or ergots for migraine, the evidence shows safer, more effective options exist. We'll tell you why if you ask.
+      </div>
+    </div>
+
+    <div class="mock-footer">
+      clara · Migraine Quiz · MOCK v1 · May 2026 · First pass demonstration, not the live product · Clinical logic per Clara Migraine Treatment Algorithm v1.0
+    </div>
+  </div>
+</section>
+
+<script>
+  // === State ===
+  const state = {
+    answers: {},
+    currentStep: 'landing',
+    history: ['landing']
+  };
+
+  // === Navigation ===
+  function showStep(stepId) {
+    document.querySelectorAll('.quiz-screen').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById(stepId);
+    if (el) {
+      el.classList.add('active');
+      state.currentStep = stepId;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const progress = el.getAttribute('data-progress');
+      const bar = document.getElementById('progress-bar');
+      if (progress) {
+        bar.style.display = 'flex';
+        document.getElementById('progress-percent-text').textContent = progress + '% complete';
+      } else {
+        bar.style.display = 'none';
+      }
+      // Show side product imagery only during the question flow (not landing/loading/plan/exits)
+      document.body.classList.toggle('show-side-decor', !!progress && stepId !== 'loading');
+      if (stepId === 'loading') animateLoading();
+    }
+  }
+  function goNext(stepId) { state.history.push(stepId); showStep(stepId); }
+  function goBack() {
+    if (state.history.length > 1) {
+      state.history.pop();
+      showStep(state.history[state.history.length - 1]);
+    }
+  }
+  function startQuiz() { goNext('q1'); }
+  function resetQuiz() {
+    state.answers = {};
+    state.history = ['landing'];
+    document.querySelectorAll('.opt.selected').forEach(o => o.classList.remove('selected'));
+    showStep('landing');
+  }
+  // Clicking the clara logo returns to the start of the quiz (landing) and clears progress
+  function goHome() { resetQuiz(); }
+
+  // === Single-select ===
+  function single(el, question, value) {
+    state.answers[question] = [value];
+    if (el) {
+      const parent = el.closest('.opt-stack');
+      parent.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  }
+
+  // === Multi-select ===
+  function multi(el, question, value) {
+    if (!state.answers[question]) state.answers[question] = [];
+    if (el) {
+      if (state.answers[question].includes(value)) {
+        state.answers[question] = state.answers[question].filter(v => v !== value);
+        el.classList.remove('selected');
+      } else {
+        state.answers[question].push(value);
+        el.classList.add('selected');
+      }
+    } else {
+      state.answers[question] = [value];
+    }
+  }
+
+  // === Gate 1: diagnosis is a hard gate ===
+  // Undiagnosed patients (q1 = 'undiagnosed') route straight to 'diag-refer' for an
+  // in person diagnosis. There is no online self-diagnosis path: this keeps Clara from
+  // treating a non-migraine headache and is the litigation-safe, patient-safe choice.
+
+  // === Gate 0: Red flag auto-reject ===
+  function checkRedFlags() {
+    const flags = state.answers['redflag'] || [];
+    if (flags.length > 0) {
+      goNext('redflag-exit');
+    } else {
+      goNext('q3');
+    }
+  }
+
+  // === Loading animation ===
+  function animateLoading() {
+    const checks = ['lc1', 'lc2', 'lc3', 'lc4', 'lc5'];
+    checks.forEach((id, i) => {
+      setTimeout(() => { document.getElementById(id).classList.add('done'); }, 400 + i * 600);
+    });
+    setTimeout(() => {
+      // MOH safety net: Q6 normally routes overuse/opioid answers out immediately;
+      // this defensive check catches any overuse value that still reaches the plan step.
+      const moh = (state.answers.q6 || [])[0];
+      if (moh === 'triptan-overuse' || moh === 'analgesic-overuse') { goNext('moh-exit'); return; }
+      if (moh === 'opioid') { goNext('opioid-exit'); return; }
+      const plan = generatePlan(state.answers);
+      if (plan.referOut) {
+        document.getElementById('refer-exit-text').textContent = plan.referReason;
+        goNext('refer-exit');
+        return;
+      }
+      renderPlan(plan);
+      goNext('plan');
+    }, 4200);
+  }
+
+  // === PLAN GENERATION, hard-block model per Clara Migraine Algorithm v1.0 ===
+  function generatePlan(answers) {
+    const plan = { name: '', summary: '', tagline: '', components: [], total: 0,
+                   reviewFlags: [], referOut: false, referReason: '' };
+
+    const freq      = (answers.q3 || [])[0];          // low / moderate / high / chronic
+    const chronicQ  = (answers.q3b || [])[0];         // cm-yes / cm-recent / cm-no
+    const severity  = (answers.q4 || [])[0];          // mild / moderate / severe / disabling
+    const pattern   = (answers.q5 || [])[0];          // stable / changed
+    const tried     = answers.q7 || [];
+    const cond      = answers.q8 || [];
+    const meds      = answers.q9 || [];
+    const allergy   = answers.q10 || [];
+    const preg      = answers.q11 || [];
+    const goal      = (answers.q12 || [])[0];
+
+    const isChronicMigraine = freq === 'chronic' && chronicQ === 'cm-yes';
+
+    // Prevention eligibility, two paths per ACP 2025:
+    //   (a) Frequency path: 4+ migraine days a month (moderate, high, or chronic).
+    //   (b) Impact path: 2-3 migraine days a month (low) WHEN attacks adversely affect life
+    //       AND acute therapy has been inadequate. We use severity (moderate/severe/disabling)
+    //       and a prior acute therapy trial (OTC, prescription NSAID, triptan, or gepant) as
+    //       proxies for the ACP "lives are adversely affected despite acute therapy" criterion.
+    const acuteTried = (answers.q7 || []).some(t => ['otc','rx-nsaid','triptan','gepant'].includes(t));
+    const severeEnough = (severity === 'moderate' || severity === 'severe' || severity === 'disabling');
+    const eligibleForPreventionByImpact = (freq === 'low') && severeEnough && acuteTried;
+
+    const preventionIndicated =
+      (freq === 'moderate' || freq === 'high' || freq === 'chronic') ||
+      eligibleForPreventionByImpact;
+
+    // Track which path triggered prevention so the rendered plan can show the right rationale.
+    const preventionViaImpact = eligibleForPreventionByImpact && freq === 'low';
+
+    const isPregnant = preg.includes('pregnant') || preg.includes('breastfeed');
+
+    // ---- Contraindication flags (hard-block) ----
+    const cvDisease = cond.includes('cad') || cond.includes('mi') || cond.includes('stroke') || cond.includes('pad');
+
+    const nsaidBlocked = cond.includes('gi') || cond.includes('kidney') || cvDisease ||
+                         meds.includes('anticoag') || allergy.includes('nsaid') ||
+                         allergy.includes('aspirin-asthma') || isPregnant;
+
+    const triptanBlocked = cvDisease || cond.includes('htn') || cond.includes('hemiplegic') ||
+                           cond.includes('arrhythmia') || meds.includes('ergot') ||
+                           meds.includes('maoi') || allergy.includes('triptan') || isPregnant;
+    const sumatriptanBlocked = triptanBlocked;
+    const rizatriptanBlocked = triptanBlocked || meds.includes('propranolol');
+    const eletriptanBlocked  = triptanBlocked || meds.includes('cyp3a4inhibitor');
+
+    const gepantBlocked = meds.includes('cyp3a4inhibitor') || meds.includes('cyp3a4inducer') ||
+                          cond.includes('liver') || isPregnant;
+
+    const amiBlocked = cond.includes('mi') || cond.includes('seizure') || cond.includes('arrhythmia') ||
+                       cond.includes('glaucoma') || meds.includes('maoi') || meds.includes('qtdrugs') || isPregnant;
+    const venBlocked = cond.includes('htn') || meds.includes('maoi') || isPregnant;
+    const botoxBlocked = !isChronicMigraine || isPregnant;
+
+    // ---- Review flags (physician must personally review) ----
+    if (cond.includes('mi')) plan.reviewFlags.push('a prior heart attack');
+    if (pattern === 'changed') plan.reviewFlags.push('a recent change in your migraine pattern');
+    if (isPregnant) plan.reviewFlags.push('pregnancy or breastfeeding');
+    if (meds.includes('ssrisnri') && !amiBlocked) plan.reviewFlags.push('an antidepressant that may interact with preventive options');
+    if (isChronicMigraine) plan.reviewFlags.push('chronic migraine, which may benefit from Botox (an in-clinic treatment)');
+
+    // ============ ACUTE TRACK ============
+    let acuteChosen = null;
+
+    // Determine acute tier (aligns with algorithm: MIDAS I-II → Tier 1; MIDAS III-IV / failed simple → Tier 2):
+    // mild → simple analgesic; moderate/severe/disabling OR failed simple analgesic → triptan/gepant
+    const triedSimpleFailed = tried.includes('otc') || tried.includes('rx-nsaid');
+    const needsMigraineSpecific = (severity === 'moderate' || severity === 'severe' || severity === 'disabling' || triedSimpleFailed);
+
+    if (goal !== 'prevention') {
+      if (isPregnant) {
+        // Pregnancy/breastfeeding: acetaminophen is the one safe acute option, regardless of tier.
+        // Triptans have limited data and are used only with specialist oversight; NSAIDs and gepants are avoided.
+        plan.components.push(comp('Acetaminophen 1000 mg, as needed', 'OTC', 'badge-otc', 'acetaminophen',
+          'Pregnancy and breastfeeding change which medications are safe. Anti-inflammatories, triptans, and the newer gepant pills are avoided, so acetaminophen is the recommended acute option, at the lowest effective dose. A physician will personally review whether anything else is appropriate for you.'));
+        acuteChosen = 'acetaminophen-preg';
+      } else if (!needsMigraineSpecific) {
+        // Tier 1, simple analgesic (recommendation order: ibuprofen, naproxen, diclofenac, APAP, celecoxib)
+        if (!nsaidBlocked) {
+          plan.components.push(comp('Ibuprofen 400 mg, every 6 hours as needed', 'OTC', 'badge-otc', 'ibuprofen',
+            'For mild migraine, an anti-inflammatory taken early is first-line and has the best evidence among the simple options. Take at the first sign of an attack, with food. No safety flags came up in your screen.'));
+          acuteChosen = 'ibuprofen';
+        } else {
+          // NSAIDs blocked, mild severity → acetaminophen
+          plan.components.push(comp('Acetaminophen 1000 mg, every 6 hours as needed', 'OTC', 'badge-otc', 'acetaminophen',
+            'Because of a safety flag in your screen, anti-inflammatories aren\'t the right choice for you. Acetaminophen is the safer simple option. If it doesn\'t control your attacks, we\'ll step up to a migraine-specific medication.'));
+          acuteChosen = 'acetaminophen';
+        }
+      } else {
+        // Tier 2, triptan + NSAID combination. Order: eletriptan, rizatriptan, sumatriptan.
+        // The combination has the largest net benefit of any acute strategy per the ACP 2025 guideline
+        // and the AHS, so when both are eligible we present them as a SINGLE combination recommendation
+        // rather than two separate line items. The sumatriptan + naproxen combination is the best
+        // studied (Treximet 85/500 mg single tablet); the same evidence supports combining naproxen
+        // with eletriptan or rizatriptan when those are the preferred triptan.
+        let triptanPick = null;
+        if (!eletriptanBlocked) triptanPick = { key: 'eletriptan', short: 'Eletriptan (Relpax) 40 mg', maxNote: '80 mg/day',
+          alone: 'Eletriptan is the most effective oral triptan for 2-hour pain freedom in head-to-head trials. Take one tablet at the onset of a migraine; may repeat once after 2 hours (max 80 mg/day).' };
+        else if (!rizatriptanBlocked) triptanPick = { key: 'rizatriptan', short: 'Rizatriptan (Maxalt) 10 mg', maxNote: '30 mg/day',
+          alone: 'Rizatriptan is a fast, effective triptan and comes as a melt-in-mouth wafer, useful when nausea makes swallowing hard. Take at onset; may repeat after 2 hours (max 30 mg/day).' };
+        else if (!sumatriptanBlocked) triptanPick = { key: 'sumatriptan', short: 'Sumatriptan (Imitrex) 50 to 100 mg', maxNote: '200 mg/day',
+          alone: 'Sumatriptan is the most widely used migraine-specific medication, available as a tablet, nasal spray, or injection for when nausea is severe. Take at onset; may repeat after 2 hours (max 200 mg/day).' };
+
+        if (triptanPick) {
+          const canCombineWithNsaid = !nsaidBlocked && !isPregnant;
+
+          if (canCombineWithNsaid) {
+            // Single combination card. Pricing sums triptan + naproxen.
+            const comboName = triptanPick.short + ' + Naproxen 500 mg (taken together at onset)';
+            const treximetNote = (triptanPick.key === 'sumatriptan')
+              ? ' If you prefer a single tablet, ask about Treximet, a combination of sumatriptan 85 mg and naproxen 500 mg in one pill, the exact formulation used in the pivotal trials.'
+              : '';
+            const comboWhy =
+              'Pairing a triptan with naproxen has the largest net benefit of any acute migraine strategy, ' +
+              'more effective than either medication alone for both 2-hour pain freedom and sustained 24-hour relief. ' +
+              'This combination is the explicit first recommendation in the American College of Physicians 2025 acute migraine guideline for moderate to severe attacks.' +
+              treximetNote +
+              ' Take both at the first sign of an attack. Triptan max ' + triptanPick.maxNote + '; naproxen max 1000 mg in 24 hours.';
+            plan.components.push(compCombo(comboName, 'RX', 'badge-rx', [triptanPick.key, 'naproxen'], comboWhy));
+            acuteChosen = 'triptan-nsaid-combo';
+          } else {
+            // NSAID blocked (pregnancy is handled earlier and never reaches here).
+            // Per ACP 2025: when NSAIDs are contraindicated, substitute acetaminophen as the partner
+            // medication in the combination (triptan + APAP). Acetaminophen is itself blocked only by
+            // severe liver disease, so we use APAP whenever the liver flag is not set.
+            const apapSafe = !cond.includes('liver');
+            if (apapSafe) {
+              const comboName = triptanPick.short + ' + Acetaminophen 1000 mg (taken together at onset)';
+              const comboWhy =
+                'You can\'t safely take an anti-inflammatory (naproxen) due to a flag in your screen, so we substitute acetaminophen as the partner medication. ' +
+                'This is the alternative combination explicitly endorsed by the American College of Physicians 2025 guideline when NSAIDs are not an option. ' +
+                'The triptan + acetaminophen pairing is less well studied than triptan + naproxen but remains better than either drug alone. ' +
+                'Take both at the first sign of an attack. Triptan max ' + triptanPick.maxNote + '; acetaminophen max 3000 mg in 24 hours.';
+              plan.components.push(compCombo(comboName, 'RX', 'badge-rx', [triptanPick.key, 'acetaminophen'], comboWhy));
+              acuteChosen = 'triptan-apap-combo';
+            } else {
+              // Both NSAID and acetaminophen blocked (rare: liver disease + NSAID flag): triptan alone.
+              const blockNote = ' Normally we would pair this with naproxen or acetaminophen for the largest acute benefit, but flags in your screen make both unsafe, so the triptan is given on its own. A physician will look at your plan personally to consider alternatives.';
+              plan.components.push(comp(triptanPick.short, 'RX', 'badge-rx', triptanPick.key, triptanPick.alone + blockNote));
+              acuteChosen = 'triptan-alone';
+              plan.reviewFlags.push('limited acute combination options after your safety screen');
+            }
+          }
+        } else {
+          // All triptans blocked → Tier 3 gepant. Order: rimegepant, ubrogepant
+          if (!gepantBlocked) {
+            plan.components.push(comp('Rimegepant (Nurtec ODT) 75 mg', 'RX', 'badge-rx', 'rimegepant',
+              'Triptans aren\'t safe for you, but gepants are an excellent alternative, they don\'t narrow blood vessels, so they\'re safe even with heart disease. Rimegepant is a single melt-in-mouth tablet, and the same medication can later be used for prevention if needed.'));
+            acuteChosen = 'gepant';
+          } else {
+            // Acute options exhausted (e.g., CV disease + Paxlovid), fall back to APAP if possible
+            if (!isPregnant && !cond.includes('liver')) {
+              plan.components.push(comp('Acetaminophen 1000 mg, as needed', 'OTC', 'badge-otc', 'acetaminophen',
+                'Your health history rules out anti-inflammatories, triptans, and (right now) the newer gepant medications. Acetaminophen is the only acute option we can safely offer online today, and a physician will review whether you need something a clinic can provide.'));
+              acuteChosen = 'acetaminophen-only';
+              plan.reviewFlags.push('limited acute options after your safety screen');
+            } else {
+              plan.referOut = true;
+              plan.referReason = 'Based on your health history, none of the acute migraine medications we offer online are a safe match right now. This often happens when heart-related conditions rule out triptans and a current medication (like Paxlovid) temporarily rules out the newer gepant pills. The right next step is an in-person visit, and if you\'re on a short-term interacting medication, you may be able to come back once you finish it.';
+            }
+          }
+        }
+      }
+    }
+
+    // ============ PREVENTION TRACK ============
+    if (preventionIndicated && goal !== 'acute' && goal !== 'refill' && !plan.referOut) {
+      const preventionLabel = preventionViaImpact
+        ? 'Preventive plan, offered per ACP 2025 because your attacks disrupt daily life despite acute therapy'
+        : 'Preventive plan, fewer attacks over time';
+      plan.components.push({ sectionLabel: preventionLabel });
+      let prevChosen = null;
+      // Tier 1: amitriptyline, then venlafaxine
+      const triedTca = tried.includes('tca');
+      const triedSnri = tried.includes('snri');
+      if (!amiBlocked && !triedTca) {
+        plan.components.push(comp('Amitriptyline 10 mg at bedtime (titrating up over weeks)', 'RX', 'badge-rx', 'amitriptyline',
+          'A low-dose tricyclic taken at night, one of the best-established migraine preventives, and especially helpful if migraine disrupts your sleep. Allow 6–8 weeks at the target dose to judge the full effect.'));
+        prevChosen = 'amitriptyline';
+      } else if (!venBlocked && !triedSnri) {
+        plan.components.push(comp('Venlafaxine 37.5 mg daily (titrating to 75–150 mg)', 'RX', 'badge-rx', 'venlafaxine',
+          'An SNRI with good evidence for migraine prevention, a strong choice when a tricyclic isn\'t suitable, or when low mood or anxiety also play a role. Allow 6–8 weeks to judge the effect.'));
+        prevChosen = 'venlafaxine';
+      } else if (!gepantBlocked) {
+        // Tier 2: rimegepant every other day
+        plan.components.push(comp('Rimegepant (Nurtec ODT) 75 mg every other day', 'RX', 'badge-rx', 'rimegepant_qod',
+          'You\'ve already tried the first-line oral preventives (or they aren\'t suitable). Rimegepant is the only oral gepant approved for prevention in Canada, and it works as both an acute and preventive treatment.'));
+        prevChosen = 'rimegepant-prev';
+      }
+
+      // Tier 3: Botox (chronic migraine only)
+      if (isChronicMigraine && !botoxBlocked) {
+        plan.components.push(comp('Botox (OnabotulinumtoxinA), chronic migraine protocol', 'REFERRAL', 'badge-referral', 'botox',
+          'Because you meet the definition of chronic migraine (15+ headache days a month), you may benefit from Botox, injections every 12 weeks that cut headache days by more than half in about half of patients. This is given in a clinic; clara coordinates the referral and follow-up.'));
+      }
+
+      if (!prevChosen && !(isChronicMigraine && !botoxBlocked)) {
+        plan.reviewFlags.push('preventive options that need a physician\'s direct input');
+      }
+    }
+
+    // ============ ALWAYS-INCLUDED EDUCATION ============
+    plan.components.push(comp('Understanding Your Migraine, primer, triggers & tracking guide', 'INCLUDED', 'badge-included', 'free',
+      'Knowing your pattern is half the battle. Your primer covers migraine triggers, how to treat early for the best results, the medication-overuse trap to avoid, and a simple headache diary to track what works. Arrives in your account on day one.'));
+
+    // ============ NAME + SUMMARY ============
+    if (isChronicMigraine) plan.name = 'Chronic Migraine Plan';
+    else if (preventionIndicated && goal !== 'acute') plan.name = 'Migraine Relief + Prevention Plan';
+    else plan.name = 'Acute Migraine Relief Plan';
+
+    // Build summary mirror
+    let s = '';
+    const diag = (answers.q1 || [])[0];
+    s += (diag === 'diagnosed') ? 'Physician-diagnosed migraine' : 'Headaches fitting the migraine pattern';
+    const freqMap = { rare: 'fewer than 2 migraine days a month',
+                      low: '2 to 3 migraine days a month',
+                      moderate: '4 to 7 migraine days a month',
+                      high: '8 to 14 migraine days a month',
+                      chronic: '15 or more headache days a month (chronic migraine)' };
+    if (freqMap[freq]) s += ', ' + freqMap[freq];
+    const sevMap = { mild: 'mild', moderate: 'moderate', severe: 'severe', disabling: 'disabling' };
+    if (sevMap[severity]) s += ', ' + sevMap[severity] + ' in intensity';
+    if (tried.length && !tried.includes('nothing')) {
+      const names = [];
+      if (tried.includes('otc')) names.push('over-the-counter painkillers');
+      if (tried.includes('triptan')) names.push('triptans');
+      if (tried.includes('rx-nsaid')) names.push('prescription anti-inflammatories');
+      if (tried.includes('gepant')) names.push('gepants');
+      if (names.length) s += '. You\'ve previously tried ' + names.slice(0,3).join(', ');
+    } else if (tried.includes('nothing')) {
+      s += '. You haven\'t tried prescription migraine treatment yet';
+    }
+    s += '. ';
+    // safety note
+    const blockedNotes = [];
+    if (triptanBlocked && !isPregnant) blockedNotes.push('triptans (due to a cardiovascular or interaction flag)');
+    if (nsaidBlocked && !isPregnant) blockedNotes.push('anti-inflammatories (due to a safety flag)');
+    if (gepantBlocked && !isPregnant) blockedNotes.push('gepants (due to a drug interaction or liver flag)');
+    if (isPregnant) {
+      s += 'Because you\'re pregnant or breastfeeding, your plan prioritizes the safest options and will be personally reviewed by a physician.';
+    } else if (blockedNotes.length) {
+      s += 'Your plan safely avoids ' + blockedNotes.join(' and ') + ', and routes you to options that are safe for your specific profile.';
+    } else {
+      s += 'No medication safety contraindications were flagged in your screening.';
+    }
+    plan.summary = s;
+
+    // total
+    plan.total = plan.components.reduce((sum, c) => sum + (c.priceValue || 0), 0);
+    return plan;
+  }
+
+  // McKesson-based pricing (estimated): per-day = acquisition/day, acqMonth = acquisition/month,
+  // patientMonth = expected monthly cost to patient (before insurance). Source: Clara Migraine Medications xlsx.
+  const PRICING = {
+    acetaminophen:  { acqMonth: 3.58,   patientMonth: 14.99 },
+    ibuprofen:      { acqMonth: 5.62,   patientMonth: 17.28 },
+    naproxen:       { acqMonth: 13.46,  patientMonth: 26.07 },
+    diclofenac:     { acqMonth: 12.38,  patientMonth: 24.86 },
+    celecoxib:      { acqMonth: 15.35,  patientMonth: 28.18 },
+    sumatriptan:    { acqMonth: 59.92,  patientMonth: 78.10 },
+    rizatriptan:    { acqMonth: 66.69,  patientMonth: 85.68 },
+    eletriptan:     { acqMonth: 60.51,  patientMonth: 78.76 },
+    ubrogepant:     { acqMonth: 162.47, patientMonth: 192.96 },
+    rimegepant:     { acqMonth: 184.25, patientMonth: 217.35 },
+    rimegepant_qod: { acqMonth: 92.13,  patientMonth: 108.68 },
+    amitriptyline:  { acqMonth: 0.92,   patientMonth: 12.01 },
+    venlafaxine:    { acqMonth: 5.48,   patientMonth: 17.12 },
+    botox:          { acqMonth: 790.94, patientMonth: 896.84 }, // per 12-week treatment (referral, excluded from per-day totals)
+  };
+  function money(n){ return '$' + n.toFixed(2); }
+
+  // Build a plan component. 'key' is a PRICING key, or 'free', or 'botox' (referral, excluded from totals).
+  function comp(name, badge, badgeClass, key, why) {
+    const c = { name, badge, badgeClass, key, why, acqMonth: 0, patientMonth: 0, inTotals: false, priceDisplay: '' };
+    if (key === 'free') {
+      c.priceDisplay = 'Free with plan';
+    } else if (key === 'botox') {
+      c.priceDisplay = '\u2248 ' + money(PRICING.botox.patientMonth) + ' per treatment \u00b7 every 12 weeks \u00b7 billed via clinic';
+    } else if (PRICING[key]) {
+      c.acqMonth = PRICING[key].acqMonth;
+      c.patientMonth = PRICING[key].patientMonth;
+      c.inTotals = true;
+      c.priceDisplay = money(c.patientMonth / 30) + '/day';
+    }
+    c.prn = ['acetaminophen','ibuprofen','naproxen','diclofenac','celecoxib','sumatriptan','rizatriptan','eletriptan','ubrogepant','rimegepant'].includes(key);
+    return c;
+  }
+
+  // Build a combination component, two or more medications taken together as a single strategy.
+  // Pricing sums the patientMonth and acqMonth across all keys. Used for the triptan + naproxen
+  // combination which has the largest net benefit per ACP 2025.
+  function compCombo(name, badge, badgeClass, keys, why) {
+    const c = { name, badge, badgeClass, key: 'combo:' + keys.join('+'), keys, why,
+                acqMonth: 0, patientMonth: 0, inTotals: true, priceDisplay: '' };
+    keys.forEach(k => {
+      if (PRICING[k]) { c.acqMonth += PRICING[k].acqMonth; c.patientMonth += PRICING[k].patientMonth; }
+    });
+    c.priceDisplay = money(c.patientMonth / 30) + '/day (combined)';
+    c.prn = true;  // acute combinations are always PRN
+    return c;
+  }
+
+  function renderPlan(plan) {
+    document.getElementById('plan-summary-text').textContent = plan.summary;
+    document.getElementById('kit-name-text').textContent = 'The ' + plan.name;
+
+    const rf = document.getElementById('review-flag-block');
+    if (plan.reviewFlags.length) {
+      rf.style.display = 'block';
+      document.getElementById('review-flag-text').textContent =
+        ' We flagged ' + plan.reviewFlags.join('; ') + '. A Canadian-licensed physician will look at your plan personally before anything is dispensed.';
+    } else {
+      rf.style.display = 'none';
+    }
+
+    const container = document.getElementById('plan-components');
+    container.innerHTML = '';
+    let acq = 0, patient = 0;
+    plan.components.forEach(c => {
+      if (c.sectionLabel) {
+        container.insertAdjacentHTML('beforeend', '<div class="section-label">' + c.sectionLabel + '</div>');
+        return;
+      }
+      if (c.inTotals) { acq += c.acqMonth; patient += c.patientMonth; }
+      const html =
+        '<div class="component">' +
+          '<div class="comp-header">' +
+            '<div class="comp-name">' + c.name + ' <span class="comp-badge ' + c.badgeClass + '">' + c.badge + '</span></div>' +
+            '<div class="comp-price">' + (c.priceDisplay || '') + '</div>' +
+          '</div>' +
+          '<div class="comp-why"><strong>Why this is in your plan:</strong> ' + c.why + '</div>' +
+          (c.prn ? '<div class="comp-prn">As needed (PRN), you only take it when a migraine hits, so some months you\'ll use more, some less.</div>' : '') +
+        '</div>';
+      container.insertAdjacentHTML('beforeend', html);
+    });
+
+    // Big headline = the patient's estimated DAILY cost (expected monthly to patient / 30)
+    const perDay = patient > 0 ? (patient / 30) : 0;
+    document.getElementById('plan-perday').textContent = '$' + perDay.toFixed(2);
+    document.getElementById('plan-perday-mini').textContent = '$' + perDay.toFixed(2);
+    document.getElementById('cost-acq').textContent = '$' + acq.toFixed(2);
+    document.getElementById('cost-patient').textContent = '$' + patient.toFixed(2);
+  }
+</script>
+
+</body>
+</html>

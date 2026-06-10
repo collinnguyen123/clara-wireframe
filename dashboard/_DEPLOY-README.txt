@@ -1,28 +1,4 @@
-CLARA DASHBOARD DEPLOY BUNDLE
-=============================
-Built: June 7, 2026 (Session 14)
-
-WHAT THIS IS
-A self-contained, web-optimized copy of the patient Dashboard and all
-seven education pages. Only assets actually referenced by the pages are
-included; images are downscaled to 1600px web size. 133 MB total.
-
-  index.html ................ the Dashboard (also kept as Clara-Dashboard-MOCK-v1.html)
-  Education Section (Knee OA Pain)/ ... all 7 education pages + images + video
-
-HOW TO DEPLOY TO GITHUB PAGES (clara-wireframe repo)
-1. Open github.com/collinnguyen123/clara-wireframe
-2. Replace the contents of the dashboard/ folder with the contents of
-   this folder (keep the folder structure exactly as is).
-   Easiest: GitHub Desktop or git; the web uploader also accepts
-   dragging the whole folder.
-3. Commit. Pages redeploys automatically in about a minute.
-4. Check: https://collinnguyen123.github.io/clara-wireframe/dashboard/
-
-NOTES
-- The largest single file is How-to-apply-demo.mp4 (about 20 MB),
-  well under GitHub's 100 MB per file limit.
-- Links between dashboard and education pages are relative, so the
-  bundle works at any URL and also opens fine locally.
-- Full resolution image masters remain in
-  Technology/Wireframes/Education Section (Knee OA Pain)/ on the Desktop.
+clara dashboard deploy bundle, rebuilt June 10, 2026 (Session 18)
+Built from Technology/Wireframes working files. Contents: index.html (the dashboard), the seven education pages with web sized images (1600px) and the compressed how to apply video, the three condition assessment quizzes (Migraine, Back Pain, Neuropathic) with Back to your dashboard links, and the card photo folders (Pain Tracker, Home (dashboard), Get Care).
+New since the June 7 deploy: check-in save and resume, treatment start date gate with calendar, percent complete, required answers, monthly summary, key word highlights, photo heroes on check-in and condition cards everywhere, custom icon set on Get Care, quiz round trip navigation.
+Deploy: drag the CONTENTS of this folder into Documents/GitHub/clara-wireframe/dashboard (Replace when asked), then GitHub Desktop: commit to main, push origin. Live in about a minute at collinnguyen123.github.io/clara-wireframe/dashboard/
