@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>clara · Your back exercise series</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,serif}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+.wrap{max-width:800px;margin:0 auto;padding:26px 28px 90px}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:13.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:42px;line-height:1.08;font-weight:700;letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:20px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.byline{font-size:13.5px;color:var(--grey);font-weight:600}
+.chip{font-size:12px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+
+.matched{display:none;border-radius:18px;padding:20px 22px;background:linear-gradient(140deg,var(--sage),var(--sage-deep));color:#fff;box-shadow:var(--shadow-lg);margin-bottom:26px}
+.matched .mk{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.85}
+.matched h3{font-family:Georgia,serif;font-size:22px;margin:4px 0 4px}
+.matched p{font-size:14px;color:#E7EFE9;line-height:1.55}
+.matched a{display:inline-flex;align-items:center;gap:7px;margin-top:12px;background:rgba(255,255,255,.16);padding:9px 16px;border-radius:20px;font-weight:700;font-size:13.5px}
+
+.nopattern{border:1px dashed var(--line-strong);border-radius:16px;padding:18px 20px;background:var(--cream-soft);font-size:14.5px;color:var(--grey);margin-bottom:26px}
+.nopattern a{color:var(--sage-dark);font-weight:700}
+
+.lib-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.lib-nav a{font-size:13px;font-weight:700;color:var(--sage-dark);background:#fff;border:1px solid var(--line);padding:8px 13px;border-radius:20px}
+.lib-nav a:hover{border-color:var(--sage);background:var(--sage-pale)}
+
+.pattern{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px;margin:18px 0;box-shadow:var(--shadow);scroll-margin-top:80px}
+.pattern.hl{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage-soft),var(--shadow-lg)}
+.p-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.p-num{width:40px;height:40px;border-radius:50%;background:var(--sage);color:#fff;display:grid;place-items:center;font-family:Georgia,serif;font-size:20px;font-weight:700;flex:0 0 auto}
+.p-head h2{font-family:Georgia,serif;font-size:24px;color:var(--sage-dark);line-height:1.1}
+.p-tag{font-size:12px;font-weight:700;color:var(--terra-deep);background:var(--terra-pale);padding:5px 11px;border-radius:14px;display:inline-block;margin:2px 0 12px}
+.p-sym{font-size:14.5px;color:var(--grey);line-height:1.6;margin-bottom:8px}
+.p-sym b{color:var(--ink)}
+.routine-head{display:flex;align-items:center;justify-content:space-between;margin:18px 0 4px}
+.routine-head .rt{font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--sage-dark)}
+.pbar{height:8px;border-radius:5px;background:var(--sage-pale);overflow:hidden;margin:8px 0 16px}
+.pbar > i{display:block;height:100%;width:0;background:var(--terra);transition:width .4s;border-radius:5px}
+.ex{display:flex;gap:15px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:16px;margin-bottom:11px;background:var(--cream-soft);cursor:pointer;transition:all .14s}
+.ex:hover{border-color:var(--sage)}
+.ex.done{background:var(--sage-pale);border-color:var(--sage)}
+.ex .fig{width:78px;height:62px;flex:0 0 auto;background:#fff;border-radius:12px;border:1px solid var(--line);display:block}
+.ex .exb{flex:1;min-width:0}
+.ex h4{font-size:15.5px;font-weight:700;margin-bottom:3px}
+.ex p{font-size:13px;color:var(--grey);line-height:1.5}
+.ex .dose{display:inline-block;margin-top:7px;font-size:11.5px;font-weight:700;color:var(--terra-deep);background:var(--terra-pale);padding:4px 10px;border-radius:12px}
+.ex .ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--line-strong);flex:0 0 auto;display:grid;place-items:center;color:#fff;font-size:14px;background:#fff;transition:all .15s;align-self:center}
+.ex.done .ck{background:var(--sage);border-color:var(--sage)}
+.celebrate{display:none;background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:14px;padding:14px 16px;font-size:14.5px;color:var(--sage-deep);font-weight:600;margin-top:6px}
+.celebrate.on{display:block}
+.warnbox{background:var(--terra-pale);border-left:4px solid var(--terra);border-radius:10px;padding:13px 16px;font-size:13.5px;color:#6e2417;line-height:1.55;margin:10px 0 4px}
+
+h2.sec{font-family:Georgia,serif;font-size:28px;font-weight:700;color:var(--sage-dark);margin:44px 0 8px}
+.sec-sub{font-size:15.5px;color:#2b302c;line-height:1.7;margin-bottom:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+.minicard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow)}
+.minicard h4{font-size:15px;font-weight:700;color:var(--sage-dark);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.minicard ul{list-style:none}
+.minicard li{position:relative;padding-left:20px;font-size:13.5px;line-height:1.55;margin-bottom:7px;color:#2b302c}
+.minicard li::before{content:'';position:absolute;left:4px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--sage)}
+.sources{margin-top:42px}
+.sources h2{font-family:Georgia,serif;font-size:22px;color:var(--sage-dark);margin-bottom:12px}
+.sources ol{margin-left:18px;font-size:13px;color:var(--grey);line-height:1.6}
+.sources li{margin-bottom:8px}
+.disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+@media(max-width:640px){h1.title{font-size:32px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}.pattern{padding:20px}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">clara</div>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care">Get Care</a>
+  </div>
+  <div class="nav-avatar">JD</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education-back">&larr;  Back to back pain</a>
+  <div class="eyebrow">Back pain · Exercise series</div>
+  <h1 class="title serif">Your back exercise series</h1>
+  <p class="lede">The Saskatchewan Spine Pathway exercises, free, made-in-Canada, and used by family doctors across the country. Start with the routine matched to your pattern, then progress.</p>
+  <div class="meta">
+    <span class="byline">From your clara care team</span>
+    <span class="chip">Saskatchewan PIER series</span>
+    <span class="chip">Progress saves on this device</span>
+  </div>
+
+  <div class="matched" id="matched"></div>
+  <div class="nopattern" id="nopattern">Not sure which pattern you have? <a href="../Find%20Your%20Back%20Pattern/Find-Your-Pattern.html">Take the 2-minute pattern finder &#8594;</a> and we&rsquo;ll point you straight to the right routine.</div>
+
+  <div class="lib-nav">
+    <a href="#pattern1">1 · Extension</a>
+    <a href="#pattern2">2 · Flexion</a>
+    <a href="#pattern3">3 · Rest first</a>
+    <a href="#pattern4">4 · Core</a>
+    <a href="#maintenance">Healthy-back basics</a>
+  </div>
+
+  <!-- PATTERN 1 -->
+  <div class="pattern" id="pattern1">
+    <div class="p-head"><div class="p-num">1</div><h2>Extension pattern</h2></div>
+    <span class="p-tag">&#129465; Rest positions &amp; the sloppy pushup</span>
+    <p class="p-sym"><b>This is you if:</b> pain is worse sitting or bending forward, and eased by standing, walking, or arching backward. Walking beats sitting.</p>
+    <div class="routine-head"><span class="rt">Today&rsquo;s routine</span><span id="c1" style="font-size:12px;font-weight:700;color:var(--muted)">0 / 7</span></div>
+    <div class="pbar"><i id="bar1"></i></div>
+    <div data-routine="1">
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__SUPINE__</svg><div class="exb"><h4>Supine lie</h4><p>Lie on your back with your knees and head resting on pillows.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__PRONE__</svg><div class="exb"><h4>Prone lie</h4><p>Lie on your stomach with three pillows supporting your hips.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__DBLKNEE__</svg><div class="exb"><h4>Knees to chest</h4><p>Lie on your back, knees bent and feet flat. Slowly bring your knees up toward your chest, one leg at a time is easier, then wrap your arms behind your knees and draw them in.</p><span class="dose">Hold as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__ZLIE__</svg><div class="exb"><h4>&ldquo;Z&rdquo; lie</h4><p>Lie on your back, head on a pillow, with your feet up on a chair and knees bent more than 90 degrees. You can support your buttocks with a pillow.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__SIT__</svg><div class="exb"><h4>Lumbar roll (sitting)</h4><p>Sit in a straight backed chair with a lumbar roll supporting the curve of your lower back.</p><span class="dose">Use as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__NIGHT__</svg><div class="exb"><h4>Lumbar roll (night)</h4><p>Use a lumbar night roll under your mid back while sleeping to support the curve of your spine.</p><span class="dose">Use overnight</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__PRESSUP__</svg><div class="exb"><h4>Sloppy pushup</h4><p>Lie on your stomach with your hands beside your head. Keep your lower body on the floor and use your arms to slowly raise your upper body, keeping your pelvis down and your back muscles relaxed.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+    </div>
+    <div class="celebrate" id="cel1">Nicely done. Use a lumbar roll when sitting and driving to keep that gentle curve. &#127881;</div>
+    <div class="warnbox">If any exercise sends pain <b>further down your leg</b>, stop and rest. Pain moving back toward your spine is a good sign; pain travelling down the leg is not.</div>
+  </div>
+
+  <!-- PATTERN 2 -->
+  <div class="pattern" id="pattern2">
+    <div class="p-head"><div class="p-num">2</div><h2>Flexion pattern</h2></div>
+    <span class="p-tag">&#129486; Forward-bend positions &amp; stretches</span>
+    <p class="p-sym"><b>This is you if:</b> pain is worse with standing, walking a while, or arching backward, and eased by sitting or bending forward.</p>
+    <div class="routine-head"><span class="rt">Today&rsquo;s routine</span><span id="c2" style="font-size:12px;font-weight:700;color:var(--muted)">0 / 5</span></div>
+    <div class="pbar"><i id="bar2"></i></div>
+    <div data-routine="2">
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__ZLIE__</svg><div class="exb"><h4>&ldquo;Z&rdquo; lie</h4><p>Lie on your back, head on a pillow, with your feet up on a chair and knees bent more than 90&deg;. You can support your buttocks with a pillow.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__DBLKNEE__</svg><div class="exb"><h4>Knees to chest</h4><p>Lie on your back, knees bent and feet flat. Slowly bring your knees up toward your chest, one leg at a time is easier, then wrap your arms behind your knees and draw them in.</p><span class="dose">Hold as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__SIT__</svg><div class="exb"><h4>Sitting flexion</h4><p>Sit with your feet flat, about hip width apart. Lean forward to rest your stomach on your lap and let your arms and head hang toward your feet, then use your hands on your knees to come back up.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__CHILD__</svg><div class="exb"><h4>Trunk flexion stretch</h4><p>Kneel on your hands and knees, tuck your chin and arch your back, then slowly sit back toward your heels, dropping your shoulders toward the floor.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__KNEES__</svg><div class="exb"><h4>Knees to chest stretch</h4><p>Lie on your back, knees bent and feet flat. Raise one knee to your chest, then the other to meet it, hold your knees and pull gently while pressing your lower back into the floor with your stomach muscles.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+    </div>
+    <div class="celebrate" id="cel2">Great work. Build up slowly, comfort, not force, is the goal. &#127881;</div>
+  </div>
+
+  <!-- PATTERN 3 -->
+  <div class="pattern" id="pattern3">
+    <div class="p-head"><div class="p-num">3</div><h2>Acute nerve pattern, rest first</h2></div>
+    <span class="p-tag">&#128719; Rest &amp; positioning</span>
+    <p class="p-sym"><b>This is you if:</b> the pain is mainly down your leg, often constant, and most movement makes it worse. In this acute phase, <b>rest and positioning come before exercise.</b></p>
+    <div class="warnbox" style="border-color:var(--terra)"><b>Message your clara care team before starting.</b> Because the leg pain is dominant, an early physiotherapy review leads to far better outcomes, and we want a clinician to check the nerve. The positions below are for relief while you wait, not a workout.</div>
+    <div class="routine-head"><span class="rt">Comfort positions</span><span id="c3" style="font-size:12px;font-weight:700;color:var(--muted)">0 / 6</span></div>
+    <div class="pbar"><i id="bar3"></i></div>
+    <div data-routine="3">
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__ZLIE__</svg><div class="exb"><h4>&ldquo;Z&rdquo; lie</h4><p>Lie on your back, head on a pillow, with your feet up on a chair and knees bent more than 90&deg;. You can support your buttocks with a pillow.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__PRONE__</svg><div class="exb"><h4>Prone lie</h4><p>Lie on your stomach with three pillows supporting your hips. You can support your hips and head with pillows.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__ELBOWS__</svg><div class="exb"><h4>Prone lie on elbows</h4><p>Lie face down on the floor or a bed, bend your elbows, and relax.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__HANDSKNEES__</svg><div class="exb"><h4>Rest on hands and knees</h4><p>Kneel on your hands and knees on the floor or a bed and let your back relax.</p><span class="dose">Rest as advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__NIGHT__</svg><div class="exb"><h4>Lumbar night roll</h4><p>Wrap a night roll securely around your waist while sleeping to support your spine.</p><span class="dose">Use overnight</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__SIT__</svg><div class="exb"><h4>Lumbar support when sitting</h4><p>Sit in a straight backed chair with a lumbar roll supporting the curve of your lower back.</p><span class="dose">Use as advised</span></div><div class="ck">&#10003;</div></div>
+    </div>
+    <div class="celebrate" id="cel3">Good, keep these short and frequent. Long bed rest actually slows recovery; gentle position changes are best. &#129496;</div>
+  </div>
+
+  <!-- PATTERN 4 -->
+  <div class="pattern" id="pattern4">
+    <div class="p-head"><div class="p-num">4</div><h2>Claudication pattern, core focus</h2></div>
+    <span class="p-tag">&#129496; Core stability &amp; flexion</span>
+    <p class="p-sym"><b>This is you if:</b> your legs feel heavy or achy after walking or standing, and it lifts quickly when you sit or bend forward. The long-term win is a steady core routine.</p>
+    <div class="routine-head"><span class="rt">Today&rsquo;s routine</span><span id="c4" style="font-size:12px;font-weight:700;color:var(--muted)">0 / 5</span></div>
+    <div class="pbar"><i id="bar4"></i></div>
+    <div data-routine="4">
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__LEGPRESS__</svg><div class="exb"><h4>Single leg abdominal press</h4><p>Lie on your back with knees bent and your back neutral, and tighten your abdominal muscles. Lift one leg so your hip and knee are at 90&deg;, then press one hand against that knee while pulling the knee toward your hand, keeping your elbow straight. Switch legs.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__PELVIC__</svg><div class="exb"><h4>Pelvic tilt</h4><p>Lie on your back, knees bent and feet flat hip width apart, arms at your sides. Tighten your abdominal muscles and press the small of your back into the floor so the front of your pelvis tilts up.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__SIT__</svg><div class="exb"><h4>Sitting flexion</h4><p>Sit with your feet flat, about hip width apart. Lean forward to rest your stomach on your lap and let your arms and head hang toward your feet.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__CATCAMEL__</svg><div class="exb"><h4>Cat and camel</h4><p>Kneel on your hands and knees. Arch your back and let your head drop slightly while tightening your stomach and buttock muscles, then let your back sag toward the floor with your arms straight.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+      <div class="ex" onclick="tg(this)"><svg class="fig" viewBox="0 0 78 62">__CRUNCH__</svg><div class="exb"><h4>Partial sit up (crunch)</h4><p>Lie on your back with knees bent, feet flat and arms crossed over your chest. Using your lower stomach muscles, raise your head and shoulders just until your shoulder blades lift off the floor.</p><span class="dose">As advised</span></div><div class="ck">&#10003;</div></div>
+    </div>
+    <div class="celebrate" id="cel4">Excellent. Consistency matters most here, a regular core routine is what keeps the heavy-leg feeling away. &#127881;</div>
+  </div>
+
+  <!-- MAINTENANCE -->
+  <h2 class="sec" id="maintenance">Healthy-back basics (everyone)</h2>
+  <p class="sec-sub">Whatever your pattern, these habits from the Saskatchewan &ldquo;Maintaining a Healthy Back&rdquo; guide protect your spine between flares. Well-balanced core muscles stabilise the spine and support every other movement.</p>
+  <div class="grid2">
+    <div class="minicard"><h4>&#129485; Good standing posture</h4><ul><li>Chest raised, shoulders relaxed and back</li><li>Abdomen and buttocks gently pulled in</li><li>Knees soft, feet slightly apart, weight even</li></ul></div>
+    <div class="minicard"><h4>&#129681; Good sitting posture</h4><ul><li>Back against the chair, small lumbar support at the curve</li><li>Knees at about 90&deg;, thighs level with hips</li><li>Feet flat on the floor; get up and move often</li></ul></div>
+    <div class="minicard"><h4>&#128170; Lift the safe way</h4><ul><li>Bend your knees, not your back; keep the load close</li><li>Tighten your core before you lift</li><li>Turn with your feet, never twist under load</li></ul></div>
+    <div class="minicard"><h4>&#129516; What helps the discs</h4><ul><li>Keep moving, motion nourishes the discs</li><li>Don&rsquo;t smoke, it starves discs of oxygen and nutrients</li><li>A healthy weight takes load off the spine</li></ul></div>
+  </div>
+
+  <div class="sources" id="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>Saskatchewan Health Authority / Provincial Spine Pathway. Patient Information and Education Resource: Guide to Back Exercises, Patterns 1&ndash;4 (CS-PIER-0119 to 0122). Transitioned from the Saskatchewan Ministry of Health, 2022.</li>
+      <li>Saskatchewan Health Authority. General Recommendations for Maintaining a Healthy Back: Patient Information (CS-PIER-0118). Saskatchewan Provincial Spine Pathway.</li>
+      <li>Qaseem A, Wilt TJ, McLean RM, Forciea MA. Noninvasive treatments for acute, subacute, and chronic low back pain: a clinical practice guideline from the American College of Physicians. Annals of Internal Medicine. 2017;166(7):514-530.</li>
+      <li>Hayden JA, Ellis J, Ogilvie R, et al. Exercise therapy for chronic low back pain. Cochrane Database of Systematic Reviews. 2021;9:CD009790.</li>
+    </ol>
+  </div>
+  <p class="disclaimer">These exercises are an educational starting point, not a substitute for your clara doctor&rsquo;s or physiotherapist&rsquo;s advice. Start gently, stop anything that worsens leg pain, and seek urgent care for new leg weakness, saddle numbness, or bladder or bowel changes.</p>
+</div>
+
+<script>
+/* ---- simple house-style SVG pose glyphs (sage line art on cream) ---- */
+var S='stroke="#4A6B5B" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+var MAT='<line x1="6" y1="50" x2="72" y2="50" stroke="#D4CFC4" stroke-width="3" stroke-linecap="round"/>';
+var POSE={
+ PRONE: MAT+'<path '+S+' d="M12 46 H58"/><circle cx="60" cy="44" r="5" '+S+'/><path '+S+' d="M16 46q22-6 40 0"/>',
+ ELBOWS: MAT+'<path '+S+' d="M14 48 H40 l10-14"/><circle cx="55" cy="28" r="5" '+S+'/><path '+S+' d="M40 48 l4-16"/>',
+ PRESSUP: MAT+'<path '+S+' d="M16 48 H38 l16-22"/><circle cx="58" cy="22" r="5" '+S+'/><path '+S+' d="M44 30 V48"/><path '+S+' d="M54 26 V48"/>',
+ STAND: '<line x1="14" y1="56" x2="64" y2="56" stroke="#D4CFC4" stroke-width="3"/><circle cx="40" cy="14" r="5" '+S+'/><path '+S+' d="M40 19 q8 10 4 22 l-2 12"/><path '+S+' d="M40 41 l-6 14"/><path '+S+' d="M44 24 q8 4 9 12"/>',
+ KNEES: MAT+'<path '+S+' d="M14 47 H30 q14 0 12-14"/><circle cx="13" cy="44" r="5" '+S+'/><path '+S+' d="M42 33 q-2 8-10 12"/>',
+ DBLKNEE: MAT+'<path '+S+' d="M16 47 H32 q16 0 12-16"/><circle cx="14" cy="44" r="5" '+S+'/><path '+S+' d="M44 31 q-4 10-14 12"/><path '+S+' d="M40 33 q-3 9-12 13"/>',
+ SIT: '<line x1="10" y1="56" x2="40" y2="56" stroke="#D4CFC4" stroke-width="3"/><path '+S+' d="M22 54 V40 q0-4 4-4 h10"/><path '+S+' d="M26 40 q4-14 16-16"/><circle cx="46" cy="22" r="5" '+S+'/>',
+ CHILD: MAT+'<path '+S+' d="M16 48 q10-18 30-12"/><path '+S+' d="M16 48 V40"/><path '+S+' d="M30 40 q0 6 4 8"/><circle cx="50" cy="38" r="5" '+S+'/>',
+ ZLIE: MAT+'<path '+S+' d="M12 46 H40 l8-12 12 0"/><circle cx="14" cy="42" r="5" '+S+'/><line x1="48" y1="34" x2="60" y2="34" '+S+'/>',
+ SUPINE: MAT+'<circle cx="14" cy="42" r="5" '+S+'/><path '+S+' d="M19 45 H38 q8 0 8-9"/><line x1="40" y1="47" x2="56" y2="47" stroke="#C97257" stroke-width="3" stroke-linecap="round"/>',
+ NIGHT: '<line x1="8" y1="50" x2="70" y2="50" stroke="#D4CFC4" stroke-width="3" stroke-linecap="round"/><path '+S+' d="M14 47 H54"/><circle cx="57" cy="44" r="5" '+S+'/><path d="M28 47 q4-5 8 0" stroke="#C97257" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
+ HANDSKNEES: MAT+'<path '+S+' d="M20 48 V34 H50 V48"/><path '+S+' d="M20 34 H50"/><circle cx="56" cy="32" r="5" '+S+'/>',
+ PELVIC: MAT+'<path '+S+' d="M14 46 H36 l8-10 8 0"/><circle cx="13" cy="43" r="5" '+S+'/><path '+S+' d="M36 46 l8-10"/><path '+S+' d="M30 44 q2-4 0-7" stroke="#C97257"/>',
+ LEGPRESS: MAT+'<path '+S+' d="M14 46 H34 q12 0 10-14"/><circle cx="13" cy="43" r="5" '+S+'/><path '+S+' d="M44 32 l-10 6" stroke="#C97257"/>',
+ CRUNCH: MAT+'<path '+S+' d="M16 47 H36 l8-10 8 0"/><circle cx="20" cy="40" r="5" '+S+'/><path '+S+' d="M25 41 q8-3 11 6" stroke="#C97257"/>',
+ CATCAMEL: MAT+'<path '+S+' d="M20 46 V32 q14-10 28 0 V46"/><path '+S+' d="M20 32 q14-10 28 0" stroke="#C97257"/><circle cx="54" cy="30" r="5" '+S+'/>'
+};
+document.querySelectorAll('svg.fig').forEach(function(svg){var html=svg.innerHTML;Object.keys(POSE).forEach(function(k){html=html.replace('__'+k+'__',POSE[k]);});svg.innerHTML=html;});
+
+/* ---- interactive routines with progress + localStorage ---- */
+function key(r){return 'claraBackEx_p'+r;}
+function loadR(r){try{return JSON.parse(localStorage.getItem(key(r))||'[]');}catch(e){return [];}}
+function saveR(r,arr){try{localStorage.setItem(key(r),JSON.stringify(arr));}catch(e){}}
+function refresh(r){
+  var rows=document.querySelectorAll('[data-routine="'+r+'"] .ex');var done=0;
+  rows.forEach(function(x){if(x.classList.contains('done'))done++;});
+  var pct=Math.round(done/rows.length*100);
+  document.getElementById('bar'+r).style.width=pct+'%';
+  document.getElementById('c'+r).textContent=done+' / '+rows.length;
+  document.getElementById('cel'+r).classList.toggle('on',done===rows.length);
+}
+function tg(el){el.classList.toggle('done');var r=el.closest('[data-routine]').dataset.routine;
+  var idx=[].indexOf.call(el.parentNode.children,el);var arr=loadR(r);arr[idx]=el.classList.contains('done')?1:0;saveR(r,arr);refresh(r);}
+[1,2,3,4].forEach(function(r){var arr=loadR(r);var rows=document.querySelectorAll('[data-routine="'+r+'"] .ex');rows.forEach(function(x,n){if(arr[n]){x.classList.add('done');}});refresh(r);});
+
+/* ---- matched-pattern banner from #hash or localStorage ---- */
+var NAMES={1:'Extension pattern',2:'Flexion pattern',3:'Acute nerve pattern',4:'Claudication pattern'};
+function showMatched(p){
+  if(!NAMES[p])return;
+  var m=document.getElementById('matched');
+  m.innerHTML='<div class="mk">Matched to your pattern finder</div><h3>Pattern '+p+' · '+NAMES[p]+'</h3><p>We&rsquo;ve highlighted your routine below. Start here, and progress as it gets easier.</p><a href="#pattern'+p+'">Jump to my routine &#8594;</a>';
+  m.style.display='block';
+  document.getElementById('nopattern').style.display='none';
+  var sec=document.getElementById('pattern'+p);if(sec)sec.classList.add('hl');
+}
+var hp=(location.hash.match(/pattern([1-4])/)||[])[1];
+var sp=null;try{sp=localStorage.getItem('claraBackPattern');}catch(e){}
+showMatched(hp||sp);
+if(hp){setTimeout(function(){var el=document.getElementById('pattern'+hp);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},250);}
+</script>
+</body>
+</html>

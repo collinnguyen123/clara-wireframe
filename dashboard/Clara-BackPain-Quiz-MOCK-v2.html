@@ -199,8 +199,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="logo" onclick="goHome(); return false;" title="Back to start">clara</a>
-    <a href="index.html#care" class="dash-back">← Back to your dashboard</a>
+    <a class="logo" href="Clara-Homepage-MOCK-v1.html" title="Back to the homepage">clara</a>
+    <a href="#" class="dash-back" id="exitLink" onclick="if(history.length>1){history.back();}else{location.href='Clara-Homepage-MOCK-v1.html';}return false;">&#8592; Back</a>
     <div class="progress-pill" id="progress-bar" style="display:none;">
       <button class="back-btn" onclick="goBack()">←</button>
       <span class="progress-step">Step 1 of 3</span><span class="progress-divider">·</span>
@@ -217,7 +217,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="hero-content">
       <div class="hero-eyebrow"><span class="hero-eyebrow-mark">clara</span> · Back pain care</div>
       <h1>Find clarity on your <em style="color:var(--warm-deep);font-style:italic;">back pain.</em></h1>
-      <p>Around 80–90% of back pain has no serious structural cause, and the right plan is mostly movement, supported by the right medication when it's needed. Take 5 minutes. We'll build you an evidence based plan, reviewed by a physician licensed in Canada before anything ships.</p>
+      <p>Around 80–90% of back pain has no serious structural cause, and the right plan is mostly movement, supported by the right medication when it's needed. Take 5 minutes. We'll build you an evidence based plan, reviewed by a doctor licensed in Canada before anything ships.</p>
       <button class="btn-primary" onclick="startQuiz()">Get started →</button>
     </div>
     <div class="hero-visual">
@@ -372,7 +372,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="quiz-container">
     <h1 class="quiz-question">When is your pain worse?</h1>
     <p class="quiz-question-sub">Select all that apply.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>How your pain behaves with movement is a helpful clue. In particular, pain that's worse when you stand or walk is something we like a physician to take a closer look at.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>How your pain behaves with movement is a helpful clue. In particular, pain that's worse when you stand or walk is something we like a doctor to take a closer look at.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'q4','sitting')"><div class="opt-content">Sitting for a long time (car, desk)</div></div>
       <div class="opt multi" onclick="multi(this,'q4','forward')"><div class="opt-content">Bending forward (tying shoes, picking things up)</div></div>
@@ -394,7 +394,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="quiz-container">
     <h1 class="quiz-question">How did your back pain start, and how does it behave?</h1>
     <p class="quiz-question-sub">Select all that apply.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>A small number of people have an inflammatory type of back pain (linked to conditions like ankylosing spondylitis) rather than the common mechanical type. It behaves differently, and if we see that pattern we want a physician to consider a referral, because the work up and treatment are different.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>A small number of people have an inflammatory type of back pain (linked to conditions like ankylosing spondylitis) rather than the common mechanical type. It behaves differently, and if we see that pattern we want a doctor to consider a referral, because the work up and treatment are different.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'q4b','insidious')"><div class="opt-content">It came on gradually over weeks or months, not from a specific injury</div></div>
       <div class="opt multi" onclick="multi(this,'q4b','am-stiff')"><div class="opt-content">Morning stiffness in my back that lasts more than 30 minutes</div></div>
@@ -588,7 +588,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'q9b','nsaid')"><div class="opt-content">An allergy to anti-inflammatories or aspirin (Advil, Aleve, aspirin, Celebrex)<div class="opt-sub">For example hives, swelling, or trouble breathing after taking one</div></div></div>
       <div class="opt multi" onclick="multi(this,'q9b','sulfa')"><div class="opt-content">A sulfa (sulfonamide) antibiotic allergy<div class="opt-sub">For example a reaction to Bactrim or Septra</div></div></div>
-      <div class="opt multi" onclick="toggleOtherAllergy(this)"><div class="opt-content">Other medical allergies<div class="opt-sub">For example penicillin, tell us what so your physician knows</div></div></div>
+      <div class="opt multi" onclick="toggleOtherAllergy(this)"><div class="opt-content">Other medical allergies<div class="opt-sub">For example penicillin, tell us what so your doctor knows</div></div></div>
       <input type="text" id="q9b-other-input" class="other-allergy-input" placeholder="Type your allergy (for example penicillin)" oninput="setOtherAllergy(this.value)" style="display:none;" />
     </div>
     <button class="opt-escape" onclick="multi(null,'q9b','none'); goNext('q10')">No known drug allergies</button>
@@ -620,7 +620,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <section class="quiz-screen" id="q11" data-progress="88">
   <div class="quiz-container">
     <h1 class="quiz-question">Are you currently pregnant or breastfeeding?</h1>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Pregnancy and breastfeeding change which medications are safe. If this applies, your plan will be built around the safest options and personally reviewed by a physician.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Pregnancy and breastfeeding change which medications are safe. If this applies, your plan will be built around the safest options and personally reviewed by a doctor.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'q11','pregnant')"><div class="opt-content">I'm pregnant or trying to conceive</div></div>
       <div class="opt multi" onclick="multi(this,'q11','breastfeed')"><div class="opt-content">I'm breastfeeding</div></div>
@@ -680,11 +680,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="plan-container">
     <div class="plan-eyebrow">Your personalized plan</div>
     <h1 class="plan-title">Your <em style="font-style:italic;color:var(--warm-deep);">clara</em> back pain plan</h1>
-    <div class="review-flag" id="review-flag-block" style="display:none;"><strong>A physician will personally review your plan.</strong> <span id="review-flag-text"></span></div>
+    <div class="review-flag" id="review-flag-block" style="display:none;"><strong>A doctor will personally review your plan.</strong> <span id="review-flag-text"></span></div>
     <div class="plan-summary" id="plan-summary-block"><span class="plan-summary-label">Based on what you told us</span><span id="plan-summary-text">Loading your summary…</span></div>
     <div class="kit-card">
       <div class="kit-header"><div class="kit-name" id="kit-name-text">Your clara Plan</div></div>
-      <p class="kit-tagline">An evidence based plan built around your specific profile, reviewed by a physician licensed in Canada before anything ships.</p>
+      <p class="kit-tagline">An evidence based plan built around your specific profile, reviewed by a doctor licensed in Canada before anything ships.</p>
       <div id="plan-components"></div>
     </div>
 
@@ -710,7 +710,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="fin-includes">
         <b>Every order includes:</b>
         <ul>
-          <li>A physician review and approval before anything is made or shipped</li>
+          <li>A doctor review and approval before anything is made or shipped</li>
           <li>Your custom compounded cream from a licensed Canadian compounding pharmacy</li>
           <li>A pharmacist consult and clear instructions for safe use</li>
           <li>Discreet shipping and ongoing messaging with your care team</li>
@@ -721,11 +721,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     </div>
 
     <div class="plan-ctas">
-      <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a physician review queue, for the mock, this is where we stop.')">Add to cart, start my plan</button>
+      <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a doctor review queue, for the mock, this is where we stop.')">Add to cart, start my plan</button>
       <button class="cta-secondary" onclick="alert('Plan saved. In the live version you would receive an email summary and a short primer on back pain.')">Save this plan and think about it</button>
       <button class="cta-secondary" onclick="alert('In the live version, this would email a printable PDF of the plan to share with your GP.')">Email me this plan</button>
     </div>
-    <div class="plan-disclaimer">This plan is a recommendation generated from your assessment, not a prescription. A physician licensed in Canada reviews and approves (or modifies) every order before anything ships. You'll get an SMS the moment your plan is reviewed. We do not prescribe opioids, gabapentin/pregabalin, benzodiazepines, or acetaminophen (Tylenol) for back pain, the evidence shows safer, more effective options exist. We'll tell you why if you ask. Pricing is finalized at checkout.</div>
+    <div class="plan-disclaimer">This plan is a recommendation generated from your assessment, not a prescription. A doctor licensed in Canada reviews and approves (or modifies) every order before anything ships. You'll get an SMS the moment your plan is reviewed. We do not prescribe opioids, gabapentin/pregabalin, benzodiazepines, or acetaminophen (Tylenol) for back pain, the evidence shows safer, more effective options exist. We'll tell you why if you ask. Pricing is finalized at checkout.</div>
     <div class="mock-footer">clara · Back Pain Quiz · MOCK v2 · May 2026 · First pass demonstration, not the live product · Clinical logic per Clara LBP Clinician Summary (ACP 2017, AAFP 2024–2025, CFP PEER 2021)</div>
   </div>
 </section>
@@ -894,12 +894,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         cc={name:'Clara Compound Cream, C2 (Mixed Pain)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C2',
           whyShort:'You told us you\'ve used a compounded cream before, so we\'re starting you at C2 rather than the entry strength, it layers ketamine, gabapentin and amitriptyline on top of the C1 base (diclofenac + lidocaine + baclofen + menthol/camphor) for a stronger, multi-mechanism effect.',
           whyMore:creamPositives};
-        plan.creamNote='You\'ve used a compounded cream before, so we started you at C2 (a step up from the C1 entry strength) to give you a stronger effect from the start. If C2 isn\'t enough, your physician can step you up to C3.';
+        plan.creamNote='You\'ve used a compounded cream before, so we started you at C2 (a step up from the C1 entry strength) to give you a stronger effect from the start. If C2 isn\'t enough, your doctor can step you up to C3.';
       }else{
         cc={name:'Clara Compound Cream, C1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C1',
           whyShort:'Our foundation cream pairs an anti-inflammatory (diclofenac) with lidocaine, baclofen and menthol/camphor in one custom formula, included in every Clara back-pain plan as the targeted, lower-risk first step.',
           whyMore:creamPositives};
-        plan.creamNote='Everyone starts at C1, our foundation strength. It\'s a deliberately stepwise system: if C1 isn\'t enough after a fair trial, your physician can step you up to C2 (which adds nerve-pain ingredients), and C3 if needed. We start low and increase only if you need it.';
+        plan.creamNote='Everyone starts at C1, our foundation strength. It\'s a deliberately stepwise system: if C1 isn\'t enough after a fair trial, your doctor can step you up to C2 (which adds nerve-pain ingredients), and C3 if needed. We start low and increase only if you need it.';
       }
       cc.note=plan.creamNote;
       cc.priceDisplay='$340 / bottle';cc.priceValue=340;cc.insured=true;cc.inTotals=false;
@@ -908,9 +908,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       // so we do NOT also list the compound diclofenac/lidocaine patches (avoids redundancy).
     }else{
       // No compound cream (pregnancy / NSAID sensitivity), offer the safest single-agent topical instead.
-      plan.reviewFlags.push('pregnancy/NSAID-sensitivity, the compound cream (contains diclofenac) is deferred to physician review');
+      plan.reviewFlags.push('pregnancy/NSAID-sensitivity, the compound cream (contains diclofenac) is deferred to doctor review');
       comp('Lidocaine 5% patch, optional adjunct','RX','badge-rx',
-        'A numbing patch for a localized sore spot, with very low systemic absorption, a sensible topical option while a physician reviews anything stronger. 12 hours on / 12 hours off.','lidocaine_patch');
+        'A numbing patch for a localized sore spot, with very low systemic absorption, a sensible topical option while a doctor reviews anything stronger. 12 hours on / 12 hours off.','lidocaine_patch');
     }
 
     // ---- 4. Oral medication (step up only if topical + movement aren't enough) ----
@@ -921,14 +921,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     }
     // A history of stomach ulcers or GI bleeding is a hard contraindication to ALL oral anti-inflammatories,
     // including COX-2 selective agents (celecoxib), so no oral NSAID is offered; the plan relies on the
-    // cream, movement, and (for chronic pain) duloxetine, with physician review.
+    // cream, movement, and (for chronic pain) duloxetine, with doctor review.
     if((isAcute||isSubacute) && !isPreg && (sev==='severe'||sev==='disabling'||sev==='significant')){
       if(!cycloBlocked){
         comp('Cyclobenzaprine 5\u201310 mg at night (short course, max 2\u20133 weeks)','RX','badge-rx',
           'A short course of muscle relaxant can help when spasm is significant in the first weeks. Causes drowsiness, take at night, don\'t drive on it. Strictly limited to 2\u20133 weeks; not for long-term or chronic use.','cyclobenzaprine');
       }else if(!tizBlocked){
         comp('Tizanidine 2\u20134 mg as needed (short course)','RX','badge-rx',
-          'A muscle relaxant alternative used when cyclobenzaprine isn\'t suitable. Causes drowsiness and can lower blood pressure; your physician may check liver function. Short-term use only.','tizanidine');
+          'A muscle relaxant alternative used when cyclobenzaprine isn\'t suitable. Causes drowsiness and can lower blood pressure; your doctor may check liver function. Short-term use only.','tizanidine');
       }else{
         plan.reviewFlags.push('muscle-relaxant options limited by your health profile');
       }
@@ -944,34 +944,34 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     const serotonergic=[];
     if(meds.includes('ssri'))serotonergic.push('an SSRI');
     if(meds.includes('triptan'))serotonergic.push('a triptan');
-    if(isChronic && serotonergic.length){plan.reviewFlags.push(serotonergic.join(' and ')+' on board, your physician will check for serotonin interactions before any duloxetine is started');}
+    if(isChronic && serotonergic.length){plan.reviewFlags.push(serotonergic.join(' and ')+' on board, your doctor will check for serotonin interactions before any duloxetine is started');}
 
     // ---- review flags ----
-    if(cond.includes('htn'))plan.reviewFlags.push('uncontrolled high blood pressure, oral anti-inflammatories are being held for physician review because they can raise blood pressure and reduce the effect of blood-pressure medicines');
-    if(isChronic && cond.includes('bipolar'))plan.reviewFlags.push('bipolar disorder, duloxetine (the usual second-line oral option) is being held for physician review because starting an antidepressant can affect mood stability');
-    if(cond.includes('anticoag') && plan.cream)plan.reviewFlags.push('a blood thinner together with the diclofenac-containing compound cream, only a small amount is absorbed through the skin, but it can occasionally increase the effect of blood thinners like warfarin, so your physician will check whether your INR needs monitoring');
-    if(cond.includes('liver'))plan.reviewFlags.push('liver disease, oral anti-inflammatories are being held for physician review because they can be harder on the liver and kidneys and raise bleeding risk in significant liver disease; your physician will decide what is safe based on your liver function');
-    if(cond.includes('gi'))plan.reviewFlags.push('a history of stomach ulcers or GI bleeding, all oral anti-inflammatories (including the COX-2 option) are being held because they can irritate the stomach and raise bleeding risk; your plan relies on the topical cream and movement, with physician review');
-    if(tripleWhammy)plan.reviewFlags.push('both a blood-pressure medicine (ACE inhibitor or ARB) and a water pill (diuretic), adding an oral anti-inflammatory to that combination can strain the kidneys (the "triple whammy"), so the oral anti-inflammatory is being held for physician review');
-    else if((onRaas||onDiuretic) && !nsaidHardBlock)plan.reviewFlags.push('a blood-pressure medicine or a water pill on board, which can increase the kidney risk of oral anti-inflammatories, so your physician will keep any anti-inflammatory at the lowest dose for the shortest time and may check your kidney function');
+    if(cond.includes('htn'))plan.reviewFlags.push('uncontrolled high blood pressure, oral anti-inflammatories are being held for doctor review because they can raise blood pressure and reduce the effect of blood-pressure medicines');
+    if(isChronic && cond.includes('bipolar'))plan.reviewFlags.push('bipolar disorder, duloxetine (the usual second-line oral option) is being held for doctor review because starting an antidepressant can affect mood stability');
+    if(cond.includes('anticoag') && plan.cream)plan.reviewFlags.push('a blood thinner together with the diclofenac-containing compound cream, only a small amount is absorbed through the skin, but it can occasionally increase the effect of blood thinners like warfarin, so your doctor will check whether your INR needs monitoring');
+    if(cond.includes('liver'))plan.reviewFlags.push('liver disease, oral anti-inflammatories are being held for doctor review because they can be harder on the liver and kidneys and raise bleeding risk in significant liver disease; your doctor will decide what is safe based on your liver function');
+    if(cond.includes('gi'))plan.reviewFlags.push('a history of stomach ulcers or GI bleeding, all oral anti-inflammatories (including the COX-2 option) are being held because they can irritate the stomach and raise bleeding risk; your plan relies on the topical cream and movement, with doctor review');
+    if(tripleWhammy)plan.reviewFlags.push('both a blood-pressure medicine (ACE inhibitor or ARB) and a water pill (diuretic), adding an oral anti-inflammatory to that combination can strain the kidneys (the "triple whammy"), so the oral anti-inflammatory is being held for doctor review');
+    else if((onRaas||onDiuretic) && !nsaidHardBlock)plan.reviewFlags.push('a blood-pressure medicine or a water pill on board, which can increase the kidney risk of oral anti-inflammatories, so your doctor will keep any anti-inflammatory at the lowest dose for the shortest time and may check your kidney function');
     if(isChronic && duloxBlocked && !cond.includes('bipolar') && !isPreg){ // transparency: explain why the second-line oral option was withheld
       const dwhy=[];
       if(meds.includes('maoi'))dwhy.push('you take an MAOI antidepressant, which cannot be combined with it');
       if(meds.includes('snri'))dwhy.push('you already take an SNRI antidepressant');
       if(cond.includes('liver'))dwhy.push('your liver disease');
       if(cond.includes('glaucoma-bph'))dwhy.push('your narrow-angle glaucoma or trouble urinating');
-      if(dwhy.length)plan.reviewFlags.push('the usual second-line oral option (duloxetine) is not included because '+dwhy.join(' and ')+'; your physician will consider an alternative if an oral medication is needed');
+      if(dwhy.length)plan.reviewFlags.push('the usual second-line oral option (duloxetine) is not included because '+dwhy.join(' and ')+'; your doctor will consider an alternative if an oral medication is needed');
     }
-    if(age75plus && (isAcute||isSubacute))plan.reviewFlags.push('age 75 or older with new back pain, your physician will take extra care to rule out a fracture, because even a minor strain can cause one at this age');
-    if(isPreg)plan.reviewFlags.push('pregnancy or breastfeeding, your plan avoids anti-inflammatories and is built around movement, heat, and physician-reviewed safe options');
-    if(loc==='sciatica'||loc==='both-legs')plan.reviewFlags.push('leg/radicular symptoms, your physician will check whether nerve-targeted treatment or referral is warranted');
-    if(worse.includes('walking')||worse.includes('standing'))plan.reviewFlags.push('pain that is worse with standing or walking, your physician may check for spinal stenosis');
+    if(age75plus && (isAcute||isSubacute))plan.reviewFlags.push('age 75 or older with new back pain, your doctor will take extra care to rule out a fracture, because even a minor strain can cause one at this age');
+    if(isPreg)plan.reviewFlags.push('pregnancy or breastfeeding, your plan avoids anti-inflammatories and is built around movement, heat, and doctor-reviewed safe options');
+    if(loc==='sciatica'||loc==='both-legs')plan.reviewFlags.push('leg/radicular symptoms, your doctor will check whether nerve-targeted treatment or referral is warranted');
+    if(worse.includes('walking')||worse.includes('standing'))plan.reviewFlags.push('pain that is worse with standing or walking, your doctor may check for spinal stenosis');
     // inflammatory back pain (axial spondyloarthritis) screen: gradual onset, prolonged AM stiffness, better with movement, night waking, onset <45, SpA-associated condition
     const inflamCount=inflam.filter(x=>x!=='none').length;
-    if(inflamCount>=3 || (inflamCount>=2 && inflam.includes('spa-assoc')))plan.reviewFlags.push('features of inflammatory back pain (such as gradual onset, prolonged morning stiffness, and improvement with movement rather than rest), your physician will consider a referral to rheumatology and inflammatory blood tests to check for axial spondyloarthritis');
+    if(inflamCount>=3 || (inflamCount>=2 && inflam.includes('spa-assoc')))plan.reviewFlags.push('features of inflammatory back pain (such as gradual onset, prolonged morning stiffness, and improvement with movement rather than rest), your doctor will consider a referral to rheumatology and inflammatory blood tests to check for axial spondyloarthritis');
     if(tried.includes('opioid'))plan.reviewFlags.push('prior opioid use, flagged for careful prescriber attention');
-    if(tried.includes('surgery'))plan.reviewFlags.push('prior back surgery, flagged for physician review');
-    if(allergy.includes('other'))plan.reviewFlags.push('a drug allergy you told us about'+(allergyOther?' ('+allergyOther+')':'')+', your physician will review it before prescribing anything');
+    if(tried.includes('surgery'))plan.reviewFlags.push('prior back surgery, flagged for doctor review');
+    if(allergy.includes('other'))plan.reviewFlags.push('a drug allergy you told us about'+(allergyOther?' ('+allergyOther+')':'')+', your doctor will review it before prescribing anything');
 
     // ---- name + summary ----
     if(isAcute)plan.name='Acute Back Pain Recovery Plan';
@@ -997,7 +997,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       if(names.length)s+='. You\'ve tried '+names.slice(0,3).join(', ');
     }else{s+='. You haven\'t tried prescription treatment yet';}
     s+='. ';
-    if(isPreg)s+='Because you\'re pregnant or breastfeeding, your plan prioritizes movement and the safest options, with a physician personally reviewing it.';
+    if(isPreg)s+='Because you\'re pregnant or breastfeeding, your plan prioritizes movement and the safest options, with a doctor personally reviewing it.';
     else if(nsaidHardBlock)s+='Your plan safely avoids oral anti-inflammatories (due to a safety flag) and routes you to topical and movement-based options.';
     else s+='No medication safety contraindications were flagged in your screening.';
     plan.summary=s;
@@ -1008,7 +1008,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     document.getElementById('plan-summary-text').textContent=plan.summary;
     document.getElementById('kit-name-text').textContent='The '+plan.name;
     const rf=document.getElementById('review-flag-block');
-    if(plan.reviewFlags.length){rf.style.display='block';document.getElementById('review-flag-text').textContent=' We flagged '+plan.reviewFlags.join('; ')+'. A physician licensed in Canada will look at your plan personally before anything is dispensed.';}
+    if(plan.reviewFlags.length){rf.style.display='block';document.getElementById('review-flag-text').textContent=' We flagged '+plan.reviewFlags.join('; ')+'. A doctor licensed in Canada will look at your plan personally before anything is dispensed.';}
     else{rf.style.display='none';}
     const c=document.getElementById('plan-components');c.innerHTML='';
     // pre-compute: oral meds stack into the running total; cream + insured topicals are summarized
@@ -1107,5 +1107,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     else{more.setAttribute('hidden','');btn.textContent='Read more';}
   }
 </script>
+
+
 </body>
 </html>

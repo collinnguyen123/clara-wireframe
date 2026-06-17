@@ -603,8 +603,8 @@ body.show-side-decor .side-decor { display: block; }
 <!-- ============ TOP NAV ============ -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="logo" onclick="goHome(); return false;" title="Back to start">clara</a>
-    <a href="index.html#care" class="dash-back">← Back to your dashboard</a>
+    <a class="logo" href="Clara-Homepage-MOCK-v1.html" title="Back to the homepage">clara</a>
+    <a href="#" class="dash-back" id="exitLink" onclick="if(history.length>1){history.back();}else{location.href='Clara-Homepage-MOCK-v1.html';}return false;">&#8592; Back</a>
     <div class="progress-pill" id="progress-bar" style="display: none;">
       <button class="back-btn" onclick="goBack()">←</button>
       <span class="progress-step">Step 1 of 3</span>
@@ -628,7 +628,7 @@ body.show-side-decor .side-decor { display: block; }
         <span class="hero-eyebrow-mark">clara</span> · Migraine care
       </div>
       <h1>Find relief from your <em style="color:var(--warm-deep); font-style: italic;">migraines.</em></h1>
-      <p>Migraine is one of the most treatable neurological conditions, once you have the right plan. Take 5 minutes. We'll match you to evidence based migraine medication, screened for safety against your health history, and reviewed by a Canadian licensed physician before anything ships.</p>
+      <p>Migraine is one of the most treatable neurological conditions, once you have the right plan. Take 5 minutes. We'll match you to evidence based migraine medication, screened for safety against your health history, and reviewed by a Canadian licensed doctor before anything ships.</p>
       <button class="btn-primary" onclick="startQuiz()">Get started →</button>
     </div>
     <div class="hero-visual">
@@ -813,7 +813,7 @@ body.show-side-decor .side-decor { display: block; }
     <h1 class="quiz-question">How many days per month do you get migraines?</h1>
     <div class="why-ask">
       <span class="why-ask-label">Why we ask</span>
-      Frequency decides whether you need acute treatment (to stop attacks) or also a preventive plan (to have fewer attacks in the first place). The American College of Physicians 2025 guideline says preventive therapy may be offered to anyone with two or more migraine days a month if attacks meaningfully disrupt daily life. We use that threshold here.
+      Frequency decides whether you need acute treatment (to stop attacks) or also a preventive plan (to have fewer attacks in the first place). The American College of Doctors 2025 guideline says preventive therapy may be offered to anyone with two or more migraine days a month if attacks meaningfully disrupt daily life. We use that threshold here.
     </div>
     <div class="opt-stack">
       <div class="opt" onclick="single(this, 'q3', 'rare'); goNext('q4');">
@@ -1173,7 +1173,7 @@ body.show-side-decor .side-decor { display: block; }
     <h1 class="quiz-question">Are you currently pregnant or breastfeeding?</h1>
     <div class="why-ask">
       <span class="why-ask-label">Why we ask</span>
-      Pregnancy and breastfeeding change which migraine medications are safe. If this applies to you, your plan will be built around the safest options and a physician will personally review it.
+      Pregnancy and breastfeeding change which migraine medications are safe. If this applies to you, your plan will be built around the safest options and a doctor will personally review it.
     </div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this, 'q11', 'pregnant')">
@@ -1305,7 +1305,7 @@ body.show-side-decor .side-decor { display: block; }
     <h1 class="plan-title">Your <em style="font-style: italic; color: var(--warm-deep);">clara</em> migraine plan</h1>
 
     <div class="review-flag" id="review-flag-block" style="display:none;">
-      <strong>A physician will personally review your plan.</strong>
+      <strong>A doctor will personally review your plan.</strong>
       <span id="review-flag-text"></span>
     </div>
 
@@ -1318,7 +1318,7 @@ body.show-side-decor .side-decor { display: block; }
       <div class="kit-header">
         <div class="kit-name" id="kit-name-text">Your clara Plan</div>
       </div>
-      <p class="kit-tagline" id="kit-tagline-text">A clara curated, evidence based plan built around your specific profile, reviewed by a Canadian licensed physician before anything ships.</p>
+      <p class="kit-tagline" id="kit-tagline-text">A clara curated, evidence based plan built around your specific profile, reviewed by a Canadian licensed doctor before anything ships.</p>
 
       <div class="plan-perday">
         <div class="plan-perday-label">Your estimated cost</div>
@@ -1338,7 +1338,7 @@ body.show-side-decor .side-decor { display: block; }
       </div>
 
       <div class="plan-ctas">
-        <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a physician review queue, for the mock, this is where we stop.')">
+        <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a doctor review queue, for the mock, this is where we stop.')">
           Add to cart, start my plan
         </button>
         <button class="cta-secondary" onclick="alert('Plan saved. In the live version you would receive an email summary and a short primer on living with migraine.')">
@@ -1350,7 +1350,7 @@ body.show-side-decor .side-decor { display: block; }
       </div>
 
       <div class="plan-disclaimer">
-        This plan is a recommendation generated from your assessment, not a prescription. A Canadian licensed physician reviews and approves (or modifies) every order before any medication ships. You'll receive an SMS the moment your plan is reviewed. We do not prescribe opioids, butalbital, or ergots for migraine, the evidence shows safer, more effective options exist. We'll tell you why if you ask.
+        This plan is a recommendation generated from your assessment, not a prescription. A Canadian licensed doctor reviews and approves (or modifies) every order before any medication ships. You'll receive an SMS the moment your plan is reviewed. We do not prescribe opioids, butalbital, or ergots for migraine, the evidence shows safer, more effective options exist. We'll tell you why if you ask.
       </div>
     </div>
 
@@ -1529,7 +1529,7 @@ body.show-side-decor .side-decor { display: block; }
     const venBlocked = cond.includes('htn') || meds.includes('maoi') || isPregnant;
     const botoxBlocked = !isChronicMigraine || isPregnant;
 
-    // ---- Review flags (physician must personally review) ----
+    // ---- Review flags (doctor must personally review) ----
     if (cond.includes('mi')) plan.reviewFlags.push('a prior heart attack');
     if (pattern === 'changed') plan.reviewFlags.push('a recent change in your migraine pattern');
     if (isPregnant) plan.reviewFlags.push('pregnancy or breastfeeding');
@@ -1549,7 +1549,7 @@ body.show-side-decor .side-decor { display: block; }
         // Pregnancy/breastfeeding: acetaminophen is the one safe acute option, regardless of tier.
         // Triptans have limited data and are used only with specialist oversight; NSAIDs and gepants are avoided.
         plan.components.push(comp('Acetaminophen 1000 mg, as needed', 'OTC', 'badge-otc', 'acetaminophen',
-          'Pregnancy and breastfeeding change which medications are safe. Anti-inflammatories, triptans, and the newer gepant pills are avoided, so acetaminophen is the recommended acute option, at the lowest effective dose. A physician will personally review whether anything else is appropriate for you.'));
+          'Pregnancy and breastfeeding change which medications are safe. Anti-inflammatories, triptans, and the newer gepant pills are avoided, so acetaminophen is the recommended acute option, at the lowest effective dose. A doctor will personally review whether anything else is appropriate for you.'));
         acuteChosen = 'acetaminophen-preg';
       } else if (!needsMigraineSpecific) {
         // Tier 1, simple analgesic (recommendation order: ibuprofen, naproxen, diclofenac, APAP, celecoxib)
@@ -1590,7 +1590,7 @@ body.show-side-decor .side-decor { display: block; }
             const comboWhy =
               'Pairing a triptan with naproxen has the largest net benefit of any acute migraine strategy, ' +
               'more effective than either medication alone for both 2-hour pain freedom and sustained 24-hour relief. ' +
-              'This combination is the explicit first recommendation in the American College of Physicians 2025 acute migraine guideline for moderate to severe attacks.' +
+              'This combination is the explicit first recommendation in the American College of Doctors 2025 acute migraine guideline for moderate to severe attacks.' +
               treximetNote +
               ' Take both at the first sign of an attack. Triptan max ' + triptanPick.maxNote + '; naproxen max 1000 mg in 24 hours.';
             plan.components.push(compCombo(comboName, 'RX', 'badge-rx', [triptanPick.key, 'naproxen'], comboWhy));
@@ -1605,14 +1605,14 @@ body.show-side-decor .side-decor { display: block; }
               const comboName = triptanPick.short + ' + Acetaminophen 1000 mg (taken together at onset)';
               const comboWhy =
                 'You can\'t safely take an anti-inflammatory (naproxen) due to a flag in your screen, so we substitute acetaminophen as the partner medication. ' +
-                'This is the alternative combination explicitly endorsed by the American College of Physicians 2025 guideline when NSAIDs are not an option. ' +
+                'This is the alternative combination explicitly endorsed by the American College of Doctors 2025 guideline when NSAIDs are not an option. ' +
                 'The triptan + acetaminophen pairing is less well studied than triptan + naproxen but remains better than either drug alone. ' +
                 'Take both at the first sign of an attack. Triptan max ' + triptanPick.maxNote + '; acetaminophen max 3000 mg in 24 hours.';
               plan.components.push(compCombo(comboName, 'RX', 'badge-rx', [triptanPick.key, 'acetaminophen'], comboWhy));
               acuteChosen = 'triptan-apap-combo';
             } else {
               // Both NSAID and acetaminophen blocked (rare: liver disease + NSAID flag): triptan alone.
-              const blockNote = ' Normally we would pair this with naproxen or acetaminophen for the largest acute benefit, but flags in your screen make both unsafe, so the triptan is given on its own. A physician will look at your plan personally to consider alternatives.';
+              const blockNote = ' Normally we would pair this with naproxen or acetaminophen for the largest acute benefit, but flags in your screen make both unsafe, so the triptan is given on its own. A doctor will look at your plan personally to consider alternatives.';
               plan.components.push(comp(triptanPick.short, 'RX', 'badge-rx', triptanPick.key, triptanPick.alone + blockNote));
               acuteChosen = 'triptan-alone';
               plan.reviewFlags.push('limited acute combination options after your safety screen');
@@ -1628,7 +1628,7 @@ body.show-side-decor .side-decor { display: block; }
             // Acute options exhausted (e.g., CV disease + Paxlovid), fall back to APAP if possible
             if (!isPregnant && !cond.includes('liver')) {
               plan.components.push(comp('Acetaminophen 1000 mg, as needed', 'OTC', 'badge-otc', 'acetaminophen',
-                'Your health history rules out anti-inflammatories, triptans, and (right now) the newer gepant medications. Acetaminophen is the only acute option we can safely offer online today, and a physician will review whether you need something a clinic can provide.'));
+                'Your health history rules out anti-inflammatories, triptans, and (right now) the newer gepant medications. Acetaminophen is the only acute option we can safely offer online today, and a doctor will review whether you need something a clinic can provide.'));
               acuteChosen = 'acetaminophen-only';
               plan.reviewFlags.push('limited acute options after your safety screen');
             } else {
@@ -1672,7 +1672,7 @@ body.show-side-decor .side-decor { display: block; }
       }
 
       if (!prevChosen && !(isChronicMigraine && !botoxBlocked)) {
-        plan.reviewFlags.push('preventive options that need a physician\'s direct input');
+        plan.reviewFlags.push('preventive options that need a doctor\'s direct input');
       }
     }
 
@@ -1688,7 +1688,7 @@ body.show-side-decor .side-decor { display: block; }
     // Build summary mirror
     let s = '';
     const diag = (answers.q1 || [])[0];
-    s += (diag === 'diagnosed') ? 'Physician-diagnosed migraine' : 'Headaches fitting the migraine pattern';
+    s += (diag === 'diagnosed') ? 'Doctor-diagnosed migraine' : 'Headaches fitting the migraine pattern';
     const freqMap = { rare: 'fewer than 2 migraine days a month',
                       low: '2 to 3 migraine days a month',
                       moderate: '4 to 7 migraine days a month',
@@ -1714,7 +1714,7 @@ body.show-side-decor .side-decor { display: block; }
     if (nsaidBlocked && !isPregnant) blockedNotes.push('anti-inflammatories (due to a safety flag)');
     if (gepantBlocked && !isPregnant) blockedNotes.push('gepants (due to a drug interaction or liver flag)');
     if (isPregnant) {
-      s += 'Because you\'re pregnant or breastfeeding, your plan prioritizes the safest options and will be personally reviewed by a physician.';
+      s += 'Because you\'re pregnant or breastfeeding, your plan prioritizes the safest options and will be personally reviewed by a doctor.';
     } else if (blockedNotes.length) {
       s += 'Your plan safely avoids ' + blockedNotes.join(' and ') + ', and routes you to options that are safe for your specific profile.';
     } else {
@@ -1786,7 +1786,7 @@ body.show-side-decor .side-decor { display: block; }
     if (plan.reviewFlags.length) {
       rf.style.display = 'block';
       document.getElementById('review-flag-text').textContent =
-        ' We flagged ' + plan.reviewFlags.join('; ') + '. A Canadian-licensed physician will look at your plan personally before anything is dispensed.';
+        ' We flagged ' + plan.reviewFlags.join('; ') + '. A Canadian-licensed doctor will look at your plan personally before anything is dispensed.';
     } else {
       rf.style.display = 'none';
     }
@@ -1820,6 +1820,8 @@ body.show-side-decor .side-decor { display: block; }
     document.getElementById('cost-patient').textContent = '$' + patient.toFixed(2);
   }
 </script>
+
+
 
 </body>
 </html>

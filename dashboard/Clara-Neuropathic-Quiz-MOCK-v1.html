@@ -198,8 +198,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="logo" onclick="goHome(); return false;" title="Back to start">clara</a>
-    <a href="index.html#care" class="dash-back">← Back to your dashboard</a>
+    <a class="logo" href="Clara-Homepage-MOCK-v1.html" title="Back to the homepage">clara</a>
+    <a href="#" class="dash-back" id="exitLink" onclick="if(history.length>1){history.back();}else{location.href='Clara-Homepage-MOCK-v1.html';}return false;">&#8592; Back</a>
     <div class="progress-pill" id="progress-bar" style="display:none;">
       <button class="back-btn" onclick="goBack()">&larr;</button>
       <span class="progress-step">Step 1 of 3</span><span class="progress-divider">&middot;</span>
@@ -342,7 +342,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="alert-icon">&#9888;</div>
     <h2>Let's wait until your skin has healed.</h2>
     <p>Compounded creams must only go on healthy, unbroken skin. On broken, open, blistered, or infected skin, far too much of the medicine is absorbed into the body, which can cause serious side effects. This is the most important rule for using these creams safely.</p>
-    <p><strong style="color:var(--ink);">What to do now:</strong><br>If you have an active shingles rash, a wound, or an ulcer over the area, let it fully heal first, and have any infection treated by your doctor. Once the skin is intact, come back and we will build your plan. If you are unsure, your clara physician is happy to advise.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>If you have an active shingles rash, a wound, or an ulcer over the area, let it fully heal first, and have any infection treated by your doctor. Once the skin is intact, come back and we will build your plan. If you are unsure, your clara doctor is happy to advise.</p>
     <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
   </div>
 </section>
@@ -366,7 +366,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="quiz-container">
     <h1 class="quiz-question">What have you already tried for this nerve pain?</h1>
     <p class="quiz-question-sub">Check anything that applies. This helps us pick the right starting point.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>If you have already used a compounded cream, we can start you a step up the ladder. What you have tried also helps your physician understand your history.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>If you have already used a compounded cream, we can start you a step up the ladder. What you have tried also helps your doctor understand your history.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'tried','otc')"><div class="opt-content">Over the counter options<div class="opt-sub">For example a lidocaine patch or cream, or a capsaicin cream</div></div></div>
       <div class="opt multi" onclick="multi(this,'tried','oral')"><div class="opt-content">Prescription pills for nerve pain<div class="opt-sub">For example gabapentin, pregabalin, amitriptyline, nortriptyline, or duloxetine</div></div></div>
@@ -383,14 +383,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="quiz-container">
     <h1 class="quiz-question">Do you have any of these allergies?</h1>
     <p class="quiz-question-sub">Check anything that applies. These are the ingredients that can appear in our nerve pain creams. If none apply, use the green button.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our creams are built from a defined set of ingredients: a numbing agent, amitriptyline, ketamine, gabapentin, and an anti-inflammatory, among others. A true allergy to one of them changes which cream is safe for you, or means a physician chooses a safe alternative before anything is dispensed.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our creams are built from a defined set of ingredients: a numbing agent, amitriptyline, ketamine, gabapentin, and an anti-inflammatory, among others. A true allergy to one of them changes which cream is safe for you, or means a doctor chooses a safe alternative before anything is dispensed.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'allergy','lido')"><div class="opt-content">Numbing agents (local anesthetics)<div class="opt-sub">Lidocaine, prilocaine, bupivacaine, or any "caine" anesthetic</div></div></div>
       <div class="opt multi" onclick="multi(this,'allergy','tca')"><div class="opt-content">Amitriptyline or other tricyclic antidepressants<div class="opt-sub">For example nortriptyline, doxepin</div></div></div>
       <div class="opt multi" onclick="multi(this,'allergy','ketamine')"><div class="opt-content">Ketamine</div></div>
       <div class="opt multi" onclick="multi(this,'allergy','gaba')"><div class="opt-content">Gabapentin or pregabalin</div></div>
       <div class="opt multi" onclick="multi(this,'allergy','nsaid')"><div class="opt-content">Anti-inflammatory painkillers (NSAIDs) or aspirin<div class="opt-sub">Diclofenac, ibuprofen, naproxen, aspirin, or asthma that flares with these</div></div></div>
-      <div class="opt multi" id="q7-other-opt" onclick="toggleOtherAllergy(this)"><div class="opt-content">Another drug allergy<div class="opt-sub">Tell us what, so your physician can review it</div></div></div>
+      <div class="opt multi" id="q7-other-opt" onclick="toggleOtherAllergy(this)"><div class="opt-content">Another drug allergy<div class="opt-sub">Tell us what, so your doctor can review it</div></div></div>
     </div>
     <input type="text" id="q7-other-input" class="other-allergy-input" style="display:none;margin-top:10px;" placeholder="Which medication or ingredient?" oninput="setOtherAllergy(this.value)">
     <button class="opt-escape" onclick="goNext('q8')">None of these</button>
@@ -402,12 +402,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <section class="quiz-screen" id="q8" data-progress="78">
   <div class="quiz-container">
     <h1 class="quiz-question">Do any of these apply to your health?</h1>
-    <p class="quiz-question-sub">Check anything that applies. Most just tell your physician what to review; a couple mean we will have you seen in person instead. If none apply, use the green button.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our C1 and C2 creams include a numbing agent (lidocaine) and an anti-inflammatory (diclofenac). A few conditions and medicines change how these are handled, so a physician reviews them before anything ships.</div>
+    <p class="quiz-question-sub">Check anything that applies. Most just tell your doctor what to review; a couple mean we will have you seen in person instead. If none apply, use the green button.</p>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our C1 and C2 creams include a numbing agent (lidocaine) and an anti-inflammatory (diclofenac). A few conditions and medicines change how these are handled, so a doctor reviews them before anything ships.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'cond','liver')"><div class="opt-content">Severe liver disease<div class="opt-sub">The liver clears the numbing agent and the anti-inflammatory, so this needs a closer look</div></div></div>
       <div class="opt multi" onclick="multi(this,'cond','g6pd')"><div class="opt-content">G6PD deficiency, or a history of methemoglobinemia<div class="opt-sub">A blood condition that affects how lidocaine is handled</div></div></div>
-      <div class="opt multi" id="q8-heart-opt" onclick="toggleHeartMed(this)"><div class="opt-content">I take heart medications<div class="opt-sub">Especially heart rhythm medicines such as mexiletine or tocainide. Add yours below so your physician can review them.</div></div></div>
+      <div class="opt multi" id="q8-heart-opt" onclick="toggleHeartMed(this)"><div class="opt-content">I take heart medications<div class="opt-sub">Especially heart rhythm medicines such as mexiletine or tocainide. Add yours below so your doctor can review them.</div></div></div>
       <input type="text" id="q8-heart-input" class="other-allergy-input" style="display:none;margin-top:2px;" placeholder="Which heart medication(s)? For example metoprolol, mexiletine" oninput="setHeartMeds(this.value)">
       <div class="opt multi" onclick="multi(this,'cond','anticoag')"><div class="opt-content">I take a blood thinner (anticoagulant)<div class="opt-sub">For example warfarin, apixaban, rivaroxaban, dabigatran</div></div></div>
       <div class="opt multi" onclick="multi(this,'cond','htn')"><div class="opt-content">Poorly controlled or unstable high blood pressure</div></div>
@@ -435,7 +435,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="quiz-container">
     <h1 class="quiz-question">Are you pregnant or breastfeeding?</h1>
     <p class="quiz-question-sub">Check anything that applies. If neither applies, use the green button.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>There is not enough safety data for these cream ingredients in pregnancy, so we do not dispense them while you are pregnant. While breastfeeding, a physician reviews the plan personally before anything is dispensed.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>There is not enough safety data for these cream ingredients in pregnancy, so we do not dispense them while you are pregnant. While breastfeeding, a doctor reviews the plan personally before anything is dispensed.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'pregbf','pregnant')"><div class="opt-content">I am pregnant, or might be</div></div>
       <div class="opt multi" onclick="multi(this,'pregbf','breastfeed')"><div class="opt-content">I am breastfeeding</div></div>
@@ -451,7 +451,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="alert-icon info">&#9432;</div>
     <h2>Let's hold off while you're pregnant.</h2>
     <p>Our nerve pain creams contain amitriptyline, ketamine, gabapentin, and an anti-inflammatory (diclofenac), among other agents. There is not enough safety information for these applied to the skin during pregnancy, and anti-inflammatories are not used in later pregnancy, so clara does not dispense them while you are pregnant or might be.</p>
-    <p><strong style="color:var(--ink);">What to do now:</strong><br>Please speak with your own doctor or obstetric provider about pain options that are right for pregnancy. After pregnancy, come back and we will build your plan. If you are breastfeeding rather than pregnant, you can return and choose that option for a physician reviewed plan.</p>
+    <p><strong style="color:var(--ink);">What to do now:</strong><br>Please speak with your own doctor or obstetric provider about pain options that are right for pregnancy. After pregnancy, come back and we will build your plan. If you are breastfeeding rather than pregnant, you can return and choose that option for a doctor reviewed plan.</p>
     <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
   </div>
 </section>
@@ -500,13 +500,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="edu-evidence" id="edu-evidence"></div>
     </div>
 
-    <div class="plan-oa-note"><strong>Please read first.</strong> This program is only for adults already diagnosed by a doctor with one of the four nerve pain conditions we treat. It is treatment, not a diagnosis, and it does not replace your specialist care. A physician licensed in Canada reviews and approves every plan before anything ships.</div>
-    <div class="review-flag" id="review-flag-block" style="display:none;"><strong>A physician will personally review your plan.</strong> <span id="review-flag-text"></span></div>
+    <div class="plan-oa-note"><strong>Please read first.</strong> This program is only for adults already diagnosed by a doctor with one of the four nerve pain conditions we treat. It is treatment, not a diagnosis, and it does not replace your specialist care. A doctor licensed in Canada reviews and approves every plan before anything ships.</div>
+    <div class="review-flag" id="review-flag-block" style="display:none;"><strong>A doctor will personally review your plan.</strong> <span id="review-flag-text"></span></div>
     <div class="plan-summary" id="plan-summary-block"><span class="plan-summary-label">Based on what you told us</span><span id="plan-summary-text">Loading your summary&hellip;</span></div>
 
     <div class="kit-card">
       <div class="kit-header"><div class="kit-name" id="kit-name-text">Your clara Plan</div></div>
-      <p class="kit-tagline">An evidence based topical plan built around your specific condition and profile, reviewed by a physician licensed in Canada before anything ships.</p>
+      <p class="kit-tagline">An evidence based topical plan built around your specific condition and profile, reviewed by a doctor licensed in Canada before anything ships.</p>
       <div id="plan-components"></div>
     </div>
 
@@ -532,7 +532,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="fin-includes">
         <b>Every order includes:</b>
         <ul>
-          <li>A physician review and approval before anything is made or shipped</li>
+          <li>A doctor review and approval before anything is made or shipped</li>
           <li>Your custom compounded cream from a licensed Canadian compounding pharmacy</li>
           <li>A pharmacist consult and clear instructions for safe use</li>
           <li>Discreet shipping and ongoing messaging with your care team</li>
@@ -542,11 +542,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     </div>
 
     <div class="plan-ctas">
-      <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a physician review queue. For the mock, this is where we stop.')">Add to cart, start my plan</button>
+      <button class="cta-primary" onclick="alert('In the live version, this routes to checkout and a doctor review queue. For the mock, this is where we stop.')">Add to cart, start my plan</button>
       <button class="cta-secondary" onclick="alert('Plan saved. In the live version you would receive an email summary and a short primer on your condition.')">Save this plan and think about it</button>
       <button class="cta-secondary" onclick="alert('In the live version, this would email a printable PDF of the plan to share with your doctor.')">Email me this plan</button>
     </div>
-    <div class="plan-disclaimer">This plan is a recommendation generated from your assessment, not a prescription. A physician licensed in Canada reviews and approves (or modifies) every order before anything ships. You will get an SMS the moment your plan is reviewed. clara treats diagnosed nerve pain with compounded topical creams only. We do not diagnose nerve pain, we do not prescribe opioids, and for now we do not prescribe oral medications through this program. Compounded creams are not FDA approved products and their ingredients are used based on published evidence and physician judgement.</div>
+    <div class="plan-disclaimer">This plan is a recommendation generated from your assessment, not a prescription. A doctor licensed in Canada reviews and approves (or modifies) every order before anything ships. You will get an SMS the moment your plan is reviewed. clara treats diagnosed nerve pain with compounded topical creams only. We do not diagnose nerve pain, we do not prescribe opioids, and for now we do not prescribe oral medications through this program. Compounded creams are not FDA approved products and their ingredients are used based on published evidence and doctor judgement.</div>
     <div class="mock-footer">clara &middot; Neuropathic Pain Quiz &middot; MOCK v1 &middot; May 2026 &middot; First pass demonstration, not the live product &middot; Clinical logic per the Clara Neuropathic Pain evidence set (AAPM topical guide 2025, AAN 2022, Harden CRPS 2022, Open Evidence syntheses) and the Clara Neuropathic C1 to C3 cream ladder (Sandbox V3 formulations, May 2026)</div>
   </div>
 </section>
@@ -636,13 +636,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       title:'Complex regional pain syndrome: a nervous system stuck in overdrive',
       body:'<p>Complex regional pain syndrome usually starts after an injury, surgery, or fracture, but the pain is far out of proportion to what you would expect and does not settle the way it should. The nervous system stays in overdrive.</p>'+
            '<p>You may notice burning pain, swelling, changes in skin colour or temperature, sweating changes, and skin so sensitive that light touch or clothing hurts. That last symptom is called allodynia.</p>',
-      evidence:'<strong>Why a cream makes sense here:</strong> The evidence for compounded creams in CRPS is more limited and comes mostly from case series, but topical lidocaine can calm the focal allodynia, and multi-agent creams like yours have helped a majority of patients in retrospective reports. Because CRPS is complex, your plan is built to be reviewed closely by a physician.'
+      evidence:'<strong>Why a cream makes sense here:</strong> The evidence for compounded creams in CRPS is more limited and comes mostly from case series, but topical lidocaine can calm the focal allodynia, and multi-agent creams like yours have helped a majority of patients in retrospective reports. Because CRPS is complex, your plan is built to be reviewed closely by a doctor.'
     },
     psnp:{
       title:'Post-surgical and post-traumatic nerve pain: a nerve that keeps signalling',
       body:'<p>When a nerve is cut, stretched, or bruised during surgery or an injury, it can keep sending pain signals long after the wound has healed. This is post-surgical or post-traumatic nerve pain.</p>'+
            '<p>You might feel burning, shooting, or electric pains, numbness, or extra sensitivity around the scar or injured area, often in a patch that follows where the nerve runs.</p>',
-      evidence:'<strong>Why a cream makes sense here:</strong> The evidence here comes mainly from case reports and observational studies: topical amitriptyline has helped in reported cases, and the agents in your cream target the over-firing nerves right where the pain is, with little absorbed into the body. A physician reviews your plan to make sure a topical is the right next step.'
+      evidence:'<strong>Why a cream makes sense here:</strong> The evidence here comes mainly from case reports and observational studies: topical amitriptyline has helped in reported cases, and the agents in your cream target the over-firing nerves right where the pain is, with little absorbed into the body. A doctor reviews your plan to make sure a topical is the right next step.'
     }
   };
   const CONDNAME={phn:'Post-herpetic neuralgia',dpn:'Diabetic peripheral neuropathy',crps:'Complex regional pain syndrome',psnp:'Post-surgical or post-traumatic nerve pain'};
@@ -700,17 +700,17 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
             ? 'You told us you have used a compounded cream before, so we are starting you at C2 rather than the entry strength. C2 keeps the same multi-agent recipe as C1 but raises ketamine to 10% (and amitriptyline and gabapentin a little) for a stronger effect on an over-firing nerve.'
             : 'Because your pain is significant and you have already tried oral medicine or a specialist, we are starting at C2. It keeps the same multi-agent recipe as C1 but raises ketamine to 10% (and amitriptyline and gabapentin a little) for a stronger effect on an over-firing nerve.'),
           whyMore:creamPositives};
-        plan.creamNote='You are starting at C2 (a step up from the C1 entry strength). If C2 is not enough after a fair trial, your physician can step you up to C3, our phenytoin led maximum tier.';
+        plan.creamNote='You are starting at C2 (a step up from the C1 entry strength). If C2 is not enough after a fair trial, your doctor can step you up to C3, our phenytoin led maximum tier.';
       }else{
         cc={name:'clara Neuropathic Cream, C1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C1',
           whyShort:'Our foundation cream layers several agents that calm an over-firing nerve from different directions at once: amitriptyline 3% and ketamine 5% (the most studied nerve pain pair), lidocaine 5% to numb, gabapentin 5%, the anti-inflammatory diclofenac 5%, and baclofen 3% to ease muscle over-activity, finished with a touch of camphor and menthol. It is your targeted first step, concentrated right where it hurts.',
           whyMore:creamPositives};
-        plan.creamNote='Everyone starts at C1, our foundation strength. It is a deliberately stepwise system: if C1 is not enough after a fair trial, your physician can step you up to C2 (higher strengths of the same agents), and then C3 (our phenytoin led maximum) if needed. We start lower and increase only if you need it.';
+        plan.creamNote='Everyone starts at C1, our foundation strength. It is a deliberately stepwise system: if C1 is not enough after a fair trial, your doctor can step you up to C2 (higher strengths of the same agents), and then C3 (our phenytoin led maximum) if needed. We start lower and increase only if you need it.';
       }
       cc.note=plan.creamNote;
       plan.components.push(cc);
     }else{
-      // an allergy to an ingredient in the entry tiers means no cream is auto-recommended; physician chooses an alternative
+      // an allergy to an ingredient in the entry tiers means no cream is auto-recommended; doctor chooses an alternative
       const reasons=[];
       if(coreBlocked){
         const al=[];
@@ -721,21 +721,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       }
       if(gabaAllergy)reasons.push('a gabapentin allergy, and gabapentin is in our C1 and C2 creams');
       if(nsaidAllergy)reasons.push('an anti-inflammatory (NSAID or aspirin) allergy, and the anti-inflammatory diclofenac is in our C1 and C2 creams');
-      plan.reviewFlags.push(reasons.join('; ')+', so a physician must choose a safe alternative before anything is dispensed');
-      comp('Topical plan held for physician review','RX','badge-rx',
-        'You told us about '+reasons.join('; ')+'. For your safety we are not auto recommending a cream. A clara physician will review your profile and decide whether a topical can be made safely for you, for example a version without that ingredient.');
+      plan.reviewFlags.push(reasons.join('; ')+', so a doctor must choose a safe alternative before anything is dispensed');
+      comp('Topical plan held for doctor review','RX','badge-rx',
+        'You told us about '+reasons.join('; ')+'. For your safety we are not auto recommending a cream. A clara doctor will review your profile and decide whether a topical can be made safely for you, for example a version without that ingredient.');
     }
 
-    // ---- physician review flags (relative contraindications, per Open Evidence safety doc) ----
-    if(conds.includes('liver'))plan.reviewFlags.push('severe liver disease, which affects how both the numbing agent (lidocaine) and the anti-inflammatory (diclofenac) are cleared, so your physician will confirm it is safe and may adjust the cream');
+    // ---- doctor review flags (relative contraindications, per Open Evidence safety doc) ----
+    if(conds.includes('liver'))plan.reviewFlags.push('severe liver disease, which affects how both the numbing agent (lidocaine) and the anti-inflammatory (diclofenac) are cleared, so your doctor will confirm it is safe and may adjust the cream');
     if(conds.includes('g6pd'))plan.reviewFlags.push('G6PD deficiency or a history of methemoglobinemia, the lidocaine in the cream is reviewed because it can rarely affect how your blood carries oxygen');
-    if(conds.includes('heart'))plan.reviewFlags.push('a heart medication you told us about'+(heartText?' ('+heartText+')':'')+', so your physician will review it and check for interactions with the cream before anything is dispensed (for example, heart rhythm medicines like mexiletine can add to the effect of the numbing agent, lidocaine)');
-    if(conds.includes('anticoag'))plan.reviewFlags.push('a blood thinner, the anti-inflammatory (diclofenac) in the C1 and C2 creams can add to bleeding risk, so your physician will confirm it is safe or choose a diclofenac free option');
-    if(conds.includes('htn'))plan.reviewFlags.push('poorly controlled high blood pressure, the anti-inflammatory (diclofenac) in the C1 and C2 creams can nudge blood pressure up, so your physician will review before dispensing');
-    if(breastfeeding)plan.reviewFlags.push('breastfeeding, the cream ingredients are reviewed by a physician personally before anything is dispensed, and we keep the strength and the area treated as low as possible');
-    if(age75plus)plan.reviewFlags.push('age 75 or older, your physician will take extra care with strength and the amount of skin treated, since skin can absorb a little more with age');
-    if(cond==='crps')plan.reviewFlags.push('complex regional pain syndrome, which is complex by nature, so a physician reviews your plan closely and may coordinate with your specialist');
-    if(allergy.includes('other'))plan.reviewFlags.push('a drug allergy you told us about'+(allergyOther?' ('+allergyOther+')':'')+', which your physician will review before prescribing anything');
+    if(conds.includes('heart'))plan.reviewFlags.push('a heart medication you told us about'+(heartText?' ('+heartText+')':'')+', so your doctor will review it and check for interactions with the cream before anything is dispensed (for example, heart rhythm medicines like mexiletine can add to the effect of the numbing agent, lidocaine)');
+    if(conds.includes('anticoag'))plan.reviewFlags.push('a blood thinner, the anti-inflammatory (diclofenac) in the C1 and C2 creams can add to bleeding risk, so your doctor will confirm it is safe or choose a diclofenac free option');
+    if(conds.includes('htn'))plan.reviewFlags.push('poorly controlled high blood pressure, the anti-inflammatory (diclofenac) in the C1 and C2 creams can nudge blood pressure up, so your doctor will review before dispensing');
+    if(breastfeeding)plan.reviewFlags.push('breastfeeding, the cream ingredients are reviewed by a doctor personally before anything is dispensed, and we keep the strength and the area treated as low as possible');
+    if(age75plus)plan.reviewFlags.push('age 75 or older, your doctor will take extra care with strength and the amount of skin treated, since skin can absorb a little more with age');
+    if(cond==='crps')plan.reviewFlags.push('complex regional pain syndrome, which is complex by nature, so a doctor reviews your plan closely and may coordinate with your specialist');
+    if(allergy.includes('other'))plan.reviewFlags.push('a drug allergy you told us about'+(allergyOther?' ('+allergyOther+')':'')+', which your doctor will review before prescribing anything');
 
     // ---- name + summary ----
     plan.name=(CONDNAME[cond]||'Nerve Pain')+' Plan';
@@ -752,9 +752,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       if(names.length)s+='. You have tried '+names.slice(0,3).join(', ');
     }else{s+='. You have not tried structured treatment yet';}
     s+='. ';
-    if(entryBlocked)s+='Because of an ingredient allergy, your cream is held for a physician to choose a safe alternative.';
-    else s+='Your plan starts with the clara '+plan.cream+' compounded cream, applied right where it hurts, with a physician reviewing it before anything ships.';
-    if(breastfeeding)s+=' Because you are breastfeeding, a physician reviews and approves the plan personally before dispensing.';
+    if(entryBlocked)s+='Because of an ingredient allergy, your cream is held for a doctor to choose a safe alternative.';
+    else s+='Your plan starts with the clara '+plan.cream+' compounded cream, applied right where it hurts, with a doctor reviewing it before anything ships.';
+    if(breastfeeding)s+=' Because you are breastfeeding, a doctor reviews and approves the plan personally before dispensing.';
     plan.summary=s;
     return plan;
   }
@@ -772,7 +772,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     document.getElementById('plan-summary-text').textContent=plan.summary;
     document.getElementById('kit-name-text').textContent='The '+plan.name;
     const rf=document.getElementById('review-flag-block');
-    if(plan.reviewFlags.length){rf.style.display='block';document.getElementById('review-flag-text').textContent=' We flagged '+plan.reviewFlags.join('; ')+'. A physician licensed in Canada will look at your plan personally before anything is dispensed.';}
+    if(plan.reviewFlags.length){rf.style.display='block';document.getElementById('review-flag-text').textContent=' We flagged '+plan.reviewFlags.join('; ')+'. A doctor licensed in Canada will look at your plan personally before anything is dispensed.';}
     else{rf.style.display='none';}
 
     const c=document.getElementById('plan-components');c.innerHTML='';
@@ -814,7 +814,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           '</div>');
         return;
       }
-      const flagHtml=x.physicianFlag?'<div class="comp-flag"><strong>Physician review:</strong> '+x.physicianFlag+'</div>':'';
+      const flagHtml=x.doctorFlag?'<div class="comp-flag"><strong>Doctor review:</strong> '+x.doctorFlag+'</div>':'';
       c.insertAdjacentHTML('beforeend',
         '<div class="component"><div class="comp-header"><div class="comp-name">'+x.name+' <span class="comp-badge '+x.badgeClass+'">'+x.badge+'</span></div></div>'+
         '<div class="comp-why"><strong>Why this is in your plan:</strong> '+x.why+'</div>'+flagHtml+'</div>');
@@ -838,5 +838,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     document.getElementById('fin-total-val').textContent='$'+total.toLocaleString();
   }
 </script>
+
+
 </body>
 </html>

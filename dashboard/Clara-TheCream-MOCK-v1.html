@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clara · the cream</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#24382E; --sage-soft:#D7E3DB; --sage-pale:#EAF1ED;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#474D48; --muted:#666C67;
+  --cream:#F7F5F0; --cream-soft:#F2EFE8; --line:#E8E4DC; --line-strong:#D9D4C8; --gold:#C8A875;
+  --shadow-sm:0 1px 3px rgba(31,36,33,.06); --shadow:0 10px 30px rgba(31,36,33,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--cream);color:var(--ink);font-size:17px;line-height:1.6}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+a{text-decoration:none;color:inherit}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1240px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;gap:30px}
+.logo{font-family:Georgia,serif;font-weight:700;font-size:30px;color:var(--sage-dark);letter-spacing:-.5px}
+.nav-links{display:flex;gap:26px;margin-left:14px}
+.nav-links a{font-size:15.5px;font-weight:600;color:var(--grey);transition:color .15s}
+.nav-links a:hover{color:var(--sage-dark)}
+/* conditions dropdown */
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd-trigger{font:inherit;font-size:15.5px;font-weight:600;color:var(--grey);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0;transition:color .15s}
+.nav-dd:hover .nav-dd-trigger{color:var(--sage-dark)}
+.nav-dd-trigger svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .2s}
+.nav-dd:hover .nav-dd-trigger svg{transform:rotate(180deg)}
+.nav-dd-panel{position:absolute;top:calc(100% + 16px);left:-18px;min-width:300px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 48px rgba(31,36,33,.17);padding:10px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:all .18s;z-index:200}
+.nav-dd-panel:before{content:"";position:absolute;top:-16px;left:0;right:0;height:16px}
+.nav-dd:hover .nav-dd-panel{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dd-panel a{display:flex;flex-direction:column;gap:2px;padding:11px 15px;border-radius:11px;transition:background .15s}
+.nav-dd-panel a:hover{background:var(--cream-soft)}
+.nav-dd-panel a b{font-size:15.5px;font-weight:700;color:var(--ink)}
+.nav-dd-panel a span{font-size:12.5px;color:var(--muted)}
+
+.nav-cta{margin-left:auto;display:flex;align-items:center;gap:16px}
+.nav-cta .signin{font-size:15.5px;font-weight:600;color:var(--grey)}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--sage-dark);color:#fff;font-size:16px;font-weight:700;padding:13px 26px;border-radius:28px;border:none;cursor:pointer;transition:all .15s}
+.btn:hover{box-shadow:0 0 0 3px var(--sage),0 14px 30px rgba(47,71,59,.24);transform:translateY(-2px);background:var(--sage)}
+.btn.light{background:#fff;color:var(--sage-dark);border:1.5px solid var(--sage)}
+.btn.light:hover{background:var(--sage-pale)}
+
+/* hero */
+.hero{padding:84px 0 30px;text-align:center}
+.hero .eyebrow{font-size:14px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:20px}
+.hero h1{font-family:Georgia,serif;font-size:78px;font-weight:700;line-height:1.05;letter-spacing:-1.5px;color:var(--ink)}
+.hero h1 em{font-style:italic;color:var(--sage)}
+.hero .sub{font-size:21px;color:var(--grey);max-width:62ch;margin:26px auto 0;line-height:1.65}
+@media(max-width:760px){.hero h1{font-size:48px}}
+
+/* condition doors */
+.doors{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:54px 0 30px}
+@media(max-width:1000px){.doors{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.doors{grid-template-columns:1fr}}
+.door{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;text-align:left;box-shadow:var(--shadow-sm)}
+.door:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
+.door img{width:100%;height:210px;object-fit:cover;display:block}
+.door .body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+.door h3{font-family:Georgia,serif;font-size:21px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.door p{font-size:15px;color:var(--grey);line-height:1.5;flex:1}
+.door .go{margin-top:14px;color:var(--terra);font-weight:700;font-size:15.5px}
+.hero-note{font-family:Georgia,serif;font-size:18.5px;font-weight:700;color:var(--sage-dark);margin-bottom:76px}
+.hero-note b{color:var(--terra)}
+
+/* trust band */
+.trust{background:linear-gradient(135deg,var(--sage-dark),var(--sage-deep));color:#fff;padding:50px 0}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;text-align:center}
+@media(max-width:900px){.trust-grid{grid-template-columns:1fr 1fr}}
+.trust .n{font-family:Georgia,serif;font-size:42px;font-weight:700;color:#F4C9A8}
+.trust .d{font-size:15.5px;color:#DCE7E0;margin-top:6px;line-height:1.5}
+
+/* sections */
+.sec{padding:88px 0}
+.sec-eyebrow{font-size:16.5px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:14px}
+.sec h2{font-family:Georgia,serif;font-size:44px;font-weight:700;letter-spacing:-.5px;color:var(--ink);line-height:1.15}
+.sec h2 em{font-style:italic;color:var(--sage)}
+.sec .lead{font-size:18.5px;color:var(--grey);max-width:64ch;margin-top:16px;line-height:1.7}
+
+.sec-divider{width:220px;height:6px;border-radius:3px;background:var(--sage-soft);margin:0 auto}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:48px}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 28px;box-shadow:var(--shadow-sm);position:relative}
+.step .num{position:absolute;top:22px;left:24px;width:52px;height:52px;border-radius:50%;background:var(--sage-pale);color:var(--sage-dark);font-family:Georgia,serif;font-size:27px;font-weight:700;display:grid;place-items:center}
+.step svg{width:128px;height:128px;display:block;margin:0 auto 18px}
+.step h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.step p{font-size:15.5px;color:var(--grey);line-height:1.6}
+.promise{margin-top:40px;text-align:center;font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark)}
+.promise span{color:var(--terra)}
+
+
+/* onboarding style how-it-works panels */
+.onb{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1020px;margin:48px auto 0}
+@media(max-width:900px){.onb{grid-template-columns:1fr}}
+.onb-card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;min-height:430px;padding-bottom:18px;transition:all .15s;text-align:left}
+.onb-card:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.18);transform:translateY(-5px)}
+.onb-art{position:relative;height:300px;display:grid;place-items:center;overflow:hidden;border-radius:28px 28px 0 0}
+.onb-art img{width:100%;height:100%;object-fit:cover;object-position:50% 72%}
+.onb-body{padding:20px 26px 0;flex:1}
+.onb-body h3{font-size:21px;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:12px}
+.onb-body p{font-size:14.5px;color:var(--grey);line-height:1.65}
+.onb-foot{display:flex;align-items:center;justify-content:space-between;padding:14px 22px 0}
+.onb-dots{display:flex;gap:7px;align-items:center}
+.onb-dots i{width:8px;height:8px;border-radius:4px;background:var(--line-strong);display:inline-block}
+.onb-dots i.on{width:26px;background:var(--ink)}
+.onb-next{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#D98E6F,#B25F45);color:#fff;display:grid;place-items:center;font-family:Georgia,serif;font-size:21px;font-weight:700;box-shadow:0 8px 20px rgba(178,95,69,.35)}
+
+/* split sections */
+.split{display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center}
+@media(max-width:960px){.split{grid-template-columns:1fr}}
+.split.rev{grid-template-columns:1fr 1.05fr}
+@media(max-width:960px){.split.rev{grid-template-columns:1fr}}
+.browser{background:#fff;border:1px solid var(--line-strong);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.browser .bar{background:var(--cream-soft);border-bottom:1px solid var(--line);padding:11px 16px;display:flex;align-items:center;gap:7px}
+.browser .bar i{width:11px;height:11px;border-radius:50%;background:var(--line-strong);display:inline-block}
+.browser .bar .url{margin-left:10px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:12.5px;color:var(--muted);padding:4px 14px;font-style:normal}
+.browser .inner{padding:22px}
+.feature-list{margin-top:26px}
+.feat{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+.feat .tick{width:26px;height:26px;border-radius:50%;background:var(--sage-pale);color:var(--sage-dark);display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0;margin-top:2px}
+.feat p{font-size:16.5px;color:var(--ink);line-height:1.55}
+.feat p b{color:var(--sage-dark)}
+
+/* mini dashboard preview bits */
+.mini-label{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.mini-cards{display:flex;gap:10px;margin-top:14px}
+.mini-card{flex:1;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px}
+.mini-card .t{font-size:12px;font-weight:700;color:var(--ink)}
+.mini-card .v{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark);margin-top:2px}
+.mini-card .s{font-size:10.5px;color:var(--terra-deep);font-weight:700}
+
+/* product feature */
+.prod-stage{position:relative}
+.prod-split{grid-template-columns:1.5fr 1fr;align-items:stretch}
+@media(max-width:960px){.prod-split{grid-template-columns:1fr}}
+.prod-left{display:flex;flex-direction:column;height:100%}
+.prod-stage{flex:1;min-height:0}
+.prod-card{height:100%}
+.prod-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.prod-card{border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
+.prod-card img{width:100%;height:100%;object-fit:cover;display:block}
+.prod-chip{position:absolute;top:22px;left:22px;background:var(--sage-dark);color:#fff;font-size:12.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;padding:9px 18px;border-radius:22px}
+.glance{margin-top:26px;background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:24px 28px}
+.glance h4{font-size:13px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:14px}
+.glance ul{list-style:none}
+.glance li{position:relative;padding-left:28px;font-size:16px;color:var(--ink);line-height:1.55;margin-bottom:11px}
+.glance li:before{content:"✓";position:absolute;left:0;top:0;color:var(--sage-dark);font-weight:800}
+.glance li:last-child{margin-bottom:0}
+.glance li b{color:var(--sage-dark)}
+
+/* story + education peeks */
+.story-head{text-align:center;max-width:880px;margin:0 auto}
+.story-flow{max-width:1140px;margin:30px auto 0;font-size:18.5px;color:var(--ink);line-height:1.78}
+.story-flow p{margin-bottom:20px}
+.story-illus{float:right;width:72%;margin:0 0 6px 44px;mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(ellipse 92% 92% at center,#000 58%,transparent 98%);
+  mask-image:radial-gradient(ellipse 92% 92% at center,#000 58%,transparent 98%)}
+@media(max-width:900px){.story-illus{float:none;width:100%;margin:0 0 18px}}
+.story-close{clear:both;font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--sage-dark);text-align:center;max-width:62ch;margin:64px auto 0;line-height:1.55}
+.peek-head{margin:52px 0 20px;font-size:15.5px;font-weight:700;color:var(--grey);text-align:center}
+.peek-head b{color:var(--sage-dark)}
+.peeks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+@media(max-width:860px){.peeks{grid-template-columns:1fr}}
+.peek{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:all .15s;display:flex;flex-direction:column;text-align:left;box-shadow:var(--shadow-sm)}
+.peek:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
+.peek img{width:100%;height:175px;object-fit:cover;display:block}
+.peek .pb{padding:17px 20px 20px;flex:1;display:flex;flex-direction:column}
+.peek .ptag{font-size:11.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-deep)}
+.peek h3{font-family:Georgia,serif;font-size:19.5px;font-weight:700;margin:7px 0 6px;color:var(--ink)}
+.peek p{font-size:14.5px;color:var(--grey);line-height:1.55;flex:1}
+.peek .pmin{margin-top:13px;font-size:13px;font-weight:700;color:var(--muted)}
+
+/* plan + proof duo cards */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:870px;margin:0 auto}
+@media(max-width:900px){.duo{grid-template-columns:1fr}}
+.duo-card{position:relative;background:linear-gradient(170deg,#FDFCF7,#F0EDE2 70%,#E9EEE7);border:1px solid var(--line);border-radius:22px;padding:22px 22px 0;display:flex;flex-direction:column;min-height:504px;overflow:hidden;transition:all .15s;box-shadow:var(--shadow-sm)}
+.duo-card:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
+.duo-head h3{font-family:Georgia,serif;font-size:25px;font-weight:700;color:var(--ink);line-height:1.1}
+.duo-sub{font-family:Georgia,serif;font-size:16px;color:var(--sage);font-style:italic;margin-top:4px}
+.duo-chip{align-self:flex-start;margin-top:11px;background:#fff;border:1px solid var(--line-strong);border-radius:16px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--grey)}
+.duo-art{flex:1;margin:14px -22px 0;overflow:hidden}
+.duo-art img{width:100%;height:100%;object-fit:cover;display:block}
+.duo-btn{position:absolute;right:18px;bottom:17px;background:var(--sage-dark);color:#fff;font-size:12px;font-weight:700;padding:10px 19px;border-radius:19px;box-shadow:0 8px 22px rgba(31,36,33,.3)}
+.duo-card:hover .duo-btn{background:var(--sage)}
+
+/* peek reader modal */
+.pk-overlay{position:fixed;inset:0;background:rgba(31,36,33,.55);display:none;align-items:center;justify-content:center;z-index:300;padding:24px}
+.pk-overlay.on{display:flex}
+.pk-modal{background:#fff;border-radius:24px;max-width:860px;width:100%;height:min(820px,90vh);display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden;box-shadow:0 30px 80px rgba(31,36,33,.35);position:relative}
+.pk-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);border:1px solid var(--line);font-size:20px;color:var(--ink);cursor:pointer;z-index:5}
+.pk-x:hover{background:var(--sage-pale)}
+.pk-scroll{overflow-y:auto;overscroll-behavior:contain;position:relative;background:#fff}
+.pk-scroll iframe{width:100%;border:0;display:block;pointer-events:none}
+.pk-fade{position:sticky;bottom:0;height:120px;margin-top:-120px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 88%);pointer-events:none}
+.pk-lock{border-top:1px solid var(--line);background:var(--cream);padding:22px 34px 24px;text-align:center}
+.pk-lock .pl-t{font-family:Georgia,serif;font-size:20px;font-weight:700;color:var(--sage-dark)}
+.pk-lock .pl-s{font-size:14.5px;color:var(--grey);margin:6px 0 14px}
+.pk-lock .btn{font-size:15.5px;padding:11px 24px}
+.pk-lock .later{display:inline-block;margin-left:16px;font-size:14.5px;font-weight:700;color:var(--muted);cursor:pointer}
+.pk-lock .later:hover{color:var(--ink)}
+
+/* founder quote */
+.founder{background:linear-gradient(135deg,var(--sage-dark),var(--sage-deep));border-radius:26px;padding:62px 70px;text-align:center;color:#fff}
+@media(max-width:760px){.founder{padding:40px 26px}}
+.founder .q{font-family:Georgia,serif;font-size:26px;font-style:italic;line-height:1.55;max-width:58ch;margin:0 auto;color:#F3F1EA}
+.founder .who{font-family:Georgia,serif;font-size:20px;font-weight:700;color:#F4C9A8;margin-top:26px}
+.founder .role{font-size:15px;color:#DCE7E0;margin-top:5px}
+
+/* human moment */
+.moment{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
+.moment img{width:100%;height:520px;object-fit:cover;display:block}
+.moment .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(31,36,33,.55) 0%,rgba(31,36,33,.18) 55%,transparent 100%)}
+.moment .copy{position:absolute;left:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 56px;max-width:580px}
+.moment h2{font-family:Georgia,serif;font-size:42px;font-weight:700;color:#fff;line-height:1.2;letter-spacing:-.5px}
+.moment p{font-size:18px;color:#EDE9E0;margin-top:16px;line-height:1.65}
+@media(max-width:760px){.moment .copy{padding:0 28px}.moment h2{font-size:30px}}
+
+/* final cta */
+.final{background:#fff;border-top:1px solid var(--line);text-align:center;padding:96px 0}
+.final h2{font-family:Georgia,serif;font-size:56px;font-weight:700;letter-spacing:-1px}
+.final h2 em{font-style:italic;color:var(--sage)}
+.final .sub{font-size:18px;color:var(--grey);margin-top:14px}
+.final-doors{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:38px}
+.pill-door{background:var(--cream);border:1.5px solid var(--line-strong);border-radius:30px;padding:16px 30px;font-size:17px;font-weight:700;color:var(--ink);cursor:pointer;transition:all .15s}
+.pill-door:hover{border-color:var(--sage);background:var(--sage-pale);box-shadow:0 0 0 3px var(--sage),0 14px 30px rgba(47,71,59,.2);transform:translateY(-3px);color:var(--sage-dark)}
+
+/* footer */
+.foot{background:var(--sage-deep);color:#B9C9BF;padding:46px 0;font-size:14.5px}
+.foot-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.foot .logo{color:#fff;font-size:24px}
+.foot .tag{font-family:Georgia,serif;font-style:italic;color:#DCE7E0;font-size:16px}
+.foot .legal{margin-left:auto;text-align:right;line-height:1.6}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="Clara-Homepage-MOCK-v1.html">clara</a>
+    <div class="nav-links">
+      <div class="nav-dd">
+      <button class="nav-dd-trigger" type="button">Conditions <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="nav-dd-panel">
+        <a href="Clara-KneePain-MOCK-v1.html"><b>Knee pain</b><span>Osteoarthritis and joint pain</span></a>
+        <a href="Clara-BackPain-Quiz-MOCK-v2.html"><b>Back pain</b><span>Low back and muscle pain</span></a>
+        <a href="Clara-Migraine-MOCK-v1.html"><b>Migraines</b><span>Stop and prevent attacks</span></a>
+        <a href="Clara-Neuropathic-Quiz-MOCK-v1.html"><b>Nerve pain</b><span>Burning, tingling nerve pain</span></a>
+      </div>
+    </div>
+      <a href="Clara-TheCream-MOCK-v1.html" style="color:var(--sage-dark);border-bottom:2px solid var(--terra)">The cream</a>
+      <a href="Clara-HowItWorks-MOCK-v1.html">How &amp; why it works</a>
+      <a href="Clara-YourPlan-MOCK-v1.html">Your plan</a>
+      <a href="Clara-AboutUs-MOCK-v1.html">About us</a>
+    </div>
+    <div class="nav-cta">
+      <a class="signin" href="Clara-SignIn-MOCK-v1.html">Sign in</a>
+      <a class="btn" href="Clara-Homepage-MOCK-v1.html#conditions">Start your assessment</a>
+    </div>
+  </div>
+</nav>
+
+<!-- CREAM — animated product hero (Hims style marquee) -->
+<style>
+.cf{position:relative;overflow:hidden;background:linear-gradient(160deg,#F7F5F0 0%,#EFE7DC 46%,#E9DBCE 100%);padding:64px 0 0;min-height:780px;border-bottom:1px solid var(--line)}
+.cf-head{position:relative;z-index:5;text-align:center;padding:0 24px;pointer-events:none}
+.cf-head h2{font-family:Georgia,serif;font-size:52px;font-weight:700;letter-spacing:-.6px;color:var(--ink);line-height:1.08}
+.cf-head h2 em{font-style:italic;color:var(--sage)}
+.cf-head .sec-eyebrow{font-size:17.5px;letter-spacing:2.4px}
+.cf-head .lead{margin:18px auto 0;max-width:60ch;font-size:20px;color:var(--grey);line-height:1.65}
+.cf-track-wrap{position:absolute;left:0;right:0;top:476px;bottom:0;display:flex;align-items:flex-start;z-index:1;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.cf-track{display:flex;gap:20px;padding:0 20px;animation:cfscroll 56s linear infinite;will-change:transform}
+.cf-track{animation-play-state:running !important}
+@keyframes cfscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.cf-card{flex:0 0 344px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(217,212,200,.95);border-radius:24px;padding:23px 25px;box-shadow:0 22px 48px rgba(31,36,33,.15);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.cf-card.lo{margin-top:66px}.cf-card.mid{margin-top:33px}.cf-card.hi{margin-top:0}
+.cf-top{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:17px}
+.cf-ic{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
+.cf-ic svg{width:24px;height:24px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cf-ic.sage{background:var(--sage-pale)}.cf-ic.sage svg{stroke:var(--sage-dark)}
+.cf-ic.terra{background:var(--terra-pale)}.cf-ic.terra svg{stroke:var(--terra-deep)}
+.cf-chip2{font-size:13px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;padding:7px 14px;border-radius:999px;white-space:nowrap}
+.cf-chip2.sage{background:var(--sage-pale);color:var(--sage-dark)}
+.cf-chip2.terra{background:var(--terra-soft);color:var(--terra-deep)}
+.cf-card p{font-size:18px;color:var(--ink);line-height:1.5}
+.cf-card p b{color:var(--sage-dark)}
+.cf-stat{font-family:Georgia,serif;font-weight:700;line-height:1;font-size:42px;margin:2px 0 7px}
+.cf-stat.sage{color:var(--sage-dark)}.cf-stat.terra{color:var(--terra-deep)}
+.cf-sub{font-size:15px;font-weight:700;color:var(--muted)}
+.cf-big{font-family:Georgia,serif;font-size:32px;font-weight:700;color:var(--sage-dark);line-height:1.12;margin:2px 0 9px;letter-spacing:-.3px}
+.cf-spark{display:block;width:100%;height:39px;margin:2px 0 9px}
+.cf-ring{position:relative;width:111px;height:111px;margin:0 auto 9px}
+.cf-ring .rv{position:absolute;inset:0;display:grid;place-items:center;font-family:Georgia,serif;font-weight:700;font-size:28px;color:var(--terra-deep)}
+.cf-card.fill{flex:0 0 251px;align-items:center;justify-content:center;text-align:center;background:linear-gradient(150deg,var(--sage),var(--sage-dark));border:none}
+.cf-card.fill .fl{font-family:Georgia,serif;font-size:28px;font-weight:700;color:#fff;line-height:1.15}
+.cf-card.fill .fs{font-size:13px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:#D2E1D8;margin-top:10px}
+.cf-card.fill svg{width:39px;height:39px;fill:none;stroke:#EAF1ED;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-bottom:15px}
+.cf-product{position:relative;z-index:3;display:block;margin:28px auto 0;height:670px;max-width:100%;object-fit:contain;filter:drop-shadow(0 28px 44px rgba(31,36,33,.22))}
+.cf-cta{position:absolute;left:50%;bottom:46px;transform:translateX(-50%);z-index:6;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+@media(max-width:760px){.cf{min-height:600px}.cf-head h2{font-size:34px}.cf-head .lead{font-size:17px}.cf-product{height:420px}.cf-track-wrap{top:340px}.cf-card{flex-basis:300px}}
+</style>
+<section class="cf" id="cream">
+  <div class="cf-track-wrap">
+    <div class="cf-track">
+      <div class="cf-card hi"><div class="cf-top"><div class="cf-ic sage"><svg viewBox="0 0 24 24"><path d="M12 3l8 5-8 5-8-5 8-5z"/><path d="M4 13l8 5 8-5"/></svg></div><span class="cf-chip2 sage">One cream</span></div><p><b>Multiple prescription ingredients,</b> matched to your condition by your doctor.</p></div>
+      <div class="cf-card lo"><div class="cf-top"><span class="cf-chip2 terra">Pain</span></div><div class="cf-stat sage">&#9660; 50%</div><svg class="cf-spark" viewBox="0 0 120 30" preserveAspectRatio="none"><polyline points="2,6 26,10 50,9 74,18 98,24 118,27" fill="none" stroke="#4A6B5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="118" cy="27" r="3.5" fill="#C97257"/></svg><div class="cf-sub">target relief</div></div>
+      <div class="cf-card mid"><div class="cf-top"><span class="cf-chip2 terra">Recovery</span></div><div class="cf-ring"><svg viewBox="0 0 88 88"><circle cx="44" cy="44" r="38" fill="none" stroke="#F2EFE8" stroke-width="8"/><circle cx="44" cy="44" r="38" fill="none" stroke="#C97257" stroke-width="8" stroke-linecap="round" stroke-dasharray="162 239" transform="rotate(-90 44 44)"/></svg><div class="rv">68%</div></div><div class="cf-sub" style="text-align:center">to your goal</div></div>
+      <div class="cf-card hi" style="align-items:center;text-align:center;justify-content:center"><div class="cf-ic terra" style="margin-bottom:12px"><svg viewBox="0 0 24 24"><path d="M12 2.5C12 2.5 6 9 6 13.5a6 6 0 0 0 12 0C18 9 12 2.5 12 2.5Z"/></svg></div><div class="cf-big" style="font-size:35px;margin:0 0 10px">Gentler cream</div><p><b>Comparable relief to oral medication,</b> with far less reaching your bloodstream.</p></div>
+      <div class="cf-card fill mid"><svg viewBox="0 0 48 24" style="width:48px;height:24px;stroke:none"><rect width="48" height="24" fill="#fff"/><rect width="13" height="24" fill="#D52B1E"/><rect x="35" width="13" height="24" fill="#D52B1E"/><path fill="#D52B1E" d="M24 4.5l1.1 3.3 2.7-.9-.9 2.8 2.9-.6-1.6 2.5 2.4.6-2.1 1.5 1.9 2.1-3.4 0 .9 2.3-2.6-.9.2 3.2-1.5-1.3-1.5 1.3.2-3.2-2.6.9.9-2.3-3.4 0 1.9-2.1-2.1-1.5 2.4-.6-1.6-2.5 2.9.6-.9-2.8 2.7.9z"/></svg><div class="fl">Made in Canada</div><div class="fs">Accredited pharmacy</div></div>
+      <div class="cf-card lo"><div class="cf-top"><div class="cf-ic sage"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6l-5 8.2A2 2 0 0 0 6.8 20.2h10.4A2 2 0 0 0 19 17.2L14 9V3"/><line x1="7.5" y1="14" x2="16.5" y2="14"/></svg></div><span class="cf-chip2 sage">Proven</span></div><div class="cf-big">Clinically tested ingredients</div><div class="cf-sub">every active backed by evidence</div></div>
+      <div class="cf-card mid"><div class="cf-top"><div class="cf-ic sage"><svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 0 1 13.5-4.5L20 9"/><path d="M20 4v5h-5"/><path d="M20 13a8 8 0 0 1-13.5 4.5L4 15"/><path d="M4 20v-5h5"/></svg></div><span class="cf-chip2 sage">Fresh</span></div><p><b>Compounded per prescription,</b> shipped free, refills timed so you never run out.</p></div>
+      <div class="cf-card hi"><div class="cf-top"><span class="cf-chip2 sage">Knee function</span></div><div class="cf-stat sage">&#9650; 16 pts</div><svg class="cf-spark" viewBox="0 0 120 30" preserveAspectRatio="none"><polyline points="2,25 26,22 50,20 74,12 98,8 118,4" fill="none" stroke="#4A6B5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="118" cy="4" r="3.5" fill="#C97257"/></svg><div class="cf-sub">target improvement</div></div>
+      <div class="cf-card hi" aria-hidden="true"><div class="cf-top"><div class="cf-ic sage"><svg viewBox="0 0 24 24"><path d="M12 3l8 5-8 5-8-5 8-5z"/><path d="M4 13l8 5 8-5"/></svg></div><span class="cf-chip2 sage">One cream</span></div><p><b>Multiple prescription ingredients,</b> matched to your condition by your doctor.</p></div>
+      <div class="cf-card lo" aria-hidden="true"><div class="cf-top"><span class="cf-chip2 terra">Pain</span></div><div class="cf-stat sage">&#9660; 50%</div><svg class="cf-spark" viewBox="0 0 120 30" preserveAspectRatio="none"><polyline points="2,6 26,10 50,9 74,18 98,24 118,27" fill="none" stroke="#4A6B5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="118" cy="27" r="3.5" fill="#C97257"/></svg><div class="cf-sub">target relief</div></div>
+      <div class="cf-card mid" aria-hidden="true"><div class="cf-top"><span class="cf-chip2 terra">Recovery</span></div><div class="cf-ring"><svg viewBox="0 0 88 88"><circle cx="44" cy="44" r="38" fill="none" stroke="#F2EFE8" stroke-width="8"/><circle cx="44" cy="44" r="38" fill="none" stroke="#C97257" stroke-width="8" stroke-linecap="round" stroke-dasharray="162 239" transform="rotate(-90 44 44)"/></svg><div class="rv">68%</div></div><div class="cf-sub" style="text-align:center">to your goal</div></div>
+      <div class="cf-card hi" aria-hidden="true" style="align-items:center;text-align:center;justify-content:center"><div class="cf-ic terra" style="margin-bottom:12px"><svg viewBox="0 0 24 24"><path d="M12 2.5C12 2.5 6 9 6 13.5a6 6 0 0 0 12 0C18 9 12 2.5 12 2.5Z"/></svg></div><div class="cf-big" style="font-size:35px;margin:0 0 10px">Gentler cream</div><p><b>Comparable relief to oral medication,</b> with far less reaching your bloodstream.</p></div>
+      <div class="cf-card fill mid" aria-hidden="true"><svg viewBox="0 0 48 24" style="width:48px;height:24px;stroke:none"><rect width="48" height="24" fill="#fff"/><rect width="13" height="24" fill="#D52B1E"/><rect x="35" width="13" height="24" fill="#D52B1E"/><path fill="#D52B1E" d="M24 4.5l1.1 3.3 2.7-.9-.9 2.8 2.9-.6-1.6 2.5 2.4.6-2.1 1.5 1.9 2.1-3.4 0 .9 2.3-2.6-.9.2 3.2-1.5-1.3-1.5 1.3.2-3.2-2.6.9.9-2.3-3.4 0 1.9-2.1-2.1-1.5 2.4-.6-1.6-2.5 2.9.6-.9-2.8 2.7.9z"/></svg><div class="fl">Made in Canada</div><div class="fs">Accredited pharmacy</div></div>
+      <div class="cf-card lo" aria-hidden="true"><div class="cf-top"><div class="cf-ic sage"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6l-5 8.2A2 2 0 0 0 6.8 20.2h10.4A2 2 0 0 0 19 17.2L14 9V3"/><line x1="7.5" y1="14" x2="16.5" y2="14"/></svg></div><span class="cf-chip2 sage">Proven</span></div><div class="cf-big">Clinically tested ingredients</div><div class="cf-sub">every active backed by evidence</div></div>
+      <div class="cf-card mid" aria-hidden="true"><div class="cf-top"><div class="cf-ic sage"><svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 0 1 13.5-4.5L20 9"/><path d="M20 4v5h-5"/><path d="M20 13a8 8 0 0 1-13.5 4.5L4 15"/><path d="M4 20v-5h5"/></svg></div><span class="cf-chip2 sage">Fresh</span></div><p><b>Compounded per prescription,</b> shipped free, refills timed so you never run out.</p></div>
+      <div class="cf-card hi" aria-hidden="true"><div class="cf-top"><span class="cf-chip2 sage">Knee function</span></div><div class="cf-stat sage">&#9650; 16 pts</div><svg class="cf-spark" viewBox="0 0 120 30" preserveAspectRatio="none"><polyline points="2,25 26,22 50,20 74,12 98,8 118,4" fill="none" stroke="#4A6B5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="118" cy="4" r="3.5" fill="#C97257"/></svg><div class="cf-sub">target improvement</div></div>
+    </div>
+  </div>
+  <div class="cf-head">
+    <div class="sec-eyebrow">The cream</div>
+    <h2>One cream, made for <em>where it hurts.</em></h2>
+    <p class="lead" style="font-family:Georgia,serif;font-style:italic;color:var(--sage-dark);max-width:none;white-space:nowrap;font-size:18px;line-height:1.4">Pain pills flood your whole body to reach one knee.</p>
+    <p style="margin:14px auto 0;max-width:92ch;font-size:17.5px;color:var(--grey);line-height:1.6"><b style="color:var(--sage-dark)">The clara cream takes the opposite path:</b> proven prescription ingredients, combined into a single topical and made for your diagnosis by an accredited Canadian pharmacy, so the medicine works where it hurts.</p>
+  </div>
+  <img class="cf-product" src="Clara%20Home%20page/Cream/jane-cream.png" alt="Jane holding a clara compound cream bottle, calm and at ease">
+  <div class="cf-cta">
+    <a class="btn" href="Clara-Homepage-MOCK-v1.html#conditions">Start your assessment</a>
+  </div>
+</section>
+
+<!-- PRODUCT SHOWCASE with feature callouts -->
+<style>
+.pshow{position:relative;background:linear-gradient(180deg,#fff 0%,var(--cream) 100%);border-bottom:1px solid var(--line);padding:64px 0 78px}
+.pshow .phead{text-align:center}
+.pgrid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;max-width:1180px;margin:38px auto 0;padding:0 32px}
+@media(max-width:900px){.pgrid{grid-template-columns:1fr;gap:30px;max-width:460px}}
+.pmid{display:flex;justify-content:center}
+.pmid img{height:clamp(360px,44vw,560px);max-width:100%;object-fit:contain;border-radius:28px;box-shadow:0 24px 52px rgba(31,36,33,.13);border:1px solid var(--line)}
+.pcol{display:flex;flex-direction:column;gap:42px}
+.pf{display:flex;align-items:center;gap:16px}
+.pcol.left .pf{justify-content:flex-end;text-align:right}
+.pcol.right .pf{justify-content:flex-start;text-align:left}
+.pf-tx .pf-t{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:5px}
+.pf-tx .pf-d{font-size:16px;color:var(--grey);line-height:1.5}
+.pf-line{flex-shrink:0;width:54px;height:2px;background:var(--line-strong);position:relative}
+.pf-line:after{content:"";position:absolute;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--terra);box-shadow:0 0 0 4px var(--terra-pale)}
+.pcol.left .pf-line:after{right:-2px}.pcol.right .pf-line:after{left:-2px}
+@media(max-width:900px){.pcol{gap:20px}.pcol.left .pf,.pcol.right .pf{flex-direction:row-reverse;justify-content:flex-start;text-align:left}.pf-line{width:30px}}
+</style>
+<section class="pshow">
+  <div class="phead">
+    <div class="sec-eyebrow">Inside the bottle</div>
+    <h2 style="font-family:Georgia,serif;font-size:40px;font-weight:700;letter-spacing:-.5px;color:var(--ink)">Everything working <em style="font-style:italic;color:var(--sage)">for you.</em></h2>
+  </div>
+  <div class="pgrid">
+    <div class="pcol left">
+      <div class="pf"><div class="pf-tx"><div class="pf-t">Goes where it hurts</div><div class="pf-d">Targeted relief, applied right at the pain.</div></div><span class="pf-line"></span></div>
+      <div class="pf"><div class="pf-tx"><div class="pf-t">Far less in your bloodstream</div><div class="pf-d">A fraction of a pill's dose reaches your system.</div></div><span class="pf-line"></span></div>
+      <div class="pf"><div class="pf-tx"><div class="pf-t">Proven actives, in one</div><div class="pf-d">Prescription ingredients combined for your condition.</div></div><span class="pf-line"></span></div>
+    </div>
+    <div class="pmid"><img src="Clara%20Home%20page/Cream/cream-hero-glow.jpg" alt="The clara compound cream bottle, glowing studio product shot"></div>
+    <div class="pcol right">
+      <div class="pf"><span class="pf-line"></span><div class="pf-tx"><div class="pf-t">Compounded fresh</div><div class="pf-d">Made for your diagnosis, shipped free.</div></div></div>
+      <div class="pf"><span class="pf-line"></span><div class="pf-tx"><div class="pf-t">Doctor and pharmacist reviewed</div><div class="pf-d">Every formula checked before it ships.</div></div></div>
+      <div class="pf"><span class="pf-line"></span><div class="pf-tx"><div class="pf-t">Made in Canada</div><div class="pf-d">Accredited pharmacy. Never opioids.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CREAM VIDEO -->
+<style>
+.vid-frame{max-width:1180px;margin:44px auto 0;border-radius:26px;overflow:hidden;box-shadow:0 26px 60px rgba(31,36,33,.18);border:1px solid var(--line-strong);background:#1F2421;line-height:0}
+.vid-frame video{display:block;width:100%;height:auto}
+</style>
+<section class="sec" id="cream-video" style="background:var(--cream);border-bottom:1px solid var(--line-strong)">
+  <div class="wrap" style="text-align:center">
+    <div class="sec-eyebrow">The clara cream</div>
+    <h2>Relief, made to meet you <em>where you are.</em></h2>
+    <p class="lead" style="margin:16px auto 0">A closer look at the compound cream built around your condition, and the calm, simple care that comes with it.</p>
+    <div class="vid-frame">
+      <video src="Clara%20Home%20page/Cream/Clara%20cream%20video.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+    </div>
+  </div>
+</section>
+
+<style>
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:42px;max-width:1180px;margin-left:auto;margin-right:auto}
+@media(max-width:760px){.compare{grid-template-columns:1fr}}
+.comp{border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.comp .cimg{display:block;width:100%;height:clamp(289px,25.5vw,374px);object-fit:cover}
+.comp .cbody{padding:26px 30px 32px}
+.comp.pill{background:var(--cream);border:1px solid var(--line)}
+.comp.cream{background:linear-gradient(150deg,var(--sage),var(--sage-dark))}
+.comp h4{font-size:27px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;margin-bottom:20px;line-height:1.1}
+.comp.pill h4{color:var(--terra-deep)}.comp.cream h4{color:#F4C9A8}
+.comp ul{list-style:none}.comp li{position:relative;padding-left:28px;margin-bottom:16px;font-size:19px;line-height:1.55}
+.comp li:before{content:"";position:absolute;left:0;top:10px;width:9px;height:9px;border-radius:50%}
+.comp.pill li{color:var(--ink)}.comp.pill li:before{background:var(--terra)}
+.comp.cream li{color:#EDE9E0}.comp.cream li:before{background:#F4C9A8}
+.cond{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:42px}
+@media(max-width:860px){.cond{grid-template-columns:1fr}}
+.ccard{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:all .15s}
+.ccard:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.18);transform:translateY(-4px)}
+.ccard .cill{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--cream);border-bottom:1px solid var(--line)}
+.ccard .cbd{padding:26px 28px 30px;display:flex;flex-direction:column;flex:1}
+.ccard .cw{font-size:13px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-deep)}
+.ccard h3{font-family:Georgia,serif;font-size:24px;font-weight:700;margin:8px 0 10px;color:var(--ink)}
+.ccard p{font-size:15px;color:var(--grey);line-height:1.6;flex:1}
+.ccard a{margin-top:16px;color:var(--terra);font-weight:700;font-size:15px}
+.also{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
+.also span{background:var(--cream);border:1px solid var(--line-strong);border-radius:999px;padding:13px 23px;font-size:18px;font-weight:700;color:var(--ink);cursor:default;transition:all .15s}
+.also span:hover{border-color:var(--sage);background:#fff;box-shadow:0 0 0 2px var(--sage),0 12px 26px rgba(47,71,59,.16);transform:translateY(-3px)}
+
+/* ===== ASSESSMENT CONDITION-PICKER MODAL ===== */
+.as-overlay{position:fixed;inset:0;background:rgba(31,36,33,.55);display:none;align-items:center;justify-content:center;z-index:400;padding:24px;opacity:0;transition:opacity .25s ease}
+.as-overlay.on{display:flex;opacity:1}
+.as-modal{background:var(--cream,#F7F5F0);border-radius:30px;max-width:1240px;width:100%;max-height:94vh;overflow-y:auto;padding:54px 52px 46px;position:relative;box-shadow:0 30px 80px rgba(31,36,33,.4);transform:translateY(16px) scale(.985);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.as-overlay.on .as-modal{transform:none}
+.as-x{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid var(--line,#E8E4DC);font-size:20px;color:var(--ink,#1F2421);cursor:pointer;z-index:5;line-height:1}
+.as-x:hover{background:var(--sage-pale,#E7EEE9)}
+.as-head{text-align:center;max-width:700px;margin:0 auto 36px}
+.as-eyebrow{font-size:15px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--terra-deep,#A35540);margin-bottom:11px}
+.as-head h2{font-family:Georgia,serif;font-size:41px;font-weight:700;color:var(--ink,#1F2421);line-height:1.15}
+.as-head h2 em{font-style:italic;color:var(--sage,#4A6B5B)}
+.as-head p{font-size:18px;color:var(--grey,#474D48);margin-top:13px;line-height:1.6}
+.as-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:19px}
+@media(max-width:920px){.as-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.as-grid{grid-template-columns:1fr}}
+.as-card{background:#fff;border:1px solid var(--line,#E8E4DC);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm,0 1px 2px rgba(0,0,0,.05));text-decoration:none}
+.as-card:hover{border-color:var(--sage,#4A6B5B);box-shadow:0 0 0 3px var(--sage,#4A6B5B),0 18px 40px rgba(47,71,59,.22);transform:translateY(-5px)}
+.as-card img{width:100%;height:182px;object-fit:cover;display:block}
+.as-card .ab{padding:18px 20px 21px;flex:1;display:flex;flex-direction:column}
+.as-card h3{font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--ink,#1F2421);margin-bottom:6px}
+.as-card p{font-size:15.5px;color:var(--grey,#474D48);line-height:1.5;flex:1}
+.as-card .go{margin-top:14px;color:var(--terra,#C97257);font-weight:700;font-size:16px}
+.as-foot{text-align:center;font-family:Georgia,serif;font-size:19px;font-weight:700;color:var(--sage-dark,#2F473B);margin-top:30px}
+
+</style>
+<section class="sec wrap">
+  <div style="text-align:center">
+    <div class="sec-eyebrow">Pills versus cream</div>
+    <h2>It works <em>where it hurts.</em></h2>
+  </div>
+  <div class="compare">
+    <div class="comp pill"><img class="cimg" src="Clara%20Home%20page/Cream/pills-compare.jpg" alt="An assortment of ordinary mass produced pills"><div class="cbody"><h4>An oral pill</h4><ul>
+      <li>Travels through your whole body to reach one joint</li>
+      <li>More medicine in your bloodstream, more whole body side effects</li>
+      <li>Swallowed daily, when some would rather not</li>
+    </ul></div></div>
+    <div class="comp cream"><img class="cimg" src="Clara%20Home%20page/Cream/cream-spread-compare.jpg" alt="Fresh clara cream spread beside the bottle"><div class="cbody"><h4>The clara cream</h4><ul>
+      <li>Applied right where the pain is</li>
+      <li>A fraction of the medicine reaches your bloodstream</li>
+      <li>A ladder of strengths, matched to your condition</li>
+    </ul></div></div>
+  </div>
+</section>
+
+<section class="sec" style="background:#fff;border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div style="text-align:center">
+      <div class="sec-eyebrow">What it treats</div>
+      <h2>Built for where the <em>evidence</em> is strongest.</h2>
+      <p class="lead" style="margin:16px auto 0">clara builds a condition specific cream where topical therapy has real evidence. Start with an assessment and a doctor matches the right formula to you.</p>
+    </div>
+    <div class="cond">
+      <div class="ccard"><img class="cill" src="Clara%20Home%20page/Cream/treat-knee.jpg" alt="Storybook illustration of a man resting a hand on his aching knee"><div class="cbd"><div class="cw">Knee osteoarthritis</div><h3>Knee pain</h3><p>Topical anti inflammatories are a guideline backed, first line option for knee OA, with relief comparable to pills and far less in your system.</p><a href="Clara-KneeOA-Quiz-MOCK-v1.html">Start the knee assessment &#8594;</a></div></div>
+      <div class="ccard"><img class="cill" src="Clara%20Home%20page/Cream/treat-back.jpg" alt="Storybook illustration of a woman resting a hand on her lower back"><div class="cbd"><div class="cw">Low back pain</div><h3>Back pain</h3><p>A musculoskeletal cream ladder targets the muscles and joints driving mechanical back pain, without sedating oral medications.</p><a href="Clara-BackPain-Quiz-MOCK-v2.html">Start the back assessment &#8594;</a></div></div>
+      <div class="ccard"><img class="cill" src="Clara%20Home%20page/Cream/treat-nerve.jpg" alt="Storybook illustration of a woman holding her lower leg with gentle tingling marks"><div class="cbd"><div class="cw">Neuropathic pain</div><h3>Nerve pain</h3><p>Topical agents like lidocaine, amitriptyline and capsaicin can calm burning, tingling nerve pain right at the skin, close to the nerves.</p><a href="Clara-Neuropathic-Quiz-MOCK-v1.html">Start the nerve assessment &#8594;</a></div></div>
+    </div>
+    <p class="lead" style="text-align:center;margin:44px auto 0">A compound cream also commonly helps other localized pain. If one of these sounds like you, a clara doctor can tell you whether a cream is a fit.</p>
+    <h2 style="text-align:center;margin-top:48px">Other conditions the cream <em>treats</em>.</h2>
+    <div class="also" style="margin-top:26px">
+      <span>Fibromyalgia</span><span>Tendonitis</span><span>Bursitis</span><span>Sciatica</span><span>Arthritis flares</span>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>One cream, <em>made for you.</em></h2>
+    <p class="sub">Five minutes. Reviewed by a doctor. Built around your condition.</p>
+    <div class="final-doors">
+      <a class="pill-door" href="Clara-KneeOA-Quiz-MOCK-v1.html">My knee</a>
+      <a class="pill-door" href="Clara-BackPain-Quiz-MOCK-v2.html">My back</a>
+      <a class="pill-door" href="Clara-Neuropathic-Quiz-MOCK-v1.html">My nerves</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <a class="logo" href="Clara-Homepage-MOCK-v1.html" style="font-family:Georgia,serif;font-weight:700">clara</a>
+    <span class="tag">chronic pain, decoded.</span>
+    <div class="legal">Clara Relief Inc. · Ontario, Canada<br>The Cream page MOCK v1 · June 2026 · first pass mockup, not the live product</div>
+  </div>
+</footer>
+
+
+<!-- ASSESS MODAL -->
+<div class="as-overlay" id="asOverlay">
+  <div class="as-modal" role="dialog" aria-modal="true" aria-label="Choose your condition">
+    <button class="as-x" id="asClose" aria-label="Close">&#10005;</button>
+    <div class="as-head">
+      <div class="as-eyebrow">Start your assessment</div>
+      <h2>Where does it <em>hurt?</em></h2>
+      <p>Pick your pain and we&#39;ll take you straight into the right assessment. About 5 minutes, and a licensed doctor reviews every plan.</p>
+    </div>
+    <div class="as-grid">
+      <a class="as-card" href="Clara-KneeOA-Quiz-MOCK-v1.html">
+        <img src="Home%20(dashboard)/knee-oa-home-1600.jpg" alt="Man seated easing his knee">
+        <div class="ab"><h3>My knee</h3><p>Knee osteoarthritis. Stairs, stiffness, and the walks you have given up.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+      <a class="as-card" href="Clara-BackPain-Quiz-MOCK-v2.html">
+        <img src="Home%20(dashboard)/back-pain-home-1600.jpg" alt="Man easing upright with a hand on his lower back">
+        <div class="ab"><h3>My back</h3><p>Low back pain. The careful mornings and the chairs you avoid.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+      <a class="as-card" href="Clara-Migraine-Quiz-MOCK-v1.html">
+        <img src="Home%20(dashboard)/migraine-home-1600.jpg" alt="Woman resting fingertips at her temple">
+        <div class="ab"><h3>Migraines</h3><p>Migraine. The days lost to a dark room and a closed door.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+      <a class="as-card" href="Clara-Neuropathic-Quiz-MOCK-v1.html">
+        <img src="Home%20(dashboard)/neuropathic-home-1600.jpg" alt="Woman gently holding her forearm">
+        <div class="ab"><h3>My nerves</h3><p>Neuropathic pain. The burning, tingling, and shooting no one can see.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+    </div>
+    <div class="as-foot">Tap your pain. A licensed doctor reviews every plan.</div>
+  </div>
+</div>
+<script>
+(function(){
+  var ov=document.getElementById('asOverlay'); if(!ov) return;
+  function openAs(){ ov.classList.add('on'); document.body.style.overflow='hidden'; }
+  function closeAs(){ ov.classList.remove('on'); document.body.style.overflow=''; }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest?e.target.closest('a,button'):null;
+    if(!el||ov.contains(el)) return;
+    if((el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase()==='start your assessment'){
+      e.preventDefault(); openAs();
+    }
+  });
+  document.getElementById('asClose').addEventListener('click',closeAs);
+  ov.addEventListener('click',function(e){ if(e.target===ov) closeAs(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAs(); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>clara · Find your back pain pattern</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,'Cormorant Garamond',serif}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+.wrap{max-width:760px;margin:0 auto;padding:26px 28px 90px}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:13.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:42px;line-height:1.08;font-weight:700;letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:20px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.byline{font-size:13.5px;color:var(--grey);font-weight:600}
+.chip{font-size:12px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.bigstat{font-family:Georgia,serif;font-weight:700;line-height:1;display:flex;align-items:baseline;flex-wrap:wrap;gap:14px;margin:10px 0 14px}
+.bigstat .b1{font-size:80px;color:var(--terra)}
+.bigstat .bof{font-size:38px;color:var(--muted)}
+.bigstat .b4{font-size:80px;color:var(--sage)}
+.bigstat .bword{font-size:36px;color:var(--ink);margin-left:6px}
+
+/* quiz card */
+.quiz{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);overflow:hidden}
+.q-bar{height:6px;background:var(--sage-pale)}
+.q-bar > i{display:block;height:100%;width:0;background:var(--terra);transition:width .4s}
+.q-inner{padding:30px 30px 26px}
+.q-step{display:none}
+.q-step.on{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.q-count{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.q-ask{font-family:Georgia,serif;font-size:25px;font-weight:700;line-height:1.2;color:var(--ink);margin-bottom:6px}
+.q-sub{font-size:14.5px;color:var(--grey);margin-bottom:20px}
+.opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:15px;padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:all .14s;font:inherit;color:var(--ink)}
+.opt:hover{border-color:var(--sage)}
+.opt.sel{border-color:var(--sage);background:var(--sage-pale)}
+.opt .oe{font-size:24px;flex:0 0 auto;line-height:1.2}
+.opt .ot{font-weight:700;font-size:16px}
+.opt .od{font-size:13px;color:var(--grey);margin-top:2px}
+.opt .ock{margin-left:auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--line-strong);flex:0 0 auto;display:grid;place-items:center;color:#fff;font-size:13px}
+.opt.sel .ock{background:var(--sage);border-color:var(--sage)}
+.chkrow{display:flex;align-items:flex-start;gap:13px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.chkrow:last-of-type{border-bottom:none}
+.chkbox{width:26px;height:26px;border-radius:8px;border:2px solid var(--line-strong);flex:0 0 auto;display:grid;place-items:center;color:#fff;font-size:14px;background:#fff;transition:all .15s}
+.chkrow.on .chkbox{background:var(--terra);border-color:var(--terra)}
+.chk-t{font-size:14.5px;line-height:1.45}
+.q-foot{display:flex;gap:12px;align-items:center;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--sage-dark);color:#fff;font-size:16px;font-weight:700;padding:14px 24px;border:none;border-radius:14px;cursor:pointer;transition:all .15s}
+.btn:hover{background:var(--sage-deep)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.btn.full{width:100%}
+.btn.ghost{background:transparent;color:var(--grey);font-weight:600;padding:14px 10px}
+.btn.terra{background:var(--terra)}.btn.terra:hover{background:var(--terra-deep)}
+
+/* stop screen */
+.stop{background:var(--terra-pale);border:1px solid var(--terra-soft);border-radius:18px;padding:26px}
+.stop h3{color:var(--terra-deep);font-family:Georgia,serif;font-size:24px;margin-bottom:10px}
+.stop p{font-size:15px;line-height:1.6;color:#6e2417;margin-bottom:10px}
+.stop ul{list-style:none;margin:6px 0 12px}
+.stop li{position:relative;padding-left:22px;margin-bottom:7px;font-size:14.5px;color:#6e2417}
+.stop li::before{content:'!';position:absolute;left:0;top:0;font-weight:800;color:var(--terra)}
+
+/* result */
+.result{display:none}
+.res-card{border-radius:22px;padding:30px;color:#fff;background:linear-gradient(150deg,var(--sage),var(--sage-deep));box-shadow:var(--shadow-lg)}
+.res-card .rp{font-size:12.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:.85}
+.res-card h2{font-family:Georgia,serif;font-size:32px;font-weight:700;margin:6px 0 4px;line-height:1.1}
+.res-card .rdesc{font-size:15.5px;line-height:1.6;color:#E7EFE9;margin-top:8px}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+.advice{background:var(--terra-pale);border:1px solid var(--terra-soft);border-radius:14px;padding:16px 20px;margin:4px 0 18px;font-size:17px;line-height:1.55;color:#6e2417}
+.advice b{font-weight:800}
+.restbanner{background:linear-gradient(140deg,var(--terra),var(--terra-deep));color:#fff;border-radius:16px;padding:22px 26px;margin:16px 0 6px;box-shadow:var(--shadow-lg)}
+.restbanner h3{font-family:Georgia,serif;font-size:27px;font-weight:700;line-height:1.15;letter-spacing:-.3px}
+.restbanner h3 span{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:3px}
+.restbanner p{font-size:15.5px;color:#fff;opacity:.94;margin-top:7px;line-height:1.5}
+.exprog{margin:2px 0 18px}
+.exprog-top{font-size:16.5px;font-weight:700;color:var(--sage-dark);margin-bottom:9px}
+.exprog-top b{font-weight:800}
+.exbar{height:12px;border-radius:8px;background:var(--line);overflow:hidden}
+.exbar>i{display:block;height:100%;width:0;background:var(--terra);border-radius:8px;transition:width .35s}
+.exprog-note{font-size:14.5px;color:var(--grey);margin-top:9px;line-height:1.5}
+.setstat{display:flex;align-items:center;gap:18px;background:linear-gradient(140deg,var(--sage),var(--sage-deep));color:#fff;border-radius:18px;padding:20px 24px;margin:24px 0 10px;box-shadow:var(--shadow-lg)}
+.setnum{font-family:Georgia,serif;font-size:48px;font-weight:700;line-height:1;min-width:58px;text-align:center}
+.setlbl{font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.9}
+.setsub{font-size:15px;color:#E7EFE9;margin-top:4px;line-height:1.45}
+.exsolo{margin-top:2px}
+.soloprog{margin-bottom:16px}
+.soloprog-top{font-size:17px;font-weight:800;color:var(--sage-dark);margin-bottom:9px}
+.soloview{position:relative;overflow:hidden}
+.solocard{animation:soloInR .34s ease}
+.solocard.rev{animation:soloInL .34s ease}
+@keyframes soloInR{from{transform:translateX(48px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes soloInL{from{transform:translateX(-48px);opacity:0}to{transform:translateX(0);opacity:1}}
+.soloimg{border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:var(--sage-pale)}
+.soloimg img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+.solobody{padding:18px 4px 2px}
+.solobody h4{font-family:Georgia,serif;font-size:25px;color:var(--sage-dark);margin-bottom:9px;line-height:1.15}
+.solobody p{font-size:18.5px;line-height:1.55;color:#2b302c}
+.soloctrl{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px}
+.soloback{background:#fff;border:1.5px solid var(--line-strong);color:var(--sage-dark);font-weight:700;font-size:15px;padding:13px 18px;border-radius:30px;cursor:pointer}
+.soloback:hover{border-color:var(--sage)}
+.solonext{flex:1;background:var(--sage);color:#fff;border:none;font-weight:800;font-size:16.5px;padding:15px 20px;border-radius:30px;cursor:pointer;box-shadow:var(--shadow)}
+.solonext:hover{background:var(--sage-dark)}
+.solodone{text-align:center;padding:32px 22px;background:linear-gradient(140deg,var(--sage),var(--sage-deep));color:#fff;border-radius:18px;box-shadow:var(--shadow-lg)}
+.solodone .bigcheck{width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:34px;margin:0 auto 14px}
+.solodone h3{font-family:Georgia,serif;font-size:27px;margin-bottom:6px}
+.solodone p{font-size:19px;color:#E7EFE9;margin-bottom:20px;line-height:1.55}
+.solodone .solonum2{font-family:Georgia,serif;font-size:38px;font-weight:800;color:#F4C9A8;line-height:1;padding:0 2px;vertical-align:-4px}
+.solodone .solonext{display:inline-block;flex:none;background:rgba(255,255,255,.18)}
+.excheck{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(20,28,24,.32);color:rgba(255,255,255,.92);font-size:22px;font-weight:800;display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 1px 5px rgba(0,0,0,.22)}
+.exr.photo.done .excheck{background:var(--sage);border-color:#fff;color:#fff}
+.exr.photo.done{box-shadow:0 0 0 3px var(--sage),var(--shadow)}
+.exr.photo.capTop .excheck{top:auto;bottom:12px}
+.exr:not(.photo){position:relative}
+.exr:not(.photo) .excheck{position:static;width:30px;height:30px;border:2px solid var(--line-strong);background:#fff;color:transparent;flex:0 0 auto;align-self:center;margin-left:auto;font-size:16px;box-shadow:none}
+.exr:not(.photo).done .excheck{background:var(--sage);border-color:var(--sage);color:#fff}
+.exr:not(.photo).done{background:var(--sage-pale);border-color:var(--sage)}
+@media(max-width:600px){.res-grid{grid-template-columns:1fr}}
+.res-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px}
+.res-box .k{font-size:13.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:12px}
+.res-box ul{list-style:none}
+.res-box li{position:relative;padding-left:24px;font-size:17.5px;line-height:1.5;margin-bottom:12px;color:#2b302c}
+.res-box li::before{content:'';position:absolute;left:5px;top:10px;width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.res-box.move li::before{background:var(--terra)}
+.exhead{font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--sage-dark);margin:26px 0 4px}
+.exsub{font-size:14.5px;color:var(--grey);line-height:1.6;margin-bottom:16px}
+.exr{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:11px;box-shadow:var(--shadow)}
+.exr .en{width:32px;height:32px;border-radius:50%;background:var(--sage-pale);color:var(--sage-dark);font-weight:800;display:grid;place-items:center;flex:0 0 auto;font-size:15px;font-family:Georgia,serif}
+.exr h4{font-size:16px;font-weight:700;margin-bottom:3px;color:var(--ink)}
+.exr p{font-size:14px;color:var(--grey);line-height:1.55}
+.exr .d{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--terra-deep);background:var(--terra-pale);padding:4px 11px;border-radius:12px}
+.exr.photo{display:block;position:relative;padding:0;background:transparent;border:none;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px}
+.exr.photo img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+.exrcap{position:absolute;left:0;right:0;bottom:0;padding:64px 24px 20px;background:linear-gradient(to top,rgba(18,26,22,.88),rgba(18,26,22,.55) 48%,rgba(18,26,22,0));color:#fff}
+.exrcap p{font-size:18.5px;line-height:1.4;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.exrcap p b{font-weight:800}
+.exrcap .d{display:inline-block;margin-top:12px;font-size:15px;font-weight:700;color:#fff;background:var(--terra);padding:5px 14px;border-radius:14px}
+.exr.photo.capTop .exrcap{top:0;bottom:auto;padding:20px 24px 64px;background:linear-gradient(to bottom,rgba(18,26,22,.88),rgba(18,26,22,.55) 48%,rgba(18,26,22,0))}
+@media(max-width:620px){.exrcap{padding:52px 16px 16px}.exrcap p{font-size:15.5px}.exr.photo.capTop .exrcap{padding:16px 16px 52px}}
+.callout{border-radius:16px;padding:18px 20px;margin:18px 0;font-size:14.5px;line-height:1.6}
+.callout.sage{background:var(--sage-pale);border:1px solid var(--sage-soft);color:var(--sage-deep)}
+.callout.terra{background:var(--terra-pale);border:1px solid var(--terra-soft);color:#6e2417}
+.callout b{font-weight:700}
+.disclaimer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+
+/* the four patterns reference */
+.pat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+@media(max-width:600px){.pat-grid{grid-template-columns:1fr}}
+.pat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.pat .pn{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--sage-dark);font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.pat .pnum{width:26px;height:26px;border-radius:50%;background:var(--sage);color:#fff;display:grid;place-items:center;font-size:13px}
+.pat h4{font-family:Georgia,serif;font-size:19px;margin:10px 0 8px}
+.pat p{font-size:13.5px;color:var(--grey);line-height:1.55}
+.pat .tag{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;color:var(--terra-deep);background:var(--terra-pale);padding:5px 11px;border-radius:14px}
+h2.sec{font-family:Georgia,serif;font-size:26px;font-weight:700;color:var(--sage-dark);margin:40px 0 14px}
+@media(max-width:640px){h1.title{font-size:32px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}.q-inner{padding:24px 20px}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">clara</div>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care">Get Care</a>
+  </div>
+  <div class="nav-avatar">JD</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education-back">&larr;  Back to back pain</a>
+  <div class="eyebrow">Back pain · Find your pattern</div>
+  <h1 class="title serif">Which back pattern do you have?</h1>
+  <p class="lede" style="margin-bottom:2px">Mechanical back pain falls into</p>
+  <div class="bigstat"><span class="b1">1</span><span class="bof"> of </span><span class="b4">4</span><span class="bword"> patterns</span></div>
+  <p style="font-size:18px;color:var(--grey);line-height:1.6;margin:10px 0 4px;white-space:nowrap">Knowing yours tells us which exercises will help, and which could make it worse.</p>
+  <div class="meta">
+    <span class="byline">From your clara care team</span>
+    <span class="chip">2 minutes</span>
+    <span class="chip">Based on the Saskatchewan Spine Pathway</span>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz" id="quiz">
+    <div class="q-bar"><i id="qbar"></i></div>
+    <div class="q-inner">
+
+      <!-- step 0: red flags -->
+      <div class="q-step on" data-step="0">
+        <div class="q-count">First, a quick safety check</div>
+        <div class="q-ask">Do any of these apply to you right now?</div>
+        <div class="q-sub">These are uncommon, but they need in-person care rather than an online plan. Tap any that are true.</div>
+        <div id="rf">
+          <div class="chkrow" onclick="tgRf(this)"><div class="chkbox">&#10003;</div><div class="chk-t">Numbness in the &ldquo;saddle&rdquo; area (between the legs), or new loss of bladder or bowel control</div></div>
+          <div class="chkrow" onclick="tgRf(this)"><div class="chkbox">&#10003;</div><div class="chk-t">Real <b>weakness</b> in a leg or foot (not just pain), or it&rsquo;s getting worse fast</div></div>
+          <div class="chkrow" onclick="tgRf(this)"><div class="chkbox">&#10003;</div><div class="chk-t">A recent significant injury, fall, or car accident</div></div>
+          <div class="chkrow" onclick="tgRf(this)"><div class="chkbox">&#10003;</div><div class="chk-t">Fever, unexplained weight loss, or a history of cancer with new back pain</div></div>
+          <div class="chkrow" onclick="tgRf(this)"><div class="chkbox">&#10003;</div><div class="chk-t">Pain that is clearly worse at night, or a throbbing feeling in your belly</div></div>
+          <div class="chkrow on" id="rf-none" onclick="tgNone(this)"><div class="chkbox">&#10003;</div><div class="chk-t"><b>None of these</b> apply to me</div></div>
+        </div>
+        <div class="q-foot"><button class="btn full" id="b0" onclick="afterRedFlags()">Continue</button></div>
+      </div>
+
+      <!-- step 1: location -->
+      <div class="q-step" data-step="1">
+        <div class="q-count" data-qn="1">Question 1 of 3</div>
+        <div class="q-ask">Where do you feel it most?</div>
+        <div class="q-sub">Pick the one that&rsquo;s closest.</div>
+        <button class="opt" data-q="loc" data-v="back" onclick="pick(this)"><span class="oe">&#129460;</span><div><div class="ot">Mostly my back or buttock</div><div class="od">Pain centred in the lower back, maybe into the buttock or upper thigh</div></div><span class="ock">&#10003;</span></button>
+        <button class="opt" data-q="loc" data-v="leg" onclick="pick(this)"><span class="oe">&#129461;</span><div><div class="ot">Mostly down my leg</div><div class="od">The leg pain is as bad as, or worse than, the back pain</div></div><span class="ock">&#10003;</span></button>
+        <div class="q-foot"><button class="btn ghost" onclick="goStep(0)">&#8249; Back</button><span style="flex:1"></span><button class="btn" id="b1" disabled onclick="goAdvance(1)">Next</button></div>
+      </div>
+
+      <!-- step 2: worse -->
+      <div class="q-step" data-step="2">
+        <div class="q-count" data-qn="2">Question 2 of 3</div>
+        <div class="q-ask">What makes it <em>worse</em>?</div>
+        <div class="q-sub">Choose the one that fits you best.</div>
+        <button class="opt" data-q="worse" data-arm="back" data-v="flex" onclick="pick(this)"><span class="oe">&#128186;</span><div><div class="ot">Sitting a while, or bending forward</div><div class="od">Tying shoes, slouching, long drives</div></div><span class="ock">&#10003;</span></button>
+        <button class="opt" data-q="worse" data-arm="back" data-v="ext" onclick="pick(this)"><span class="oe">&#127947;</span><div><div class="ot">Standing or arching backward</div><div class="od">Long standing, leaning back, walking upright a long time</div></div><span class="ock">&#10003;</span></button>
+        <button class="opt" data-q="worse" data-arm="leg" data-v="walk" onclick="pick(this)"><span class="oe">&#128694;</span><div><div class="ot">Walking, until my legs feel heavy</div><div class="od">Legs ache or feel heavy; I stop and lean forward to rest</div></div><span class="ock">&#10003;</span></button>
+        <button class="opt" data-q="worse" data-arm="leg" data-v="any" onclick="pick(this)"><span class="oe">&#9889;</span><div><div class="ot">Almost any movement</div><div class="od">Most positions and movements hurt; I can&rsquo;t get comfortable</div></div><span class="ock">&#10003;</span></button>
+        <div class="q-foot"><button class="btn ghost" onclick="goBackTo(2)">&#8249; Back</button><span style="flex:1"></span><button class="btn" id="b2" disabled onclick="goAdvance(2)">Next</button></div>
+      </div>
+
+      <!-- step 3: better -->
+      <div class="q-step" data-step="3">
+        <div class="q-count" data-qn="3">Question 3 of 3</div>
+        <div class="q-ask">What makes it <em>better</em>?</div>
+        <div class="q-sub">Almost there.</div>
+        <button class="opt" data-q="better" data-v="ext" onclick="pick(this)"><span class="oe">&#129465;</span><div><div class="ot">Standing or walking; bending backward</div></div><span class="ock">&#10003;</span></button>
+        <button class="opt" data-q="better" data-v="flex" onclick="pick(this)"><span class="oe">&#129486;</span><div><div class="ot">Sitting or bending forward</div></div><span class="ock">&#10003;</span></button>
+        <button class="opt" data-q="better" data-v="rest" onclick="pick(this)"><span class="oe">&#128719;</span><div><div class="ot">Only lying down in certain positions</div></div><span class="ock">&#10003;</span></button>
+        <div class="q-foot"><button class="btn ghost" onclick="goBackTo(3)">&#8249; Back</button><span style="flex:1"></span><button class="btn terra" id="b3" disabled onclick="goAdvance(3)">See my result</button></div>
+      </div>
+
+      <!-- step 4: leg-dominant only — constant vs intermittent (the CORE P3 vs P4 split) -->
+      <div class="q-step" data-step="4">
+        <div class="q-count" data-qn="4">Question 4 of 4</div>
+        <div class="q-ask">Is the leg pain there <em>all the time</em>, or does it come and go?</div>
+        <div class="q-sub">This helps us tell two leg patterns apart. Pick the one that&rsquo;s closest.</div>
+        <button class="opt" data-q="dur" data-v="constant" onclick="pick(this)"><span class="oe">&#128367;</span><div><div class="ot">It&rsquo;s there pretty much constantly</div><div class="od">The leg pain is present most of the time, even at rest</div></div><span class="ock">&#10003;</span></button>
+        <button class="opt" data-q="dur" data-v="intermittent" onclick="pick(this)"><span class="oe">&#128260;</span><div><div class="ot">It comes and goes</div><div class="od">It flares with activity like walking, then settles when I sit or rest</div></div><span class="ock">&#10003;</span></button>
+        <div class="q-foot"><button class="btn ghost" onclick="goBackTo(4)">&#8249; Back</button><span style="flex:1"></span><button class="btn" id="b4" disabled onclick="goAdvance(4)">Next</button></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STOP SCREEN -->
+  <div class="quiz" id="stopScreen" style="display:none">
+    <div class="q-inner">
+      <div class="stop">
+        <h3>Please see a doctor in person first</h3>
+        <p>You told us about a symptom that should be checked face-to-face before starting an online exercise plan. This is the safe, careful thing to do, most of the time it turns out fine.</p>
+        <p style="font-weight:700;margin-top:14px">Go to an emergency room now if you have:</p>
+        <ul>
+          <li>Loss of bladder or bowel control, or numbness in the saddle area</li>
+          <li>Sudden, worsening leg weakness</li>
+        </ul>
+        <p>For the other items, book with your family doctor or a walk-in clinic soon. clara is built for routine, non-emergency back pain, the other 10% deserves in-person attention.</p>
+        <button class="btn full" style="margin-top:8px" onclick="restart()">Start the check over</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result" id="result"></div>
+
+  <p class="disclaimer">This pattern finder is an educational starting point based on the Saskatchewan Provincial Spine Pathway, not a diagnosis. Your clara doctor and physiotherapist confirm your pattern and personalise your plan. If new leg weakness, numbness in the saddle area, or bladder or bowel changes appear at any time, stop and seek urgent care.</p>
+</div>
+
+<script>
+var ans={loc:null,worse:null,better:null,dur:null};
+var curStep=0;
+var view='quiz';
+function persist(){try{sessionStorage.setItem('claraBackQuiz',JSON.stringify({ans:ans,step:curStep,view:view}));}catch(e){}}
+/* step ids: 1 location, 2 worse, 3 better, 4 constant/intermittent.
+   Back-dominant asks location, worse, better. Leg-dominant asks location, worse, constant/intermittent, then better last. */
+function seq(){return ans.loc==='leg'?[1,2,4,3]:[1,2,3];}
+function updateCounts(){var s=seq();s.forEach(function(stepNum,i){var c=document.querySelector('.q-step[data-step="'+stepNum+'"] .q-count[data-qn]');if(c)c.textContent='Question '+(i+1)+' of '+s.length;});}
+function setBar(){var s=seq();var i=s.indexOf(curStep);var p=(i<0)?0:i+1;document.getElementById('qbar').style.width=(p/s.length*100)+'%';}
+function goAdvance(step){var s=seq();var i=s.indexOf(step);if(i===s.length-1){finish();}else{goStep(s[i+1]);}}
+function goBackTo(step){var s=seq();var i=s.indexOf(step);if(i<=0){goStep(0);}else{goStep(s[i-1]);}}
+function goStep(n){curStep=n;view='quiz';document.querySelectorAll('.q-step').forEach(function(s){s.classList.toggle('on',+s.dataset.step===n)});if(n===2)filterWorse();updateCounts();setBar();persist();window.scrollTo({top:0,behavior:'smooth'});}
+/* Q2 is arm-aware: back-dominant sees only the flexion/extension options, leg-dominant only the walking/any-movement options */
+function filterWorse(){
+  var arm=(ans.loc==='leg')?'leg':'back';
+  var valid=(arm==='leg')?['walk','any']:['flex','ext'];
+  document.querySelectorAll('.q-step[data-step="2"] .opt[data-q="worse"]').forEach(function(b){
+    var show=(b.dataset.arm===arm);
+    b.style.display=show?'':'none';
+    if(!show)b.classList.remove('sel');
+  });
+  if(ans.worse && valid.indexOf(ans.worse)===-1){ans.worse=null;document.getElementById('b2').disabled=true;}
+}
+/* red flags */
+function tgRf(el){el.classList.toggle('on');document.getElementById('rf-none').classList.remove('on');syncNone();}
+function tgNone(el){var none=el.classList.contains('on');document.querySelectorAll('#rf .chkrow').forEach(function(r){r.classList.remove('on')});el.classList.toggle('on',!none||true);el.classList.add('on');syncNone();}
+function syncNone(){}
+function anyRf(){var rows=[].slice.call(document.querySelectorAll('#rf .chkrow')).filter(function(r){return r.id!=='rf-none'});return rows.some(function(r){return r.classList.contains('on')});}
+function afterRedFlags(){
+  if(anyRf()){view='stop';persist();document.getElementById('quiz').style.display='none';document.getElementById('stopScreen').style.display='block';window.scrollTo({top:0,behavior:'smooth'});return;}
+  goStep(1);
+}
+/* picks */
+function pick(el){var q=el.dataset.q;ans[q]=el.dataset.v;el.parentNode.querySelectorAll('.opt[data-q="'+q+'"]').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');
+  if(q==='loc')document.getElementById('b1').disabled=false;
+  if(q==='worse')document.getElementById('b2').disabled=false;
+  if(q==='better')document.getElementById('b3').disabled=false;
+  if(q==='dur')document.getElementById('b4').disabled=false;
+  if(q==='loc')updateCounts(); /* total questions depends on back vs leg */
+  persist();
+}
+function restart(){ans={loc:null,worse:null,better:null,dur:null};document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});document.getElementById('b1').disabled=document.getElementById('b2').disabled=document.getElementById('b3').disabled=document.getElementById('b4').disabled=true;document.querySelectorAll('#rf .chkrow').forEach(function(r){r.classList.toggle('on',r.id==='rf-none')});document.getElementById('stopScreen').style.display='none';document.getElementById('result').style.display='none';document.getElementById('quiz').style.display='block';goStep(0);}
+
+var PATTERNS={
+ 1:{name:'The extension pattern',sub:'Pattern 1 · your back prefers backward movement',
+    desc:'Your pain settles when you stand, walk, or gently arch backward, and flares when you sit too long or bend forward. This is the most common pattern, and it usually settles with gentle extension and the right rest positions.',
+    sym:['Worse with sitting and bending forward','Eased by standing, walking, or arching back','Often centred in the back, may refer to the thigh'],
+    move:['Gentle prone press ups (the sloppy pushup)','A lumbar roll to support the curve when sitting','Walking or standing rather than long sitting'],
+    note:'Pattern 1 in the Saskatchewan guides. Start gently and stop any exercise that sends pain further down your leg.'},
+ 2:{name:'The flexion pattern',sub:'Pattern 2 · your back prefers forward movement',
+    desc:'Your pain eases when you sit or bend forward, and flares with long standing, walking, or arching backward. Flexion based exercises are your friends here.',
+    sym:['Worse with standing, walking a while, or arching back','Eased by sitting or bending forward','Usually intermittent rather than constant'],
+    move:['Knees to chest stretches','Sitting flexion (lean forward in a chair)','Child&rsquo;s pose style trunk flexion stretches'],
+    note:'Pattern 2 in the Saskatchewan guides. Build up slowly; comfort, not force, is the goal.'},
+ 3:{name:'The acute nerve pattern',sub:'Pattern 3 · leg dominant pain that needs rest first',
+    desc:'Your pain is mainly down the leg and most movement makes it worse right now. In this acute phase the evidence is clear: scheduled rest and the right positions come first, and repeated exercises can wait. This is also the pattern most worth having a clinician look at soon.',
+    sym:['Pain mainly in the leg, often constant','Worse with most movement, eased only by certain rest positions','Can be a nerve root that is irritated (sciatica)'],
+    move:['Scheduled short rest periods in your most comfortable position','Prone lying or &ldquo;Z&rdquo; lying to offload the nerve','Avoid pushing through pain; let it calm before loading'],
+    note:'Pattern 3 in the Saskatchewan guides. Because the leg pain is dominant, message your clara care team, a physiotherapy review early in this pattern leads to far better outcomes.'},
+ 4:{name:'The claudication pattern',sub:'Pattern 4 · heavy legs with walking',
+    desc:'Your legs feel heavy or achy after walking or standing, and it lifts quickly when you sit or bend forward. This pattern responds best to core stability work and a forward bend bias, built up over time.',
+    sym:['Leg heaviness or aching brought on by walking','Relieved quickly by sitting or bending forward','Comes and goes with activity'],
+    move:['Pelvic tilts and gentle core activation','Single leg abdominal presses, cat and camel','Sitting flexion when symptoms come on'],
+    note:'Pattern 4 in the Saskatchewan guides. The long term win here is a steady core strengthening routine.'},
+};
+var EXS={
+ 1:[{n:'Supine lie',h:'Lie on your back with your knees and head resting on pillows.',d:'Rest as advised',img:'pattern%201%20exercises/ex1.jpg'},
+    {n:'Prone lie',h:'Lie on your stomach with three pillows supporting your hips.',d:'Rest as advised',img:'pattern%201%20exercises/ex2.jpg'},
+    {n:'Knees to chest',h:'Lie on your back with knees bent and feet flat. Slowly bring your knees up toward your chest, one leg at a time is easier, then wrap your arms behind your knees and draw them in.',d:'Hold as advised',img:'pattern%201%20exercises/ex3.jpg'},
+    {n:'&ldquo;Z&rdquo; lie',h:'Lie on your back with your head on a pillow and your feet up on a chair, knees bent more than 90 degrees. You can support your buttocks with a pillow.',d:'Rest as advised',img:'pattern%201%20exercises/ex4.jpg',cap:'top'},
+    {n:'Lumbar roll (sitting)',h:'Sit in a straight backed chair with a lumbar roll supporting the curve of your lower back.',d:'Use as advised',img:'pattern%201%20exercises/ex5.jpg'},
+    {n:'Lumbar roll (night)',h:'Use a lumbar night roll under your mid back while sleeping to support the curve of your spine.',d:'Use overnight',img:'pattern%201%20exercises/ex6.jpg'},
+    {n:'Sloppy pushup',h:'Lie on your stomach with your hands beside your head. Keep your lower body on the floor and use your arms to slowly raise your upper body, keeping your pelvis down and your back muscles relaxed.',d:'As advised',img:'pattern%201%20exercises/ex7.jpg',cap:'top'}],
+ 2:[{n:'&ldquo;Z&rdquo; lie',h:'Lie on your back with your head on a pillow and your feet up on a chair, knees bent more than 90 degrees. You can support your buttocks with a pillow.',d:'Rest as advised',img:'pattern%202%20exercises/ex1.jpg',cap:'top'},
+    {n:'Knees to chest',h:'Lie on your back, knees bent and feet flat. Slowly bring your knees up toward your chest, one leg at a time is easier, then wrap your arms behind your knees and draw them in.',d:'Hold as advised',img:'pattern%202%20exercises/ex2.jpg',cap:'top'},
+    {n:'Sitting flexion',h:'Sit with your feet flat, about hip width apart. Lean forward to rest your stomach on your lap and let your arms and head hang toward your feet, then use your hands on your knees to come back up.',d:'As advised',img:'pattern%202%20exercises/ex3.jpg'},
+    {n:'Trunk flexion stretch',h:'Kneel on your hands and knees, tuck your chin and arch your back, then slowly sit back toward your heels, dropping your shoulders toward the floor.',d:'As advised',img:'pattern%202%20exercises/ex4.jpg',cap:'top'},
+    {n:'Knees to chest stretch',h:'Lie on your back, knees bent and feet flat. Raise one knee to your chest, then the other to meet it, hold your knees and pull gently while pressing your lower back into the floor with your stomach muscles.',d:'As advised',img:'pattern%202%20exercises/ex5.jpg',cap:'top'}],
+ 3:[{n:'&ldquo;Z&rdquo; lie',h:'Lie on your back with your head on a pillow and your feet up on a chair, knees bent more than 90 degrees. You can support your buttocks with a pillow.',d:'Rest as advised',img:'pattern%203%20exercises/ex1.jpg',cap:'top'},
+    {n:'Prone lie',h:'Lie on your stomach with three pillows supporting your hips. You can support your hips and head with pillows.',d:'Rest as advised',img:'pattern%203%20exercises/ex2.jpg',cap:'top'},
+    {n:'Prone lie on elbows',h:'Lie face down on the floor or a bed, bend your elbows, and relax.',d:'Rest as advised',img:'pattern%203%20exercises/ex3.jpg',cap:'top'},
+    {n:'Rest on hands and knees',h:'Kneel on your hands and knees on the floor or a bed and let your back relax.',d:'Rest as advised',img:'pattern%203%20exercises/ex4.jpg',cap:'top'},
+    {n:'Lumbar night roll',h:'Wrap a night roll securely around your waist while sleeping to support your spine.',d:'Use overnight',img:'pattern%203%20exercises/ex5.jpg',cap:'top'},
+    {n:'Lumbar support when sitting',h:'Sit in a straight backed chair with a lumbar roll supporting the curve of your lower back.',d:'Use as advised',img:'pattern%203%20exercises/ex6.jpg'}],
+ 4:[{n:'Single leg abdominal press',h:'Lie on your back with knees bent and your back neutral, and tighten your abdominal muscles. Lift one leg so your hip and knee are at 90 degrees, then press one hand against that knee while pulling the knee toward your hand, keeping your elbow straight. Switch legs.',d:'As advised',img:'pattern%204%20exercises/ex1.jpg',cap:'top'},
+    {n:'Pelvic tilt',h:'Lie on your back, knees bent and feet flat hip width apart, arms at your sides. Tighten your abdominal muscles and press the small of your back into the floor so the front of your pelvis tilts up.',d:'As advised',img:'pattern%204%20exercises/ex2.jpg',cap:'top'},
+    {n:'Sitting flexion',h:'Sit with your feet flat, about hip width apart. Lean forward to rest your stomach on your lap and let your arms and head hang toward your feet.',d:'As advised',img:'pattern%204%20exercises/ex3.jpg'},
+    {n:'Cat and camel',h:'Kneel on your hands and knees. Arch your back and let your head drop slightly while tightening your stomach and buttock muscles, then let your back sag toward the floor with your arms straight.',d:'As advised',img:'pattern%204%20exercises/ex4.jpg',cap:'top'},
+    {n:'Partial sit up (crunch)',h:'Lie on your back with knees bent, feet flat and arms crossed over your chest. Using your lower stomach muscles, raise your head and shoulders just until your shoulder blades lift off the floor.',d:'As advised',img:'pattern%204%20exercises/ex5.jpg',cap:'top'}]
+};
+function classify(){
+  // LEG-DOMINANT ARM. Constant vs intermittent is the primary P3 vs P4 split
+  // (CORE Back Tool / Hamilton Hall: P3 = constant compressed-nerve pain, P4 = intermittent claudication).
+  if(ans.loc==='leg'){
+    if(ans.dur==='constant') return 3;                 // constant leg pain => irritable/compressed nerve, rest first
+    if(ans.dur==='intermittent'){
+      // intermittent leg pain: claudication, unless it still reads as acutely irritable -> stay rest-first
+      if(ans.worse==='any' || ans.better==='rest') return 3;
+      return 4;
+    }
+    // duration not answered (safety fallback to the prior directional logic, biased rest-first)
+    if(ans.worse==='any' || ans.better==='rest') return 3;
+    if(ans.worse==='walk' || ans.better==='flex') return 4;
+    return 3;
+  }
+  // BACK-DOMINANT ARM (unchanged)
+  if(ans.worse==='flex' || ans.better==='ext') return 1; // worse forward / better backward => extension
+  if(ans.worse==='ext' || ans.worse==='walk' || ans.better==='flex') return 2; // worse backward/standing / better forward => flexion
+  return 1;
+}
+function finish(){
+  var p=classify();var d=PATTERNS[p];
+  try{localStorage.setItem('claraBackPattern',String(p));}catch(e){}
+  var seriesLink='../Back%20Exercise%20Series/Back-Exercise-Series.html#pattern'+p;
+  var urgent=(p===3)?'<div class="callout terra"><b>One more thing.</b> Because your pain is mainly in the leg, please message your clara care team before starting exercises. Early physiotherapy makes a real difference in this pattern, and we want a clinician to check the nerve.</div>':'';
+  var shortName=d.name.replace('The ','').replace(' pattern','');
+  shortName=shortName.charAt(0).toUpperCase()+shortName.slice(1);
+  var html=''+
+   '<div class="res-card"><div class="rp">Your result</div><h2>Your back pattern is <span style="color:#F4C9A8">'+shortName+'</span></h2><div class="rdesc">'+d.desc+'</div></div>'+
+   (p===3?'<div class="restbanner"><h3>These are all <span>REST</span> positions</h3><p>Use them to settle the pain and offload the nerve. In this pattern there is no exercise, rest is the treatment.</p></div>':'')+
+   '<div class="res-grid">'+
+     '<div class="res-box"><div class="k">What it looks like</div><ul>'+d.sym.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>'+
+     '<div class="res-box move"><div class="k">What tends to help</div><ul>'+d.move.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>'+
+   '</div>'+
+   urgent+
+   (p!==1&&p!==4?'<div class="callout sage">'+d.note+'</div>':'')+
+   '<h3 class="exhead">'+(p===3?'Your rest positions':'Your '+shortName.toLowerCase()+(p===4?' exercises':' positions and exercises'))+'</h3>'+
+   '<p class="exsub">'+(
+     p===1?'These are the positions and exercises from the Saskatchewan Health Authority Pattern 1 guide. Start gently and do what feels comfortable, and stop any exercise that sends pain further down your leg.':
+     p===2?'These are the positions and exercises from the Saskatchewan Health Authority Pattern 2 guide. This pattern prefers forward bending, so avoid arching your back backward.':
+     p===3?'These are the rest positions from the Saskatchewan Health Authority Pattern 3 guide. In this acute phase there is no place for repeated exercise. Use the position that most reduces your leg pain, and arrange a clinician review.':
+     'These are the exercises from the Saskatchewan Health Authority Pattern 4 guide. The long term goal is a steady core strengthening routine. When leg pain comes on, sit and lean forward until it settles.'
+   )+'</p>'+
+   (p!==3?'<div class="advice"><b>Try a few of these for 5 to 10 minutes a day,</b> whatever feels comfortable. Let your pain be your guide and ease off if anything sharpens or travels down your leg. Even a few minutes most days can make a real difference to your back.</div>':'')+
+   '<div class="exsolo" id="exsolo"><div class="soloprog"><div class="soloprog-top"><span id="soloNum">1</span> of <span id="soloTot">'+EXS[p].length+'</span> &middot; <span id="soloPct">'+Math.round(1/EXS[p].length*100)+'%</span> '+(p===3?'viewed':'complete')+'</div><div class="exbar"><i id="soloBar"></i></div></div><div class="soloview" id="soloView"></div></div>'+
+   '<button class="btn full ghost" style="margin-top:8px" onclick="restart()">Redo my back pattern check</button>';
+  document.getElementById('quiz').style.display='none';
+  var r=document.getElementById('result');r.innerHTML=html;r.style.display='block';
+  SOLO={p:p,idx:0,total:EXS[p].length};soloGo(0,1);
+  view='result';persist();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function exKey(p){return 'claraBackExDone_p'+p;}
+function loadEx(p){try{return JSON.parse(localStorage.getItem(exKey(p))||'[]');}catch(e){return [];}}
+function saveEx(p,a){try{localStorage.setItem(exKey(p),JSON.stringify(a));}catch(e){}}
+function updateExProg(p){var cards=document.querySelectorAll('#result .exr');var total=cards.length,done=0;cards.forEach(function(c){if(c.classList.contains('done'))done++;});var de=document.getElementById('exDone');if(de)de.textContent=done;var te=document.getElementById('exTotal');if(te)te.textContent=total;var f=document.getElementById('exbarfill');if(f)f.style.width=(total?Math.round(done/total*100):0)+'%';return done===total&&total>0;}
+function toggleEx(btn,p,i){var card=btn.closest('.exr');card.classList.toggle('done');var a=loadEx(p);a[i]=card.classList.contains('done')?1:0;saveEx(p,a);var all=updateExProg(p);if(all&&p!==3)completeSet(p);}
+function applyExState(p){var a=loadEx(p);var cards=document.querySelectorAll('#result .exr');cards.forEach(function(c,n){if(a[n])c.classList.add('done');});updateExProg(p);}
+/* gamified sets, resets each day */
+function todayKey(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function setsKey(p){return 'claraBackSets_p'+p;}
+function loadSets(p){try{var o=JSON.parse(localStorage.getItem(setsKey(p))||'null');if(!o||o.date!==todayKey())return {date:todayKey(),count:0};return o;}catch(e){return {date:todayKey(),count:0};}}
+function saveSets(p,o){try{localStorage.setItem(setsKey(p),JSON.stringify(o));}catch(e){}}
+function renderSets(p){var o=loadSets(p);var n=document.getElementById('setCount');if(n)n.textContent=o.count;var sub=document.getElementById('setSub');if(sub)sub.textContent=o.count===0?'Finish all the exercises to log your first set. Resets each day.':(o.count===1?'One set done today, lovely work. Resets each day.':o.count+' sets done today, keep it going. Resets each day.');}
+/* Pattern 4 guided slider: one exercise at a time, advance by marking complete */
+var SOLO={p:4,idx:0,total:0};
+function soloProg(i){var pct=Math.round((i+1)/SOLO.total*100);document.getElementById('soloNum').textContent=(i+1);document.getElementById('soloPct').textContent=pct+'%';document.getElementById('soloBar').style.width=pct+'%';}
+function soloGo(i,dir){SOLO.idx=i;var rest=(SOLO.p===3);var e=EXS[SOLO.p][i];var last=(i===SOLO.total-1);
+  var nextLbl=last?(rest?'Done':'Finish and log set'):(rest?'Next position':'Mark complete');
+  var html='<div class="solocard'+(dir<0?' rev':'')+'">'
+    +'<div class="soloimg"><img src="'+e.img+'" alt="'+e.n+'"></div>'
+    +'<div class="solobody"><h4>'+(i+1)+') '+e.n+'</h4><p>'+e.h+'</p></div>'
+    +'<div class="soloctrl">'
+    +(i>0?'<button class="soloback" onclick="soloGo('+(i-1)+',-1)">&#8592; Back</button>':'<span></span>')
+    +'<button class="solonext" onclick="soloDone()">'+nextLbl+' &#8594;</button>'
+    +'</div></div>';
+  document.getElementById('soloView').innerHTML=html;soloProg(i);}
+function soloDone(){if(SOLO.idx<SOLO.total-1){soloGo(SOLO.idx+1,1);}else{soloComplete();}}
+function soloComplete(){var p=SOLO.p;
+  if(p===3){
+    document.getElementById('soloView').innerHTML='<div class="solodone"><div class="bigcheck">&#10003;</div><h3>You have been through them all</h3><p>Return to whichever rest position settles your leg pain the most, as often as you need.</p><button class="solonext" onclick="soloGo(0,1)">Review them again &#8594;</button></div>';
+  } else {
+    var o=loadSets(p);o.count++;saveSets(p,o);
+    document.getElementById('soloView').innerHTML='<div class="solodone"><div class="bigcheck">&#10003;</div><h3>Set complete</h3><p>That makes <span class="solonum2">'+o.count+'</span> set'+(o.count>1?'s':'')+' today. This resets each day.</p><button class="solonext" onclick="soloGo(0,1)">Do another set &#8594;</button></div>';
+  }
+  document.getElementById('soloNum').textContent=SOLO.total;document.getElementById('soloPct').textContent='100%';document.getElementById('soloBar').style.width='100%';}
+function completeSet(p){var o=loadSets(p);o.count++;saveSets(p,o);var n=document.getElementById('setCount');if(n)n.textContent=o.count;var sub=document.getElementById('setSub');if(sub)sub.textContent='✨ Set complete. That makes '+o.count+' today. Starting a fresh set...';
+  setTimeout(function(){saveEx(p,[]);document.querySelectorAll('#result .exr').forEach(function(c){c.classList.remove('done');});updateExProg(p);renderSets(p);},1600);}
+/* restore the same view after a page refresh */
+(function init(){
+  var st=null;try{st=JSON.parse(sessionStorage.getItem('claraBackQuiz')||'null');}catch(e){}
+  if(!st){setBar();return;}
+  ans=st.ans||{loc:null,worse:null,better:null,dur:null};
+  ['loc','worse','better','dur'].forEach(function(q){if(ans[q]){var o=document.querySelector('.opt[data-q="'+q+'"][data-v="'+ans[q]+'"]');if(o)o.classList.add('sel');var bel=document.getElementById({loc:'b1',worse:'b2',better:'b3',dur:'b4'}[q]);if(bel)bel.disabled=false;}});
+  updateCounts();
+  if(st.view==='result'){finish();return;}
+  if(st.view==='stop'){document.getElementById('quiz').style.display='none';document.getElementById('stopScreen').style.display='block';setBar();return;}
+  goStep(st.step||0);
+})();
+</script>
+</body>
+</html>

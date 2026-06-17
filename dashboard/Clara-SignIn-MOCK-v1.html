@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clara · sign in</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#24382E; --sage-pale:#EAF1ED;
+  --terra:#C97257; --terra-deep:#A35540; --terra-pale:#FBF2ED;
+  --ink:#1F2421; --grey:#474D48; --muted:#777C76;
+  --cream:#F7F5F0; --cream-soft:#F2EFE8; --line:#E5E1D8; --line-strong:#D9D4C8;
+  --shadow:0 10px 30px rgba(31,36,33,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--cream)}
+a{text-decoration:none;color:inherit}
+
+.auth{display:grid;grid-template-columns:1.05fr .95fr;min-height:100vh}
+@media(max-width:880px){.auth{grid-template-columns:1fr}.auth .pane-img{min-height:46vh}}
+
+/* LEFT image pane */
+.pane-img{position:relative;overflow:hidden;background:var(--sage-dark)}
+.pane-img .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 78%;opacity:0;transition:opacity 1.5s cubic-bezier(.4,0,.2,1)}
+.pane-img .slide.on{opacity:1}
+.pane-img .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,56,46,.30) 0%,rgba(36,56,46,.05) 26%,rgba(36,56,46,.40) 62%,rgba(36,56,46,.72) 100%)}
+.brandmark{position:absolute;top:34px;left:38px;z-index:3;font-family:Georgia,serif;font-weight:700;font-size:30px;color:#fff;letter-spacing:-.5px}
+.brandmark .dot{color:var(--terra)}
+.quote{position:absolute;left:48px;right:44px;top:50%;z-index:3;color:#fff;transition:opacity .7s ease}
+.quote .q{font-family:Georgia,serif;font-size:33px;line-height:1.32;font-weight:700;letter-spacing:-.3px;max-width:26ch;text-shadow:0 2px 22px rgba(31,36,33,.6)}
+.byline{position:absolute;left:42px;bottom:46px;z-index:3;color:#fff}
+.byline .who{font-size:19px;font-weight:800;text-shadow:0 1px 12px rgba(31,36,33,.5)}
+.byline .role{font-size:14px;color:#E9F0EB;margin-top:4px;line-height:1.5;text-shadow:0 1px 12px rgba(31,36,33,.5)}
+.qnav{position:absolute;right:40px;bottom:44px;z-index:3;display:flex;gap:14px}
+.qnav button{width:50px;height:50px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);background:rgba(255,255,255,.10);color:#fff;font-size:18px;cursor:pointer;transition:all .15s;backdrop-filter:blur(2px)}
+.qnav button:hover{background:rgba(255,255,255,.22)}
+.qdots{position:absolute;left:42px;bottom:118px;z-index:3;display:flex;gap:8px}
+.qdots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45)}
+.qdots i.on{background:#fff;width:22px;border-radius:5px}
+
+/* RIGHT form pane */
+.pane-form{background:#fff;display:flex;align-items:center;justify-content:center;padding:48px 40px}
+.form-wrap{width:100%;max-width:392px}
+.fh{font-family:Georgia,serif;font-size:33px;font-weight:700;letter-spacing:-.5px;color:var(--ink)}
+.fsub{font-size:15.5px;color:var(--muted);margin-top:8px;line-height:1.5}
+
+.tabs{display:flex;gap:6px;background:var(--cream-soft);border:1px solid var(--line);border-radius:12px;padding:5px;margin:26px 0 8px}
+.tabs button{flex:1;border:none;background:none;font:inherit;font-size:14.5px;font-weight:700;color:var(--muted);padding:9px 0;border-radius:8px;cursor:pointer;transition:all .15s}
+.tabs button.on{background:#fff;color:var(--sage-dark);box-shadow:0 1px 3px rgba(31,36,33,.10)}
+
+.field{margin-top:20px}
+.field label{display:block;font-size:13.5px;font-weight:700;color:var(--grey);margin-bottom:7px}
+.field input{width:100%;border:1px solid var(--line-strong);border-radius:11px;background:var(--cream);font:inherit;font-size:15.5px;color:var(--ink);padding:13px 15px;transition:all .15s}
+.field input::placeholder{color:#A7ABA3}
+.field input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px var(--sage-pale);background:#fff}
+
+.btn-primary{width:100%;margin-top:26px;background:var(--sage-dark);color:#fff;border:none;font:inherit;font-size:16px;font-weight:700;padding:15px;border-radius:12px;cursor:pointer;transition:all .15s}
+.btn-primary:hover{background:var(--sage);box-shadow:0 0 0 3px var(--sage),0 14px 30px rgba(47,71,59,.22);transform:translateY(-1px)}
+
+.divider{display:flex;align-items:center;gap:14px;margin:22px 0 18px;color:var(--muted);font-size:13px;font-weight:700}
+.divider:before,.divider:after{content:"";flex:1;height:1px;background:var(--line)}
+
+.social{display:flex;flex-direction:column;gap:11px}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;border:1.5px solid var(--line-strong);background:#fff;font:inherit;font-size:15px;font-weight:700;color:var(--ink);padding:12px;border-radius:12px;cursor:pointer;transition:all .15s}
+.sbtn:hover{border-color:var(--sage);background:var(--cream)}
+.sbtn svg,.sbtn .ic{width:20px;height:20px;flex-shrink:0;display:block}
+
+.foot-note{text-align:center;font-size:14px;color:var(--muted);margin-top:24px}
+.foot-note a{color:var(--sage-dark);font-weight:800;text-decoration:underline}
+.legal{text-align:center;font-size:12px;color:#A7ABA3;margin-top:30px;line-height:1.6}
+.legal a{text-decoration:underline}
+.backhome{position:absolute;top:34px;right:38px;z-index:5;font-size:14px;font-weight:700;color:var(--muted)}
+.pane-form{position:relative}
+.backhome:hover{color:var(--sage-dark)}
+</style>
+</head>
+<body>
+<div class="auth">
+
+  <!-- LEFT: Jane + quote -->
+  <div class="pane-img">
+    <img class="slide on" src="Clara%20Home%20page/Auth/jane-auth.jpg" alt="A calm person living well with chronic pain">
+    <img class="slide" src="Clara%20Home%20page/Auth/kim-auth.jpg" alt="A calm person living well with chronic pain">
+    <img class="slide" src="Clara%20Home%20page/Auth/lamar-auth.jpg" alt="A calm person living well with chronic pain">
+    <img class="slide" src="Clara%20Home%20page/Auth/nadia-auth.jpg" alt="A calm person living well with chronic pain">
+    <div class="veil"></div>
+    <a class="brandmark" href="Clara-Homepage-MOCK-v1.html">clara</a>
+    <div class="quote" id="quoteBox">
+      <div class="q" id="qtext">&ldquo;For the first time, I felt like my pain was truly heard and finally understood. That clarity changed everything.&rdquo;</div>
+    </div>
+    <div class="qdots"><i class="on"></i><i></i><i></i><i></i></div>
+    <div class="qnav"><button aria-label="Previous" onclick="step(-1)">&larr;</button><button aria-label="Next" onclick="step(1)">&rarr;</button></div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="pane-form">
+    <a class="backhome" href="Clara-Homepage-MOCK-v1.html">&larr; Back to site</a>
+    <div class="form-wrap">
+      <h1 class="fh" id="title">Create your account</h1>
+      <p class="fsub" id="subtitle">Start your clara plan. No appointments. No calls.</p>
+
+      <div class="tabs">
+        <button class="on" id="tabSignup" onclick="setMode('signup')">Sign up</button>
+        <button id="tabLogin" onclick="setMode('login')">Sign in</button>
+      </div>
+
+      <div class="field" id="nameField">
+        <label>Full name</label>
+        <input type="text" placeholder="Jane Miller">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" placeholder="you@email.com">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" placeholder="Create a password">
+      </div>
+
+      <a href="Clara-Dashboard-MOCK-v1.html"><button class="btn-primary" id="primaryBtn">Create account</button></a>
+
+      <div class="divider">or continue with</div>
+
+      <div class="social">
+        <a href="Clara-Dashboard-MOCK-v1.html"><button class="sbtn"><svg viewBox="0 0 48 48" class="ic"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35.5 24 35.5c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 19.7-8 19.7-20 0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 12.5 24 12.5c3 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.3 0-9.7-3.4-11.3-8.1l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.6l6.2 5.2C40.9 36.3 44 30.7 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg>Continue with Google</button></a>
+        <a href="Clara-Dashboard-MOCK-v1.html"><button class="sbtn"><svg viewBox="0 0 24 24" class="ic" fill="#000"><path d="M16.36 12.78c.02 2.5 2.2 3.33 2.22 3.34-.02.06-.35 1.2-1.15 2.37-.69 1.02-1.41 2.03-2.55 2.05-1.11.02-1.47-.66-2.74-.66-1.27 0-1.67.64-2.72.68-1.09.04-1.93-1.1-2.63-2.12-1.43-2.07-2.52-5.85-1.05-8.41.73-1.27 2.03-2.07 3.45-2.09 1.07-.02 2.09.72 2.74.72.66 0 1.89-.89 3.19-.76.54.02 2.07.22 3.05 1.65-.08.05-1.82 1.06-1.8 3.16M14.28 5.4c.58-.7.97-1.68.86-2.65-.83.03-1.84.55-2.44 1.25-.54.62-1.01 1.61-.88 2.56.93.07 1.88-.47 2.46-1.16"/></svg>Continue with Apple</button></a>
+      </div>
+
+      <p class="foot-note" id="footNote">Already have an account? <a href="#" onclick="setMode('login');return false">Sign in</a></p>
+      <p class="legal">By continuing you agree to clara&rsquo;s <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.<br>Clara Relief Inc. · Ontario, Canada</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var slides = document.querySelectorAll('.pane-img .slide');
+var dots = document.querySelectorAll('.qdots i');
+var quoteBox = document.getElementById('quoteBox');
+var qtext = document.getElementById('qtext');
+var quotes = [
+  '“For the first time, I felt like my pain was truly heard and finally understood. That clarity changed everything.”',
+  '“For years I was told it was just stress. clara was the first to actually explain what was going on.”',
+  '“Finally, a real plan built around me. I knew exactly what to do, and exactly why it works.”',
+  '“I have my mornings back. I can move, keep up with my grandkids, and feel like myself again.”'
+];
+var cur = 0, timer;
+function show(i){
+  var prev = cur;
+  cur = (i + slides.length) % slides.length;
+  if(cur === prev){ slides[cur].classList.add('on'); return; }
+  // layer the incoming image above the current one and fade it in;
+  // keep the previous one visible underneath, then hide it once covered.
+  slides.forEach(function(s,n){ s.style.zIndex = (n===cur) ? '2' : (n===prev ? '1' : '0'); });
+  slides[cur].classList.add('on');
+  var p = slides[prev];
+  clearTimeout(p._hide);
+  p._hide = setTimeout(function(){ p.classList.remove('on'); }, 1600);
+  dots.forEach(function(d,n){ d.classList.toggle('on', n===cur); });
+  quoteBox.style.opacity = 0;
+  setTimeout(function(){ qtext.innerHTML = quotes[cur]; quoteBox.style.opacity = 1; }, 650);
+}
+function step(d){ show(cur + d); restart(); }
+function restart(){ clearInterval(timer); timer = setInterval(function(){ show(cur+1); }, 5000); }
+restart();
+
+function setMode(mode){
+  var signup = mode === 'signup';
+  document.getElementById('title').textContent = signup ? 'Create your account' : 'Welcome back';
+  document.getElementById('subtitle').textContent = signup ? 'Start your clara plan. No appointments. No calls.' : 'Sign in to your clara dashboard.';
+  document.getElementById('primaryBtn').textContent = signup ? 'Create account' : 'Sign in';
+  document.getElementById('nameField').style.display = signup ? 'block' : 'none';
+  document.getElementById('tabSignup').classList.toggle('on', signup);
+  document.getElementById('tabLogin').classList.toggle('on', !signup);
+  document.getElementById('footNote').innerHTML = signup
+    ? 'Already have an account? <a href="#" onclick="setMode(\'login\');return false">Sign in</a>'
+    : 'New to clara? <a href="#" onclick="setMode(\'signup\');return false">Create an account</a>';
+}
+</script>
+</body>
+</html>

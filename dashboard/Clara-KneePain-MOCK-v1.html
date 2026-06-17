@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clara · knee pain care</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#24382E; --sage-soft:#D7E3DB; --sage-pale:#EAF1ED;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#474D48; --muted:#666C67;
+  --cream:#F7F5F0; --cream-soft:#F2EFE8; --line:#E8E4DC; --line-strong:#D9D4C8; --gold:#C8A875;
+  --shadow-sm:0 1px 3px rgba(31,36,33,.06); --shadow:0 10px 30px rgba(31,36,33,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--cream);color:var(--ink);font-size:17px;line-height:1.6}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+a{text-decoration:none;color:inherit}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1240px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;gap:30px}
+.logo{font-family:Georgia,serif;font-weight:700;font-size:30px;color:var(--sage-dark);letter-spacing:-.5px}
+.nav-links{display:flex;gap:26px;margin-left:14px}
+.nav-links a{font-size:15.5px;font-weight:600;color:var(--grey);transition:color .15s}
+.nav-links a:hover{color:var(--sage-dark)}
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd-trigger{font:inherit;font-size:15.5px;font-weight:600;color:var(--grey);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:0;transition:color .15s}
+.nav-dd:hover .nav-dd-trigger{color:var(--sage-dark)}
+.nav-dd-trigger svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .2s}
+.nav-dd:hover .nav-dd-trigger svg{transform:rotate(180deg)}
+.nav-dd-panel{position:absolute;top:calc(100% + 16px);left:-18px;min-width:300px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 48px rgba(31,36,33,.17);padding:10px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:all .18s;z-index:200}
+.nav-dd-panel:before{content:"";position:absolute;top:-16px;left:0;right:0;height:16px}
+.nav-dd:hover .nav-dd-panel{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dd-panel a{display:flex;flex-direction:column;gap:2px;padding:11px 15px;border-radius:11px;transition:background .15s}
+.nav-dd-panel a:hover{background:var(--cream-soft)}
+.nav-dd-panel a b{font-size:15.5px;font-weight:700;color:var(--ink)}
+.nav-dd-panel a span{font-size:12.5px;color:var(--muted)}
+.nav-cta{margin-left:auto;display:flex;align-items:center;gap:16px}
+.nav-cta .signin{font-size:15.5px;font-weight:600;color:var(--grey)}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--sage-dark);color:#fff;font-size:16px;font-weight:700;padding:13px 26px;border-radius:28px;border:none;cursor:pointer;transition:all .15s}
+.btn:hover{box-shadow:0 0 0 3px var(--sage),0 14px 30px rgba(47,71,59,.24);transform:translateY(-2px);background:var(--sage)}
+.btn.light{background:#fff;color:var(--sage-dark);border:1.5px solid var(--sage)}
+.btn.light:hover{background:var(--sage-pale)}
+@media(max-width:900px){.nav-links{display:none}}
+
+/* sections */
+.sec{padding:88px 0}
+.sec-eyebrow{font-size:14px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:14px}
+.sec h2{font-family:Georgia,serif;font-size:44px;font-weight:700;letter-spacing:-.5px;color:var(--ink);line-height:1.15}
+.sec h2 em{font-style:italic;color:var(--sage)}
+.sec .lead{font-size:18.5px;color:var(--grey);max-width:64ch;margin-top:16px;line-height:1.7}
+
+/* hero — blended Bill cutout */
+.khero{position:relative;overflow:hidden;background:linear-gradient(158deg,#F7F5F0 0%,#EEF1EA 52%,#DFE7DC 100%);border-bottom:1px solid var(--line);min-height:600px}
+.khero .wrap{position:relative;z-index:3}
+.khero-copy{max-width:600px;padding:88px 0 100px}
+.khero h1{font-family:Georgia,serif;font-size:60px;font-weight:700;line-height:1.04;letter-spacing:-1.4px;color:var(--ink)}
+.khero h1 em{font-style:italic;color:var(--sage)}
+.khero .sub{font-size:20px;color:var(--grey);margin:22px 0 0;line-height:1.65;max-width:52ch}
+.khero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.chip-ca{display:inline-flex;align-items:center;gap:9px;margin-top:26px;background:rgba(255,255,255,.82);border:1px solid var(--line-strong);border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:700;color:var(--sage-dark)}
+.chip-ca .leaf{color:#C0392B;font-size:15px}
+.bill{position:absolute;right:12%;bottom:0;height:96%;width:auto;z-index:2;pointer-events:none}
+@media(max-width:1080px){.bill{right:-10%;height:80%;opacity:.4}.khero-copy{max-width:none;padding:64px 0 76px}}
+@media(max-width:760px){.bill{display:none}.khero{min-height:0}.khero h1{font-size:44px}}
+
+/* trust band */
+.trust{background:linear-gradient(135deg,var(--sage-dark),var(--sage-deep));color:#fff;padding:46px 0}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;text-align:center}
+@media(max-width:760px){.trust-grid{grid-template-columns:1fr}}
+.trust .n{font-family:Georgia,serif;font-size:40px;font-weight:700;color:#F4C9A8}
+.trust .d{font-size:14.5px;color:#DCE7E0;margin-top:6px;line-height:1.5}
+
+/* knee explainer cards */
+.phase{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:42px}
+@media(max-width:860px){.phase{grid-template-columns:1fr}}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:var(--shadow-sm)}
+.pcard .pic{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px;background:var(--cream-soft);margin:-4px 0 18px}
+.pcard .pn{font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-deep)}
+.pcard h4{font-family:Georgia,serif;font-size:21px;font-weight:700;margin:7px 0 8px;color:var(--ink)}
+.pcard p{font-size:15px;color:var(--grey);line-height:1.6}
+
+/* treatments */
+.tx{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px}
+@media(max-width:920px){.tx{grid-template-columns:1fr}}
+.txcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px 30px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:all .15s}
+.txcard:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.16);transform:translateY(-4px)}
+.txcard .ti{width:52px;height:52px;border-radius:14px;background:var(--sage-pale);display:grid;place-items:center;margin-bottom:18px}
+.txcard .ti svg{width:28px;height:28px;stroke:var(--sage-dark);fill:none;stroke-width:1.8}
+.txcard .tw{font-size:12.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-deep)}
+.txcard h3{font-family:Georgia,serif;font-size:25px;font-weight:700;margin:6px 0 12px;color:var(--ink)}
+.txcard .tp{font-size:15.5px;color:var(--grey);line-height:1.6;margin-bottom:18px}
+.txcard .meds{list-style:none;margin-top:auto}
+.txcard .meds.nudge-up{margin-top:4px}
+.txcard .meds li{position:relative;padding-left:24px;font-size:15px;color:var(--ink);line-height:1.5;margin-bottom:11px}
+.txcard .meds li:before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%;background:var(--sage)}
+.txcard .meds li span{color:var(--muted);font-size:13.5px}
+.txcard .tlink{margin-top:18px;font-size:14.5px;font-weight:700;color:var(--terra)}
+.txcard .meds.pills li{display:flex;align-items:center;gap:14px;padding-left:0;min-height:42px;margin-bottom:20px}
+.txcard .meds.pills li:last-child{margin-bottom:0}
+.txcard .meds.pills li:before{display:none}
+.txcard .meds.pills .pm{flex:0 0 52px;width:52px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 9px rgba(31,36,33,.17))}
+.txcard .meds.pills .mt{font-size:15px;color:var(--ink);line-height:1.5}
+.txcard .meds.pills .mt span{color:var(--muted);font-size:13.5px}
+.txcard.alt{background:linear-gradient(160deg,var(--sage-dark),var(--sage-deep));border:none}
+.txcard.alt .ti{background:rgba(255,255,255,.12)} .txcard.alt .ti svg{stroke:#F4C9A8}
+.txcard.alt .tw{color:#F4C9A8}.txcard.alt h3{color:#fff}.txcard.alt .tp{color:#E4ECE6}
+.txcard.alt .meds li{color:#fff}.txcard.alt .meds li:before{background:#F4C9A8}.txcard.alt .meds li span{color:#BFD0C6}
+.cream-row{display:flex;align-items:center;gap:18px;margin-top:6px}
+.cream-bottle{flex:0 0 78px;width:78px;height:auto;display:block;filter:drop-shadow(0 12px 24px rgba(0,0,0,.32))}
+.cream-body{flex:1;min-width:0}
+.cream-body .tp{margin-bottom:16px}
+.cream-body .meds{margin-top:0}
+.txcard.alt .tlink{color:#F4C9A8}
+.tx-note{text-align:center;font-size:20.5px;color:var(--grey);max-width:74ch;margin:34px auto 0;line-height:1.55}
+
+/* education / exercise cards */
+.edu{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px}
+@media(max-width:920px){.edu{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.edu{grid-template-columns:1fr}}
+.ecard{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:all .15s}
+.ecard:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.18);transform:translateY(-5px)}
+.ecard img{width:100%;height:188px;object-fit:cover;display:block}
+.ecard .eb{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column}
+.ecard .et{font-size:11.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-deep)}
+.ecard h3{font-family:Georgia,serif;font-size:21px;font-weight:700;margin:7px 0 7px;color:var(--ink)}
+.ecard p{font-size:14.5px;color:var(--grey);line-height:1.55;flex:1}
+.ecard .ego{margin-top:14px;font-size:14px;font-weight:700;color:var(--terra)}
+
+/* how it works circles */
+.hiw{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:56px}
+@media(max-width:860px){.hiw{grid-template-columns:1fr;gap:46px;max-width:400px;margin-left:auto;margin-right:auto}}
+.hiwc{text-align:center}
+.hiwc .circ{position:relative;width:280px;height:280px;margin:0 auto}
+.hiwc .circ img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--cream);box-shadow:0 0 0 1px var(--line),0 16px 40px rgba(31,36,33,.13)}
+.hiwc .num{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);width:51px;height:51px;border-radius:50%;background:var(--sage-dark);color:#fff;font-family:Georgia,serif;font-weight:700;font-size:30px;display:grid;place-items:center;border:4px solid var(--cream)}
+.hiwc h3{font-size:20px;font-weight:800;color:var(--ink);margin:34px 0 8px}
+.hiwc p{font-size:15.5px;color:var(--grey);line-height:1.6;max-width:34ch;margin:0 auto}
+.promise{margin-top:54px;text-align:center;font-family:Georgia,serif;font-size:25px;font-weight:700;color:var(--sage-dark)}
+.promise span{color:var(--terra)}
+
+/* evidence split */
+.evsplit{display:grid;grid-template-columns:.92fr 1.08fr;gap:58px;align-items:center}
+@media(max-width:920px){.evsplit{grid-template-columns:1fr;gap:38px}}
+.evphoto img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:26px;box-shadow:var(--shadow);display:block}
+.evlist{margin-top:34px}
+.evrow{display:flex;align-items:flex-start;gap:18px;padding:18px 0;border-top:1px solid var(--line-strong)}
+.evrow:first-child{border-top:none;padding-top:0}
+.evrow .en{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:var(--sage-dark);color:#fff;font-family:Georgia,serif;font-weight:700;font-size:18px;display:grid;place-items:center}
+.evrow h4{font-size:18.5px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.evrow p{font-size:15px;color:var(--grey);line-height:1.55}
+
+/* pricing */
+.price{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:980px;margin:46px auto 0;align-items:stretch}
+@media(max-width:760px){.price{grid-template-columns:1fr}}
+.pcardx{background:#fff;border:1px solid var(--line-strong);border-radius:24px;padding:38px 36px;box-shadow:var(--shadow-sm)}
+.pcardx .pl{font-size:13px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--terra-deep)}
+.pcardx .amt{font-family:Georgia,serif;font-size:54px;font-weight:700;color:var(--ink);margin:10px 0 2px}
+.pcardx .amt small{font-size:18px;color:var(--muted);font-family:inherit;font-weight:600}
+.pcardx ul{list-style:none;margin-top:20px}
+.pcardx li{position:relative;padding-left:28px;font-size:15.5px;color:var(--ink);line-height:1.5;margin-bottom:12px}
+.pcardx li:before{content:"\2713";position:absolute;left:0;top:0;color:var(--sage-dark);font-weight:800}
+.pcardx.dark{background:linear-gradient(160deg,var(--sage-dark),var(--sage-deep));border:none;color:#fff}
+.pcardx.dark .pl{color:#F4C9A8}.pcardx.dark .amt{color:#fff}.pcardx.dark .amt small{color:#BFD0C6}
+.pcardx.dark li{color:#EDE9E0}.pcardx.dark li:before{color:#F4C9A8}
+.pcardx .btn{margin-top:24px;width:100%;justify-content:center}
+
+/* faq */
+.faq{max-width:820px;margin:42px auto 0}
+.qa{border-bottom:1px solid var(--line);padding:22px 0}
+.qa summary{font-size:18px;font-weight:700;color:var(--ink);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:after{content:"+";font-size:26px;color:var(--sage);font-weight:400;transition:transform .2s}
+.qa[open] summary:after{transform:rotate(45deg)}
+.qa p{font-size:15.5px;color:var(--grey);line-height:1.7;margin-top:14px}
+
+/* final cta */
+.final{background:#fff;border-top:1px solid var(--line);text-align:center;padding:92px 0}
+.final h2{font-family:Georgia,serif;font-size:52px;font-weight:700;letter-spacing:-1px}
+.final h2 em{font-style:italic;color:var(--sage)}
+.final .sub{font-size:18px;color:var(--grey);margin-top:14px}
+.final-doors{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+.pill-door{background:var(--cream);border:1.5px solid var(--line-strong);border-radius:30px;padding:16px 30px;font-size:17px;font-weight:700;color:var(--ink);cursor:pointer;transition:all .15s}
+.pill-door:hover{border-color:var(--sage);background:var(--sage-pale);box-shadow:0 0 0 3px var(--sage),0 14px 30px rgba(47,71,59,.2);transform:translateY(-3px);color:var(--sage-dark)}
+
+/* footer */
+.foot{background:var(--sage-deep);color:#B9C9BF;padding:46px 0;font-size:14.5px}
+.foot-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.foot .logo{color:#fff;font-size:24px}
+.foot .tag{font-family:Georgia,serif;font-style:italic;color:#DCE7E0;font-size:16px}
+.foot .legal{margin-left:auto;text-align:right;line-height:1.6}
+
+/* ===== ASSESSMENT CONDITION-PICKER MODAL ===== */
+.as-overlay{position:fixed;inset:0;background:rgba(31,36,33,.55);display:none;align-items:center;justify-content:center;z-index:400;padding:24px;opacity:0;transition:opacity .25s ease}
+.as-overlay.on{display:flex;opacity:1}
+.as-modal{background:var(--cream,#F7F5F0);border-radius:30px;max-width:1240px;width:100%;max-height:94vh;overflow-y:auto;padding:54px 52px 46px;position:relative;box-shadow:0 30px 80px rgba(31,36,33,.4);transform:translateY(16px) scale(.985);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.as-overlay.on .as-modal{transform:none}
+.as-x{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid var(--line,#E8E4DC);font-size:20px;color:var(--ink,#1F2421);cursor:pointer;z-index:5;line-height:1}
+.as-x:hover{background:var(--sage-pale,#E7EEE9)}
+.as-head{text-align:center;max-width:700px;margin:0 auto 36px}
+.as-eyebrow{font-size:15px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--terra-deep,#A35540);margin-bottom:11px}
+.as-head h2{font-family:Georgia,serif;font-size:41px;font-weight:700;color:var(--ink,#1F2421);line-height:1.15}
+.as-head h2 em{font-style:italic;color:var(--sage,#4A6B5B)}
+.as-head p{font-size:18px;color:var(--grey,#474D48);margin-top:13px;line-height:1.6}
+.as-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:19px}
+@media(max-width:920px){.as-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.as-grid{grid-template-columns:1fr}}
+.as-card{background:#fff;border:1px solid var(--line,#E8E4DC);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm,0 1px 2px rgba(0,0,0,.05));text-decoration:none}
+.as-card:hover{border-color:var(--sage,#4A6B5B);box-shadow:0 0 0 3px var(--sage,#4A6B5B),0 18px 40px rgba(47,71,59,.22);transform:translateY(-5px)}
+.as-card img{width:100%;height:182px;object-fit:cover;display:block}
+.as-card .ab{padding:18px 20px 21px;flex:1;display:flex;flex-direction:column}
+.as-card h3{font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--ink,#1F2421);margin-bottom:6px}
+.as-card p{font-size:15.5px;color:var(--grey,#474D48);line-height:1.5;flex:1}
+.as-card .go{margin-top:14px;color:var(--terra,#C97257);font-weight:700;font-size:16px}
+.as-foot{text-align:center;font-family:Georgia,serif;font-size:19px;font-weight:700;color:var(--sage-dark,#2F473B);margin-top:30px}
+
+
+/* education peek cards + reader modal (mirrored from homepage) */
+.peeks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:42px}
+@media(max-width:860px){.peeks{grid-template-columns:1fr}}
+.peek{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:all .15s;display:flex;flex-direction:column;text-align:left;box-shadow:var(--shadow-sm)}
+.peek:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
+.peek img{width:100%;height:175px;object-fit:cover;display:block}
+.peek .pb{padding:17px 20px 20px;flex:1;display:flex;flex-direction:column}
+.peek .ptag{font-size:11.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-deep)}
+.peek h3{font-family:Georgia,serif;font-size:19.5px;font-weight:700;margin:7px 0 6px;color:var(--ink)}
+.peek p{font-size:14.5px;color:var(--grey);line-height:1.55;flex:1}
+.peek .pmin{margin-top:13px;font-size:13px;font-weight:700;color:var(--muted)}
+.pk-overlay{position:fixed;inset:0;background:rgba(31,36,33,.55);display:none;align-items:center;justify-content:center;z-index:300;padding:24px}
+.pk-overlay.on{display:flex}
+.pk-modal{background:#fff;border-radius:24px;max-width:860px;width:100%;height:min(820px,90vh);display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden;box-shadow:0 30px 80px rgba(31,36,33,.35);position:relative}
+.pk-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);border:1px solid var(--line);font-size:20px;color:var(--ink);cursor:pointer;z-index:5}
+.pk-x:hover{background:var(--sage-pale)}
+.pk-scroll{overflow-y:auto;overscroll-behavior:contain;position:relative;background:#fff}
+.pk-scroll iframe{width:100%;border:0;display:block;pointer-events:none}
+.pk-fade{position:sticky;bottom:0;height:120px;margin-top:-120px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 88%);pointer-events:none}
+.pk-lock{border-top:1px solid var(--line);background:var(--cream);padding:22px 34px 24px;text-align:center}
+.pk-lock .pl-t{font-family:Georgia,serif;font-size:20px;font-weight:700;color:var(--sage-dark)}
+.pk-lock .pl-s{font-size:14.5px;color:var(--grey);margin:6px 0 14px}
+.pk-lock .btn{font-size:15.5px;padding:11px 24px}
+.pk-lock .later{display:inline-block;margin-left:16px;font-size:14.5px;font-weight:700;color:var(--muted);cursor:pointer}
+.pk-lock .later:hover{color:var(--ink)}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="Clara-Homepage-MOCK-v1.html">clara</a>
+    <div class="nav-links">
+      <div class="nav-dd">
+        <button class="nav-dd-trigger" type="button">Conditions <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-dd-panel">
+          <a href="Clara-KneePain-MOCK-v1.html"><b>Knee pain</b><span>Osteoarthritis and joint pain</span></a>
+          <a href="Clara-BackPain-Quiz-MOCK-v2.html"><b>Back pain</b><span>Low back and muscle pain</span></a>
+          <a href="Clara-Migraine-MOCK-v1.html"><b>Migraines</b><span>Stop and prevent attacks</span></a>
+          <a href="Clara-Neuropathic-Quiz-MOCK-v1.html"><b>Nerve pain</b><span>Burning, tingling nerve pain</span></a>
+        </div>
+      </div>
+      <a href="Clara-TheCream-MOCK-v1.html">The cream</a>
+      <a href="Clara-HowItWorks-MOCK-v1.html">How &amp; why it works</a>
+      <a href="Clara-YourPlan-MOCK-v1.html">Your plan</a>
+      <a href="Clara-AboutUs-MOCK-v1.html">About us</a>
+    </div>
+    <div class="nav-cta">
+      <a class="signin" href="Clara-SignIn-MOCK-v1.html">Sign in</a>
+      <a class="btn" href="Clara-KneeOA-Quiz-MOCK-v1.html">Start your assessment</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="khero">
+  <div class="wrap">
+    <div class="khero-copy">
+      <div class="sec-eyebrow">Knee pain care</div>
+      <h1>Knee pain care that finally <em>makes sense.</em></h1>
+      <p class="sub">Real osteoarthritis care, prescribed online by Canadian doctors. We start with a compound cream made for your knee, the movement that actually works, and a doctor who reviews everything.</p>
+      <div class="khero-cta">
+        <a class="btn" href="Clara-KneeOA-Quiz-MOCK-v1.html">Start your knee assessment &#8594;</a>
+        <a class="btn light" href="#treatments">See treatments</a>
+      </div>
+    </div>
+  </div>
+  <img class="bill" src="Clara%20Home%20page/Knee/bill-knee.png" alt="A man easing his knee pain at home">
+</header>
+
+<!-- TRUST BAND -->
+<section class="trust">
+  <div class="wrap trust-grid">
+    <div><div class="n">Nearly 1 in 2</div><div class="d">will develop symptomatic knee osteoarthritis<span style="display:block;margin-top:5px">lifetime risk by age 85</span></div></div>
+    <div><div class="n">#1</div><div class="d">most common joint disease worldwide, the knee is the most affected joint</div></div>
+    <div><div class="n">24h</div><div class="d">average doctor review after your assessment</div></div>
+  </div>
+</section>
+
+<!-- CLARA DIFFERENCE / EDUCATION WEDGE -->
+<section class="sec wrap">
+  <div style="max-width:760px">
+    <div class="sec-eyebrow">The clara difference</div>
+    <h2>Most places just hand you a pill. We treat the <em>whole knee.</em></h2>
+    <p class="lead">Knee osteoarthritis is not just wear and tear you have to live with. It is a joint you can calm and protect. Before any prescription, clara helps you understand what is happening, then builds a plan around the things that actually move the needle.</p>
+  </div>
+  <div class="phase">
+    <div class="pcard"><img class="pic" src="Clara%20Home%20page/Knee/knee-stage-1-lab.png" alt="Knee joint with smooth cartilage starting to thin"><div class="pn">What happens</div><h4>The cushion thins</h4><p>The smooth cartilage that cushions your knee gradually wears, so the joint moves less easily and feels stiff.</p></div>
+    <div class="pcard"><img class="pic" src="Clara%20Home%20page/Knee/knee-stage-2-lab.png" alt="Inflamed, swollen knee joint lining"><div class="pn">Why it hurts</div><h4>The joint inflames</h4><p>That wear sets off inflammation, swelling and pain, often worse after rest, stairs, or a long day on your feet.</p></div>
+    <div class="pcard"><img class="pic" src="Clara%20Home%20page/Knee/knee-stage-3-lab.png" alt="Soothed knee joint with clara cream applied"><div class="pn">The good news</div><h4>It responds to care</h4><p>The right mix of topical medicine, movement and load management can quiet the pain and keep you moving for years.</p></div>
+  </div>
+</section>
+
+<!-- TREATMENTS -->
+<section class="sec" id="treatments" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div style="text-align:center;max-width:700px;margin:0 auto">
+      <div class="sec-eyebrow">What we treat with</div>
+      <h2>Cream first, <em>then more if you need it.</em></h2>
+      <p class="lead" style="margin:14px auto 0">clara follows the guidelines: start where the evidence is strongest and the risk is lowest. A doctor decides what fits your knee and your history.</p>
+    </div>
+    <div class="tx">
+      <div class="txcard alt">
+        <div class="tw">Treat it at the source</div>
+        <h3>The clara cream</h3>
+        <div class="cream-row">
+          <img class="cream-bottle" src="Clara%20Home%20page/Knee/clara-bottle.png" alt="clara compound cream bottle">
+          <div class="cream-body">
+            <p class="tp">A compound cream made for your knee, proven topical medicines blended and titrated, rubbed in right where it hurts. Guideline backed first line, with far less reaching your bloodstream than pills.</p>
+            <ul class="meds">
+              <li>Topical anti inflammatories <span>diclofenac and proven actives</span></li>
+              <li>A strength ladder <span>C1 to C3, matched to your knee</span></li>
+              <li>Made by an accredited Canadian pharmacy</li>
+            </ul>
+          </div>
+        </div>
+        <a class="tlink" href="Clara-TheCream-MOCK-v1.html">Why a compound cream? &#8594;</a>
+      </div>
+      <div class="txcard">
+        <div class="ti"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.2A2 2 0 0 0 6.8 20.2h10.4A2 2 0 0 0 19 17.2L14 9V3M7.5 14h9"/></svg></div>
+        <div class="tw">When you need more</div>
+        <h3>Oral medication</h3>
+        <p class="tp">If the cream and movement are not enough, a doctor can add a carefully chosen oral medicine, at the lowest effective dose.</p>
+        <ul class="meds pills">
+          <li><img class="pm" src="Clara%20Home%20page/Knee/Naproxen.png" alt=""><div class="mt">Anti inflammatories <span>ibuprofen, naproxen, diclofenac, celecoxib, meloxicam</span></div></li>
+          <li><img class="pm" src="Clara%20Home%20page/Knee/acentaminophen.png" alt=""><div class="mt">Acetaminophen <span>a gentler option</span></div></li>
+          <li><img class="pm" src="Clara%20Home%20page/Knee/duloxetine.png" alt=""><div class="mt">Duloxetine <span>for persistent osteoarthritis pain</span></div></li>
+        </ul>
+      </div>
+      <div class="txcard">
+        <div class="ti"><svg viewBox="0 0 24 24"><path d="M4 12h3l2-5 4 12 2-7h5"/></svg></div>
+        <div class="tw">The core treatment</div>
+        <h3>Movement &amp; strength</h3>
+        <p class="tp">Exercise is not optional, it is the single most effective thing for knee OA. clara gives you guided programs you can actually keep up with.</p>
+        <ul class="meds nudge-up">
+          <li>Walking and low impact cardio</li>
+          <li>Knee strengthening and tai chi</li>
+          <li>Weight and load management</li>
+        </ul>
+        <a class="tlink" href="#education">See the programs &#8594;</a>
+      </div>
+    </div>
+    <p class="tx-note">Every plan is reviewed by a Canadian doctor and dispensed from an accredited pharmacy.</p>
+  </div>
+</section>
+
+<!-- EXERCISE & EDUCATION -->
+<section class="sec wrap" id="education">
+  <div style="max-width:720px">
+    <div class="sec-eyebrow">Exercise &amp; education</div>
+    <h2>Movement is <em>medicine</em> for your knee.</h2>
+    <p class="lead">Every clara knee plan comes with the same evidence based programs our doctors use in clinic, written in plain language with real sources. Learn what is happening, then build the habits that protect your joint.</p>
+  </div>
+  <div class="peeks">
+    <a class="peek" href="#" data-peek="knee">
+      <img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/bill-cover.png" alt="Man seated on a sofa holding his knee">
+      <div class="pb">
+        <div class="ptag">Understand your pain</div>
+        <h3>What is actually happening inside your knee</h3>
+        <p>Why "wear and tear" is the wrong story, why pain does not equal damage, and what that means for getting moving again.</p>
+        <div class="pmin">Patient guide &middot; every claim cited</div>
+      </div>
+    </a>
+    <a class="peek" href="#" data-peek="walk">
+      <img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/kim-walkcover.jpeg" alt="Woman walking happily on a forest path">
+      <div class="pb">
+        <div class="ptag">Move with confidence</div>
+        <h3>Your walking prescription</h3>
+        <p>The evidence backed program that rebuilds your walks week by week, with a flare plan for the hard days.</p>
+        <div class="pmin">6 week program &middot; free with your plan</div>
+      </div>
+    </a>
+    <a class="peek" href="#" data-peek="taichi">
+      <img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/tachi-card-hero.png" alt="Woman practising tai chi in a bright studio">
+      <div class="pb">
+        <div class="ptag">Calm the system</div>
+        <h3>Tai chi, the strongest evidence you have never tried</h3>
+        <p>Gentle, proven, and easier than it looks. How slow movement quiets a sensitised nervous system.</p>
+        <div class="pmin">Guided routine &middot; start at any level</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" style="background:var(--cream-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div style="text-align:center;margin:0 auto">
+      <div class="sec-eyebrow">How it works</div>
+      <h2 style="white-space:nowrap">From your couch to a real plan.</h2>
+    </div>
+    <div class="hiw">
+      <div class="hiwc">
+        <div class="circ"><img src="Clara%20Home%20page/how-1-900.jpg" alt="Answer the assessment at home"><span class="num">1</span></div>
+        <h3>Tell us about your knee</h3>
+        <p>A focused assessment about your knee, your history and what you have already tried. Five minutes, on your own schedule.</p>
+      </div>
+      <div class="hiwc">
+        <div class="circ"><img src="Clara%20Home%20page/how-2-900.jpg" alt="A doctor builds your plan"><span class="num">2</span></div>
+        <h3>A doctor builds your plan</h3>
+        <p>A Canadian doctor reviews everything, confirms it is osteoarthritis, screens for red flags, and matches your cream and plan to you.</p>
+      </div>
+      <div class="hiwc">
+        <div class="circ"><img src="Clara%20Home%20page/how-3-900.jpg" alt="Your cream and plan are delivered"><span class="num">3</span></div>
+        <h3>Cream and plan delivered</h3>
+        <p>Your compound cream ships to your door with your movement plan. Message your care team anytime to fine tune it.</p>
+      </div>
+    </div>
+    <p class="promise">No appointments. No waiting rooms. <span>Just a plan built around your knee.</span></p>
+  </div>
+</section>
+
+<!-- EVIDENCE LADDER (split) -->
+<section class="sec wrap">
+  <div class="evsplit">
+    <div class="evphoto">
+      <img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/bill-cover.png" alt="A man resting his hand on his knee at home">
+    </div>
+    <div>
+      <div class="sec-eyebrow">Built on the evidence</div>
+      <h2>We follow the same steps a <em>specialist</em> would.</h2>
+      <p class="lead">clara's knee logic follows the 2021 AAOS and modern osteoarthritis guidelines. We start with the basics that actually work and only escalate when it is warranted, the way good joint care is meant to go.</p>
+      <div class="evlist">
+        <div class="evrow"><div class="en">1</div><div><h4>Confirm it is osteoarthritis</h4><p>Match your symptoms to the diagnostic criteria and rule out the red flags that need in person care.</p></div></div>
+        <div class="evrow"><div class="en">2</div><div><h4>Start with movement and the cream</h4><p>Exercise, weight and a topical cream applied right at the knee, the lowest risk first line.</p></div></div>
+        <div class="evrow"><div class="en">3</div><div><h4>Add oral medicine when needed</h4><p>Anti-inflammatories and other medications, for pain that first-line care cannot fully settle on its own.</p></div></div>
+        <div class="evrow"><div class="en">4</div><div><h4>Keep adjusting</h4><p>Track how your knee responds and step up or ease back only when it is warranted.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div style="text-align:center;max-width:620px;margin:0 auto">
+      <div class="sec-eyebrow">Simple, honest pricing</div>
+      <h2>One assessment. <em>Then care that stays.</em></h2>
+    </div>
+    <div class="price">
+      <div class="pcardx dark">
+        <div class="pl">The clara assessment</div>
+        <div class="amt">$50 <small>one time</small></div>
+        <ul>
+          <li>Reviewed by a licensed Canadian doctor</li>
+          <li>A knee plan matched to your history</li>
+          <li>Access to the clara online platform</li>
+          <li>Free, discreet shipping to your door</li>
+        </ul>
+        <a class="btn light" href="Clara-KneeOA-Quiz-MOCK-v1.html" data-direct>Start your assessment</a>
+      </div>
+      <div class="pcardx">
+        <div class="pl">Your cream &amp; medication</div>
+        <div class="amt">At cost <small>+ pharmacy fee</small></div>
+        <ul>
+          <li>Transparent pricing, comparable to your local pharmacy</li>
+          <li>The compound cream made to your prescription</li>
+          <li>We bill your insurance directly when you have it</li>
+          <li>You only pay for what a doctor prescribes</li>
+        </ul>
+        <a class="btn" href="#treatments">See what fits you</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec wrap">
+  <div style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="sec-eyebrow">Good questions</div>
+    <h2>Knee pain, answered.</h2>
+  </div>
+  <div class="faq">
+    <details class="qa"><summary>How do I know my knee pain is osteoarthritis?</summary><p>Osteoarthritis usually builds gradually, with stiffness after rest, pain that is worse with activity or stairs, and sometimes swelling or a grinding feeling. Our assessment walks through the diagnostic criteria, and a doctor confirms it and rules out other causes before recommending anything. If you are ever unsure about having knee osteoarthritis, please check with your family doctor.</p></details>
+    <details class="qa"><summary>Why does clara lead with a cream instead of pills?</summary><p>Because the guidelines do. Topical anti inflammatories are a recommended first line for knee osteoarthritis, with relief comparable to oral medication and far less reaching the rest of your body. A compound cream lets a doctor combine and titrate proven ingredients to your specific knee.</p></details>
+    <details class="qa"><summary>Does exercise really help, or will it wear my knee out faster?</summary><p>Exercise is the single most effective treatment for knee osteoarthritis, and the right kind protects the joint rather than wearing it down. clara gives you gentle, guided walking, strengthening and tai chi programs designed specifically for sore knees.</p></details>
+    <details class="qa"><summary>Do I need a video appointment?</summary><p>Usually not. clara uses an asynchronous model, so you complete your assessment on your own time and a doctor reviews it, typically within 24 hours. If they need more information, they will message you securely or arrange a quick call.</p></details>
+    <details class="qa"><summary>What kind of medications does clara use?</summary><p>clara starts with the lowest risk option that works: a topical compound cream applied right at the knee, so less reaches your bloodstream than with pills. When more is needed, a doctor can add anti-inflammatories or other proven medications, at the lowest effective dose. Every plan is reviewed by a licensed Canadian doctor who screens your full history and contraindications. clara never uses opioids.</p></details>
+    <details class="qa"><summary>When should I see someone in person instead?</summary><p>Some signs need in person care, like a hot, red, severely swollen knee, a knee that locks or gives way, pain after a clear injury, or fever with joint pain. Our assessment screens for these, and if anything looks concerning we will tell you to seek in person care.</p></details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2>Let's get your knee <em>moving again.</em></h2>
+    <p class="sub">Five minutes. Reviewed by a doctor. Built around your knee.</p>
+    <div class="final-doors">
+      <a class="pill-door" href="Clara-KneeOA-Quiz-MOCK-v1.html">Start the knee assessment</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <a class="logo" href="Clara-Homepage-MOCK-v1.html" style="font-family:Georgia,serif;font-weight:700">clara</a>
+    <span class="tag">chronic pain, decoded.</span>
+    <div class="legal">Clara Relief Inc. &middot; Ontario, Canada<br>Knee pain page MOCK v1 &middot; June 2026 &middot; first pass mockup, not the live product</div>
+  </div>
+</footer>
+
+
+<!-- ASSESS MODAL -->
+<div class="as-overlay" id="asOverlay">
+  <div class="as-modal" role="dialog" aria-modal="true" aria-label="Choose your condition">
+    <button class="as-x" id="asClose" aria-label="Close">&#10005;</button>
+    <div class="as-head">
+      <div class="as-eyebrow">Start your assessment</div>
+      <h2>Where does it <em>hurt?</em></h2>
+      <p>Pick your pain and we&#39;ll take you straight into the right assessment. About 5 minutes, and a licensed doctor reviews every plan.</p>
+    </div>
+    <div class="as-grid">
+      <a class="as-card" href="Clara-KneeOA-Quiz-MOCK-v1.html">
+        <img src="Home%20(dashboard)/knee-oa-home-1600.jpg" alt="Man seated easing his knee">
+        <div class="ab"><h3>My knee</h3><p>Knee osteoarthritis. Stairs, stiffness, and the walks you have given up.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+      <a class="as-card" href="Clara-BackPain-Quiz-MOCK-v2.html">
+        <img src="Home%20(dashboard)/back-pain-home-1600.jpg" alt="Man easing upright with a hand on his lower back">
+        <div class="ab"><h3>My back</h3><p>Low back pain. The careful mornings and the chairs you avoid.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+      <a class="as-card" href="Clara-Migraine-Quiz-MOCK-v1.html">
+        <img src="Home%20(dashboard)/migraine-home-1600.jpg" alt="Woman resting fingertips at her temple">
+        <div class="ab"><h3>Migraines</h3><p>Migraine. The days lost to a dark room and a closed door.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+      <a class="as-card" href="Clara-Neuropathic-Quiz-MOCK-v1.html">
+        <img src="Home%20(dashboard)/neuropathic-home-1600.jpg" alt="Woman gently holding her forearm">
+        <div class="ab"><h3>My nerves</h3><p>Neuropathic pain. The burning, tingling, and shooting no one can see.</p><div class="go">Start here &#8594;</div></div>
+      </a>
+    </div>
+    <div class="as-foot">Tap your pain. A licensed doctor reviews every plan.</div>
+  </div>
+</div>
+<script>
+(function(){
+  var ov=document.getElementById('asOverlay'); if(!ov) return;
+  function openAs(){ ov.classList.add('on'); document.body.style.overflow='hidden'; }
+  function closeAs(){ ov.classList.remove('on'); document.body.style.overflow=''; }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest?e.target.closest('a,button'):null;
+    if(!el||ov.contains(el)||el.hasAttribute('data-direct')) return;
+    if((el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase()==='start your assessment'){
+      e.preventDefault(); openAs();
+    }
+  });
+  document.getElementById('asClose').addEventListener('click',closeAs);
+  ov.addEventListener('click',function(e){ if(e.target===ov) closeAs(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAs(); });
+})();
+</script>
+
+
+<!-- PEEK READER MODAL -->
+<div class="pk-overlay" id="pkOverlay">
+  <div class="pk-modal" role="dialog" aria-modal="true">
+    <button class="pk-x" id="pkClose" aria-label="Close preview">&#10005;</button>
+    <div class="pk-scroll" id="pkScroll">
+      <iframe id="pkFrame" src="about:blank" title="Guide preview" scrolling="no"></iframe>
+      <div class="pk-fade"></div>
+    </div>
+    <div class="pk-lock">
+      <div class="pl-t">That&#39;s the free peek.</div>
+      <div class="pl-s">The full guide, with every claim cited, is included free in your clara plan.</div>
+      <a class="btn" href="#" id="pkStart">Start your assessment</a>
+      <span class="later" id="pkLater">Maybe later</span>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var PEEKS={
+    knee:{src:"Education%20Section%20(Knee%20OA%20Pain)/Understanding%20Your%20Knee%20Osetoarthritis/Understanding-Knee-OA.html",frac:0.5,fallback:6000},
+    walk:{src:"Education%20Section%20(Knee%20OA%20Pain)/Walk%20With%20Ease/Walk-With-Ease.html",frac:0.4,fallback:4400},
+    taichi:{src:"Education%20Section%20(Knee%20OA%20Pain)/Tai%20Chi%20for%20Knee%20Pain/Tai-Chi.html",frac:0.4,fallback:4400}
+  };
+  var ov=document.getElementById('pkOverlay'); if(!ov)return;
+  var fr=document.getElementById('pkFrame'),scr=document.getElementById('pkScroll');
+  function sizeFrame(d){
+    var hpx=d.fallback||6000;
+    try{ var doc=fr.contentDocument||fr.contentWindow.document;
+      if(doc&&doc.body){var full=Math.max(doc.body.scrollHeight,doc.documentElement.scrollHeight);if(full>500)hpx=Math.round(full*d.frac);}
+    }catch(e){}
+    fr.style.height=hpx+'px';
+  }
+  function open(key){
+    var d=PEEKS[key]; if(!d)return;
+    fr.style.height='1200px';
+    fr.onload=function(){sizeFrame(d);setTimeout(function(){sizeFrame(d);},600);};
+    fr.src=d.src;
+    scr.scrollTop=0; ov.classList.add('on'); document.body.style.overflow='hidden';
+  }
+  function close(){ ov.classList.remove('on'); document.body.style.overflow=''; fr.src='about:blank'; }
+  document.querySelectorAll('[data-peek]').forEach(function(c){
+    c.addEventListener('click',function(e){ e.preventDefault(); open(c.dataset.peek); });
+  });
+  document.getElementById('pkClose').addEventListener('click',close);
+  document.getElementById('pkLater').addEventListener('click',close);
+  document.getElementById('pkStart').addEventListener('click',function(e){ e.preventDefault(); close(); var as=document.getElementById('asOverlay'); if(as){ as.classList.add('on'); document.body.style.overflow='hidden'; } });
+  ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+
+</body>
+</html>
