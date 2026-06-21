@@ -1,5 +1,5 @@
 clara — FULL SITE deploy bundle (homepage + dashboard in one link)
-Built June 17, 2026.
+Built June 17, 2026.  REFRESHED June 21, 2026 (Session 31): added the full Migraine education section (Understanding, Treatments, Prevention & Triggers incl. the interactive Headache Diary), the new Neuropathic / Nerve pain education section (hub + PHN, Diabetic, CRPS, Fibromyalgia, Other Neuropathy), the Migraine Tracker, and refreshed the dashboard and homepage. All links re-verified: 35 pages crawl with zero broken references. Images capped at 1600px.
 
 WHAT THIS IS
 A single, self-contained website: the public landing page is index.html, and the

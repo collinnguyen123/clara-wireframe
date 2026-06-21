@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>clara · Prevention and triggers for migraine</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,serif}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:15.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:14.5px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px;font-size:18.5px;line-height:1.72;color:#2b302c}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:15.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:700;letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:18px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.byline{font-size:15.5px;color:var(--grey);font-weight:600}
+.chip{font-size:14px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.hero-img{width:100%;border-radius:20px;display:block;box-shadow:var(--shadow-lg);margin-bottom:8px;aspect-ratio:16/8;object-fit:cover;object-position:center 38%;background:var(--cream-soft)}
+.cap{font-size:14px;color:var(--muted);font-style:italic;margin-bottom:26px}
+.article{font-size:18.5px;line-height:1.78;color:#2b302c}
+.article h2{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:48px 0 12px;line-height:1.2}
+.article h3{font-size:18px;font-weight:700;color:var(--ink);margin:22px 0 4px}
+.article p{margin-bottom:18px}
+.article ul{margin:0 0 18px 2px;list-style:none}
+.article li{position:relative;padding-left:26px;margin-bottom:11px}
+.article li::before{content:'';position:absolute;left:4px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.article sup a{color:var(--sage);font-style:italic;font-weight:600;text-decoration:none;font-size:.92em}
+.callout{border-radius:16px;padding:22px 24px;margin:26px 0;border:1px solid var(--line)}
+.callout.sage{background:var(--sage-pale);border-color:var(--sage-soft)}
+.callout.terra{background:var(--terra-pale);border-color:var(--terra-soft)}
+.callout h3{margin:0 0 10px;font-size:20px;color:var(--sage-dark);line-height:1.25}
+.callout.terra h3{color:var(--terra-deep)}
+.callout p{margin:0;font-size:18.5px;line-height:1.6;color:#2b302c}
+.callout p+p{margin-top:12px}
+.goals{margin:6px 0 22px;display:flex;flex-direction:column;gap:16px}
+.goal{display:flex;gap:16px;align-items:flex-start}
+.goal .gnum{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:var(--sage);color:#fff;font-family:Georgia,serif;font-weight:700;font-size:21px;display:grid;place-items:center;margin-top:1px;box-shadow:var(--shadow)}
+.goal .gtext{flex:1;font-size:18.5px;line-height:1.6;padding-top:6px}
+.goal .gtext b{color:var(--sage-dark)}
+.diary{background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 26px;margin:20px 0;box-shadow:var(--shadow)}
+.drow{display:flex;gap:18px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line)}
+.drow:last-child{border-bottom:none}
+.drow .dk{flex:0 0 175px;font-weight:700;color:var(--sage-dark);font-size:17px;line-height:1.4}
+.drow .dv{flex:1;font-size:17px;line-height:1.5;color:#2b302c}
+.diarybook{margin:22px 0 8px;perspective:1600px}
+.db-stage{position:relative;background:linear-gradient(180deg,#FBF9F4,#F3F0E7);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden}
+.db-spine{position:absolute;top:0;left:0;bottom:0;width:34px;background:linear-gradient(90deg,var(--sage-dark),var(--sage));z-index:2}
+.db-spine::after{content:'';position:absolute;top:0;bottom:0;right:7px;width:2px;background:rgba(255,255,255,.22)}
+.db-page{position:relative;margin-left:34px;padding:36px 44px 40px;min-height:440px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.db-page.flip{animation:dbflip .45s ease}
+@keyframes dbflip{0%{opacity:0;transform:rotateY(-16deg) translateX(28px)}100%{opacity:1;transform:none}}
+.db-illwrap{position:relative;display:inline-block;margin:0 auto 2px}
+.db-illus{width:340px;height:340px;object-fit:contain;display:block;margin:0 auto 2px;filter:drop-shadow(0 10px 18px rgba(31,51,41,.10))}
+.db-illwrap .db-illus{margin-bottom:0}
+.db-illlabel{position:absolute;top:14%;left:50%;transform:translate(-50%,-50%) rotate(-5deg);font-family:Georgia,serif;font-weight:700;font-size:29px;color:#7a5a48;letter-spacing:.4px;pointer-events:none}
+.db-illus.wide{width:600px;height:auto;max-width:100%}
+.db-kicker{font-size:12.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:7px}
+.db-title{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--sage-dark);margin-bottom:12px;line-height:1.15}
+.db-desc{font-size:19px;line-height:1.6;color:#2b302c;max-width:470px}
+.db-pagenum{position:absolute;bottom:14px;right:22px;font-size:13px;color:var(--muted);font-style:italic}
+.db-cover .db-illus{width:400px;height:400px;margin-bottom:6px}
+.db-cta{margin-top:6px;display:inline-flex;align-items:center;gap:9px;background:var(--terra);color:#fff;font-weight:700;font-size:17.5px;padding:14px 28px;border:none;border-radius:30px;cursor:pointer;box-shadow:0 6px 18px rgba(201,114,87,.35);animation:dbpulse 1.9s ease-in-out infinite}
+.db-cta:hover{background:var(--terra-deep)}
+@keyframes dbpulse{0%,100%{transform:translateY(0);box-shadow:0 6px 18px rgba(201,114,87,.32)}50%{transform:translateY(-4px);box-shadow:0 14px 28px rgba(201,114,87,.46)}}
+.db-hint{margin-top:13px;font-size:14.5px;color:var(--muted);font-style:italic}
+.db-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.db-btn{background:#fff;border:1px solid var(--line-strong);color:var(--sage-dark);font-weight:600;font-size:15.5px;padding:11px 20px;border-radius:24px;cursor:pointer;transition:background .15s}
+.db-btn:hover{background:var(--sage-pale)}
+.db-btn:disabled{opacity:.32;cursor:default}
+.db-btn.primary{background:var(--sage);color:#fff;border-color:var(--sage)}
+.db-btn.primary:hover{background:var(--sage-dark)}
+.db-count{font-size:14px;color:var(--grey);font-weight:600;white-space:nowrap}
+.db-summary{width:100%;text-align:left}
+.db-summary h3{font-family:Georgia,serif;font-size:26px;color:var(--sage-dark);text-align:center;margin:0 0 4px}
+.db-summary .ssub{text-align:center;font-size:15px;color:var(--grey);margin-bottom:18px}
+.db-srow{display:flex;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.db-srow:last-child{border-bottom:none}
+.db-srow .si{width:50px;height:50px;flex:0 0 50px;object-fit:contain}
+.db-srow .sk{font-weight:700;color:var(--sage-dark);font-size:16.5px;margin-bottom:2px}
+.db-srow .sv{font-size:15.5px;color:#2b302c;line-height:1.5}
+@media(max-width:560px){.db-page{padding:28px 18px 36px;min-height:380px}.db-illus{width:230px;height:230px}.db-cover .db-illus{width:270px;height:270px}.db-title{font-size:25px}.db-desc{font-size:17px}.db-btn{padding:10px 15px;font-size:14.5px}}
+.secphoto{width:100%;border-radius:18px;display:block;box-shadow:var(--shadow-lg);margin:8px 0 24px;aspect-ratio:16/9;object-fit:cover;background:var(--cream-soft)}
+.trigrows{margin:24px 0 8px}
+.trigrow{display:flex;gap:34px;align-items:center;margin:34px 0;padding-bottom:34px;border-bottom:1px solid var(--line)}
+.trigrow:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.trigrow img{flex:0 0 44%;width:44%;aspect-ratio:1/1;object-fit:cover;border-radius:18px;box-shadow:var(--shadow-lg);display:block;background:var(--cream-soft)}
+.trigrow .trtext{flex:1;min-width:0}
+.trigrow .trk{font-family:Georgia,serif;font-size:24px;font-weight:700;color:var(--sage-dark);margin-bottom:9px;line-height:1.2}
+.trigrow .trv{font-size:18.5px;line-height:1.6;color:#2b302c}
+.trigrow.rev{flex-direction:row-reverse}
+@media(max-width:640px){.trigrow,.trigrow.rev{flex-direction:column;align-items:flex-start;gap:16px}.trigrow img{width:100%;flex:0 0 auto;aspect-ratio:16/11}}
+.trio{position:relative;left:50%;transform:translateX(-50%);width:min(900px,94vw);display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:28px 0 32px}
+.trigtile .ph{aspect-ratio:4/5;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);background:var(--cream-soft)}
+.trigtile .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.trigtile.zoom .ph img{transform:scale(1.16)}
+.trigtile .tt{font-family:Georgia,serif;font-weight:700;font-size:20px;color:var(--sage-dark);margin:14px 0 3px;text-align:center;line-height:1.2}
+.trigtile .tcap{font-size:16px;color:var(--grey);line-height:1.45;text-align:center}
+@media(max-width:600px){.trio{position:static;left:auto;transform:none;width:auto;grid-template-columns:1fr;gap:18px}.trigtile .ph{aspect-ratio:16/10}}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+.tcard{border-radius:16px;padding:22px 24px;border:1px solid var(--line)}
+.tcard.real{background:var(--terra-pale);border-color:var(--terra-soft)}
+.tcard.early{background:var(--sage-pale);border-color:var(--sage-soft)}
+.tcard h3{font-size:19px;margin:0 0 4px;text-transform:uppercase;letter-spacing:.5px}
+.tcard.real h3{color:var(--terra-deep)}
+.tcard.early h3{color:var(--sage-dark)}
+.tcard .sub{font-size:16.5px;color:var(--grey);margin-bottom:14px;line-height:1.45}
+.tcard ul{margin:0;list-style:none}
+.tcard li{position:relative;padding-left:22px;margin-bottom:11px;font-size:19px;line-height:1.5}
+.tcard li::before{content:'';position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%}
+.tcard.real li::before{background:var(--terra)}
+.tcard.early li::before{background:var(--sage)}
+@media(max-width:600px){.twocol{grid-template-columns:1fr}}
+.pillar{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 26px;margin:16px 0;box-shadow:var(--shadow)}
+.pillar .ph{font-family:Georgia,serif;font-size:21px;font-weight:700;color:var(--sage-dark);margin-bottom:14px;display:flex;align-items:center;gap:13px}
+.pillar .pico{width:74px;height:74px;flex:0 0 74px;border-radius:50%;background:var(--sage-pale);display:grid;place-items:center}
+.pillar .pico svg{width:42px;height:42px;stroke:var(--sage-dark);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pillar .prow{display:flex;gap:14px;margin-bottom:10px;font-size:17.5px;line-height:1.55}
+.pillar .prow:last-child{margin-bottom:0}
+.pillar .ptag{flex:0 0 84px;font-weight:700;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--terra-deep);padding-top:4px}
+.pillar .pbody{flex:1}
+.ttable{background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 26px;margin:20px 0;box-shadow:var(--shadow)}
+.trow{display:flex;gap:18px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:none}
+.trow .tk{flex:0 0 195px;font-weight:700;color:var(--sage-dark);font-size:17px;line-height:1.4}
+.trow .tv{flex:1;font-size:17px;line-height:1.5;color:#2b302c}
+@media(max-width:600px){.drow,.trow{flex-direction:column;gap:4px}.drow .dk,.trow .tk{flex:0 0 auto}}
+.planhead{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 22px;margin:18px 0 14px;box-shadow:var(--shadow)}
+.planhead .ph-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:11px}
+.planhead .ph-t{font-weight:700;color:var(--sage-dark);font-size:17px}
+.planhead .ph-c{font-size:15px;color:var(--grey);font-weight:700;white-space:nowrap}
+.planbar{height:13px;border-radius:8px;background:var(--sage-soft);overflow:hidden}
+.planbar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sage),var(--sage-dark));border-radius:8px;transition:width .55s cubic-bezier(.34,1.2,.4,1)}
+.planmsg{margin-top:12px;font-size:16px;color:var(--terra-deep);font-weight:600;line-height:1.45;min-height:1.45em;opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s}
+.planmsg.show{opacity:1;transform:none}
+.planrow{display:flex;gap:18px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin:14px 0;box-shadow:var(--shadow);cursor:pointer;transition:background .18s,border-color .18s,box-shadow .18s;user-select:none}
+.planrow:hover{border-color:var(--line-strong)}
+.planrow.done{background:var(--sage-pale);border-color:var(--sage-soft)}
+.planrow .ck{flex:0 0 30px;width:30px;height:30px;border-radius:50%;border:2px solid var(--line-strong);display:grid;place-items:center;margin-top:1px;transition:background .2s,border-color .2s}
+.planrow.done .ck{background:var(--sage);border-color:var(--sage)}
+.planrow .ck svg{width:16px;height:16px;stroke:#fff;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .2s}
+.planrow.done .ck svg{opacity:1}
+.planrow .wk{flex:0 0 92px;font-family:Georgia,serif;font-weight:700;color:var(--terra-deep);font-size:19px;line-height:1.15;padding-top:2px}
+.planrow .wd{flex:1;font-size:17.5px;line-height:1.55}
+.planrow .wd b{color:var(--sage-dark)}
+@media(max-width:560px){.planrow{flex-wrap:wrap;gap:12px}.planrow .wk{flex:0 0 auto}.planrow .wd{flex:1 1 100%}}
+.warn{background:var(--terra-pale);border:1px solid var(--terra-soft);border-radius:16px;padding:24px 28px;margin:26px 0}
+.warn h3{color:var(--terra-deep);font-size:22px;margin-bottom:12px}
+.warn p{margin:0;font-size:18.5px;line-height:1.6;color:#6e2417}
+.endnote{background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:16px;padding:24px 26px;margin:28px 0 8px}
+.endnote p{margin:0;font-size:19px;line-height:1.6;color:var(--sage-deep)}
+.endnote sup a{color:var(--sage)}
+.hr{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);margin:56px 0}
+h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:46px 0 12px}
+.sources ol{margin:0;padding-left:20px;font-size:15.5px;color:var(--grey);line-height:1.65}
+.sources li{margin-bottom:9px;position:static}
+.sources li::before{display:none}
+.disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);font-style:italic;line-height:1.6}
+@media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-logo" href="../../Clara-Homepage-MOCK-v1.html?signedin=1" style="text-decoration:none" title="Back to the clara home page">clara</a>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care">Get Care</a>
+  </div>
+  <div class="nav-avatar">SK</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education-migraine">&larr;  Back to migraine</a>
+  <div class="eyebrow">Migraine &middot; Prevention and triggers</div>
+  <h1 class="title serif">Prevention and triggers</h1>
+  <p class="lede">You cannot control that you have migraine, but you can change how often it shows up. This is the practical guide: how to find your own triggers, and the everyday habits proven to make attacks rarer.</p>
+  <div class="meta">
+    <span class="byline">From your clara care team</span>
+    <span class="chip">&#9201; 10 min read</span>
+    <span class="chip">Evidence based</span>
+  </div>
+
+  <img class="hero-img" src="prevention-hero.jpg" alt="A woman at her kitchen table filling in a headache diary, with a coffee and a glass of water nearby">
+  <p class="cap">Prevention is built one small, steady habit at a time. The headache diary is where it starts.</p>
+
+  <div class="article">
+
+    <p>Migraine prevention has two halves that work together.</p>
+    <div class="goals">
+      <div class="goal"><div class="gnum">1</div><div class="gtext"><b>Finding and managing your triggers.</b> They are personal, and no two people share the same list.</div></div>
+      <div class="goal"><div class="gnum">2</div><div class="gtext"><b>Building a handful of everyday habits,</b> around sleep, meals, movement, and stress, that quietly raise the bar an attack has to clear before it starts.<sup><a href="#sources">(15)</a></sup></div></div>
+    </div>
+    <p>Neither half cures migraine, but together they can meaningfully lower how often and how hard the attacks come, and they make your medicines work better.</p>
+
+    <h2>Start with a headache diary</h2>
+    <p>A diary is the single most useful tool you have. It is the only reliable way to spot your real triggers, to see whether a change is actually helping, and to catch yourself drifting toward taking acute medicine on too many days. Track <b>every</b> day, including the good ones, because the quiet days are what make the patterns visible.</p>
+
+    <div class="diarybook" id="diaryBook">
+      <div class="db-stage"><div class="db-spine"></div><div class="db-page" id="dbPage"></div></div>
+      <div class="db-nav">
+        <button class="db-btn" id="dbPrev">&larr; Previous</button>
+        <span class="db-count" id="dbCount"></span>
+        <button class="db-btn primary" id="dbNext">Open the diary &rarr;</button>
+      </div>
+    </div>
+
+    <p>Look for <b>repeated patterns, not single bad days</b>. One migraine after a glass of red wine could be coincidence. Four attacks, each within a day of red wine, is a signal. Most patterns become clear after about eight to twelve weeks of steady tracking, so give it time before drawing conclusions.<sup><a href="#sources">(1)</a></sup></p>
+
+    <hr class="hr">
+
+    <h2>Triggers, or the attack already starting?</h2>
+    <p>This is the most common mix up in all of migraine, and getting it right will save you from giving up foods you never needed to. A migraine is not only the headache. It moves through phases, and the earliest one, the <b>prodrome</b>, begins up to a day or two before the pain and happens in most people who get migraine.<sup><a href="#sources">(2, 3)</a></sup></p>
+    <div class="trio">
+      <div class="trigtile zoom"><div class="ph"><img src="trigger-food.jpg" alt="Red wine, aged cheese and chocolate on a table"></div><div class="tt">Food and drink</div><div class="tcap">Wine, aged cheese, chocolate.</div></div>
+      <div class="trigtile"><div class="ph"><img src="trigger-weather.jpg" alt="A woman watching rainy weather through a window"></div><div class="tt">Weather changes</div><div class="tcap">Shifting pressure and rainy fronts.</div></div>
+      <div class="trigtile"><div class="ph"><img src="trigger-light.jpg" alt="Bright light from a hanging bulb in a warm room"></div><div class="tt">Bright or flickering light</div><div class="tcap">Harsh light, glare and screens.</div></div>
+    </div>
+    <p>Here is the trap: some of the things people blame as triggers are actually the <b>first symptoms of an attack that has quietly already begun</b>. If you crave chocolate and then get a migraine, the craving was often the migraine announcing itself, not the cause. Eliminating the chocolate will not help, and you will have lost the chocolate for nothing.</p>
+
+    <div class="twocol">
+      <div class="tcard real">
+        <h3>True triggers</h3>
+        <div class="sub">Things that come before and provoke an attack.</div>
+        <ul>
+          <li>Stress and the let down after it</li>
+          <li>The drop in estrogen around a period</li>
+          <li>Skipping meals or fasting</li>
+          <li>Too little or too much sleep</li>
+          <li>Alcohol, especially red wine</li>
+          <li>Aged cheese and other tyramine foods, for some people</li>
+          <li>Weather and pressure changes</li>
+          <li>Bright or flickering light, strong smells</li>
+        </ul>
+      </div>
+      <div class="tcard early">
+        <h3>Early symptoms</h3>
+        <div class="sub">Often mistaken for triggers, but they are the attack beginning.</div>
+        <ul>
+          <li>Food and chocolate cravings</li>
+          <li>Yawning</li>
+          <li>Neck stiffness or pain</li>
+          <li>Tiredness and low energy</li>
+          <li>Mood change, irritability</li>
+          <li>Feeling extra sensitive to light or sound</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Notice that a few items, like neck pain and tiredness, can sit on either side. That overlap is exactly why a single observation is unreliable, and why the diary, looking for the same thing happening again and again, is the only way to tell them apart.<sup><a href="#sources">(4)</a></sup></p>
+
+    <hr class="hr">
+
+    <h2>The everyday habits that work</h2>
+    <p>These foundations will not erase migraine, but they steadily lower how often it strikes, and they carry no downside. The key is to <b>add them one at a time</b> rather than overhauling your whole life in a week.</p>
+    <img class="secphoto" src="sleep-nadia.jpg" alt="A woman settling into bed at night with a sleep mask, a small clock on the nightstand showing 10 o'clock">
+
+
+    <div class="pillar">
+      <div class="ph"><span class="pico"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>Sleep on a steady clock</div>
+      <div class="prow"><div class="ptag">Do this</div><div class="pbody">Aim for seven to nine hours, and keep the <b>same wake time every day, weekends included</b>. A short wind down away from screens and a cool, dark room help.</div></div>
+      <div class="prow"><div class="ptag">Evidence</div><div class="pbody">Both too little and too much sleep can trigger an attack, and poor sleep tracks with more frequent migraine, which is why the weekday to weekend swing catches so many people.<sup><a href="#sources">(1, 7)</a></sup></div></div>
+    </div>
+
+    <div class="pillar">
+      <div class="ph"><span class="pico"><svg viewBox="0 0 24 24"><path d="M6 3v8a2 2 0 0 0 4 0V3M8 11v10M16 3c-1.5 0-2.5 1.5-2.5 4s1 4 2.5 4m0-8c1.5 0 2.5 1.5 2.5 4s-1 4-2.5 4m0 0v6"/></svg></span>Eat on a regular schedule</div>
+      <div class="prow"><div class="ptag">Do this</div><div class="pbody">Three meals at roughly consistent times, breakfast within an hour of waking, and a snack on hand for delays. Do not skip meals to save time.</div></div>
+      <div class="prow"><div class="ptag">Evidence</div><div class="pbody">Not eating is one of the most consistently reported triggers, and it is also one of the easiest to fix.<sup><a href="#sources">(1)</a></sup></div></div>
+    </div>
+
+    <div class="pillar">
+      <div class="ph"><span class="pico"><svg viewBox="0 0 24 24"><path d="M12 3c3.5 4 6 7 6 10a6 6 0 0 1-12 0c0-3 2.5-6 6-10z"/></svg></span>Stay hydrated</div>
+      <div class="prow"><div class="ptag">Do this</div><div class="pbody">Sip water through the day and drink more in heat, with exercise, or after alcohol. Pale, clear urine is the simplest gauge.</div></div>
+      <div class="prow"><div class="ptag">Evidence</div><div class="pbody">Dehydration is a commonly reported trigger. The science here is softer than for sleep, but the habit is free and carries no risk.</div></div>
+    </div>
+
+    <div class="pillar">
+      <div class="ph"><span class="pico"><svg viewBox="0 0 24 24"><path d="M4 9h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM16 10h2a2 2 0 0 1 0 4h-2M6 4v1.5M9 4v1.5M12 4v1.5"/></svg></span>Keep caffeine steady</div>
+      <div class="prow"><div class="ptag">Do this</div><div class="pbody">Pick a consistent daily amount, roughly two cups of coffee or less, and stick to it. If you want to cut down, taper over two to three weeks rather than stopping cold.</div></div>
+      <div class="prow"><div class="ptag">Evidence</div><div class="pbody">Caffeine cuts both ways: small steady amounts can help, but a sudden drop is a classic trigger. The enemy is the swing, not the coffee.</div></div>
+    </div>
+
+    <div class="pillar">
+      <div class="ph"><span class="pico"><svg viewBox="0 0 24 24"><path d="M3 13h3l2-4 3 8 2-5 2 1h4"/></svg></span>Move most days</div>
+      <div class="prow"><div class="ptag">Do this</div><div class="pbody">Gentle aerobic exercise, walking, cycling or swimming, about three to four times a week for thirty minutes. Warm up first and build up slowly, since leaping straight into hard effort can set off an attack.</div></div>
+      <div class="prow"><div class="ptag">Evidence</div><div class="pbody">This is one of the strongest tools you have that is not a medicine. In a head to head trial, regular exercise reduced attacks about as well as a relaxation program and as well as a standard preventive medicine.<sup><a href="#sources">(5)</a></sup></div></div>
+    </div>
+
+    <div class="pillar">
+      <div class="ph"><span class="pico"><svg viewBox="0 0 24 24"><path d="M12 21c4-3 7-6 7-10a4 4 0 0 0-7-2.6A4 4 0 0 0 5 11c0 4 3 7 7 10z"/></svg></span>Manage stress, and the let down</div>
+      <div class="prow"><div class="ptag">Do this</div><div class="pbody">Build a small daily calming habit even on good days, such as five minutes of slow breathing, breathe in for four, out for six. Talk therapy (CBT), biofeedback, and mindfulness all help.</div></div>
+      <div class="prow"><div class="ptag">Evidence</div><div class="pbody">Stress is the most reported trigger of all, and attacks often land <b>after</b> stress lifts, not during it, so protect your weekends and the days after a deadline.<sup><a href="#sources">(1, 6, 14)</a></sup></div></div>
+    </div>
+
+    <hr class="hr">
+
+    <h2>Handling specific triggers</h2>
+    <p>Once your diary points to a trigger that is truly yours, here is how to take the practical sting out of each of the common ones.</p>
+
+    <div class="trigrows">
+      <div class="trigrow"><img src="trig-stress.jpg" alt="A woman stressed at a cluttered work desk"><div class="trtext"><div class="trk">Stress and let-down</div><div class="trv">Steady sleep, meals, and a daily calming habit. Be extra careful with the window right after stress, when the pressure comes off.</div></div></div>
+      <div class="trigrow rev"><img src="trig-hormonal.jpg" alt="A woman checking dates on her calendar"><div class="trtext"><div class="trk">Hormonal and menstrual</div><div class="trv">Track your cycle next to your headache days, then raise the pattern with your doctor (see below).</div></div></div>
+      <div class="trigrow"><img src="trig-sleep.jpg" alt="A woman yawning on the couch, ready for sleep"><div class="trtext"><div class="trk">Sleep disruption</div><div class="trv">Hold a consistent wake time. Remember both short and long nights can trigger attacks.</div></div></div>
+      <div class="trigrow rev"><img src="trig-meals.jpg" alt="A prepared breakfast of pancakes, eggs and orange juice"><div class="trtext"><div class="trk">Skipped meals</div><div class="trv">Regular meals, never skip breakfast, carry a snack for busy or delayed days.</div></div></div>
+      <div class="trigrow"><img src="trig-dehydration.jpg" alt="A man drinking water while walking outdoors"><div class="trtext"><div class="trk">Dehydration</div><div class="trv">Keep a water bottle in sight; aim for pale urine through the day.</div></div></div>
+      <div class="trigrow rev"><img src="trig-weather.jpg" alt="A man looking out the window at heavy rain"><div class="trtext"><div class="trk">Weather changes</div><div class="trv">Not something you can change, so track it. Some people use an anti-inflammatory ahead of a forecast day, but only after their doctor agrees.</div></div></div>
+      <div class="trigrow"><img src="trig-light.jpg" alt="A man relaxing on a park bench in sunglasses"><div class="trtext"><div class="trk">Bright or flickering light</div><div class="trv">Sunglasses outdoors, lower screen brightness, regular screen breaks. Tinted lenses help some people.</div></div></div>
+      <div class="trigrow rev"><img src="trig-smells.jpg" alt="Fragrant lilies and a lit scented candle"><div class="trtext"><div class="trk">Strong smells</div><div class="trv">Reduce exposure where you can; perfumes, cleaning products, and smoke are common culprits.</div></div></div>
+      <div class="trigrow"><img src="trig-alcohol.jpg" alt="A bottle of red wine and a poured glass"><div class="trtext"><div class="trk">Alcohol</div><div class="trv">Red wine is the most reported offender. Use your diary to learn your own limit and type, since it is very individual.<sup><a href="#sources">(8)</a></sup></div></div></div>
+      <div class="trigrow rev"><img src="trig-foods.jpg" alt="A board of aged cheese and dark chocolate"><div class="trtext"><div class="trk">Specific foods</div><div class="trv">Do not cut foods on suspicion. The evidence for food triggers is modest and personal, and many are really early symptoms. Only drop a food if a four week test, removing then reintroducing it, confirms it.<sup><a href="#sources">(9)</a></sup></div></div></div>
+      <div class="trigrow"><img src="trig-screen.jpg" alt="A woman tired from too much time on a tablet screen"><div class="trtext"><div class="trk">Screen time</div><div class="trv">Try the 20-20-20 rule: every 20 minutes, look about 20 feet away for 20 seconds. Keep your eye prescription current.</div></div></div>
+    </div>
+
+    <h2 style="margin-top:80px">If your attacks follow your cycle</h2>
+    <p>Migraine is the headache most affected by hormones, and for many women attacks cluster in the days around their period. The trigger is not high estrogen but the natural <b>drop</b> in estrogen just before bleeding begins, which lowers the threshold for an attack.<sup><a href="#sources">(10, 11)</a></sup> These attacks, defined as falling from two days before to three days after the period starts, tend to be longer and more stubborn than others.<sup><a href="#sources">(12)</a></sup></p>
+    <p>The first and most useful step is simply to <b>track your cycle in the diary</b>, which often reveals the pattern on its own. Keep the everyday habits especially steady in the days beforehand. If your attacks reliably follow your period, tell your clara doctor, because there are specific options, such as a short preventive taken only around your period, that are decided with a doctor based on how regular your cycle is and whether you have aura.</p>
+
+    <div class="callout terra">
+      <h3>One important safety note</h3>
+      <p>If you have migraine <b>with aura</b>, birth control that contains estrogen is usually avoided for safety reasons. This is one more reason hormonal strategies are a conversation with your doctor rather than something to try on your own.</p>
+    </div>
+
+    <hr class="hr">
+
+    <h2>Your first eight weeks</h2>
+    <p>You do not have to do everything at once. In fact you should not. Here is a gentle way to build the habits in stages, so each one has room to stick.</p>
+
+    <div class="planhead">
+      <div class="ph-top"><span class="ph-t">Your progress</span><span class="ph-c" id="planCount">0 of 4 done</span></div>
+      <div class="planbar"><span id="planFill"></span></div>
+      <div class="planmsg" id="planMsg">Tick each stage as you build it. Small steps, big change.</div>
+    </div>
+    <div class="plansteps" id="planSteps">
+    <div class="planrow" data-step="0"><div class="ck"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div><div class="wk">Weeks 1&ndash;2</div><div class="wd"><b>Start the diary</b> and lock a consistent sleep and wake time. Add a five minute breathing practice, morning and evening.</div></div>
+    <div class="planrow" data-step="1"><div class="ck"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div><div class="wk">Weeks 3&ndash;4</div><div class="wd"><b>Regular meals,</b> three a day, no skipping. Begin <b>gentle exercise</b>, three times a week, starting at twenty minutes.</div></div>
+    <div class="planrow" data-step="2"><div class="ck"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div><div class="wk">Weeks 5&ndash;6</div><div class="wd"><b>Hydration and steady caffeine.</b> Review your diary for any emerging pattern, and message your care team about it.</div></div>
+    <div class="planrow" data-step="3"><div class="ck"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div><div class="wk">Weeks 7&ndash;8</div><div class="wd"><b>Add a calm practice you will keep,</b> such as CBT, biofeedback, or structured relaxation. Review whether your monthly attack count has moved.</div></div>
+    </div>
+
+    <div class="callout sage">
+      <h3>How to know it is working</h3>
+      <p>By around eight weeks, look for fewer migraine days a month, lower severity scores, and less reliance on rescue medicine. Better sleep, energy, and mood often come along for free. If nothing has moved, that is your cue to message clara about adding a preventive medicine, and some people also find a daily supplement like riboflavin worth discussing with their doctor.<sup><a href="#sources">(13)</a></sup></p>
+    </div>
+
+    <div class="endnote">
+      <p>A last, honest word. Migraine is a neurological condition, not a habit you can simply outrun, and lifestyle changes lower the baseline rather than cure it.<sup><a href="#sources">(15)</a></sup> So manage the triggers your own diary reveals, keep the everyday habits that help, and resist the trap of shrinking your life chasing a long list of maybes. The goal is fewer, gentler attacks and a fuller life, not a smaller one.</p>
+    </div>
+
+    <hr style="border:none;height:1px;background:linear-gradient(90deg,transparent,#D4CFC4,transparent);margin:56px 0">
+
+    <h2 id="sources">Sources</h2>
+    <ol class="sources">
+      <li>Kelman L. The triggers or precipitants of the acute migraine attack. Cephalalgia. 2007;27(5):394-402.</li>
+      <li>Charles A. The evolution of a migraine attack: a review of recent evidence. Headache. 2013;53(2):413-419.</li>
+      <li>Laurell K, Artto V, Bendtsen L, et al. Premonitory symptoms in migraine: a cross-sectional study in 2714 persons. Cephalalgia. 2016;36(10):951-959.</li>
+      <li>Martin VT, Behbehani MM. Toward a rational understanding of migraine trigger factors. Medical Clinics of North America. 2001;85(4):911-941.</li>
+      <li>Varkey E, Cider A, Carlsson J, Linde M. Exercise as migraine prophylaxis: a randomized study using relaxation and topiramate as controls. Cephalalgia. 2011;31(14):1428-1438.</li>
+      <li>Lipton RB, Buse DC, Hall CB, et al. Reduction in perceived stress as a migraine trigger: testing the let-down headache hypothesis. Neurology. 2014;82(16):1395-1401.</li>
+      <li>Walters AB, Hamer JD, Smitherman TA. Sleep disturbance and affective comorbidity among episodic migraineurs. Headache. 2014;54(1):116-124.</li>
+      <li>Onderwater GLJ, van Oosterhout WPJ, Schoonman GG, et al. Alcoholic beverages as trigger factor and the effect on alcohol consumption behavior in patients with migraine. European Journal of Neurology. 2019;26(4):588-595.</li>
+      <li>Martin VT, Vij B. Diet and headache: part 1. Headache. 2016;56(9):1543-1552.</li>
+      <li>Vetvik KG, MacGregor EA. Menstrual migraine: a distinct disorder needing greater recognition. Lancet Neurology. 2021;20(4):304-315.</li>
+      <li>MacGregor EA, Frith A, Ellis J, et al. Incidence of migraine relative to menstrual cycle phases of rising and falling estrogen. Neurology. 2006;67(12):2154-2158.</li>
+      <li>Headache Classification Committee of the International Headache Society. The International Classification of Headache Disorders, 3rd edition (ICHD-3). Cephalalgia. 2018;38(1):1-211.</li>
+      <li>Schoenen J, Jacquy J, Lenaerts M. Effectiveness of high-dose riboflavin in migraine prophylaxis: a randomized controlled trial. Neurology. 1998;50(2):466-470.</li>
+      <li>Holroyd KA, Cottrell CK, O'Donnell FJ, et al. Effect of preventive (beta blocker) treatment, behavioural migraine management, or their combination on outcomes of optimised acute treatment in frequent migraine: randomised controlled trial. BMJ. 2010;341:c4871.</li>
+      <li>Dodick DW. Migraine. Lancet. 2018;391(10127):1315-1330.</li>
+    </ol>
+
+    <p class="disclaimer">This guide is general education from your clara care team and is not a substitute for personal medical advice. Your triggers, your suitability for any strategy, and any medicine or supplement are decided with your clara doctor based on your individual health.</p>
+
+  </div>
+</div>
+<script>
+(function(){
+  var pages=[
+    {type:'cover', img:'diary-cover.png'},
+    {img:'diary-1-today.png',    k:'Entry 1', t:'Migraine today?',     d:'Yes, no, or partial. Your monthly count is the most important number on the page.', lbl:'Today'},
+    {img:'diary-2-severity.png', k:'Entry 2', t:'Severity and length', d:'A 0 to 10 score and how many hours it lasted. Both should ease as prevention takes hold.', wide:true},
+    {img:'diary-3-medicine.png', k:'Entry 3', t:'Medicine taken',      d:'What you took and whether it worked. This also keeps your acute days under the safe limits.'},
+    {img:'diary-4-sleep.png',    k:'Entry 4', t:'Sleep last night',    d:'Hours and rough quality. One of the most revealing and most fixable columns.'},
+    {img:'diary-5-triggers.png', k:'Entry 5', t:'Possible triggers',   d:'Stress, a missed meal, alcohol, weather, a big screen day, anything notable in the last 24 hours.'},
+    {img:'diary-6-cycle.png',    k:'Entry 6', t:'Cycle day',           d:'If you menstruate, note the day. A pattern around your period is common and easy to miss otherwise.'},
+    {type:'summary'}
+  ];
+  var entries=pages.filter(function(p){return !p.type;});
+  var i=0;
+  var pageEl=document.getElementById('dbPage');
+  var prev=document.getElementById('dbPrev');
+  var next=document.getElementById('dbNext');
+  var count=document.getElementById('dbCount');
+  var nEntries=entries.length;
+
+  function esc(s){return s;}
+  function render(){
+    var p=pages[i], html='';
+    if(p.type==='cover'){
+      html='<div class="db-cover">'+
+        '<img class="db-illus" src="'+p.img+'" alt="An illustrated Migraine Diary book">'+
+        '<button class="db-cta" id="dbOpen">Open the diary &rarr;</button>'+
+        '<div class="db-hint">Six quick things to jot down each day. Flip through to see them.</div>'+
+      '</div>';
+    } else if(p.type==='summary'){
+      var rows='';
+      entries.forEach(function(e){
+        rows+='<div class="db-srow"><img class="si" src="'+e.img+'" alt=""><div><div class="sk">'+e.t+'</div><div class="sv">'+e.d+'</div></div></div>';
+      });
+      html='<div class="db-summary"><h3>Your diary, at a glance</h3><div class="ssub">Six things to note each day, all in one place.</div>'+rows+'</div>';
+    } else {
+      var num=i;
+      var illus = p.lbl
+        ? '<div class="db-illwrap"><img class="db-illus" src="'+p.img+'" alt=""><span class="db-illlabel">'+p.lbl+'</span></div>'
+        : '<img class="db-illus'+(p.wide?' wide':'')+'" src="'+p.img+'" alt="">';
+      html=illus+
+        '<div class="db-kicker">'+p.k+'</div>'+
+        '<div class="db-title">'+p.t+'</div>'+
+        '<div class="db-desc">'+p.d+'</div>'+
+        '<div class="db-pagenum">'+num+' of '+nEntries+'</div>';
+    }
+    pageEl.className='db-page flip';
+    pageEl.innerHTML=html;
+    void pageEl.offsetWidth;
+    var open=document.getElementById('dbOpen');
+    if(open) open.addEventListener('click', function(){ go(1); });
+
+    // nav state
+    prev.style.visibility = i===0 ? 'hidden' : 'visible';
+    if(pages[i].type==='cover'){ next.textContent='Open the diary →'; next.className='db-btn primary'; count.textContent=''; }
+    else if(pages[i].type==='summary'){ next.textContent='Start over'; next.className='db-btn'; count.textContent='Summary'; }
+    else {
+      count.textContent='Entry '+i+' of '+nEntries;
+      if(i===nEntries){ next.textContent='See summary →'; next.className='db-btn primary'; }
+      else { next.textContent='Next page →'; next.className='db-btn primary'; }
+    }
+  }
+  function go(d){
+    if(pages[i].type==='summary' && d>0){ i=0; render(); return; }
+    var ni=i+d;
+    if(ni<0||ni>=pages.length) return;
+    i=ni; render();
+  }
+  prev.addEventListener('click', function(){ go(-1); });
+  next.addEventListener('click', function(){ go(1); });
+  render();
+})();
+</script>
+<script>
+(function(){
+  var steps=document.querySelectorAll('#planSteps .planrow');
+  if(!steps.length) return;
+  var fill=document.getElementById('planFill');
+  var count=document.getElementById('planCount');
+  var msg=document.getElementById('planMsg');
+  var N=steps.length;
+  var KEY='clara-migraine-plan';
+  var state=[false,false,false,false];
+  try{ var s=JSON.parse(localStorage.getItem(KEY)); if(Array.isArray(s)&&s.length===N) state=s; }catch(e){}
+
+  var checkMsgs=[
+    'Nice. That is one habit on its way.',
+    'Look at you go. Keep the momentum.',
+    'Another one locked in. Your brain will thank you.',
+    'Steady progress. This is how attacks get rarer.'
+  ];
+  var milestone={
+    1:'Great start. Every prevention routine begins with one small step.',
+    2:'Halfway there. The habits are starting to take hold.',
+    3:'Three of four. You are building something that lasts.',
+    4:'All four, done. You have built a real prevention routine. Be proud of this.'
+  };
+  var resetMsg='Tick each stage as you build it. Small steps, big change.';
+
+  function tally(){ var n=0; state.forEach(function(v){ if(v) n++; }); return n; }
+  function flash(text){
+    msg.classList.remove('show');
+    setTimeout(function(){ msg.textContent=text; msg.classList.add('show'); }, 120);
+  }
+  function paint(animateText){
+    var n=tally();
+    fill.style.width=(n/N*100)+'%';
+    count.textContent=n+' of '+N+' done';
+    steps.forEach(function(row,i){ row.classList.toggle('done', !!state[i]); });
+    if(!animateText){ msg.textContent = n? (milestone[n]||resetMsg) : resetMsg; msg.classList.add('show'); }
+  }
+  steps.forEach(function(row){
+    row.addEventListener('click', function(){
+      var i=+row.getAttribute('data-step');
+      state[i]=!state[i];
+      try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+      var n=tally();
+      paint(true);
+      if(state[i]){ flash(milestone[n] || checkMsgs[Math.min(n-1,checkMsgs.length-1)]); }
+      else { flash(n? (milestone[n]||'Unchecked. No rush, go at your own pace.') : resetMsg); }
+    });
+  });
+  paint(false);
+})();
+</script>
+</body></html>

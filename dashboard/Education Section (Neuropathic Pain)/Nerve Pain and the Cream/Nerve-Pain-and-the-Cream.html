@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>clara · Nerve pain and the cream</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,serif}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:15.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:14.5px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px;font-size:18.5px;line-height:1.72;color:#2b302c}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:15.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:700;letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:18px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.byline{font-size:15.5px;color:var(--grey);font-weight:600}
+.chip{font-size:14px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.article{font-size:18.5px;line-height:1.78;color:#2b302c}
+.article h2{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:48px 0 12px;line-height:1.2}
+.article p{margin-bottom:18px}
+.article sup a{color:var(--sage);font-style:italic;font-weight:600;text-decoration:none;font-size:.92em}
+.callout{border-radius:16px;padding:22px 24px;margin:26px 0;border:1px solid var(--line)}
+.callout.sage{background:var(--sage-pale);border-color:var(--sage-soft)}
+.callout h3{margin:0 0 10px;font-size:20px;color:var(--sage-dark);line-height:1.25}
+.callout p{margin:0;font-size:18.5px;line-height:1.6;color:#2b302c}
+.callout p+p{margin-top:12px}
+.benefit{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:14px 0;box-shadow:var(--shadow)}
+.benefit .bi{flex:0 0 40px;width:40px;height:40px;border-radius:11px;background:var(--sage-pale);display:grid;place-items:center}
+.benefit .bi svg{width:22px;height:22px;stroke:var(--sage-dark);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.benefit .bt{font-weight:700;color:var(--sage-dark);font-size:17.5px;margin-bottom:3px}
+.benefit .bd{font-size:16.5px;line-height:1.55;color:#2b302c}
+.conds{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
+.condcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 26px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.condcard .ev{align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 11px;border-radius:20px;margin-bottom:12px}
+.ev.strong{background:var(--sage);color:#fff}
+.ev.some{background:var(--sage-pale);color:var(--sage-dark);border:1px solid var(--sage-soft)}
+.ev.limited{background:var(--terra-pale);color:var(--terra-deep);border:1px solid var(--terra-soft)}
+.ev.whole{background:#EEF1F4;color:#5a6470;border:1px solid #E1E5EA}
+.condcard .ct{font-family:Georgia,serif;font-size:21px;font-weight:700;color:var(--ink);margin-bottom:7px;line-height:1.2}
+.condcard .cd{font-size:16.5px;line-height:1.55;color:#2b302c;margin-bottom:12px}
+.condcard .ch{font-size:16.5px;line-height:1.55;color:#2b302c;border-top:1px solid var(--line);padding-top:12px}
+.condcard .ch b{color:var(--sage-dark)}
+@media(max-width:640px){.conds{grid-template-columns:1fr}}
+.warn{background:var(--terra-pale);border:1px solid var(--terra-soft);border-radius:16px;padding:24px 28px;margin:28px 0}
+.warn h3{color:var(--terra-deep);font-size:22px;margin-bottom:12px}
+.warn ul{margin:0 0 0 2px;list-style:none}
+.warn li{position:relative;padding-left:26px;font-size:18px;line-height:1.55;margin-bottom:10px;color:#2b302c}
+.warn li::before{content:'';position:absolute;left:4px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--terra)}
+.warn li b{color:#6e2417}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 6px}
+.chip2{background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:24px;padding:11px 20px;font-weight:700;color:var(--sage-dark);font-size:16.5px}
+.ctacard{background:linear-gradient(135deg,var(--sage),var(--sage-dark));border-radius:22px;padding:32px 34px;margin:30px 0 8px;color:#fff;box-shadow:var(--shadow-lg)}
+.ctacard h3{font-family:Georgia,serif;font-size:26px;margin:0 0 8px}
+.ctacard p{font-size:17.5px;line-height:1.6;color:rgba(255,255,255,.92);margin:0 0 18px;max-width:560px}
+.ctabtn{display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--sage-dark);font-weight:700;font-size:16.5px;padding:14px 26px;border-radius:30px}
+.hr{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);margin:56px 0}
+h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:46px 0 12px}
+.sources ol{margin:0;padding-left:20px;font-size:15.5px;color:var(--grey);line-height:1.65}
+.sources li{margin-bottom:9px}
+.disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);font-style:italic;line-height:1.6}
+@media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-logo" href="../../Clara-Homepage-MOCK-v1.html?signedin=1" style="text-decoration:none" title="Back to the clara home page">clara</a>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care">Get Care</a>
+  </div>
+  <div class="nav-avatar">SK</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education">&larr;  All conditions</a>
+  <div class="eyebrow">Neuropathic pain</div>
+  <h1 class="title serif">Nerve pain, and how a cream can help</h1>
+  <p class="lede">Nerve pain is its own kind of pain, with its own rules. For pain in one area, a compound cream can work right where it hurts, with far less medicine reaching the rest of your body.</p>
+  <div class="meta">
+    <span class="byline">From your clara care team</span>
+    <span class="chip">&#9201; 7 min read</span>
+    <span class="chip">Evidence based</span>
+  </div>
+
+  <div class="article">
+
+    <p>Most everyday pain comes from a muscle, joint, or bone. <b>Neuropathic pain is different: it comes from the nerves themselves</b>, the body&rsquo;s wiring, sending faulty or exaggerated signals. Because the nerves are what is misfiring, the pain feels different too. People most often describe it as <b>burning, tingling or pins and needles, shooting, or like an electric shock</b>.<sup><a href="#sources">(1)</a></sup></p>
+    <p>A telltale sign is pain from things that should not hurt at all, like a light touch, clothing brushing the skin, or a cool breeze. Common causes include diabetes, shingles, nerve compression, and nerve injury after surgery.<sup><a href="#sources">(1, 2)</a></sup></p>
+
+    <h2>Why a cream for nerve pain</h2>
+    <p>For pain that sits in one area, a topical cream has a real advantage over a pill: it puts the medicine <b>where the pain is</b>, so far less of it reaches your bloodstream, which usually means fewer whole-body side effects.<sup><a href="#sources">(3)</a></sup> That makes a cream especially worth considering if you cannot tolerate oral nerve-pain medicines, take many other medications, or simply prefer to avoid the drowsiness and other effects that the oral versions can bring.</p>
+
+    <div class="benefit">
+      <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg></div>
+      <div><div class="bt">Relief right where you rub it in</div><div class="bd">clara&rsquo;s nerve-pain cream combines agents that calm overactive nerves at the surface, such as amitriptyline and ketamine, alongside options like lidocaine. They work in the skin and nerves of the painful area rather than the whole body.<sup><a href="#sources">(5, 6)</a></sup></div></div>
+    </div>
+    <div class="benefit">
+      <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 3c3.5 4 6 7 6 10a6 6 0 0 1-12 0c0-3 2.5-6 6-10z"/></svg></div>
+      <div><div class="bt">Less medicine through the body</div><div class="bd">Because it is absorbed mostly where you apply it, a topical carries a lower risk of the system-wide effects that come with oral medicines. A clara doctor still reviews every ingredient against your health and other medications first.<sup><a href="#sources">(3)</a></sup></div></div>
+    </div>
+
+    <div class="callout sage">
+      <h3>An honest word on what a cream can and cannot do</h3>
+      <p>Compounded creams are made for the individual and are not FDA approved, and the evidence is mixed: a large trial found multi-ingredient creams no better than a placebo for some patients, while guidelines and clinical experience still support them for the right person with <b>localized</b> pain.<sup><a href="#sources">(4, 13)</a></sup> Expect a cream to <b>take the edge off</b>, often a partial reduction rather than zero pain, give it a fair trial of about four to six weeks, and treat it as one part of a plan your clara doctor builds with you.</p>
+    </div>
+
+    <h2>Nerve pain conditions a cream may help</h2>
+    <p>The strength of the evidence is different for each condition, so we show it honestly. A clara doctor decides whether a cream is a sensible fit for you.</p>
+
+    <div class="conds">
+      <div class="condcard">
+        <span class="ev strong">Strongest evidence</span>
+        <div class="ct">Pain after shingles</div>
+        <div class="cd">Shingles can damage a nerve and leave behind burning or stabbing pain that lasts long after the rash heals, known as post-herpetic neuralgia.<sup><a href="#sources">(7)</a></sup></div>
+        <div class="ch"><b>How a cream helps:</b> this is where topicals are best proven. Lidocaine eases the touch-sensitive pain, and a compounded amitriptyline and ketamine cream is the most studied combination for it.<sup><a href="#sources">(7, 6)</a></sup></div>
+      </div>
+      <div class="condcard">
+        <span class="ev strong">Strongest evidence</span>
+        <div class="ct">Diabetic nerve pain</div>
+        <div class="cd">Years of high blood sugar can damage nerves, usually starting in the feet, with burning or stabbing pain in the toes and soles.<sup><a href="#sources">(10)</a></sup></div>
+        <div class="ch"><b>How a cream helps:</b> high-strength capsaicin is approved for painful diabetic neuropathy of the feet,<sup><a href="#sources">(8, 9)</a></sup> and topical amitriptyline has matched capsaicin with fewer side effects in trials.<sup><a href="#sources">(10)</a></sup></div>
+      </div>
+      <div class="condcard">
+        <span class="ev some">Some evidence</span>
+        <div class="ct">Nerve pain after surgery or injury</div>
+        <div class="cd">Sometimes pain lingers in a scar or limb for months after an operation or injury, including nerve pain from cancer treatment.<sup><a href="#sources">(12)</a></sup></div>
+        <div class="ch"><b>How a cream helps:</b> for focused, well-defined pain, lidocaine, capsaicin and compounded amitriptyline, ketamine and lidocaine are used, and cancer-care guidelines list compounded creams as an option.<sup><a href="#sources">(12)</a></sup></div>
+      </div>
+      <div class="condcard">
+        <span class="ev limited">Limited evidence</span>
+        <div class="ct">Complex regional pain syndrome</div>
+        <div class="cd">After an injury or surgery, a limb can develop pain out of proportion to the original problem, with swelling and skin and temperature changes (CRPS).<sup><a href="#sources">(11)</a></sup></div>
+        <div class="ch"><b>How a cream helps:</b> the evidence is limited, but topical lidocaine or capsaicin over the painful, touch-sensitive area is used by some clinicians as part of a wider plan.<sup><a href="#sources">(11)</a></sup></div>
+      </div>
+      <div class="condcard" style="grid-column:1/-1">
+        <span class="ev whole">Whole-body care, not mainly a cream</span>
+        <div class="ct">Fibromyalgia</div>
+        <div class="cd">Fibromyalgia is widespread pain that comes from a more sensitive pain-processing system rather than one damaged nerve, so it is felt all over rather than in one spot.</div>
+        <div class="ch"><b>How a cream fits:</b> because topical creams work best on <b>localized</b> pain, they are not the main treatment for fibromyalgia, which responds to exercise, sleep and stress care, and certain oral medicines.<sup><a href="#sources">(13)</a></sup> A cream may still soothe a particular tender area, and your clara doctor can advise.</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <h3>Using a nerve-pain cream safely</h3>
+      <ul>
+        <li><b>Never put it on broken, cut, raw or burned skin.</b> This is the most important rule, because broken skin lets far more medicine through and has caused real harm.</li>
+        <li>Apply a thin layer to the painful area as directed, usually a few times a day, and wash your hands afterward unless your hands are what you are treating.</li>
+        <li>Keep it away from your eyes, do not cover it with tight dressings, and avoid heat like heating pads over the area.</li>
+        <li>Store it out of reach of children and pets, and tell your doctor before using it in pregnancy.</li>
+        <li>Mild stinging, warmth or redness where you apply it is common and usually settles. Stop and message clara for a bad rash, or any drowsiness, dizziness or palpitations.</li>
+      </ul>
+    </div>
+
+    <hr class="hr">
+
+    <h2>Other localized pain a cream can help</h2>
+    <p>A compound cream is not just for nerve pain. It is often a good fit for other pain that sits in one place. If one of these sounds like you, a clara doctor can tell you whether a cream is a fit.</p>
+    <div class="chips">
+      <span class="chip2">Tendonitis</span>
+      <span class="chip2">Bursitis</span>
+      <span class="chip2">Arthritis flares</span>
+    </div>
+
+    <div class="ctacard">
+      <h3>See if a cream is right for you</h3>
+      <p>Answer a few questions and a Canadian licensed clara doctor will review whether a compound cream fits your pain, your history and your other medicines, before anything is made or shipped.</p>
+      <a class="ctabtn" href="../../Clara-Dashboard-MOCK-v1.html#care">Talk to a clara doctor &rarr;</a>
+    </div>
+
+    <hr class="hr">
+
+    <h2 id="sources">Sources</h2>
+    <ol class="sources">
+      <li>Finnerup NB. Nonnarcotic methods of pain management. New England Journal of Medicine. 2019;380(25):2440-2448.</li>
+      <li>Finnerup NB, Attal N, Haroutounian S, et al. Pharmacotherapy for neuropathic pain in adults: a systematic review and meta-analysis. Lancet Neurology. 2015;14(2):162-173.</li>
+      <li>Derry S, Wiffen PJ, Kalso EA, et al. Topical analgesics for acute and chronic pain in adults: an overview of Cochrane Reviews. Cochrane Database of Systematic Reviews. 2017;5:CD008609.</li>
+      <li>Brutcher RE, Kurihara C, Bicket MC, et al. Compounded topical pain creams to treat localized chronic pain: a randomized controlled trial. Annals of Internal Medicine. 2019;170(5):309-318.</li>
+      <li>Lynch ME, Clark AJ, Sawynok J, Sullivan MJ. Topical amitriptyline and ketamine in neuropathic pain syndromes: an open-label study. The Journal of Pain. 2005;6(10):644-649.</li>
+      <li>Sawynok J, Zinger C. Topical amitriptyline and ketamine for post-herpetic neuralgia and other forms of neuropathic pain. Expert Opinion on Pharmacotherapy. 2016;17(4):601-609.</li>
+      <li>Rowbotham MC, Davies PS, Verkempinck C, Galer BS. Lidocaine patch: double-blind controlled study of a new treatment method for post-herpetic neuralgia. Pain. 1996;65(1):39-44.</li>
+      <li>Derry S, Rice AS, Cole P, et al. Topical capsaicin (high concentration) for chronic neuropathic pain in adults. Cochrane Database of Systematic Reviews. 2017;1:CD007393.</li>
+      <li>Simpson DM, Robinson-Papp J, Van J, et al. Capsaicin 8% patch in painful diabetic peripheral neuropathy: a randomized, double-blind, placebo-controlled study. The Journal of Pain. 2017;18(1):42-53.</li>
+      <li>Price R, Smith D, Franklin G, et al. Oral and topical treatment of painful diabetic polyneuropathy: practice guideline update summary. Neurology. 2022;98(1):31-43.</li>
+      <li>Harden RN, McCabe CS, Goebel A, et al. Complex regional pain syndrome: practical diagnostic and treatment guidelines, 5th edition. Pain Medicine. 2022;23(Suppl 1):S1-S53.</li>
+      <li>Loprinzi CL, Lacchetti C, Bleeker J, et al. Prevention and management of chemotherapy-induced peripheral neuropathy in survivors of adult cancers: ASCO guideline update. Journal of Clinical Oncology. 2020;38(28):3325-3348.</li>
+      <li>Lawson E, Singla P, Adler J, et al. Topical analgesics for neuropathic pain: an evidence-informed guide for the practicing clinician. Pain Medicine. 2025.</li>
+    </ol>
+
+    <p class="disclaimer">This guide is general education from your clara care team and is not a substitute for personal medical advice. Compounded creams are prepared for the individual, are not FDA approved, and their ingredients, doses and suitability are decided by your clara doctor based on your health, allergies and other medicines.</p>
+
+  </div>
+</div>
+</body></html>

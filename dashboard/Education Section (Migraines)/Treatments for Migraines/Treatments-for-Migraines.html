@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>clara · Treatments for migraines</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#1F3329; --sage-soft:#E8EFEA; --sage-pale:#F2F6F3;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540;
+  --ink:#1F2421; --grey:#5A615D; --muted:#8A908B;
+  --cream:#F7F5F0; --cream-soft:#FBF9F4; --line:#E8E4DC; --line-strong:#D4CFC4;
+  --shadow:0 4px 14px rgba(31,51,41,.07); --shadow-lg:0 12px 36px rgba(31,51,41,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.serif{font-family:Georgia,serif}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
+.nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:15.5px;font-weight:500;color:var(--grey)}
+.nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
+.nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:14.5px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px;font-size:18.5px;line-height:1.72;color:#2b302c}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:15.5px;font-weight:600;margin-bottom:22px}
+.back:hover{color:var(--sage-dark)}
+.eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:700;letter-spacing:-.5px;margin-bottom:14px}
+.lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:18px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.byline{font-size:15.5px;color:var(--grey);font-weight:600}
+.chip{font-size:14px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.hero-img{width:100%;border-radius:20px;display:block;box-shadow:var(--shadow-lg);margin-bottom:8px;aspect-ratio:16/8;object-fit:cover;object-position:center 40%;background:var(--cream-soft)}
+.cap{font-size:14px;color:var(--muted);font-style:italic;margin-bottom:26px}
+.article{font-size:18.5px;line-height:1.78;color:#2b302c}
+.article h2{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:48px 0 12px;line-height:1.2}
+.article h3{font-size:18px;font-weight:700;color:var(--ink);margin:22px 0 4px}
+.article p{margin-bottom:18px}
+.article ul{margin:0 0 18px 2px;list-style:none}
+.article li{position:relative;padding-left:26px;margin-bottom:11px}
+.article li::before{content:'';position:absolute;left:4px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.article sup a{color:var(--sage);font-style:italic;font-weight:600;text-decoration:none;font-size:.92em}
+.callout{border-radius:16px;padding:22px 24px;margin:26px 0;border:1px solid var(--line)}
+.callout.sage{background:var(--sage-pale);border-color:var(--sage-soft)}
+.goals{margin:6px 0 22px;display:flex;flex-direction:column;gap:16px}
+.goal{display:flex;gap:16px;align-items:flex-start}
+.goal .gnum{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:var(--sage);color:#fff;font-family:Georgia,serif;font-weight:700;font-size:21px;display:grid;place-items:center;margin-top:1px;box-shadow:var(--shadow)}
+.goal .gtext{flex:1;font-size:18.5px;line-height:1.6;padding-top:6px}
+.goal .gtext b{color:var(--sage-dark)}
+.callout h3{margin:0 0 10px;font-size:20px;color:var(--sage-dark);line-height:1.25}
+.callout p{margin:0;font-size:18.5px;line-height:1.6;color:#2b302c}
+.callout .illwrap{position:relative;margin-top:18px}
+.callout .ill{width:100%;border-radius:14px;display:block;border:1px solid var(--sage-soft)}
+.callout .ill-label{position:absolute;top:50%;right:6%;transform:translateY(-50%);font-family:Georgia,serif;font-weight:700;font-size:clamp(22px,3.6vw,40px);color:var(--sage-dark);line-height:1.1;text-align:right;letter-spacing:-.5px}
+.secimg{width:100%;border-radius:18px;display:block;box-shadow:var(--shadow-lg);margin:6px 0 22px;aspect-ratio:16/9;object-fit:cover;background:var(--cream-soft)}
+.introrow{display:flex;gap:32px;align-items:center;margin:0 0 10px}
+.introrow .iimg{flex:0 0 300px;width:300px;aspect-ratio:3/4;object-fit:cover;border-radius:18px;box-shadow:var(--shadow-lg);display:block;background:var(--cream-soft)}
+.introrow .itext{flex:1;min-width:0}
+.introrow .itext h2{margin-top:0}
+.introrow .itext p{margin-bottom:0}
+@media(max-width:600px){.introrow{flex-direction:column;align-items:flex-start;gap:18px}.introrow .iimg{width:100%;flex:0 0 auto;aspect-ratio:16/11}}
+.medtier{display:flex;gap:24px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 26px;margin:18px 0;box-shadow:var(--shadow)}
+.medtier .orb{width:96px;height:96px;flex:0 0 96px;object-fit:contain;display:block}
+.medtier .mc{flex:1;min-width:0}
+.medtier .mstep{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--terra-deep);background:var(--terra-pale);padding:4px 11px;border-radius:12px;margin-bottom:9px}
+.medtier .mh{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark);margin-bottom:7px;line-height:1.2}
+.medtier p{margin:0;font-size:17.5px;line-height:1.6;color:#2b302c}
+.medtier .drugs{margin-top:8px;font-size:16px;color:var(--grey)}
+@media(max-width:560px){.medtier{flex-direction:column;text-align:center}.medtier .orb{flex:0 0 auto}}
+.mohcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 26px;margin:18px 0;box-shadow:var(--shadow)}
+.mohrow{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.mohrow:last-child{border-bottom:none}
+.mohrow .ml{font-size:18px;color:#2b302c;font-weight:600}
+.mohrow .mr{font-size:18px;color:var(--terra-deep);font-weight:700;white-space:nowrap;text-align:right}
+.mohrow .mr.safe{color:var(--sage-dark)}
+.warn{background:var(--terra-pale);border:1px solid var(--terra-soft);border-radius:16px;padding:24px 28px;margin:26px 0}
+.warn h3{color:var(--terra-deep);font-size:22px;margin-bottom:12px}
+.warn ul{margin:0 0 0 2px;list-style:none}
+.warn li{position:relative;padding-left:26px;font-size:18.5px;line-height:1.55;margin-bottom:11px}
+.warn li::before{content:'';position:absolute;left:4px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--terra)}
+.warn p{margin:0;font-size:18.5px;line-height:1.6;color:#2b302c}
+.endnote{background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:16px;padding:24px 26px;margin:28px 0 8px}
+.endnote h3{margin:0 0 10px;font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--sage-dark);line-height:1.25}
+.endnote p{margin:0;font-size:20px;line-height:1.65;color:var(--sage-deep)}
+h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:46px 0 12px}
+.sources ol{margin:0;padding-left:20px;font-size:15.5px;color:var(--grey);line-height:1.65}
+.sources li{margin-bottom:9px;position:static}
+.sources li::before{display:none}
+.disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);font-style:italic;line-height:1.6}
+.hr{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);margin:56px 0}
+@media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-logo" href="../../Clara-Homepage-MOCK-v1.html?signedin=1" style="text-decoration:none" title="Back to the clara home page">clara</a>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#home">Home</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#pain">Pain Tracker</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#rx">My Rx</a>
+    <a class="nav-tab active" href="../../Clara-Dashboard-MOCK-v1.html#education">Education</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#messages">Messages</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#orders">Orders</a>
+    <a class="nav-tab" href="../../Clara-Dashboard-MOCK-v1.html#care">Get Care</a>
+  </div>
+  <div class="nav-avatar">SK</div>
+</div>
+
+<div class="wrap">
+  <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education-migraine">&larr;  Back to migraine</a>
+  <div class="eyebrow">Migraine &middot; Treatments</div>
+  <h1 class="title serif">Treatments for migraines</h1>
+  <p class="lede">There is no single migraine pill that is right for everyone. The good news is that there is a clear, evidence based ladder, and a clara doctor matches the right rung to your history.</p>
+  <div class="meta">
+    <span class="byline">From your clara care team</span>
+    <span class="chip">&#9201; 8 min read</span>
+    <span class="chip">Evidence based</span>
+  </div>
+
+  <img class="hero-img" src="rose-reading.jpg" alt="A woman relaxing on her sofa at home, reading about migraine treatment with a coffee and water nearby">
+  <p class="cap">Good migraine care is a partnership: the right medicine, started gently, and adjusted as we learn what works for you.</p>
+
+  <div class="article">
+
+    <p>Migraine medicine has two big jobs.</p>
+    <div class="goals">
+      <div class="goal"><div class="gnum">1</div><div class="gtext"><b>Stop an attack</b> that has already started. This is called acute or abortive treatment.</div></div>
+      <div class="goal"><div class="gnum">2</div><div class="gtext"><b>Make attacks happen less often.</b> This is called prevention.</div></div>
+    </div>
+    <p>Most people start with acute treatment alone, and some add a daily preventive once attacks become frequent.<sup><a href="#sources">(1, 2)</a></sup> A clara doctor decides which medicines fit your history and other conditions, starts with the gentlest option, and steps up only if it is needed.</p>
+
+    <div class="callout sage">
+      <h3>The single most useful habit: treat early</h3>
+      <p>Nearly every acute migraine medicine works better the sooner it is taken. Taken while the pain is still mild, a medicine is far more likely to stop the attack than the same dose taken hours later once the migraine is in full swing.<sup><a href="#sources" style="color:var(--sage)">(1, 3)</a></sup></p>
+      <div class="illwrap">
+        <img class="ill" src="treat-early.jpg" alt="Illustration of a woman calmly taking her migraine medicine early, at the first sign of an attack">
+        <div class="ill-label">Treat<br>early</div>
+      </div>
+    </div>
+
+    <hr class="hr">
+
+    <div class="introrow">
+      <img class="iimg" src="ellie-stopping.jpg" alt="A woman gently pressing her fingertips to her temples, easing an early migraine">
+      <div class="itext">
+        <h2>1) Stopping an attack</h2>
+        <p>clara follows a simple, three step ladder for acute treatment. The aim is to use the gentlest option that reliably works for you, taken as early in the attack as possible.<sup><a href="#sources">(1)</a></sup></p>
+      </div>
+    </div>
+
+    <div class="medtier">
+      <img class="orb" src="ibuprofen.png" alt="">
+      <div class="mc">
+        <span class="mstep">Step 1 &middot; Mild to moderate attacks</span>
+        <div class="mh">Anti-inflammatories and acetaminophen</div>
+        <p>For most attacks, the first option is a simple over the counter style medicine taken at the first sign. Naproxen and ibuprofen have the strongest evidence, with diclofenac, celecoxib, and acetaminophen as alternatives depending on your stomach, kidneys, and other medicines.<sup><a href="#sources">(1, 5)</a></sup></p>
+        <div class="drugs">ibuprofen &middot; naproxen &middot; diclofenac &middot; celecoxib &middot; acetaminophen</div>
+      </div>
+    </div>
+
+    <div class="medtier">
+      <img class="orb" src="triptan.png" alt="">
+      <div class="mc">
+        <span class="mstep">Step 2 &middot; More disabling attacks</span>
+        <div class="mh">Triptans, usually paired with naproxen</div>
+        <p>Triptans are medicines made specifically for migraine that calm the overactive nerve and vessel signals behind an attack. For more disabling migraines, or when a plain anti-inflammatory is not enough, a triptan taken <b>together with naproxen</b> gives a larger benefit than either medicine alone.<sup><a href="#sources">(1, 7, 13)</a></sup> If one triptan does not help, that does not mean the others will fail, so it is worth trying a second before moving on.<sup><a href="#sources">(3)</a></sup></p>
+        <div class="drugs">sumatriptan &middot; rizatriptan &middot; eletriptan</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <h3>Triptans are not for everyone</h3>
+      <p>Because triptans gently narrow blood vessels, they are not used <b>if you have heart disease, a past heart attack, a past stroke or mini stroke (TIA), poorly controlled blood pressure,</b> or migraine with weakness on one side or brainstem aura. Mild, harmless effects like flushing, tingling, or a brief feeling of tightness in the chest or neck are common and pass on their own.<sup><a href="#sources">(6)</a></sup> Your clara doctor checks for all of this before prescribing.</p>
+    </div>
+
+    <div class="medtier">
+      <img class="orb" src="gepant.png" alt="">
+      <div class="mc">
+        <span class="mstep">Step 3 &middot; When triptans cannot be used</span>
+        <div class="mh">Gepants</div>
+        <p>Gepants are a newer class that blocks CGRP, a messenger molecule that switches on migraine pain.<sup><a href="#sources">(5)</a></sup> They do not narrow blood vessels, so they carry <b>no restriction related to the heart</b>, which makes them a good choice when triptans have not worked or cannot be taken.<sup><a href="#sources">(8, 9)</a></sup></p>
+        <div class="drugs">rimegepant (Nurtec) &middot; ubrogepant (Ubrelvy)</div>
+      </div>
+    </div>
+
+    <hr class="hr">
+
+    <h2>2) Preventing migraines</h2>
+    <p>If attacks are frequent or very disabling, a daily preventive medicine can make them rarer and milder over time. Prevention is usually considered once you are having about <b>four or more migraine days a month</b>, and sometimes with fewer if attacks are severe and acute treatment is not keeping up.<sup><a href="#sources">(2)</a></sup></p>
+
+    <div class="medtier">
+      <img class="orb" src="amitriptyline.png" alt="">
+      <div class="mc">
+        <span class="mstep">First line prevention</span>
+        <div class="mh">Amitriptyline</div>
+        <p>A low dose taken at night. It has the longest track record of any migraine preventive and is a good fit when poor sleep or tension headaches travel alongside the migraines.<sup><a href="#sources">(2)</a></sup></p>
+      </div>
+    </div>
+
+    <div class="medtier">
+      <img class="orb" src="venlafaxine.png" alt="">
+      <div class="mc">
+        <span class="mstep">First line prevention</span>
+        <div class="mh">Venlafaxine</div>
+        <p>An SNRI taken daily. It is a useful alternative to amitriptyline, and is often preferred when low mood or anxiety are also part of the picture.<sup><a href="#sources">(2)</a></sup></p>
+      </div>
+    </div>
+
+    <div class="medtier">
+      <img class="orb" src="gepant.png" alt="">
+      <div class="mc">
+        <span class="mstep">Second line prevention</span>
+        <div class="mh">Rimegepant, every other day</div>
+        <p>The same gepant used to stop an attack can also be taken on a set every other day schedule to prevent them, which makes it a convenient option when a first line preventive has not been the right fit.<sup><a href="#sources">(10)</a></sup></p>
+      </div>
+    </div>
+
+    <div class="callout sage">
+      <h3>What to expect from a preventive</h3>
+      <p>Preventives work gradually, so give one a fair trial of <b>six to eight weeks</b> at the right dose before judging it. The goal is to cut your migraine days roughly in half and to take the edge off the attacks you do get, not to reach zero.<sup><a href="#sources" style="color:var(--sage)">(2)</a></sup></p>
+    </div>
+
+    <hr class="hr">
+
+    <h2>3) Chronic migraine and Botox</h2>
+    <p>Migraine is called <b>chronic</b> when you have <b>headaches on 15 or more days</b> a month for more than three months, with at least 8 of those days being migraines.<sup><a href="#sources">(4)</a></sup> At that point a clara doctor may suggest a treatment made specifically for chronic migraine.</p>
+
+    <div class="medtier">
+      <img class="orb" src="botox.png" alt="">
+      <div class="mc">
+        <span class="mstep">Chronic migraine only</span>
+        <div class="mh">Botox (onabotulinumtoxinA)</div>
+        <p>A set of small injections given around the head and neck about every 12 weeks. In the trials that led to its approval, <b>roughly half of people with chronic migraine saw their headache days drop by more than half.</b><sup><a href="#sources">(12)</a></sup> It is proven for chronic migraine but <b>not</b> for less frequent (episodic) migraine, and it is given in clinic, so clara arranges this through in person care rather than as a medicine mailed to you.</p>
+      </div>
+    </div>
+
+    <hr class="hr">
+
+    <h2>Using acute medicine safely</h2>
+    <img class="secimg" src="migraine-rx.jpg" alt="A woman at her kitchen table reading a Migraine Treatments booklet, with a glass of water and her clara medication nearby">
+    <p>Acute medicines are wonderful when used for the occasional attack, but taking them on too many days a month can backfire and cause more frequent headaches, sometimes called rebound or medication overuse headache.<sup><a href="#sources">(11)</a></sup> A simple rule of thumb keeps you on the safe side:</p>
+
+    <div class="mohcard">
+      <div class="mohrow"><div class="ml">Anti-inflammatories &amp; acetaminophen</div><div class="mr">fewer than 15 days a month</div></div>
+      <div class="mohrow"><div class="ml">Triptans &amp; combination painkillers</div><div class="mr">fewer than 10 days a month</div></div>
+      <div class="mohrow"><div class="ml">Gepants</div><div class="mr safe">no known overuse limit</div></div>
+    </div>
+
+    <p>If you find yourself reaching for acute medicine on more days than this, that is a signal to talk with your clara doctor about a preventive, not a reason to push through.<sup><a href="#sources">(11)</a></sup></p>
+
+    <hr class="hr">
+
+    <h2>Medicines clara does not use</h2>
+    <p>You may notice some familiar painkillers are missing. clara does not prescribe <b>opioids</b> (such as codeine or oxycodone) or <b>butalbital</b> pills for migraine. They tend to work poorly for migraine, can become habit forming, and are among the most common reasons headaches become more frequent over time.<sup><a href="#sources">(11)</a></sup></p>
+    <p>Some proven preventives that need closer in person monitoring, such as certain blood pressure medicines, anti-seizure medicines, and the injectable CGRP antibodies, sit outside clara's online service. If your doctor feels one of these is the best fit, they will help you connect with in person care.</p>
+
+    <div class="endnote">
+      <h3>Every clara plan is personal</h3>
+      <p>Your doctor weighs your attack pattern, your other health conditions, and what has and has not worked before, then adjusts as you go. You are never locked into a first choice, and you can message your care team any time something is not feeling right.</p>
+    </div>
+
+    <hr style="border:none;height:1px;background:linear-gradient(90deg,transparent,#D4CFC4,transparent);margin:56px 0">
+
+    <h2 id="sources">Sources</h2>
+    <ol class="sources">
+      <li>Qaseem A, Tice JA, Etxeandia-Ikobaltzeta I, et al. Pharmacologic treatments of acute episodic migraine headache in outpatient settings: a clinical guideline from the American College of Physicians. Annals of Internal Medicine. 2025;178(4):571-578.</li>
+      <li>Qaseem A, Cooney TG, Etxeandia-Ikobaltzeta I, et al. Prevention of episodic migraine headache using pharmacologic treatments in outpatient settings: a clinical guideline from the American College of Physicians. Annals of Internal Medicine. 2025;178(3):426-433.</li>
+      <li>Ailani J, Burch RC, Robbins MS; Board of Directors of the American Headache Society. The American Headache Society consensus statement: update on integrating new migraine treatments into clinical practice. Headache. 2021;61(7):1021-1039.</li>
+      <li>Headache Classification Committee of the International Headache Society. The International Classification of Headache Disorders, 3rd edition (ICHD-3). Cephalalgia. 2018;38(1):1-211.</li>
+      <li>Ashina M. Migraine. New England Journal of Medicine. 2020;383(19):1866-1876.</li>
+      <li>Loder E. Triptan therapy in migraine. New England Journal of Medicine. 2010;363(1):63-70.</li>
+      <li>Karlsson WK, Ostinelli EG, Zhuang ZA, et al. Comparative effects of drug interventions for the acute management of migraine episodes in adults: systematic review and network meta-analysis. BMJ. 2024;386:e080107.</li>
+      <li>Lipton RB, Croop R, Stock EG, et al. Rimegepant, an oral calcitonin gene-related peptide receptor antagonist, for migraine. New England Journal of Medicine. 2019;381(2):142-149.</li>
+      <li>Dodick DW, Lipton RB, Ailani J, et al. Ubrogepant for the treatment of migraine. New England Journal of Medicine. 2019;381(23):2230-2241.</li>
+      <li>Croop R, Lipton RB, Kudrow D, et al. Oral rimegepant for preventive treatment of migraine: a phase 2/3, randomised, double-blind, placebo-controlled trial. Lancet. 2021;397(10268):51-60.</li>
+      <li>Robbins MS. Diagnosis and management of headache: a review. JAMA. 2021;325(18):1874-1885.</li>
+      <li>Dodick DW, Turkel CC, DeGryse RE, et al. OnabotulinumtoxinA for treatment of chronic migraine: pooled results from the double-blind, randomized, placebo-controlled phases of the PREEMPT clinical program. Headache. 2010;50(6):921-936.</li>
+      <li>Brandes JL, Kudrow D, Stark SR, et al. Sumatriptan-naproxen for acute treatment of migraine: a randomized trial. JAMA. 2007;297(13):1443-1454.</li>
+    </ol>
+
+    <p class="disclaimer">This guide is general education from your clara care team and is not a substitute for personal medical advice. Medicines, doses, and suitability are decided by your clara doctor based on your individual health. Always follow the instructions that come with your own prescription.</p>
+
+  </div>
+</div>
+</body></html>
