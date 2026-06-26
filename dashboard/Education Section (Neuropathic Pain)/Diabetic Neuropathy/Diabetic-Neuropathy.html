@@ -92,6 +92,47 @@ h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--
 .sources li{margin-bottom:9px}
 .disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);font-style:italic;line-height:1.6}
 @media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+.herofig{margin:8px 0 26px}
+.herofig img{width:100%;display:block;border-radius:18px;box-shadow:var(--shadow-lg)}
+.herofig figcaption{font-size:16.5px;color:var(--ink);font-style:italic;margin-top:12px;line-height:1.55}
+.recov{display:grid;grid-template-columns:0.92fr 1fr;gap:24px;align-items:stretch;margin:14px 0 6px}
+.recov-img{width:100%;height:100%;object-fit:cover;border-radius:18px;box-shadow:var(--shadow-lg);display:block}
+.recov-steps{display:flex;flex-direction:column;gap:14px;justify-content:space-between}
+.rstep{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow);text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center}
+.rstep .rk{font-family:Georgia,serif;font-size:40px;font-weight:700;color:var(--sage-dark);margin-bottom:8px;line-height:1.05}
+.rstep .rc{font-size:17px;line-height:1.5;color:#3a403c}
+@media(max-width:640px){.recov{grid-template-columns:1fr}.recov-img{max-height:520px}}
+.lead-tip{font-size:20px;font-weight:700;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);border-left:5px solid var(--terra);border-radius:14px;padding:20px 24px;margin:8px 0 22px;display:flex;align-items:center;gap:14px;line-height:1.45}
+.lead-tip svg{flex:0 0 auto;width:28px;height:28px;stroke:var(--terra);fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.acc{border:1px solid var(--line);border-radius:16px;margin:12px 0;background:#fff;box-shadow:var(--shadow);overflow:hidden}
+.acc.open{box-shadow:var(--shadow-lg)}
+.acc-h{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:24px 24px;display:flex;align-items:center;gap:16px;font-family:inherit;color:inherit}
+.acc-n{flex:0 0 auto;width:54px;height:54px;border-radius:50%;background:var(--sage-pale);color:var(--sage-dark);display:grid;place-items:center;font-family:Georgia,serif;font-weight:700;font-size:26px}
+.acc.open .acc-n{background:var(--sage);color:#fff}
+.acc-tt{flex:1;min-width:0}
+.acc-tt .att{display:block;font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark);line-height:1.25}
+.acc-tt .ats{display:block;font-size:18px;color:var(--grey);margin-top:7px;line-height:1.5}
+.acc.open .acc-tt .ats{display:none}
+.acc-chev{flex:0 0 auto;width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.acc.open .acc-chev{transform:rotate(180deg);stroke:var(--sage-dark)}
+.acc-h:hover .att{color:var(--terra-deep)}
+.acc-body{display:none;padding:4px 22px 24px;font-size:18.5px;line-height:1.72;color:#2b302c}
+.acc.open .acc-body{display:block;animation:accfade .25s ease}
+@keyframes accfade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.acc-body>*:first-child{margin-top:0}
+.acc-body p{margin-bottom:14px}.acc-body p:last-child{margin-bottom:0}
+.stagerow{display:flex;flex-direction:column;gap:14px;margin:16px 0 8px}
+.stagecard{display:flex;align-items:stretch;background:var(--cream-soft);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.stagecard img{flex:0 0 320px;width:320px;height:200px;object-fit:cover;display:block}
+.stagecard .sc-b{flex:1;padding:20px 26px;display:flex;flex-direction:column;justify-content:center}
+.stagecard .sc-l{color:var(--terra);font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;line-height:1.3}
+.stagecard .sc-d{font-size:17.5px;line-height:1.55;color:#3a403c}
+@media(max-width:640px){.stagecard{flex-direction:column}.stagecard img{flex:0 0 auto;width:100%;height:220px}}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 4px}
+.minicard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.minicard .mt{font-weight:700;color:var(--sage-dark);font-size:17.5px;margin-bottom:6px}
+.minicard .md{font-size:16px;line-height:1.55;color:#2b302c}
+@media(max-width:640px){.mini{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -117,96 +158,147 @@ h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--
 <p class="lede">Years of high blood sugar can quietly damage the nerves, usually starting in the feet. Here is what is happening, what your doctor can do, and how a cream may help the burning when the pain stays in one place.</p>
 <div class="meta"><span class="byline">From your clara care team</span><span class="chip">&#9201; 9 min read</span><span class="chip">Evidence based</span></div>
 
-<div class="toc">
-  <h4>What's in this guide</h4>
-  <ol>
-    <li><a href="#what">What it is</a></li>
-    <li><a href="#cause">Where the pain comes from</a></li>
-    <li><a href="#who">Who gets it</a></li>
-    <li><a href="#feel">What it feels like</a></li>
-    <li><a href="#dx">How it is diagnosed</a></li>
-    <li><a href="#prevent">Slowing it down</a></li>
-    <li><a href="#doctor">What a doctor may recommend</a></li>
-    <li><a href="#cream">How a compound cream can help</a></li>
-  </ol>
-</div>
+<figure class="herofig">
+  <img src="diabetic-hero.jpg" alt="A man in his 60s sitting on the edge of his bed, leaning down to check and hold his bare foot."/>
+  <figcaption>Diabetic nerve pain usually begins in the feet, which is why noticing changes there early matters so much.</figcaption>
+</figure>
+
+<div class="lead-tip"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Tap any question below to open it. Read only the parts you need, in any order.</span></div>
 
 <div class="article">
 
-<h2 id="what">What it is</h2>
-<p>Diabetic neuropathy is nerve damage caused by diabetes. It is the most common long-term complication of diabetes, and over the years it affects up to about half of everyone living with type 1 or type 2 diabetes.<sup><a href="#sources">(1, 2)</a></sup></p>
-<p>The most common form is a steady, symmetrical loss of feeling that begins in the toes and feet and, over time, can creep up the legs and into the hands, a pattern doctors call a "stocking and glove" distribution. In some people it is painless and shows up only as numbness; in others it brings a burning, distracting pain.<sup><a href="#sources">(2)</a></sup></p>
-
-<h2 id="cause">Where the pain comes from</h2>
-<p>When blood sugar runs high for a long time, it gradually damages nerves. The longest nerves in the body, the ones that reach all the way to the feet, are affected first, which is why symptoms usually start in the toes and move upward.<sup><a href="#sources">(1)</a></sup></p>
-<p>The small nerve fibres that carry pain and temperature are often hit early, and as they are injured they begin to misfire, sending burning or stabbing signals to the brain even when nothing is wrong with the skin. An important and honest point: once nerves are damaged this way, no treatment currently reverses that damage, so the goals are to slow further harm and to control the pain and protect the feet.<sup><a href="#sources">(3)</a></sup></p>
-
-<h2 id="who">Who gets it</h2>
-<div class="stats">
-  <div class="stat"><div class="n">~50%</div><div class="l">of people with diabetes develop some nerve damage over time<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
-  <div class="stat"><div class="n">15&ndash;20%</div><div class="l">have actual nerve pain, not just numbness<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(3)</a></sup></div></div>
-  <div class="stat"><div class="n">~26%</div><div class="l">of people with type 2 already have nerve damage when diabetes is found<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(1)</a></sup></div></div>
-</div>
-<p>The single biggest factor is how high your blood sugar has run, and for how long. Nerve damage becomes more likely the longer you have had diabetes, and it is generally more common in type 2 diabetes.<sup><a href="#sources">(1, 2)</a></sup></p>
-<p>Other things that add to the risk include smoking, high blood pressure, high triglycerides (a blood fat) and carrying extra weight. The encouraging news is that several of these are things you and your care team can act on.<sup><a href="#sources">(1)</a></sup></p>
-
-<h2 id="feel">What it feels like</h2>
-<p>Diabetic nerve pain almost always affects both sides of the body and is noticed first in the toes and feet. People usually describe some mix of:<sup><a href="#sources">(1)</a></sup></p>
-<div class="feel">
-  <div class="feelcard"><div class="ft">Burning, tingling, or "pins and needles"</div><div class="fd">A burning or prickling discomfort in the feet, often with extreme sensitivity, so that even the weight of a bedsheet can feel unpleasant.</div></div>
-  <div class="feelcard"><div class="ft">Numbness and loss of feeling</div><div class="fd">A dull or deadened feeling in the feet. This is the quiet danger of neuropathy, because losing sensation makes injuries easy to miss.</div></div>
-</div>
-<p>The pain is often worse at rest and at night, which can seriously disrupt sleep. The numbness matters just as much as the pain: when you cannot feel a blister, cut or rub, a small injury can quietly grow into a serious foot ulcer, which is why daily foot care is such an important part of living with diabetes.<sup><a href="#sources">(1)</a></sup></p>
-
-<h2 id="dx">How it is diagnosed</h2>
-<p>Diabetic neuropathy is usually diagnosed from your history and a careful examination of the feet, not from a scan or special test. Your doctor checks whether you can feel light touch, vibration and temperature, and tests the reflex at the ankle. A simple tool called a monofilament, a soft nylon strand pressed against the skin, is used to check whether you can still feel protective sensation.<sup><a href="#sources">(1)</a></sup></p>
-<p>More involved tests, such as nerve-conduction studies, are usually only needed when the picture is unusual. Because the condition can be silent, everyone with diabetes is advised to have their feet checked regularly.<sup><a href="#sources">(1)</a></sup></p>
-
-<h2 id="prevent">Slowing it down</h2>
-<p>The most powerful thing that slows diabetic nerve damage is keeping blood sugar in a healthy range. In type 1 diabetes, tight blood-sugar control sharply lowers the risk of developing neuropathy. In type 2 diabetes the benefit of sugar control alone is more modest, so the plan also focuses on blood pressure, cholesterol, weight and stopping smoking.<sup><a href="#sources">(3)</a></sup></p>
-<p>Just as important is daily foot care: looking over both feet every day (including between the toes), keeping skin clean and moisturised, never going barefoot, and wearing well-fitting shoes. Catching a small problem early is what prevents a serious one.<sup><a href="#sources">(1)</a></sup></p>
-
-<h2 id="doctor">What a doctor may recommend</h2>
-<p>When nerve pain needs treating, it is treated step by step and tailored to you. Pain medicines help the pain but do not fix numbness, and the aim is to find an option that helps with side effects you can live with.<sup><a href="#sources">(3)</a></sup></p>
-<div class="step"><div class="sn">1</div><div><div class="st">Nerve-calming medicines by mouth</div><div class="sd">The usual first choices are an antidepressant that works on nerve pain (such as duloxetine, venlafaxine or a low-dose tricyclic like amitriptyline) or an anti-seizure medicine (pregabalin or gabapentin). Several of these are specifically approved for diabetic nerve pain. They are started low and increased slowly, and a fair trial takes a couple of months.<sup><a href="#sources">(3)</a></sup></div></div></div>
-<div class="step"><div class="sn">2</div><div><div class="st">Treatments applied to the skin</div><div class="sd">Because the pain sits in the feet, treatments placed right there are a natural fit. Capsaicin, from chili peppers, is used as a cream or as a high-strength patch applied in clinic that is approved for diabetic foot pain, and lidocaine can be used over a painful area.<sup><a href="#sources">(3)</a></sup></div></div></div>
-<div class="step"><div class="sn">3</div><div><div class="st">Combining or switching</div><div class="sd">If one medicine is not enough, a doctor may switch to another class or combine two that work in different ways, for example a gabapentinoid with an antidepressant. Each change is given a proper trial before deciding.<sup><a href="#sources">(3)</a></sup></div></div></div>
-<div class="step"><div class="sn">4</div><div><div class="st">What is generally avoided</div><div class="sd">Opioid painkillers are generally advised against for diabetic nerve pain, because the long-term evidence is weak and the risks, including tolerance and dependence, are real. For pain that does not respond, a pain specialist may consider other approaches.<sup><a href="#sources">(3)</a></sup></div></div></div>
-
-<h2 id="cream">How a compound cream can help</h2>
-<p style="margin-bottom:14px"><span class="ev strong">Strong evidence for a cream</span></p>
-<p>After shingles pain, diabetic nerve pain has some of the best evidence for treating nerve pain through the skin. When the pain is focused in the feet, a cream can act right where it hurts while far less medicine reaches the rest of your body than a pill would deliver.<sup><a href="#sources">(4)</a></sup></p>
-<p>A compound cream lets a pharmacist combine more than one proven ingredient into a single preparation made for you. In a head-to-head study, a cream containing <b>amitriptyline</b> eased diabetic nerve pain about as well as capsaicin, with fewer skin side effects.<sup><a href="#sources">(5)</a></sup> Adding <b>ketamine</b> to amitriptyline is the best-studied compounded pairing for nerve pain and is absorbed very little into the body.<sup><a href="#sources">(6)</a></sup> A newer single-ingredient option, topical <b>phenytoin</b>, has shown meaningful relief for some people with diabetic foot pain in early studies.<sup><a href="#sources">(7)</a></sup></p>
-
-<div class="formula">
-  <h3>What clara may compound for diabetic nerve pain</h3>
-  <p class="fsub">A starting point your clara doctor tailors to you. Not everyone receives every ingredient.</p>
-  <div class="ingr"><span>Amitriptyline</span><span>Ketamine</span><span>Lidocaine</span><span>Gabapentin</span><span>or Phenytoin</span></div>
-  <p class="fnote">Amitriptyline with ketamine is the best-studied base; lidocaine targets touch-sensitive pain; gabapentin may be added for misfiring nerves. Phenytoin is an alternative used on its own. The exact ingredients and strengths are chosen by your clara doctor.<sup><a href="#sources" style="color:var(--sage)">(5, 6, 7)</a></sup></p>
+<div class="acc open">
+  <button class="acc-h" aria-expanded="true"><span class="acc-n">1</span><span class="acc-tt"><span class="att">What it is</span><span class="ats">Nerve damage from diabetes, often starting in the feet</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>Diabetic neuropathy is nerve damage caused by diabetes. It is the most common long term effect of diabetes, and over the years it affects up to about half of everyone living with type 1 or type 2 diabetes.<sup><a href="#sources">(1, 2)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="ellie-clinic.jpg" alt="A woman sitting on an exam bench in a diabetic care clinic, bare hands and feet ready for a check."/>
+      <figcaption>Because the feet and hands are affected first, a regular foot and hand check is a key part of diabetes care.</figcaption>
+    </figure>
+    <p>Most often it is a slow, even loss of feeling that starts in the toes and feet and can creep up the legs and into the hands, sometimes called a "stocking and glove" pattern. For some people it is painless and shows up only as numbness; for others it brings a burning, distracting pain.<sup><a href="#sources">(2)</a></sup></p>
+  </div>
 </div>
 
-<h3 class="sub">Why a cream can be a good fit</h3>
-<div class="benefit"><div class="bi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></div><div><div class="bt">It works where the pain is</div><div class="bd">Applied to the painful part of the feet, it targets that area directly instead of treating your whole body.<sup><a href="#sources" style="color:var(--sage)">(4)</a></sup></div></div></div>
-<div class="benefit"><div class="bi"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div><div class="bt">Less reaches the rest of the body</div><div class="bd">Because little is absorbed into the bloodstream, a cream can be a sensible choice for people already managing diabetes with several medicines, who may not tolerate the drowsiness or dizziness of oral nerve medicines.<sup><a href="#sources" style="color:var(--sage)">(4)</a></sup></div></div></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">2</span><span class="acc-tt"><span class="att">Where the pain comes from</span><span class="ats">High blood sugar slowly injures the nerves</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>When blood sugar runs high for a long time, it slowly damages nerves. The longest nerves, the ones that reach all the way to the feet, are hit first, which is why symptoms usually start in the toes and move upward.<sup><a href="#sources">(1)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="chan-diabetes.jpg" alt="A man sitting at his kitchen table with his diabetes medication, reading a pamphlet about diabetes and foot pain."/>
+      <figcaption>Learning the early signs and keeping on top of blood sugar are the best ways to protect your feet.</figcaption>
+    </figure>
+    <p>The tiny nerve fibres that carry pain and temperature are often injured early. As they are hurt they start to misfire, sending burning or stabbing signals to the brain even when nothing is wrong with the skin. An honest point: once nerves are damaged this way, no treatment reverses it. So the goals are to slow further harm, ease the pain, and protect the feet.<sup><a href="#sources">(3)</a></sup></p>
+  </div>
+</div>
 
-<h3 class="sub">An honest word on the evidence</h3>
-<p>A cream usually takes the edge off rather than removing pain entirely, and the evidence is not all one way. One large trial of multi-ingredient pain creams found no benefit over placebo. Compound creams are also not FDA approved, because each one is mixed individually rather than mass-produced. The sensible approach is to give a cream a fair four-to-six-week trial as one part of a plan your clara doctor builds and monitors with you, alongside good blood-sugar control and foot care.<sup><a href="#sources">(8)</a></sup></p>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">3</span><span class="acc-tt"><span class="att">Who gets it</span><span class="ats">More likely the longer blood sugar has run high</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <div class="recov" style="margin-top:6px">
+      <img class="recov-img" src="ellie-bench.jpg" alt="A woman around 60 sitting calmly on a wooden bench in a sunlit garden"/>
+      <div class="recov-steps">
+        <div class="rstep"><div class="rk">~50%</div><div class="rc">of people with diabetes develop some nerve damage over time<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
+        <div class="rstep"><div class="rk">15&ndash;20%</div><div class="rc">have actual nerve pain, not just numbness<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(3)</a></sup></div></div>
+        <div class="rstep"><div class="rk" style="color:var(--terra-deep)">10&ndash;15%</div><div class="rc">of people with type 2 already have nerve damage when diabetes is found<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
+      </div>
+    </div>
+    <p>The biggest factor is how <b>high your blood sugar has run, and for how long</b>. The risk grows the longer you have had diabetes, and it is generally more common in type 2.<sup><a href="#sources">(1, 2)</a></sup></p>
+    <p>Smoking, high blood pressure, high blood fats and carrying extra weight all add to the risk. The encouraging news is that several of these are things you and your care team can work on.<sup><a href="#sources">(1)</a></sup></p>
+  </div>
+</div>
 
-<div class="callout sage"><h3>Using a nerve-pain cream safely</h3><p>Never apply a compound cream to broken skin, a cut, a blister or a foot ulcer, which matters especially in diabetes where the skin can be fragile and slow to heal. Keep it away from your eyes, do not cover it with tight dressings or heat, and store it out of reach of children and pets. Mild stinging, warmth or redness where you apply it is common and usually settles. A clara doctor reviews every ingredient against your health, allergies and other medicines before anything is made.<sup><a href="#sources">(5)</a></sup></p></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">4</span><span class="acc-tt"><span class="att">What it feels like</span><span class="ats">Burning, tingling and numbness, usually in both feet</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>Diabetic nerve pain almost always affects both sides and is noticed first in the toes and feet. People usually describe some mix of:<sup><a href="#sources">(1)</a></sup></p>
+    <figure class="herofig" style="margin:14px 0 16px">
+      <img src="feel-burning.jpg" alt="Bare feet resting on a soft knit mat with a warm glow rising from the toes, suggesting a burning, tingling feeling."/>
+    </figure>
+    <div class="feel" style="margin-top:6px">
+      <div class="feelcard"><div class="ft">Burning, tingling or "pins and needles"</div><div class="fd">A burning or prickling feeling in the feet, often with such tenderness that even the weight of a bedsheet feels unpleasant.</div></div>
+      <div class="feelcard"><div class="ft">Numbness and loss of feeling</div><div class="fd">A dull or deadened feeling in the feet. This is the quiet danger, because losing sensation makes injuries easy to miss.</div></div>
+    </div>
+    <p>The pain is often worse at rest and at night, which can badly disrupt sleep. The numbness matters just as much: when you cannot feel a blister, cut or rub, a small injury can quietly grow into a serious foot wound. That is why daily foot care is so important.<sup><a href="#sources">(1)</a></sup></p>
+  </div>
+</div>
 
-<div class="ctacard"><h3>See if a cream is right for you</h3><p>Answer a few questions and a Canadian licensed clara doctor will review whether a compound cream fits your pain, your history and your other medicines, before anything is made or shipped.</p><a class="ctabtn" href="../../Clara-Dashboard-MOCK-v1.html#care">Talk to a clara doctor &rarr;</a></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">5</span><span class="acc-tt"><span class="att">How it is diagnosed</span><span class="ats">From your story and a careful foot exam</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>This is usually diagnosed from your history and a careful look at the feet, not a scan or special test. Your doctor checks whether you can feel light touch, vibration and temperature, and tests the reflex at the ankle. A soft nylon strand pressed against the skin checks whether you can still feel protective sensation.<sup><a href="#sources">(1)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="diagnosis-foot.jpg" alt="A doctor pressing a soft nylon strand against a patient's bare foot to check whether she can still feel light touch."/>
+      <figcaption>A simple foot exam, including the soft nylon strand test, is the usual way nerve damage is found.</figcaption>
+    </figure>
+    <p>More involved tests, like nerve studies, are usually only needed when the picture is unusual. Because the condition can be silent, everyone with diabetes is advised to have their feet checked regularly.<sup><a href="#sources">(1)</a></sup></p>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">6</span><span class="acc-tt"><span class="att">Slowing it down</span><span class="ats">Steady blood sugar and daily foot care help most</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>The most powerful thing that slows nerve damage is keeping blood sugar in a healthy range. In type 1 diabetes, tight control sharply lowers the risk. In type 2 the benefit of sugar control alone is smaller, so the plan also looks at blood pressure, cholesterol, weight and quitting smoking.<sup><a href="#sources">(3)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="nadia-bloodsugar.jpg" alt="A woman checking her blood sugar with a glucose meter at her kitchen table, with her diabetes medications beside her."/>
+      <figcaption>Keeping blood sugar steady is the single most powerful way to slow nerve damage.</figcaption>
+    </figure>
+    <p>Just as important is daily foot care: checking both feet every day (including between the toes), keeping skin clean and moisturised, never going barefoot, and wearing shoes that fit well. Catching a small problem early is what prevents a serious one.<sup><a href="#sources">(1)</a></sup></p>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">7</span><span class="acc-tt"><span class="att">What a doctor may recommend</span><span class="ats">A plan built up step by step</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>When nerve pain needs treating, it is built up step by step and tailored to you. Pain medicines help the pain but do not fix numbness, and the aim is to find an option that helps with side effects you can live with.<sup><a href="#sources">(3)</a></sup></p>
+    <div class="step"><div class="sn">1</div><div><div class="st">Nerve calming medicines by mouth</div><div class="sd">Usually a first choice is an antidepressant that works on nerve pain (such as duloxetine, venlafaxine or a low dose of amitriptyline) or an anti-seizure medicine (pregabalin or gabapentin). Several are approved for diabetic nerve pain. Started low and raised slowly, with a fair trial of a couple of months.<sup><a href="#sources">(3)</a></sup></div></div></div>
+    <div class="step"><div class="sn">2</div><div><div class="st">Treatments applied to the skin</div><div class="sd">Because the pain sits in the feet, treatments placed right there fit naturally. Capsaicin, from chili peppers, comes as a cream or a strong patch applied in clinic that is approved for diabetic foot pain, and lidocaine can be used over a painful area.<sup><a href="#sources">(3)</a></sup></div></div></div>
+    <div class="step"><div class="sn">3</div><div><div class="st">Combining or switching</div><div class="sd">If one medicine is not enough, a doctor may switch to another kind or combine two that work in different ways. Each change is given a proper trial before deciding.<sup><a href="#sources">(3)</a></sup></div></div></div>
+    <div class="step"><div class="sn">4</div><div><div class="st">What is usually avoided</div><div class="sd">Opioid painkillers are usually advised against for diabetic nerve pain, because the long term evidence is weak and the risks, including tolerance and dependence, are real. For pain that does not respond, a pain specialist may consider other approaches.<sup><a href="#sources">(3)</a></sup></div></div></div>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">8</span><span class="acc-tt"><span class="att">How a compound cream can help</span><span class="ats">A way to treat the burning right where it hurts</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p style="margin:2px 0 14px"><span class="ev strong">Strong evidence for a cream</span></p>
+    <p>After shingles pain, diabetic nerve pain has some of the best evidence for treating nerve pain through the skin. When the pain is focused in the feet, a cream can act right where it hurts while far less medicine reaches the rest of your body than a pill would.<sup><a href="#sources">(4)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0 8px">
+      <img src="cream-clinic.jpg" alt="A clara compound cream bottle on a doctor's office table, with a folded patient booklet and a small heart rate monitor, a calm clinic blurred behind."/>
+      <figcaption>Every clara compound cream is prepared for your specific pain and reviewed by a doctor before it is made.</figcaption>
+    </figure>
+    <p>A compound cream lets a pharmacist combine more than one proven ingredient into a single preparation made for you. In a head to head study, a cream with <b>amitriptyline</b> eased diabetic nerve pain about as well as capsaicin, with fewer skin side effects.<sup><a href="#sources">(5)</a></sup> Adding <b>ketamine</b> to amitriptyline is the best studied compounded pairing for nerve pain and is barely absorbed into the body.<sup><a href="#sources">(6)</a></sup> A newer single ingredient option, <b>phenytoin</b> on the skin, has eased diabetic foot pain for some people in early studies.<sup><a href="#sources">(7)</a></sup></p>
+    <div class="formula">
+      <h3>What clara may compound for diabetic nerve pain</h3>
+      <p class="fsub">A starting point your clara doctor tailors to you. Not everyone receives every ingredient.</p>
+      <div class="ingr"><span>Amitriptyline</span><span>Ketamine</span><span>Lidocaine</span><span>Gabapentin</span><span>or Phenytoin</span></div>
+      <p class="fnote">Amitriptyline with ketamine is the best studied base; lidocaine targets touch sensitive pain; gabapentin may be added for misfiring nerves. Phenytoin is an alternative used on its own. Your clara doctor chooses the exact ingredients and strengths.<sup><a href="#sources" style="color:var(--sage)">(5, 6, 7)</a></sup></p>
+    </div>
+    <div class="mini">
+      <div class="minicard"><div class="mt">It works where the pain is</div><div class="md">Applied to the painful part of the feet, it targets that area instead of your whole body.<sup><a href="#sources" style="color:var(--sage)">(4)</a></sup></div></div>
+      <div class="minicard"><div class="mt">Less reaches the rest of you</div><div class="md">Little is absorbed into the blood, so it can suit people already on several diabetes medicines who may not tolerate the drowsiness or dizziness of oral nerve medicines.<sup><a href="#sources" style="color:var(--sage)">(4)</a></sup></div></div>
+    </div>
+    <p style="margin-top:14px">The most sensible approach is simple: give a cream a fair four to six week trial as one part of a plan your clara doctor builds and monitors with you, alongside good blood sugar control and foot care. A cream usually takes the edge off rather than erasing pain entirely, and because each one is compounded for you it is not approved by the FDA, so results can vary from person to person. Used as one piece of a wider plan, it is a reasonable option to try.<sup><a href="#sources">(8)</a></sup></p>
+    <div class="callout sage" style="margin:18px 0 4px"><h3>Using a nerve pain cream safely</h3><p>Never apply it to broken skin, a cut, a blister or a foot wound, which matters especially in diabetes where skin can be fragile and slow to heal. Keep it away from your eyes, do not cover it with tight dressings or heat, and store it out of reach of children and pets. Mild stinging, warmth or redness is common and usually settles. A clara doctor reviews every ingredient against your health, allergies and other medicines first.<sup><a href="#sources">(5)</a></sup></p></div>
+  </div>
+</div>
+
+<div class="ctacard"><h3>See if a cream is right for you</h3><p>Send a quick note to your clara care team to request a cream trial. A Canadian licensed clara doctor reviews whether a compound cream fits your pain, your history and your other medicines before anything is made or shipped.</p><a class="ctabtn" href="../../Clara-Dashboard-MOCK-v1.html#messages">Request a cream trial &rarr;</a></div>
 
 <hr class="hr">
 <h2 id="sources">Sources</h2>
 <ol class="sources">
-<li>UpToDate. Patient education: Diabetic neuropathy (Beyond the Basics). Wolters Kluwer.</li>
-<li>UpToDate. Epidemiology and classification of diabetic neuropathy. Wolters Kluwer.</li>
-<li>UpToDate. Management of diabetic neuropathy. Wolters Kluwer.</li>
+<li>Feldman EL, Callaghan BC, Pop-Busui R, et al. Diabetic neuropathy. Nature Reviews Disease Primers. 2019;5(1):42.</li>
+<li>Pop-Busui R, Boulton AJM, Feldman EL, et al. Diabetic neuropathy: a position statement by the American Diabetes Association. Diabetes Care. 2017;40(1):136-154.</li>
+<li>Price R, Smith D, Franklin G, et al. Oral and topical treatment of painful diabetic polyneuropathy: practice guideline update summary. Neurology. 2022;98(1):31-43.</li>
 <li>Finnerup NB. Nonnarcotic methods of pain management. New England Journal of Medicine. 2019;380(25):2440-2448.</li>
 <li>Lawson E, et al. Topical analgesics for chronic pain: an evidence review (AAPM). Pain Medicine. 2025.</li>
 <li>Sawynok J, Zinger C. Topical amitriptyline and ketamine for post-herpetic neuralgia and other forms of neuropathic pain. Expert Opinion on Pharmacotherapy. 2016;17(4):601-609.</li>
-<li>Kopsky DJ, Keppel Hesselink JM. Topical phenytoin for the treatment of painful diabetic and other peripheral neuropathies. Journal of Pain Research / Pharmaceuticals. 2020-2025.</li>
+<li>Kopsky DJ, Keppel Hesselink JM. Topical phenytoin for the treatment of neuropathic pain. Journal of Pain Research. 2017;10:469-473.</li>
 <li>Brutcher RE, Kurihara C, Bicket MC, et al. Compounded topical pain creams to treat localized chronic pain: a randomized controlled trial. Annals of Internal Medicine. 2019;170(5):309-318.</li>
 </ol>
 <p class="disclaimer">This guide is general education from your clara care team and is not a substitute for personal medical advice. Compounded creams are prepared for the individual, are not FDA approved, and their ingredients, doses and suitability are decided by your clara doctor based on your health, allergies and other medicines.</p>
-</div></div></body></html>
+</div></div>
+<script>
+document.querySelectorAll('.acc-h').forEach(function(h){h.addEventListener('click',function(){var a=h.parentElement;var open=a.classList.toggle('open');h.setAttribute('aria-expanded',open?'true':'false');});});
+</script>
+</body></html>

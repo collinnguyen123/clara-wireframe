@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>clara · administrator console</title>
+<style>
+:root{
+  --bg:#F3F5FB; --card:#FFFFFF; --ink:#1E293B; --muted:#64748B; --line:#E7EBF3;
+  --indigo:#5B5BD6; --indigo-soft:#EEEEFB; --blue:#3B82F6; --sky:#0EA5E9;
+  --teal:#14B8A6; --green:#22C55E; --amber:#F59E0B; --rose:#F43F5E; --purple:#8B5CF6;
+  --good:#16A34A; --watch:#D97706; --flag:#E11D48;
+  --shadow-sm:0 1px 2px rgba(30,41,59,.06); --shadow:0 8px 24px rgba(30,41,59,.10);
+  --shadow-lg:0 20px 50px rgba(30,41,59,.20);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.muted{color:var(--muted)}
+.wrap{max-width:1500px;margin:0 auto;padding:0 26px}
+
+/* ---------- TOP NAV ---------- */
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
+.topbar .wrap{display:flex;align-items:center;gap:30px;height:66px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;letter-spacing:-.5px}
+.brand .logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),var(--sky));display:grid;place-items:center;color:#fff;font-size:16px}
+.brand .tag{font-size:11px;font-weight:700;color:var(--indigo);background:var(--indigo-soft);padding:3px 8px;border-radius:6px;letter-spacing:.4px;text-transform:uppercase}
+.nav{display:flex;gap:4px;margin-left:8px}
+.nav a{display:flex;align-items:center;gap:8px;padding:9px 15px;border-radius:10px;font-weight:600;color:var(--muted);font-size:17.5px;transition:.15s}
+.nav a .ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.nav a:hover{background:#F1F4FA;color:var(--ink)}
+.nav a.active{background:var(--indigo);color:#fff}
+.nav a .badge{background:var(--rose);color:#fff;font-size:11px;font-weight:800;border-radius:20px;padding:1px 7px;margin-left:2px}
+.nav a.active .badge{background:#fff;color:var(--indigo)}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.iconbtn{width:50px;height:50px;border-radius:50%;background:#F1F4FA;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--muted)}
+.iconbtn svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2}
+.iconbtn .dot{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--rose);border:2px solid #F1F4FA}
+.me{display:flex;align-items:center;gap:10px;padding-left:6px}
+.me .av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--purple));color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px}
+.me .nm{font-weight:700;font-size:20px;line-height:1.15}
+.me .ro{font-size:17px;color:var(--muted)}
+
+/* ---------- HEADER ROW ---------- */
+.headrow{display:flex;align-items:flex-end;justify-content:space-between;margin:26px 0 18px;gap:20px;flex-wrap:wrap}
+.headrow h1{font-size:30px;font-weight:800;letter-spacing:-.6px}
+.headrow .sub{color:var(--muted);font-size:18.5px;margin-top:3px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:17.5px;border:none;border-radius:11px;padding:11px 18px;cursor:pointer;transition:.15s}
+.btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-primary{background:var(--indigo);color:#fff}
+.btn-primary:hover{filter:brightness(1.07)}
+.btn-light{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn-light:hover{background:#F7F9FD}
+
+/* ---------- KPI BINS ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.kpi{border-radius:18px;padding:20px 22px;position:relative;overflow:hidden;color:#fff;box-shadow:var(--shadow)}
+.kpi.k1{background:linear-gradient(135deg,#5B5BD6,#7C7CF0)}
+.kpi.k2{background:linear-gradient(135deg,#8B5CF6,#A98BFB)}
+.kpi.k3{background:linear-gradient(135deg,#F59E0B,#FBBF5C)}
+.kpi.k4{background:linear-gradient(135deg,#14B8A6,#3DD6C4)}
+.kpi .kic{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.22);display:grid;place-items:center;margin-bottom:14px}
+.kpi .kic svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2}
+.kpi .klabel{font-size:18.5px;opacity:.92;font-weight:600}
+.kpi .knum{font-size:38px;font-weight:800;letter-spacing:-1px;margin-top:2px}
+.kpi .kdelta{font-size:16.5px;opacity:.95;margin-top:6px;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:20px}
+.kpi .kbg{position:absolute;right:-20px;bottom:-30px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.10)}
+
+/* ---------- GENERIC CARD ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm)}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.card-head h3{font-size:19.5px;font-weight:800}
+.pill-select{font-size:16.5px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:9px;padding:6px 12px;background:#fff}
+.grid-3{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:18px;margin-top:18px}
+
+/* legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:16.5px;color:var(--muted);font-weight:600}
+.legend span{display:flex;align-items:center;gap:6px}
+.dotc{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* line chart */
+.linechart{width:100%;height:170px}
+.xlabels{display:flex;justify-content:space-between;font-size:15.5px;color:var(--muted);margin-top:8px;font-weight:600}
+
+/* donut */
+.donut-center{font-size:26px;font-weight:800}
+.donut-stage{position:relative;width:100%;height:272px;margin:6px auto 0}
+.donut-stage .donut{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);width:176px;height:176px}
+.dlbl{position:absolute;line-height:1.05;white-space:nowrap}
+.dlbl .pct{font-size:21px;font-weight:800;letter-spacing:-.5px}
+.dlbl .lbl{font-size:16.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.dlbl-knee{top:42%;right:14px;text-align:left}
+.dlbl-back{bottom:14px;left:50%;transform:translateX(-50%);text-align:center}
+.dlbl-migraine{top:46%;left:4px;text-align:right}
+.dlbl-nerve{top:12px;left:19%;text-align:left}
+
+/* outcome bars */
+.obar{margin-bottom:16px}
+.obar:last-child{margin-bottom:0}
+.obar .ol{display:flex;justify-content:space-between;font-size:18.5px;margin-bottom:6px;font-weight:600}
+.obar .ol .ov{font-weight:800}
+.track{height:11px;background:#EEF1F7;border-radius:8px;overflow:hidden;position:relative}
+.fill{height:100%;border-radius:8px}
+
+/* ---------- LOWER GRID ---------- */
+.grid-low{display:grid;grid-template-columns:1fr 360px;gap:18px;margin:18px 0 40px}
+
+/* roster table */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.search{flex:1;min-width:180px;display:flex;align-items:center;gap:9px;background:#F4F6FB;border:1px solid var(--line);border-radius:11px;padding:9px 13px}
+.search input{border:none;background:none;outline:none;font-size:17.5px;width:100%;color:var(--ink)}
+.search svg{width:17px;height:17px;stroke:var(--muted);fill:none;stroke-width:2}
+.chip{font-size:16.5px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:7px 14px;cursor:pointer;background:#fff;transition:.15s}
+.chip:hover{border-color:var(--indigo);color:var(--indigo)}
+.chip.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;font-size:14.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;padding:0 12px 12px;border-bottom:1px solid var(--line)}
+tbody tr{border-bottom:1px solid var(--line);cursor:pointer;transition:.12s}
+tbody tr:hover{background:#F7F9FD}
+tbody td{padding:15px 12px;font-size:18.5px;vertical-align:middle}
+.pt{display:flex;align-items:center;gap:11px}
+.pt .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0}
+.pt .nm{font-weight:700}
+.pt .em{font-size:17.5px;color:var(--muted)}
+.last-checkin{font-size:18.5px;color:#475569;font-weight:500}
+.tag-cond{font-size:16.5px;font-weight:700;padding:4px 10px;border-radius:7px}
+.spark{width:84px;height:30px}
+.status{font-size:16px;font-weight:700;padding:5px 11px;border-radius:20px;display:inline-block}
+.s-active{background:#E7F8EE;color:var(--good)}
+.s-pending{background:#FEF2E2;color:var(--watch)}
+.s-hold{background:#FCE8EC;color:var(--flag)}
+.s-review{background:#EEEEFB;color:var(--indigo)}
+.rev-flag{font-size:14.5px;font-weight:800;color:var(--purple);background:var(--indigo-soft);padding:2px 8px;border-radius:6px;margin-left:7px;white-space:nowrap}
+
+/* right rail */
+.rail-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow-sm);margin-bottom:18px}
+.rail-card h3{font-size:20px;font-weight:800;display:flex;align-items:center;gap:8px}
+.rail-card h3 .ct{margin-left:auto;font-size:15.5px;font-weight:800;color:var(--indigo);background:var(--indigo-soft);padding:2px 9px;border-radius:20px}
+.req{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}
+.req:last-child{border-bottom:none;padding-bottom:0}
+.req .av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0}
+.req .ri{flex:1;min-width:0}
+.req .ri .rn{font-weight:700;font-size:18.5px}
+.req .ri .rt{font-size:17px;color:var(--muted)}
+.req .acts{display:flex;gap:6px}
+.req .acts button{width:30px;height:30px;border-radius:9px;border:none;cursor:pointer;display:grid;place-items:center;font-weight:800}
+.ok{background:#E7F8EE;color:var(--good)}
+.no{background:#FCE8EC;color:var(--flag)}
+.req .acts button svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4}
+.msg{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.msg:last-child{border-bottom:none;padding-bottom:0}
+.msg .av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0}
+.msg .mi{flex:1;min-width:0}
+.msg .mn{font-weight:700;font-size:18.5px;display:flex;justify-content:space-between}
+.msg .mn .tm{font-weight:600;color:var(--muted);font-size:15.5px}
+.msg .mp{font-size:17px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.unreaddot{width:8px;height:8px;border-radius:50%;background:var(--indigo);flex-shrink:0}
+.viewall{display:block;text-align:center;margin-top:14px;font-weight:700;color:var(--indigo);font-size:17px}
+
+/* ---------- PATIENT DRAWER ---------- */
+.overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);opacity:0;visibility:hidden;transition:.25s;z-index:60}
+.overlay.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(1180px,80vw);max-width:96vw;background:var(--bg);box-shadow:var(--shadow-lg);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:61;display:flex;flex-direction:column}
+.dh .dprint{margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:13.5px;cursor:pointer}
+.dh .dprint svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.dh .x{flex-shrink:0}
+.drawer.open{transform:translateX(0)}
+.dh{background:#fff;border-bottom:1px solid var(--line);padding:22px 26px;display:flex;align-items:flex-start;gap:16px}
+.dh .av{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:21px;flex-shrink:0}
+.dh .nm{font-size:20px;font-weight:800}
+.dh .meta{font-size:13.5px;color:var(--muted);margin-top:3px}
+.dh .x{margin-left:auto;width:36px;height:36px;border-radius:10px;background:#F1F4FA;border:none;cursor:pointer;font-size:20px;color:var(--muted);flex-shrink:0}
+.dbody{overflow-y:auto;padding:22px 26px 40px;flex:1}
+.sec-title{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:800;margin:24px 0 12px}
+.sec-title:first-child{margin-top:0}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.demo .d{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+.demo .d .dl{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.demo .d .dv{font-weight:700;font-size:14.5px;margin-top:2px}
+.mini-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mk{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 12px;text-align:center}
+.mk .mkn{font-size:21px;font-weight:800;letter-spacing:-.5px}
+.mk .mkl{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.mk .mkd{font-size:11px;font-weight:800;margin-top:4px}
+.up{color:var(--good)} .down{color:var(--good)} .warn{color:var(--watch)} .bad{color:var(--flag)}
+.plan-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.plan-card .pch{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.plan-card .pcic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+.plan-card .pcic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+.plan-card .pct{font-weight:800;font-size:15px}
+.plan-card .pcs{font-size:12.5px;color:var(--muted)}
+.plan-card p{font-size:13.5px;color:var(--ink);line-height:1.5}
+.ai-banner{background:linear-gradient(135deg,#EEF0FE,#F3EEFE);border:1px solid #DfDFFb;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ai-banner .aiic{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--purple));display:grid;place-items:center;color:#fff;flex-shrink:0;font-size:17px}
+.ai-banner .ait{font-weight:800;font-size:14px}
+.ai-banner .ais{font-size:12.5px;color:var(--muted)}
+.plan-actions{display:flex;gap:10px;margin-top:8px}
+.plan-actions .btn{flex:1;justify-content:center}
+.btn-approve{background:var(--good);color:#fff}
+.btn-reject{background:#fff;color:var(--flag);border:1.5px solid #F8C9D2}
+.btn-edit{background:#fff;color:var(--indigo);border:1.5px solid #CFCFF7}
+.tx-actions{display:flex;gap:10px;margin-top:14px}
+.tx-actions .btn{flex:1;justify-content:center}
+.btn-hold{background:#FEF2E2;color:var(--watch)}
+.btn-renew{background:var(--indigo);color:#fff}
+.intake{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13.5px}
+.intake .q{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.intake .q:last-child{border-bottom:none}
+.intake .q .qa{font-weight:700;text-align:right}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1E293B;color:#fff;padding:13px 22px;border-radius:12px;font-weight:600;font-size:14.5px;box-shadow:var(--shadow-lg);z-index:90;opacity:0;transition:.25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.mock-footer{text-align:center;color:var(--muted);font-size:12.5px;padding:8px 0 30px}
+
+@media(max-width:1180px){.grid-3{grid-template-columns:1fr}.grid-low{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.nav{display:none}}
+
+/* ===== CENTERED MODALS (messages / requests) ===== */
+.cm-overlay{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:center;justify-content:center;z-index:75;padding:24px;opacity:0;transition:opacity .18s}
+.cm-overlay.open{display:flex;opacity:1}
+.cm{background:#fff;border-radius:20px;box-shadow:var(--shadow-lg);width:100%;max-width:560px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+.cm.cm-wide{max-width:1080px}
+.cm-head{display:flex;align-items:center;gap:12px;padding:20px 24px;border-bottom:1px solid var(--line)}
+.cm-head h3{font-size:21px;font-weight:800}
+.cm-head .ct{font-size:14px;font-weight:800;color:var(--indigo);background:var(--indigo-soft);padding:4px 12px;border-radius:20px}
+.cm-head .x{margin-left:auto;width:38px;height:38px;border-radius:11px;background:#F1F4FA;border:none;font-size:21px;color:var(--muted);cursor:pointer}
+.cm-sub{padding:14px 24px 0;font-size:15.5px;color:var(--muted)}
+.perm-title{font-size:13.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--indigo);margin:6px 0 12px}
+.permwrap{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.permtable{width:100%;border-collapse:collapse;font-size:15.5px}
+.permtable th,.permtable td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+.permtable thead th{background:#F4F6FB;font-size:13.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+.permtable th:not(:first-child),.permtable td:not(:first-child){text-align:center;width:130px}
+.permtable tbody tr:last-child td{border-bottom:none}
+.permtable td.y{color:var(--good);font-weight:800;font-size:18px}
+.permtable td.n{color:#CBD5E1;font-weight:800;font-size:18px}
+.perm-note{font-size:14.5px;color:var(--muted);line-height:1.55;margin-top:12px}
+.prov-group{font-size:14px;font-weight:800;color:var(--ink);margin:20px 0 8px;display:flex;align-items:center;gap:8px}
+.prov-group .gc{font-size:13px;font-weight:800;color:var(--indigo);background:var(--indigo-soft);padding:2px 10px;border-radius:20px}
+.provrow{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:14px;margin-top:10px}
+.provrow .pav{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0}
+.provrow .pin{flex:1;min-width:0}
+.provrow .pn{font-weight:700;font-size:17.5px}
+.provrow .ps{font-size:15px;color:var(--muted);margin-top:2px}
+.prov-status{font-size:13px;font-weight:800;padding:5px 12px;border-radius:20px}
+.prov-status.active{background:#E7F8EE;color:var(--good)}
+.prov-status.pending{background:#FEF2E2;color:var(--watch)}
+.prov-role{font-size:15.5px;font-weight:600;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;color:var(--ink);cursor:pointer}
+.prov-approve{background:var(--good);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:14.5px;cursor:pointer;white-space:nowrap}
+.prov-add{margin-top:18px;width:100%;background:#F1F4FA;border:1.5px dashed var(--line-strong,#cbd5e1);border-radius:14px;padding:14px;font-weight:700;font-size:16px;color:var(--indigo);cursor:pointer}
+.prov-add:hover{background:#E9EEF7}
+.cm-more{text-align:center;font-size:14.5px;color:var(--muted);margin-top:16px;font-weight:600}
+.cm-more a{color:var(--indigo);font-weight:700}
+.kpi-click{cursor:pointer;transition:transform .15s,box-shadow .15s}
+.kpi-click:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(30,41,59,.18)}
+.notif-panel{position:fixed;top:72px;right:24px;width:400px;max-width:92vw;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);z-index:80;display:none;overflow:hidden}
+.notif-panel.open{display:block}
+.notif-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+.notif-head h3{font-size:18.5px;font-weight:800}
+.notif-head .markall{font-size:14.5px;font-weight:700;color:var(--indigo);cursor:pointer;background:none;border:none}
+.notif-list{max-height:62vh;overflow-y:auto}
+.notif-item{display:flex;gap:13px;padding:15px 18px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .12s}
+.notif-item:last-child{border-bottom:none}
+.notif-item:hover{background:#F7F9FD}
+.notif-item.unread{background:#FAFAFE}
+.notif-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex-shrink:0}
+.notif-tx{flex:1;min-width:0}
+.notif-tt{font-size:16px;font-weight:500;line-height:1.45;color:var(--ink)}
+.notif-tm{font-size:14px;color:var(--muted);margin-top:3px}
+.notif-udot{width:10px;height:10px;border-radius:50%;background:var(--indigo);flex-shrink:0;margin-top:6px}
+.notif-foot{padding:14px 18px;text-align:center;border-top:1px solid var(--line)}
+.notif-foot a{font-weight:700;color:var(--indigo);font-size:15px;text-decoration:none}
+.me-click{cursor:pointer;border-radius:12px;padding:4px 6px;transition:background .15s}
+.me-click:hover{background:#F1F4FA}
+.me-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--purple));color:#fff;display:grid;place-items:center;font-weight:700;font-size:16px;flex-shrink:0}
+.acct{padding:6px 24px 24px}
+.acct-sec{margin-top:24px}
+.acct-sec:first-child{margin-top:10px}
+.acct-sec h4{font-size:15px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--indigo);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.acct-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:680px){.acct-grid{grid-template-columns:1fr}}
+.afield label{display:block;font-size:13.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-bottom:7px}
+.afield input{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 15px;font-size:18px;color:var(--ink);font-family:inherit;background:#fff}
+.afield input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-soft)}
+.arow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 17px;border:1px solid var(--line);border-radius:12px;margin-top:11px}
+.arow .al{font-weight:700;font-size:18px}
+.arow .ad{font-size:16px;color:var(--muted);margin-top:3px}
+.abtn{background:#F1F4FA;border:1px solid var(--line);border-radius:10px;padding:11px 18px;font-weight:700;font-size:16px;color:var(--ink);cursor:pointer;white-space:nowrap}
+.abtn:hover{background:#E9EEF7}
+.abtn.danger{color:var(--flag);background:#fff;border-color:#F8C9D2}
+.abtn.danger:hover{background:#FCE8EC}
+.tgl{width:52px;height:30px;border-radius:20px;background:#CBD5E1;position:relative;cursor:pointer;transition:background .15s;flex-shrink:0;border:none;padding:0}
+.tgl.on{background:var(--good)}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s}
+.tgl.on::after{left:25px}
+.acct-foot{display:flex;align-items:center;justify-content:flex-end;gap:18px;margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
+.acct-saved{font-size:17px;font-weight:700;color:var(--good)}
+.cm-body{overflow-y:auto;padding:14px 24px 24px}
+/* requests list */
+.reqrow{display:flex;align-items:center;gap:14px;padding:15px 14px;border:1px solid var(--line);border-radius:14px;margin-top:12px;cursor:pointer;transition:.15s}
+.reqrow:hover{border-color:var(--indigo);box-shadow:0 0 0 2px var(--indigo-soft);transform:translateY(-2px)}
+.reqrow .rav{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0}
+.reqrow .rin{flex:1;min-width:0}
+.reqrow .rn{font-weight:700;font-size:17.5px}
+.reqrow .rt{font-size:15.5px;color:var(--muted);margin-top:2px}
+.reqrow .urgent{font-size:12.5px;font-weight:800;color:var(--flag);background:#FCE8EC;padding:3px 10px;border-radius:20px;margin-left:8px}
+.reqrow .rarrow{color:var(--muted);font-size:20px;flex-shrink:0}
+/* messages */
+.msgwrap{display:grid;grid-template-columns:290px 1fr;height:min(680px,80vh)}
+.msglist{border-right:1px solid var(--line);overflow-y:auto;padding:8px}
+.mthread-item{display:flex;align-items:center;gap:11px;padding:12px;border-radius:12px;cursor:pointer}
+.mthread-item:hover{background:#F7F9FD}
+.mthread-item.active{background:var(--indigo-soft)}
+.mav{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0}
+.mthread-item .mi{flex:1;min-width:0}
+.mn{font-weight:700;font-size:15.5px}
+.mp{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mdot{width:9px;height:9px;border-radius:50%;background:var(--indigo);flex-shrink:0}
+.msgthread{display:flex;flex-direction:column;min-width:0}
+.mt-head{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--line)}
+.mt-head .mt-open{margin-left:auto;font-size:14.5px;font-weight:700;color:var(--indigo);text-decoration:none;white-space:nowrap}
+.mt-body{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:5px;background:#F7F9FD}
+.bub{max-width:78%;padding:12px 16px;border-radius:16px;font-size:16px;line-height:1.5;margin-top:7px}
+.bub.them{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px}
+.bub.you{background:var(--indigo);color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.bub-meta{font-size:12.5px;color:var(--muted);align-self:center;margin:4px 0}
+.mt-compose{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line)}
+.mt-compose input{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-size:16px;outline:none}
+.mt-compose input:focus{border-color:var(--indigo)}
+.mt-compose button{background:var(--indigo);color:#fff;border:none;border-radius:12px;padding:0 22px;font-weight:700;font-size:16px;cursor:pointer}
+@media(max-width:760px){.msgwrap{grid-template-columns:1fr}.msglist{display:none}}
+
+/* ---------- COMPREHENSIVE PATIENT RECORD ---------- */
+.record{font-size:14px}
+.record .rsec{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:800;margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+.record .rsec:first-child{margin-top:0}
+.record .rsec .bar{width:4px;height:15px;border-radius:3px;background:var(--indigo)}
+.record .rcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow-sm)}
+.record .rcard h4{font-size:14.5px;font-weight:800;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.record .sub{font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.record .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.record .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.record .kpi4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.record .k{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px;box-shadow:var(--shadow-sm)}
+.record .k .kl{font-size:12px;color:var(--muted);font-weight:700}
+.record .k .kn{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-top:4px}
+.record .k .kd{font-size:12.5px;font-weight:700;margin-top:3px}
+.record .k .kb{font-size:11.5px;color:var(--muted);margin-top:2px}
+.record .dotc2{width:9px;height:9px;border-radius:50%;display:inline-block}
+.record .rrow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.record .rrow:last-child{border-bottom:none}
+.record .rrow .l{color:var(--muted)}
+.record .rrow .r{font-weight:800;text-align:right}
+.record .rpill{font-size:12px;font-weight:800;padding:4px 11px;border-radius:20px}
+.record .green{color:var(--good)} .record .blue{color:var(--blue)} .record .red{color:var(--flag)}
+.record .pill-good{background:#E7F8EE;color:var(--good)}
+.record .pill-watch{background:#FEF2E2;color:var(--watch)}
+.record .rings{display:flex;flex-direction:column;gap:15px;margin-top:6px}
+.record .ringbox{display:flex;align-items:center;gap:13px}
+.record .ringbox .t{font-weight:800;font-size:14px}
+.record .ringbox .d{font-size:12px;color:var(--muted)}
+.record .ms-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.record .ms{font-size:13px;font-weight:600;padding:7px 13px;border-radius:20px;background:#F1F4FA;color:var(--muted)}
+.record .ms.on{background:#E7F8EE;color:var(--good)}
+.record .summary{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow-sm)}
+.record .summary h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--indigo);margin:16px 0 5px;font-weight:800}
+.record .summary p{font-size:13.5px;line-height:1.62;color:var(--ink)}
+.record .hl{background:#EEF0FE;font-weight:700;padding:0 4px;border-radius:4px}
+.record .was{color:var(--flag);font-weight:700} .record .now{color:var(--good);font-weight:700}
+.record .statusbadge{font-size:11.5px;font-weight:800;padding:4px 11px;border-radius:20px;margin-left:auto;white-space:nowrap}
+.record .sb-pending{background:#FEF2E2;color:var(--watch)}
+.record .sb-approved{background:#E7F8EE;color:var(--good)}
+.record .plan-row{display:flex;gap:13px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.record .plan-row:last-child{border-bottom:none}
+.record .plan-row .pic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;flex-shrink:0;font-weight:800;font-size:12px}
+.record .plan-row .pt2{font-weight:800;font-size:14.5px}
+.record .plan-row .pd{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.45}
+.record .dxgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.record .dx{background:#F7F9FD;border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+.record .dx .dl{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.record .dx .dv{font-weight:700;font-size:14px;margin-top:2px}
+@media(max-width:900px){.record .g2,.record .g3,.record .kpi4,.record .dxgrid,.record .dergrid{grid-template-columns:1fr}}
+
+/* ---------- PRINT ---------- */
+@media print{
+  .topbar,.headrow,.kpis,.grid-3,.grid-low,.mock-footer,.overlay,.dh .dprint,.dh .x,.plan-actions,.tx-actions{display:none!important}
+  body{background:#fff}
+  .drawer{position:static!important;width:100%!important;max-width:none!important;box-shadow:none!important;transform:none!important;height:auto!important}
+  .dbody{overflow:visible!important;height:auto!important;padding:0!important}
+  .record .rcard,.record .k,.record .summary{box-shadow:none!important;break-inside:avoid}
+  .dh{border:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">clara <span class="tag" style="background:#FCE8EC;color:var(--flag)">Administrator</span></div>
+    <nav class="nav">
+      <a class="active" href="#"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</a>
+      <a href="#" id="navPatients"><svg class="ic" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M17 8a4 4 0 0 1 0 8"/></svg>Patients</a>
+      <a href="#" id="navProviders"><svg class="ic" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="9" y="2" width="6" height="4" rx="1"/><circle cx="12" cy="11" r="2"/><path d="M9 17a3 3 0 0 1 6 0"/></svg>Providers</a>
+      <a href="#" id="navMessages"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages <span class="badge">4</span></a>
+      <a href="#" id="navRequests"><svg class="ic" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Requests <span class="badge">9</span></a>
+    </nav>
+    <div class="top-right">
+      <div class="iconbtn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+      <div class="iconbtn" id="bellBtn"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="bellDot"></span></div>
+      <div class="me me-click" id="meBtn" title="Account &amp; billing">
+        <div class="av" style="background:linear-gradient(135deg,#E11D48,#F43F5E)">AR</div>
+        <div><div class="nm">Alex Romano</div><div class="ro">Administrator · Greenvale</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ HEADER ROW ============ -->
+  <div class="headrow">
+    <div>
+      <h1>Good morning, Alex</h1>
+      <div class="sub">Wednesday, June 24, 2026 · 512 patients · 7 providers across the practice</div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-light"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Export cohort data</button>
+      <button class="btn btn-primary" id="reviewPlansBtn"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Review 23 plans</button>
+    </div>
+  </div>
+
+  <!-- ============ KPI BINS ============ -->
+  <div class="kpis">
+    <div class="kpi k1"><div class="kbg"></div>
+      <div class="kic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M17 8a4 4 0 0 1 0 8"/></svg></div>
+      <div class="klabel">Total patients</div><div class="knum">512</div>
+      <div class="kdelta">▲ 8% this quarter</div>
+    </div>
+    <div class="kpi k2 kpi-click" id="kpiPlans"><div class="kbg"></div>
+      <div class="kic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></div>
+      <div class="klabel">Plans awaiting review</div><div class="knum">23</div>
+      <div class="kdelta">AI-drafted, need sign-off</div>
+    </div>
+    <div class="kpi k3 kpi-click" id="kpiReq"><div class="kbg"></div>
+      <div class="kic"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg></div>
+      <div class="klabel">Renewal & dosage requests</div><div class="knum">9</div>
+      <div class="kdelta">3 flagged urgent</div>
+    </div>
+    <div class="kpi k4"><div class="kbg"></div>
+      <div class="kic"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="klabel">Avg pain reduction (cohort)</div><div class="knum">▼ 46%</div>
+      <div class="kdelta">vs each patient's baseline</div>
+    </div>
+  </div>
+
+  <!-- ============ CHART ROW ============ -->
+  <div class="grid-3">
+    <!-- cohort pain trend -->
+    <div class="card">
+      <div class="card-head">
+        <h3>Cohort pain &amp; interference</h3>
+        <span class="pill-select">Last 6 months ▾</span>
+      </div>
+      <div class="legend" style="margin-bottom:8px">
+        <span><i class="dotc" style="background:var(--rose)"></i> Avg pain (0–10)</span>
+        <span><i class="dotc" style="background:var(--indigo)"></i> Avg interference (PEG)</span>
+      </div>
+      <svg class="linechart" viewBox="0 0 340 170" preserveAspectRatio="none">
+        <line x1="0" y1="30" x2="340" y2="30" stroke="#EEF1F7"/>
+        <line x1="0" y1="70" x2="340" y2="70" stroke="#EEF1F7"/>
+        <line x1="0" y1="110" x2="340" y2="110" stroke="#EEF1F7"/>
+        <line x1="0" y1="150" x2="340" y2="150" stroke="#EEF1F7"/>
+        <polyline fill="none" stroke="var(--rose)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="10,52 76,60 142,88 208,104 274,120 330,132"/>
+        <polyline fill="none" stroke="var(--indigo)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="10,68 76,76 142,98 208,112 274,128 330,138"/>
+        <circle cx="330" cy="132" r="4.5" fill="var(--rose)"/><circle cx="330" cy="138" r="4.5" fill="var(--indigo)"/>
+      </svg>
+      <div class="xlabels"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+    </div>
+    <!-- condition mix donut -->
+    <div class="card">
+      <div class="card-head"><h3>Condition mix</h3></div>
+      <div class="donut-stage">
+        <svg class="donut" viewBox="0 0 42 42">
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="#EEF1F7" stroke-width="6"/>
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--indigo)" stroke-width="6" stroke-dasharray="38 62" stroke-dashoffset="25"/>
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--teal)" stroke-width="6" stroke-dasharray="27 73" stroke-dashoffset="-13"/>
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--amber)" stroke-width="6" stroke-dasharray="20 80" stroke-dashoffset="-40"/>
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--purple)" stroke-width="6" stroke-dasharray="15 85" stroke-dashoffset="-60"/>
+          <text x="21" y="20" text-anchor="middle" class="donut-center" style="font-size:7px">512</text>
+          <text x="21" y="26" text-anchor="middle" style="font-size:3px;fill:var(--muted)">patients</text>
+        </svg>
+        <div class="dlbl dlbl-knee"><div class="pct" style="color:var(--indigo)">38%</div><div class="lbl">Knee OA</div></div>
+        <div class="dlbl dlbl-back"><div class="pct" style="color:var(--teal)">27%</div><div class="lbl">Back pain</div></div>
+        <div class="dlbl dlbl-migraine"><div class="pct" style="color:var(--amber)">20%</div><div class="lbl">Migraine</div></div>
+        <div class="dlbl dlbl-nerve"><div class="pct" style="color:var(--purple)">15%</div><div class="lbl">Nerve pain</div></div>
+      </div>
+    </div>
+    <!-- outcome bars -->
+    <div class="card">
+      <div class="card-head"><h3>Average outcomes vs baseline</h3></div>
+      <div class="legend" style="margin:-6px 0 14px"><span><i class="dotc" style="background:var(--good)"></i> Improving</span><span><i class="dotc" style="background:var(--flag)"></i> Worse for patient</span></div>
+      <div class="obar"><div class="ol"><span>Pain (7-day avg) ▼</span><span class="ov" style="color:var(--good)">▼ 46%</span></div><div class="track"><div class="fill" style="width:72%;background:var(--green)"></div></div></div>
+      <div class="obar"><div class="ol"><span>KOOS-12 function ▲</span><span class="ov" style="color:var(--good)">+15 pts</span></div><div class="track"><div class="fill" style="width:64%;background:var(--teal)"></div></div></div>
+      <div class="obar"><div class="ol"><span>PEG-3 interference ▼</span><span class="ov" style="color:var(--good)">▼ 2.3 pts</span></div><div class="track"><div class="fill" style="width:58%;background:var(--blue)"></div></div></div>
+      <div class="obar"><div class="ol"><span>PROMIS sleep ▲</span><span class="ov" style="color:var(--good)">+6 T</span></div><div class="track"><div class="fill" style="width:48%;background:var(--purple)"></div></div></div>
+      <div class="obar"><div class="ol"><span>Oral med days / mo ▼</span><span class="ov" style="color:var(--good)">12 → 6</span></div><div class="track"><div class="fill" style="width:50%;background:var(--amber)"></div></div></div>
+      <div class="obar"><div class="ol"><span>Opioid days</span><span class="ov" style="color:var(--good)">0 · zero</span></div><div class="track"><div class="fill" style="width:100%;background:#CBD5E1"></div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ LOWER GRID ============ -->
+  <div class="grid-low">
+    <!-- roster -->
+    <div class="card">
+      <div class="card-head" id="rosterCard"><h3>Your patients</h3><span class="pill-select">A–Z ▾</span></div>
+      <div class="toolbar">
+        <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="rosterSearch" placeholder="Search patients by name or condition..."></div>
+        <div class="chip active" data-filter="all">All</div>
+        <div class="chip" data-filter="review">Needs review</div>
+        <div class="chip" data-filter="hold">On hold</div>
+      </div>
+      <table>
+        <thead><tr><th>Patient</th><th>Condition</th><th>Pain trend</th><th>Last check-in</th><th>Status</th></tr></thead>
+        <tbody id="roster"></tbody>
+      </table>
+    </div>
+
+    <!-- right rail -->
+    <div>
+      <div class="rail-card">
+        <h3>Requests <span class="ct">9 open</span></h3>
+        <div id="requests" style="margin-top:8px"></div>
+        <a class="viewall" href="#">View all requests →</a>
+      </div>
+      <div class="rail-card">
+        <h3>Messages <span class="ct">4 unread</span></h3>
+        <div id="messages" style="margin-top:8px"></div>
+        <a class="viewall" href="#">Open inbox →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mock-footer">clara · clinician console · Doctor view · MOCK draft 1 · June 2026 · first pass wireframe, not the live product</div>
+</div>
+
+<!-- ============ PATIENT DRAWER ============ -->
+<!-- ===== MESSAGES MODAL ===== -->
+<div class="cm-overlay" id="msgOverlay">
+  <div class="cm cm-wide">
+    <div class="cm-head">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--indigo)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <h3>Messages</h3><span class="ct">4 unread</span>
+      <button class="x" id="msgClose">&times;</button>
+    </div>
+    <div class="msgwrap">
+      <div class="msglist" id="msgList"></div>
+      <div class="msgthread" id="msgThread"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REQUESTS MODAL ===== -->
+<div class="cm-overlay" id="reqOverlay">
+  <div class="cm">
+    <div class="cm-head">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+      <h3>Requests</h3><span class="ct" style="background:#FEF2E2;color:var(--watch)">9 open · 3 urgent</span>
+      <button class="x" id="reqClose">&times;</button>
+    </div>
+    <div class="cm-sub">Tap a request to open the patient's record with the full request and medications.</div>
+    <div class="cm-body" id="reqList"></div>
+  </div>
+</div>
+
+<!-- ===== PLANS AWAITING REVIEW MODAL ===== -->
+<div class="cm-overlay" id="planOverlay">
+  <div class="cm">
+    <div class="cm-head">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+      <h3>Plans awaiting review</h3><span class="ct" style="background:#EEEEFB;color:var(--indigo)">23 to sign off</span>
+      <button class="x" id="planClose">&times;</button>
+    </div>
+    <div class="cm-sub">AI-drafted from each patient's intake. Tap a plan to open the patient's record and approve, reject, or edit it.</div>
+    <div class="cm-body" id="planList"></div>
+  </div>
+</div>
+
+<!-- ===== NOTIFICATIONS PANEL ===== -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-head"><h3>Notifications</h3><button class="markall" id="notifMark">Mark all read</button></div>
+  <div class="notif-list" id="notifList">
+    <div class="notif-item unread" data-action="p10">
+      <div class="notif-ic" style="background:var(--rose)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+      <div class="notif-tx"><div class="notif-tt"><b>Jacob Klein</b> — pain rising, 3 missed check-ins</div><div class="notif-tm">2h ago · needs outreach</div></div>
+      <span class="notif-udot"></span>
+    </div>
+    <div class="notif-item unread" data-action="messages">
+      <div class="notif-ic" style="background:var(--indigo)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div class="notif-tx"><div class="notif-tt">New message from <b>Grace Holloway</b></div><div class="notif-tm">8m ago</div></div>
+      <span class="notif-udot"></span>
+    </div>
+    <div class="notif-item unread" data-action="p1">
+      <div class="notif-ic" style="background:var(--purple)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></div>
+      <div class="notif-tx"><div class="notif-tt">Plan awaiting review — <b>Amelia Brooks</b> (cream step-up C2 → C3)</div><div class="notif-tm">22m ago</div></div>
+      <span class="notif-udot"></span>
+    </div>
+    <div class="notif-item" data-action="p9">
+      <div class="notif-ic" style="background:var(--amber)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg></div>
+      <div class="notif-tx"><div class="notif-tt">Dosage change request — <b>Isabel Jennings</b></div><div class="notif-tm">1h ago</div></div>
+    </div>
+    <div class="notif-item" data-action="p11">
+      <div class="notif-ic" style="background:var(--teal)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <div class="notif-tx"><div class="notif-tt"><b>Karen Lowe</b> completed her quarterly check-in</div><div class="notif-tm">3h ago</div></div>
+    </div>
+    <div class="notif-item" data-action="report">
+      <div class="notif-ic" style="background:var(--sky)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg></div>
+      <div class="notif-tx"><div class="notif-tt">Your weekly cohort report is ready</div><div class="notif-tm">Today, 6:00 AM</div></div>
+    </div>
+  </div>
+  <div class="notif-foot"><a href="#" onclick="return false">View all notifications</a></div>
+</div>
+
+<!-- ===== ACCOUNT & BILLING MODAL ===== -->
+<div class="cm-overlay" id="acctOverlay">
+  <div class="cm cm-wide">
+    <div class="cm-head">
+      <div class="me-av" style="background:linear-gradient(135deg,#E11D48,#F43F5E)">AR</div>
+      <div><h3 style="line-height:1.15">Alex Romano</h3><div style="font-size:15.5px;color:var(--muted)">Account, identity &amp; access</div></div>
+      <button class="x" id="acctClose">&times;</button>
+    </div>
+    <div class="cm-body acct">
+
+      <div class="acct-sec">
+        <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Identity &amp; contact</h4>
+        <div class="acct-grid">
+          <div class="afield"><label>Full name</label><input id="ac_name" value="Alex Romano"></div>
+          <div class="afield"><label>Role</label><input id="ac_spec" value="Administrator"></div>
+          <div class="afield"><label>Telephone</label><input id="ac_tel" value="(519) 555-0142"></div>
+          <div class="afield"><label>Email</label><input id="ac_email" value="a.romano@clara.health"></div>
+        </div>
+      </div>
+
+      <div class="acct-sec">
+        <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg> Role &amp; access</h4>
+        <div class="acct-grid">
+          <div class="afield"><label>Employee ID</label><input id="ac_cpso" value="ADM-0012"></div>
+          <div class="afield"><label>Department</label><input id="ac_ohip" value="Operations &amp; Administration"></div>
+          <div class="afield"><label>Practice location</label><input id="ac_loc" value="Greenvale Medical Centre, ON"></div>
+          <div class="afield"><label>Access level</label><input id="ac_remit" value="Full administrator · all patients"></div>
+        </div>
+      </div>
+
+      <div class="acct-sec">
+        <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Security</h4>
+        <div class="arow">
+          <div><div class="al">Password</div><div class="ad">Last changed 3 months ago</div></div>
+          <button class="abtn" onclick="if(window.toast)toast('Opening password change')">Change password</button>
+        </div>
+        <div class="arow">
+          <div><div class="al">Two-factor authentication (2FA)</div><div class="ad" id="ac_2fa_d">On · authenticator app</div></div>
+          <button class="tgl on" id="ac_2fa" aria-label="Toggle 2FA"></button>
+        </div>
+        <div class="arow">
+          <div><div class="al">Recovery method</div><div class="ad">SMS to ····0142</div></div>
+          <button class="abtn" onclick="if(window.toast)toast('Manage recovery methods')">Manage</button>
+        </div>
+        <div class="arow">
+          <div><div class="al">Last sign-in</div><div class="ad">Today, 7:58 AM · Greenvale, ON</div></div>
+          <button class="abtn" onclick="if(window.toast)toast('Showing active sessions')">View sessions</button>
+        </div>
+      </div>
+
+      <div class="acct-sec">
+        <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.5-2.4 1a7 7 0 0 0-1.7-1l-.3-2.5h-4l-.3 2.5a7 7 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 1.7 1l.3 2.5h4l.3-2.5a7 7 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5a7 7 0 0 0 .1-1z"/></svg> Account</h4>
+        <div class="arow">
+          <div><div class="al">Email notifications</div><div class="ad">New messages, requests, plans to review</div></div>
+          <button class="tgl on" id="ac_notif" aria-label="Toggle notifications"></button>
+        </div>
+        <div class="arow">
+          <div><div class="al">Sign out</div><div class="ad">End this session on all devices</div></div>
+          <button class="abtn danger" onclick="if(window.toast)toast('Signed out (simulated)')">Sign out</button>
+        </div>
+      </div>
+
+      <div class="acct-foot">
+        <span class="acct-saved" id="acctSaved"></span>
+        <button class="btn btn-primary" id="acctSave">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="dh">
+    <div class="av" id="dAv">AB</div>
+    <div><div class="nm" id="dName">Patient</div><div class="meta" id="dMeta"></div></div>
+    <button class="dprint" id="dPrint"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print record</button>
+    <button class="x" id="dClose">×</button>
+  </div>
+  <div class="dbody" id="dBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  function openCM(id){var o=$(id);if(o)o.classList.add('open');}
+  function closeCM(id){var o=$(id);if(o)o.classList.remove('open');}
+  function ini(n){return n.split(' ').map(function(w){return w[0];}).slice(0,2).join('');}
+
+  // Requests data (9, 3 urgent) -> each routes to the patient record
+  var REQ=[
+    {n:'Amelia Brooks',t:'Dosage increase · cream C2 → C3',id:'p1',av:'#5B5BD6',urgent:true},
+    {n:'Grace Holloway',t:'Dosage change · venlafaxine',id:'p7',av:'#F43F5E',urgent:true},
+    {n:'Isabel Jennings',t:'Dosage change · pregabalin',id:'p9',av:'#0EA5E9',urgent:true},
+    {n:'David Ellis',t:'Refill renewal · gabapentin',id:'p4',av:'#3B82F6'},
+    {n:'Carla Dixon',t:'Renewal · amitriptyline',id:'p3',av:'#F59E0B'},
+    {n:'Liam Mercer',t:'Renewal · rimegepant',id:'p12',av:'#8B5CF6'},
+    {n:'Benjamin Carter',t:'Refill · topical cream',id:'p2',av:'#14B8A6'},
+    {n:'Henry Irving',t:'Renewal · acetaminophen',id:'p8',av:'#22C55E'},
+    {n:'Karen Lowe',t:'Refill · duloxetine',id:'p11',av:'#A855F7'}
+  ];
+  $('reqList').innerHTML=REQ.map(function(r){
+    return '<div class="reqrow" onclick="location.href=\'Clara-Doctor-Patient-MOCK-v1.html?patient='+r.id+'\'">'+
+      '<div class="rav" style="background:'+r.av+'">'+ini(r.n)+'</div>'+
+      '<div class="rin"><div class="rn">'+r.n+(r.urgent?'<span class="urgent">urgent</span>':'')+'</div><div class="rt">'+r.t+'</div></div>'+
+      '<span class="rarrow">→</span></div>';
+  }).join('');
+
+  // Plans awaiting review (preview of 23) -> each opens the patient record
+  var PLANS=[
+    {n:'Amelia Brooks',t:'Knee OA · cream step-up C2 → C3 + naproxen',id:'p1',av:'#5B5BD6',tag:'new'},
+    {n:'Grace Holloway',t:'Migraine · sumatriptan + venlafaxine',id:'p7',av:'#F43F5E',tag:'new'},
+    {n:'Carla Dixon',t:'Migraine · rizatriptan + amitriptyline',id:'p3',av:'#F59E0B'},
+    {n:'Liam Mercer',t:'Migraine · rimegepant PRN',id:'p12',av:'#8B5CF6'},
+    {n:'David Ellis',t:'Nerve pain · gabapentin titration + cream',id:'p4',av:'#3B82F6'},
+    {n:'Benjamin Carter',t:'Back pain · C2 cream + physiotherapy',id:'p2',av:'#14B8A6'},
+    {n:'Isabel Jennings',t:'Nerve pain · pregabalin + cream',id:'p9',av:'#0EA5E9'},
+    {n:'Karen Lowe',t:'Knee OA · duloxetine + cream',id:'p11',av:'#A855F7'}
+  ];
+  $('planList').innerHTML=PLANS.map(function(r){
+    return '<div class="reqrow" onclick="location.href=\'Clara-Doctor-Patient-MOCK-v1.html?patient='+r.id+'\'">'+
+      '<div class="rav" style="background:'+r.av+'">'+ini(r.n)+'</div>'+
+      '<div class="rin"><div class="rn">'+r.n+(r.tag?'<span class="urgent" style="color:var(--indigo);background:#EEEEFB">'+r.tag+'</span>':'')+'</div><div class="rt">'+r.t+'</div></div>'+
+      '<span class="rarrow">→</span></div>';
+  }).join('')+'<div class="cm-more">Showing 8 of 23 · <a href="#" onclick="return false">view all</a></div>';
+  var rp=$('reviewPlansBtn');if(rp)rp.addEventListener('click',function(){openCM('planOverlay');});
+  if($('planClose'))$('planClose').addEventListener('click',function(){closeCM('planOverlay');});
+  var po=$('planOverlay');if(po)po.addEventListener('click',function(e){if(e.target===po)closeCM('planOverlay');});
+
+  // Patients -> scroll to roster
+  var np=$('navPatients');
+  if(np)np.addEventListener('click',function(e){e.preventDefault();var r=$('rosterCard');if(r)r.scrollIntoView({behavior:'smooth',block:'start'});});
+  // Messages / Requests -> modals
+  var nm=$('navMessages');if(nm)nm.addEventListener('click',function(e){e.preventDefault();openCM('msgOverlay');});
+  var nr=$('navRequests');if(nr)nr.addEventListener('click',function(e){e.preventDefault();openCM('reqOverlay');});
+  // rail shortcuts
+  document.querySelectorAll('.viewall').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();var t=a.textContent.toLowerCase();if(t.indexOf('inbox')>-1)openCM('msgOverlay');else openCM('reqOverlay');});
+  });
+  // closers
+  if($('msgClose'))$('msgClose').addEventListener('click',function(){closeCM('msgOverlay');});
+  if($('reqClose'))$('reqClose').addEventListener('click',function(){closeCM('reqOverlay');});
+  ['msgOverlay','reqOverlay'].forEach(function(id){var o=$(id);if(o)o.addEventListener('click',function(e){if(e.target===o)closeCM(id);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeCM('msgOverlay');closeCM('reqOverlay');closeCM('planOverlay');closeCM('acctOverlay');closeCM('provOverlay');}});
+  var kpiPlans=$('kpiPlans');if(kpiPlans)kpiPlans.addEventListener('click',function(){openCM('planOverlay');});
+  var kpiReq=$('kpiReq');if(kpiReq)kpiReq.addEventListener('click',function(){openCM('reqOverlay');});
+
+  // Notifications panel
+  var bell=$('bellBtn'),panel=$('notifPanel');
+  if(bell&&panel){
+    bell.addEventListener('click',function(e){e.stopPropagation();panel.classList.toggle('open');});
+    document.addEventListener('click',function(e){if(panel.classList.contains('open')&&!panel.contains(e.target)&&!bell.contains(e.target))panel.classList.remove('open');});
+    panel.querySelectorAll('.notif-item').forEach(function(it){
+      it.addEventListener('click',function(){
+        it.classList.remove('unread');var d=it.querySelector('.notif-udot');if(d)d.remove();
+        var a=it.dataset.action;panel.classList.remove('open');
+        if(/^p\d+$/.test(a))location.href='Clara-Doctor-Patient-MOCK-v1.html?patient='+a;
+        else if(a==='messages')openCM('msgOverlay');
+        else if(a==='requests')openCM('reqOverlay');
+        else if(window.toast)toast('Opening notification');
+      });
+    });
+    var mk=$('notifMark');if(mk)mk.addEventListener('click',function(e){e.stopPropagation();panel.querySelectorAll('.notif-item').forEach(function(it){it.classList.remove('unread');var d=it.querySelector('.notif-udot');if(d)d.remove();});var bd=$('bellDot');if(bd)bd.style.display='none';if(window.toast)toast('All notifications marked read');});
+  }
+
+  // Providers tab -> dedicated page
+  var npv=$('navProviders');if(npv)npv.addEventListener('click',function(e){e.preventDefault();location.href='Clara-Admin-Providers-MOCK-v1.html';});
+
+  // Account & billing modal
+  var meBtn=$('meBtn');if(meBtn)meBtn.addEventListener('click',function(){openCM('acctOverlay');});
+  if($('acctClose'))$('acctClose').addEventListener('click',function(){closeCM('acctOverlay');});
+  var ao=$('acctOverlay');if(ao)ao.addEventListener('click',function(e){if(e.target===ao)closeCM('acctOverlay');});
+  function bindTgl(id,onT,offT,dId){var t=$(id);if(!t)return;t.addEventListener('click',function(){var on=t.classList.toggle('on');if(dId&&$(dId))$(dId).textContent=on?onT:offT;});}
+  bindTgl('ac_2fa','On · authenticator app','Off · not recommended','ac_2fa_d');
+  bindTgl('ac_notif');
+  var ACF=['ac_name','ac_spec','ac_tel','ac_email','ac_cpso','ac_ohip','ac_loc','ac_remit'];
+  try{var sa=JSON.parse(localStorage.getItem('claraAcct')||'null');if(sa)ACF.forEach(function(f){if(sa[f]!=null&&$(f))$(f).value=sa[f];});}catch(e){}
+  if($('acctSave'))$('acctSave').addEventListener('click',function(){
+    var d={};ACF.forEach(function(f){if($(f))d[f]=$(f).value;});
+    try{localStorage.setItem('claraAcct',JSON.stringify(d));}catch(e){}
+    if($('acctSaved'))$('acctSaved').textContent='✓ Saved';
+    if(window.toast)toast('Account details saved');
+  });
+  // ---- interactive message threads ----
+  var THREADS={
+    neil:{name:'Neil Matrix',sub:'Nerve pain · Day 64 · patient',av:'#5B5BD6',ini:'NM',pid:'neil',unread:true,prev:'Got it, thank you. It does settle…',
+      msgs:[['meta','Today'],['them','Hi Dr. Dolores, the new cream is helping but I get a burning feeling for a few minutes after I put it on. Is that normal?'],['meta','Neil · 9:12 AM'],['you','Hi Neil, a brief warm or tingling feeling is common with the menthol and capsaicin and usually settles within about 10 minutes. If it lasts longer, or the skin looks red or irritated, stop and message me.'],['meta','You · 9:40 AM'],['them','Got it, thank you. It does settle quickly.'],['meta','Neil · 9:48 AM · Read'],['you','Great. Keep applying a thin layer twice a day and we will review at your next check-in.'],['meta','You · 9:50 AM']]},
+    isabel:{name:'Isabel Jennings',sub:'Nerve pain · Day 88 · patient',av:'#14B8A6',ini:'IJ',pid:'p9',unread:true,prev:'The tingling is better but evenings…',
+      msgs:[['meta','Yesterday'],['them','The tingling is better during the day but evenings are still rough, especially in my feet.'],['meta','Isabel · 6:20 PM'],['you','Thanks for tracking that, Isabel. Evening flares are common. Let us try taking the pregabalin a little earlier and adding a short evening walk. I will note it on your plan.'],['meta','You · 7:05 PM'],['them','Okay, I will try that tonight.'],['meta','Isabel · 7:11 PM · Read']]},
+    henry:{name:'Henry Irving',sub:'Knee OA · Day 0 · patient',av:'#F59E0B',ini:'HI',pid:'p8',prev:'Should I keep walking on rest days?',
+      msgs:[['meta','Monday'],['them','Should I keep walking on the days the plan marks as rest days?'],['meta','Henry · 11:02 AM'],['you','Good question. Gentle walking is fine on rest days, just keep it easy and skip the strengthening sets. Rest days are about the strengthening load, not staying still.'],['meta','You · 11:30 AM'],['them','Perfect, thank you.'],['meta','Henry · 11:34 AM · Read']]},
+    karen:{name:'Karen Lowe',sub:'Knee OA · Day 0 · patient',av:'#A855F7',ini:'KL',pid:'p11',prev:'Question about duloxetine timing.',
+      msgs:[['meta','Monday'],['them','Quick question about duloxetine timing, should I take it morning or night?'],['meta','Karen · 8:15 AM'],['you','Morning with food works well for most people and lowers the chance of it affecting sleep. If it makes you drowsy, we can move it to the evening.'],['meta','You · 8:40 AM'],['them','Morning it is, thanks!'],['meta','Karen · 8:44 AM · Read']]}
+  };
+  var ORDER=['neil','isabel','henry','karen'];
+  var active='neil';
+  function renderList(){
+    $('msgList').innerHTML=ORDER.map(function(k){var t=THREADS[k];
+      return '<div class="mthread-item'+(k===active?' active':'')+'" data-thread="'+k+'">'+
+        '<div class="mav" style="background:'+t.av+'">'+t.ini+'</div>'+
+        '<div class="mi"><div class="mn">'+t.name+'</div><div class="mp">'+t.prev+'</div></div>'+
+        (t.unread?'<span class="mdot"></span>':'')+'</div>';
+    }).join('');
+    $('msgList').querySelectorAll('.mthread-item').forEach(function(el){
+      el.addEventListener('click',function(){active=el.dataset.thread;THREADS[active].unread=false;renderList();renderThread();});
+    });
+  }
+  function renderThread(){
+    var t=THREADS[active];
+    var bubbles=t.msgs.map(function(m){return m[0]==='meta'?'<div class="bub-meta">'+m[1]+'</div>':'<div class="bub '+m[0]+'">'+m[1]+'</div>';}).join('');
+    $('msgThread').innerHTML=
+      '<div class="mt-head"><div class="mav" style="background:'+t.av+';width:44px;height:44px;font-size:15px">'+t.ini+'</div>'+
+      '<div><div class="mn" style="font-size:17px">'+t.name+'</div><div class="mp">'+t.sub+'</div></div>'+
+      '<a class="mt-open" href="Clara-Doctor-Patient-MOCK-v1.html?patient='+t.pid+'">Open patient record →</a></div>'+
+      '<div class="mt-body" id="mtBody">'+bubbles+'</div>'+
+      '<div class="mt-compose"><input placeholder="Message '+t.name+'…"><button>Send</button></div>';
+    var body=$('mtBody');if(body)body.scrollTop=body.scrollHeight;
+    var send=$('msgThread').querySelector('.mt-compose button');
+    if(send)send.addEventListener('click',function(){var inp=$('msgThread').querySelector('.mt-compose input');if(inp)inp.value='';if(typeof toast==='function')toast('Message sent to '+t.name);});
+  }
+  renderList();renderThread();
+})();
+</script>
+
+<!-- ============ FULL RECORD TEMPLATE: Amelia Brooks (p1) ============ -->
+<div id="rec-p1" class="record" style="display:none">
+
+  <!-- 1) DIAGNOSIS -->
+  <div class="rsec"><span class="bar"></span>Diagnosis</div>
+  <div class="rcard">
+    <h4>Knee osteoarthritis · right knee <span class="rpill pill-good">Confirmed</span></h4>
+    <div class="sub">Diagnosed Feb 14, 2026 · Day 130 of plan (≈ 18 weeks) · referred from intake assessment</div>
+    <div class="dxgrid">
+      <div class="dx"><div class="dl">Primary pain site</div><div class="dv">Right knee, medial</div></div>
+      <div class="dx"><div class="dl">Laterality</div><div class="dv">Unilateral (right)</div></div>
+      <div class="dx"><div class="dl">Duration</div><div class="dv">&gt; 3 months (chronic)</div></div>
+      <div class="dx"><div class="dl">Onset</div><div class="dv">Gradual, activity-related</div></div>
+      <div class="dx"><div class="dl">Red-flag screen</div><div class="dv green">Negative · cleared</div></div>
+      <div class="dx"><div class="dl">Imaging on file</div><div class="dv">X-ray: KL grade 2</div></div>
+      <div class="dx"><div class="dl">Worst-pain time</div><div class="dv">Mornings &amp; after activity</div></div>
+      <div class="dx"><div class="dl">Baseline KOOS-12</div><div class="dv">38 / 100</div></div>
+    </div>
+    <div class="sub" style="margin:12px 0 0"><b>Intake questionnaire (knee OA):</b> stairs and prolonged standing aggravate; rest and heat relieve; no locking or giving way; no recent trauma; BMI 28; goal is to keep walking and return to gardening.</div>
+  </div>
+
+  <!-- 2) CURRENT Rx PLAN -->
+  <div class="rsec"><span class="bar" style="background:var(--teal)"></span>Current Rx plan · awaiting your review</div>
+  <div class="ai-banner"><div class="aiic">✦</div><div><div class="ait">AI-drafted plan + dosage-increase request</div><div class="ais">Generated from this patient's intake &amp; the knee OA protocol. Patient has requested a cream step-up (C2 → C3). You have full override.</div></div></div>
+  <div class="rcard">
+    <div class="plan-row">
+      <div class="pic" style="background:var(--indigo)">Rx</div>
+      <div style="flex:1"><div class="pt2">Compound cream — C2 Standard</div><div class="pd">Ketoprofen 10% + Diclofenac 5% + Lidocaine 5% + Bupivacaine 0.25% + Baclofen 5% + Amitriptyline 5% + Gabapentin 5% + Menthol/Camphor. Thin layer to right knee, 2–3×/day.</div></div>
+      <span class="statusbadge sb-pending">Step-up requested</span>
+    </div>
+    <div class="plan-row">
+      <div class="pic" style="background:var(--teal)">℞</div>
+      <div style="flex:1"><div class="pt2">Naproxen 500 mg</div><div class="pd">Oral anti-inflammatory, twice daily with food. 6 med-days last month, zero opioids.</div></div>
+      <span class="statusbadge sb-approved">Approved</span>
+    </div>
+    <div class="plan-row">
+      <div class="pic" style="background:var(--amber)">◷</div>
+      <div style="flex:1"><div class="pt2">Movement &amp; physiotherapy</div><div class="pd">Knee strengthening (quad/hip/glute) + walking ramp, 8-week build. Free with plan.</div></div>
+      <span class="statusbadge sb-approved">Active</span>
+    </div>
+    <div class="plan-actions" style="margin-top:16px">
+      <button class="btn btn-approve" onclick="act('Plan approved','Amelia Brooks')">Approve plan</button>
+      <button class="btn btn-reject" onclick="act('Plan rejected','Amelia Brooks')">Reject</button>
+      <button class="btn btn-edit" onclick="act('Opening plan editor','Amelia Brooks')">Edit plan</button>
+    </div>
+    <div class="tx-actions" style="margin-top:10px">
+      <button class="btn btn-hold" onclick="act('Treatment held','Amelia Brooks')">Hold treatment</button>
+      <button class="btn btn-renew" onclick="act('Treatment renewed','Amelia Brooks')">Renew treatment</button>
+    </div>
+  </div>
+
+  <!-- 3) ROBUST OUTCOME DATA -->
+  <div class="rsec"><span class="bar" style="background:var(--purple)"></span>Outcome data · all tracked instruments</div>
+
+  <div class="kpi4">
+    <div class="k"><div class="kl">Pain · 7-day avg</div><div class="kn">3.2<span style="font-size:14px;color:var(--muted)"> /10</span></div><div class="kd green">▼ 50% from baseline</div><div class="kb">Baseline 6.4 · 30% bar crossed ✓</div></div>
+    <div class="k"><div class="kl">PEG-3 interference</div><div class="kn">4.3<span style="font-size:14px;color:var(--muted)"> /10</span></div><div class="kd green">▼ 2.4 points</div><div class="kb">Baseline 6.7 · ≥1 pt meaningful</div></div>
+    <div class="k"><div class="kl">KOOS-12 function</div><div class="kn">54<span style="font-size:14px;color:var(--muted)"> /100</span></div><div class="kd green">▲ 16 points</div><div class="kb">Baseline 38 · MCID ≈ 10</div></div>
+    <div class="k"><div class="kl">Oral med days</div><div class="kn">6<span style="font-size:14px;color:var(--muted)"> /30</span></div><div class="kd green">▼ from 12 days</div><div class="kb">Zero opioid days on record</div></div>
+  </div>
+
+  <div class="g2" style="margin-top:14px">
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--rose)"></span> Pain trend · 90 days</h4>
+      <div class="sub">Daily 0–10 score · dotted = baseline · shaded = meaningful-improvement zone (30% below baseline)</div>
+      <svg viewBox="0 0 720 230" width="100%">
+        <rect x="40" y="124" width="660" height="86" fill="#EEF0FE" opacity=".7"/>
+        <line x1="40" y1="58" x2="700" y2="58" stroke="var(--rose)" stroke-width="1.6" stroke-dasharray="5,5" opacity=".7"/>
+        <text x="44" y="50" font-size="11" fill="var(--flag)" font-weight="700">baseline 6.4</text>
+        <text x="44" y="140" font-size="11" fill="var(--good)" font-weight="700">meaningful improvement zone (≤ 4.5)</text>
+        <line x1="40" y1="30" x2="40" y2="210" stroke="#E2E8F0"/>
+        <line x1="40" y1="210" x2="700" y2="210" stroke="#E2E8F0"/>
+        <text x="24" y="63" font-size="14" font-weight="700" fill="#1E293B" text-anchor="end">6</text>
+        <text x="24" y="123" font-size="14" font-weight="700" fill="#1E293B" text-anchor="end">4</text>
+        <text x="24" y="183" font-size="14" font-weight="700" fill="#1E293B" text-anchor="end">2</text>
+        <path d="M40 64 L92 70 L144 60 L196 84 L248 92 L300 104 L352 98 L404 118 L456 128 L508 140 L560 136 L612 150 L664 158 L700 162" fill="none" stroke="var(--indigo)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="40" cy="64" r="4" fill="#9aa0e8"/><circle cx="352" cy="98" r="4" fill="#9aa0e8"/><circle cx="700" cy="162" r="6" fill="var(--rose)"/>
+        <text x="40" y="84" font-size="13" font-weight="800" fill="var(--indigo)">6.4</text>
+        <text x="352" y="90" font-size="13" font-weight="800" fill="var(--indigo)">4.6</text>
+        <text x="688" y="152" font-size="13" font-weight="800" fill="var(--flag)">3.2</text>
+        <text x="40" y="227" font-size="13" font-weight="700" fill="#1E293B">Mar</text>
+        <text x="352" y="227" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">Apr</text>
+        <text x="700" y="227" font-size="13" font-weight="700" fill="#1E293B" text-anchor="end">Jun</text>
+      </svg>
+    </div>
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--teal)"></span> Plan adherence · last 30 days</h4>
+      <div class="sub">From daily check-ins</div>
+      <div class="rings">
+        <div class="ringbox">
+          <svg width="76" height="76" viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="#EEF1F7" stroke-width="8"/><circle cx="37" cy="37" r="30" fill="none" stroke="var(--teal)" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="54.7" transform="rotate(-90 37 37)"/><text x="37" y="42" text-anchor="middle" font-size="16" font-weight="800" fill="var(--teal)">71%</text></svg>
+          <div><div class="t">Exercises</div><div class="d">21 of 30 days logged</div></div>
+        </div>
+        <div class="ringbox">
+          <svg width="76" height="76" viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="#EEF1F7" stroke-width="8"/><circle cx="37" cy="37" r="30" fill="none" stroke="var(--indigo)" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="26.4" transform="rotate(-90 37 37)"/><text x="37" y="42" text-anchor="middle" font-size="16" font-weight="800" fill="var(--indigo)">86%</text></svg>
+          <div><div class="t">Cream applied</div><div class="d">2+ applications most days</div></div>
+        </div>
+        <div class="ringbox">
+          <svg width="76" height="76" viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="#EEF1F7" stroke-width="8"/><circle cx="37" cy="37" r="30" fill="none" stroke="var(--amber)" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="13.2" transform="rotate(-90 37 37)"/><text x="37" y="42" text-anchor="middle" font-size="16" font-weight="800" fill="#B45309">93%</text></svg>
+          <div><div class="t">Check-in streak</div><div class="d">28 of last 30 days</div></div>
+        </div>
+      </div>
+      <div class="rrow" style="margin-top:10px"><span class="l">Engagement signal</span><span class="rpill pill-good">Strong · doing the plan</span></div>
+    </div>
+  </div>
+
+  <div class="g3" style="margin-top:14px">
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--indigo)"></span> PEG-3 &amp; sleep, by month</h4>
+      <div class="sub">Lower PEG is better · higher sleep is better</div>
+      <svg viewBox="0 0 320 250" width="100%">
+        <line x1="30" y1="216" x2="310" y2="216" stroke="#E2E8F0"/>
+        <rect x="40" y="82" width="32" height="134" rx="7" fill="var(--indigo)"/>
+        <rect x="76" y="144" width="32" height="72" rx="7" fill="var(--amber)"/>
+        <rect x="134" y="104" width="32" height="112" rx="7" fill="var(--indigo)"/>
+        <rect x="170" y="124" width="32" height="92" rx="7" fill="var(--amber)"/>
+        <rect x="228" y="130" width="32" height="86" rx="7" fill="var(--indigo)"/>
+        <rect x="264" y="96" width="32" height="120" rx="7" fill="var(--amber)"/>
+        <text x="56" y="74" font-size="12" font-weight="800" fill="var(--indigo)" text-anchor="middle">6.7</text>
+        <text x="92" y="136" font-size="12" font-weight="800" fill="#B45309" text-anchor="middle">3.6</text>
+        <text x="150" y="96" font-size="12" font-weight="800" fill="var(--indigo)" text-anchor="middle">5.6</text>
+        <text x="186" y="116" font-size="12" font-weight="800" fill="#B45309" text-anchor="middle">4.6</text>
+        <text x="244" y="122" font-size="12" font-weight="800" fill="var(--indigo)" text-anchor="middle">4.3</text>
+        <text x="280" y="88" font-size="12" font-weight="800" fill="#B45309" text-anchor="middle">6.0</text>
+        <text x="74" y="238" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">Apr</text>
+        <text x="168" y="238" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">May</text>
+        <text x="262" y="238" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">Jun</text>
+      </svg>
+      <div class="sub" style="margin:6px 0 0"><span class="dotc2" style="background:var(--indigo)"></span> PEG-3 &nbsp; <span class="dotc2" style="background:var(--amber)"></span> Sleep</div>
+    </div>
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--rose)"></span> Oral medication days</h4>
+      <div class="sub">Days/month on an oral pain medication</div>
+      <svg viewBox="0 0 320 250" width="100%">
+        <line x1="30" y1="216" x2="310" y2="216" stroke="#E2E8F0"/>
+        <rect x="56" y="72" width="40" height="144" rx="9" fill="var(--rose)"/>
+        <rect x="146" y="108" width="40" height="108" rx="9" fill="#FB7185"/>
+        <rect x="236" y="144" width="40" height="72" rx="9" fill="var(--teal)"/>
+        <text x="76" y="64" font-size="13" font-weight="800" fill="var(--flag)" text-anchor="middle">12</text>
+        <text x="166" y="100" font-size="13" font-weight="800" fill="var(--flag)" text-anchor="middle">9</text>
+        <text x="256" y="136" font-size="13" font-weight="800" fill="var(--teal)" text-anchor="middle">6</text>
+        <text x="76" y="238" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">Apr</text>
+        <text x="166" y="238" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">May</text>
+        <text x="256" y="238" font-size="12" font-weight="700" fill="#1E293B" text-anchor="middle">Jun</text>
+      </svg>
+      <div class="rrow" style="margin-top:2px"><span class="l">Opioid days</span><span class="rpill pill-good">0 · every month</span></div>
+    </div>
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--amber)"></span> Patient verdict</h4>
+      <div class="sub">PGIC &amp; NPS · latest check-in</div>
+      <div class="rrow"><span class="l">Overall change (PGIC)</span><span class="r green">Much better</span></div>
+      <div class="rrow"><span class="l">Trajectory</span><span class="r" style="text-align:right;font-weight:600">A little → Much better<br>over 3 months</span></div>
+      <div class="rrow"><span class="l">Would recommend (NPS)</span><span class="r green">8 / 10</span></div>
+      <div class="rrow"><span class="l">Sleep quality (self)</span><span class="r" style="color:var(--watch)">6 / 10<br><span style="font-size:11.5px;font-weight:600">improving from 3.6</span></span></div>
+      <div class="rrow"><span class="l">Check-in completion</span><span class="r green">3 of 3 months</span></div>
+    </div>
+  </div>
+
+  <div class="g3" style="margin-top:14px">
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--teal)"></span> KOOS-12 knee function</h4>
+      <div class="sub">0 worst → 100 best · MCID ≈ 10 points</div>
+      <svg viewBox="0 0 320 180" width="100%">
+        <path d="M40 150 A120 120 0 0 1 280 150" fill="none" stroke="#EEF1F7" stroke-width="20" stroke-linecap="round"/>
+        <path d="M40 150 A120 120 0 0 1 198 41" fill="none" stroke="var(--teal)" stroke-width="20" stroke-linecap="round"/>
+        <circle cx="125" cy="55" r="7" fill="var(--amber)" stroke="#fff" stroke-width="2.5"/>
+        <line x1="121.7" y1="47.8" x2="110" y2="22" stroke="var(--flag)" stroke-width="1.3" opacity=".6"/><text x="106" y="14" font-size="13" font-weight="800" fill="var(--flag)" text-anchor="middle">baseline 38</text>
+        <text x="160" y="124" text-anchor="middle"><tspan font-size="44" font-weight="800" fill="var(--teal)">54</tspan><tspan font-size="18" font-weight="600" fill="#64748B"> / 100</tspan></text>
+        <text x="160" y="152" font-size="18" font-weight="800" fill="var(--good)" text-anchor="middle">▲ 16 points</text>
+        <text x="40" y="174" font-size="13" font-weight="700" fill="#1E293B">0</text>
+        <text x="280" y="174" font-size="13" font-weight="700" fill="#1E293B" text-anchor="end">100</text>
+      </svg>
+      <div class="rrow"><span class="l">Change vs baseline</span><span class="rpill pill-good">▲ 16 · exceeds MCID</span></div>
+    </div>
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--rose)"></span> Work impact (WPAI)</h4>
+      <div class="sub">Past 7 days · employed, regular duties</div>
+      <div class="rrow"><span class="l">Hours missed (knee)</span><span class="r blue">1 h <span class="was" style="font-size:12px">was 6 h</span></span></div>
+      <div class="rrow"><span class="l">Productivity impact at work</span><span class="r blue">20% <span class="was" style="font-size:12px">was 60%</span></span></div>
+      <div class="rrow"><span class="l">Activity impact outside work</span><span class="r blue">30% <span class="was" style="font-size:12px">was 70%</span></span></div>
+      <div class="rrow"><span class="l">Est. hours recovered</span><span class="r blue">≈ 7 h / week</span></div>
+      <div class="rrow"><span class="l">Work situation</span><span class="r" style="font-weight:600">Regular duties</span></div>
+    </div>
+    <div class="rcard">
+      <h4><span class="dotc2" style="background:var(--purple)"></span> Mood &amp; sleep instruments</h4>
+      <div class="sub">PHQ-2 / GAD-2 · PROMIS Sleep Disturbance</div>
+      <div class="rrow"><span class="l">PHQ-2 depression screen</span><span class="r blue">1 / 6 · no flag</span></div>
+      <div class="rrow"><span class="l">GAD-2 anxiety screen</span><span class="r blue">1 / 6 · no flag</span></div>
+      <div class="rrow"><span class="l">Item-9 safety rule</span><span class="r" style="font-weight:600">Not triggered</span></div>
+      <div class="rrow"><span class="l">PROMIS sleep T score</span><span class="r blue">50 <span class="was" style="font-size:12px">was 58</span></span></div>
+      <div class="rrow"><span class="l">Interpretation</span><span class="rpill pill-good">Within normal limits</span></div>
+    </div>
+  </div>
+
+  <div class="rcard" style="margin-top:14px">
+    <h4><span class="dotc2" style="background:var(--teal)"></span> Functional milestones regained <span class="rpill pill-good" style="margin-left:4px">5 of 7</span></h4>
+    <div class="sub">Compared with 3 months ago, patient-reported</div>
+    <div class="ms-wrap">
+      <span class="ms on">✓ Walking farther</span>
+      <span class="ms on">✓ Stairs without stopping</span>
+      <span class="ms on">✓ Housework is easier</span>
+      <span class="ms on">✓ Carrying groceries</span>
+      <span class="ms on">✓ Sleeping through the night</span>
+      <span class="ms">Back in the garden</span>
+      <span class="ms">Back to yoga or sport</span>
+    </div>
+  </div>
+
+  <!-- 4) CLINICAL SUMMARY -->
+  <div class="rsec"><span class="bar" style="background:var(--good)"></span>Clinical summary &amp; plan</div>
+  <div class="summary">
+    <p>Amelia Brooks is a 61-year-old female with knee osteoarthritis of the right knee (KL grade 2). She is <span class="hl">130 days</span> into her knee OA plan. Treatments: C2 compound cream, naproxen, and a strengthening + walking program.</p>
+    <h4>Pain &amp; function</h4>
+    <p>Daily pain fell from a baseline of <span class="was">6.4</span> to <span class="now">3.2</span>, <span class="hl">a 50% reduction</span> that crosses the 30% meaningful-improvement bar. PEG-3 interference improved <span class="was">6.7</span> → <span class="now">4.3</span> and KOOS-12 rose <span class="was">38</span> → <span class="now">54</span>, both beyond published thresholds.</p>
+    <h4>Medications</h4>
+    <p>Oral medication use halved, <span class="was">12</span> → <span class="now">6 days</span>/month, with <span class="hl">zero opioid exposure</span> on every month of record.</p>
+    <h4>Work &amp; daily life</h4>
+    <p>Work absence fell <span class="was">6 h</span> → <span class="now">1 h</span>/week, ≈ <span class="hl">7 productive hours recovered weekly</span>. Five of seven milestones regained. Mood and sleep within normal limits.</p>
+    <h4>Adherence &amp; verdict</h4>
+    <p>Adherence is strong (cream <span class="now">86%</span>, exercises <span class="now">71%</span>); exercise dips on higher-pain days. Patient rates herself <span class="hl">Much better</span> and scores clara 8/10.</p>
+    <h4>Decision needed</h4>
+    <p>Patient is responding well but has requested a cream step-up to <b>C3</b>. Review the dosage-increase request above: <b>Approve</b>, <b>Reject</b>, or <b>Edit</b> the plan. Otherwise continue C2 and revisit a naproxen taper at the next quarterly check-in.</p>
+  </div>
+  <div style="height:14px"></div>
+</div>
+
+<script>
+const COND = {
+  knee:{label:'Knee OA', color:'var(--indigo)'},
+  back:{label:'Back pain', color:'var(--teal)'},
+  migraine:{label:'Migraine', color:'var(--amber)'},
+  nerve:{label:'Nerve pain', color:'var(--purple)'}
+};
+const AVC = ['#5B5BD6','#14B8A6','#F59E0B','#8B5CF6','#3B82F6','#F43F5E','#0EA5E9','#22C55E'];
+
+// 12 patients, alphabetical
+const PATIENTS = [
+  {id:'p1', name:'Amelia Brooks', age:61, sex:'Female', cond:'knee', status:'review', last:'2h ago', trend:[6.4,5.8,5.1,4.3,3.9,3.2], koos:'54', peg:'4.3', sleep:'52', med:'6/30', adh:'92%', city:'Greenvale, ON', plan:'Pending review',
+    meds:'Naproxen 500 mg · twice daily with food', cream:'C2 compound cream · thin layer to right knee 2–3×/day', exercise:'Knee strengthening + walking ramp, 8-week build', flag:'Dosage increase requested'},
+  {id:'p2', name:'Benjamin Carter', age:48, sex:'Male', cond:'back', status:'active', last:'1d ago', trend:[7.1,6.6,5.9,5.2,4.8,4.4], koos:'—', peg:'3.8', sleep:'56', med:'4/30', adh:'88%', city:'Greenvale, ON', plan:'Active',
+    meds:'None oral · topical only', cream:'C2 compound cream · lower back, 2×/day', exercise:'Physiotherapy referral + walking, McKenzie extension', flag:null},
+  {id:'p3', name:'Carla Dixon', age:39, sex:'Female', cond:'migraine', status:'review', last:'4h ago', trend:[8,7.2,6.5,5.8,5.1,4.6], koos:'—', peg:'4.1', sleep:'49', med:'8/30', adh:'80%', city:'Riverton, ON', plan:'Pending review',
+    meds:'Rizatriptan 10 mg PRN · Amitriptyline 10 mg nightly', cream:'Not indicated for migraine', exercise:'Sleep, hydration & trigger plan, headache diary', flag:'Renewal due'},
+  {id:'p4', name:'David Ellis', age:57, sex:'Male', cond:'nerve', status:'active', last:'3h ago', trend:[7.5,6.9,6.1,5.4,4.9,4.2], koos:'—', peg:'4.6', sleep:'47', med:'10/30', adh:'85%', city:'Greenvale, ON', plan:'Active',
+    meds:'Gabapentin 300 mg · titrating', cream:'C2 compound cream (lidocaine) · affected area', exercise:'Graded activity, gentle mobility', flag:'Refill renewal'},
+  {id:'p5', name:'Evelyn Foster', age:66, sex:'Female', cond:'knee', status:'hold', last:'6d ago', trend:[5.5,5.2,5.4,5.0,5.1,4.9], koos:'48', peg:'5.0', sleep:'44', med:'9/30', adh:'61%', city:'Lakeside, ON', plan:'On hold',
+    meds:'Naproxen 500 mg · paused (GI review)', cream:'C2 compound cream · continue', exercise:'Low-impact: swimming, tai chi', flag:'Low adherence'},
+  {id:'p6', name:'Frank Greene', age:52, sex:'Male', cond:'back', status:'active', last:'12h ago', trend:[6.8,6.1,5.5,4.9,4.4,4.0], koos:'—', peg:'3.6', sleep:'58', med:'3/30', adh:'94%', city:'Greenvale, ON', plan:'Active',
+    meds:'None oral', cream:'C1 base compound cream · lower back', exercise:'Walking for your back, 8-week ramp', flag:null},
+  {id:'p7', name:'Grace Holloway', age:44, sex:'Female', cond:'migraine', status:'review', last:'1h ago', trend:[7.8,7.0,6.2,5.6,5.0,4.5], koos:'—', peg:'4.0', sleep:'51', med:'7/30', adh:'83%', city:'Riverton, ON', plan:'Pending review',
+    meds:'Sumatriptan 50 mg PRN · Venlafaxine 37.5 mg', cream:'Not indicated for migraine', exercise:'Prevention & triggers plan', flag:'Dosage change requested'},
+  {id:'p8', name:'Henry Irving', age:70, sex:'Male', cond:'knee', status:'active', last:'2d ago', trend:[6.0,5.5,5.0,4.6,4.2,3.8], koos:'58', peg:'3.9', sleep:'55', med:'5/30', adh:'90%', city:'Lakeside, ON', plan:'Active',
+    meds:'Acetaminophen 1 g · PRN', cream:'C2 compound cream · right knee', exercise:'Strengthening + walking, weight management', flag:null},
+  {id:'p9', name:'Isabel Jennings', age:35, sex:'Female', cond:'nerve', status:'active', last:'5h ago', trend:[8.2,7.4,6.6,5.9,5.2,4.7], koos:'—', peg:'4.8', sleep:'46', med:'11/30', adh:'87%', city:'Greenvale, ON', plan:'Active',
+    meds:'Pregabalin 75 mg · twice daily', cream:'C2 compound cream (lidocaine)', exercise:'Graded activity, sleep hygiene', flag:null},
+  {id:'p10', name:'Jacob Klein', age:59, sex:'Male', cond:'back', status:'hold', last:'8d ago', trend:[4.9,5.3,5.6,6.0,6.4,6.8], koos:'—', peg:'6.2', sleep:'41', med:'11/30', adh:'58%', city:'Riverton, ON', plan:'On hold',
+    meds:'None oral', cream:'C2 compound cream · paused pending review', exercise:'Physiotherapy referral', flag:'Missed 3 check-ins'},
+  {id:'p11', name:'Karen Lowe', age:63, sex:'Female', cond:'knee', status:'active', last:'1d ago', trend:[6.2,5.7,5.1,4.5,4.0,3.6], koos:'56', peg:'3.7', sleep:'57', med:'4/30', adh:'93%', city:'Greenvale, ON', plan:'Active',
+    meds:'Duloxetine 30 mg · daily', cream:'C2 compound cream · right knee', exercise:'Strengthening + tai chi', flag:null},
+  {id:'p12', name:'Liam Mercer', age:41, sex:'Male', cond:'migraine', status:'review', last:'7h ago', trend:[7.6,6.9,6.3,5.7,5.2,4.8], koos:'—', peg:'4.2', sleep:'50', med:'6/30', adh:'82%', city:'Lakeside, ON', plan:'Pending review',
+    meds:'Rimegepant 75 mg PRN', cream:'Not indicated for migraine', exercise:'Sleep & trigger plan', flag:'Renewal due'}
+];
+
+const REQUESTS = [
+  {name:'Amelia Brooks', type:'Dosage increase · cream C2 → C3', av:0},
+  {name:'David Ellis', type:'Refill renewal · gabapentin', av:4},
+  {name:'Grace Holloway', type:'Dosage change · venlafaxine', av:5},
+  {name:'Liam Mercer', type:'Renewal · rimegepant', av:3},
+  {name:'Carla Dixon', type:'Renewal · amitriptyline', av:2}
+];
+const MESSAGES = [
+  {name:'Isabel Jennings', preview:'The tingling is better but evenings...', time:'18m', unread:true, av:5},
+  {name:'Henry Irving', preview:'Should I keep walking on rest days?', time:'1h', unread:true, av:1},
+  {name:'Frank Greene', preview:'Thanks doctor, the cream is helping.', time:'3h', unread:true, av:3},
+  {name:'Karen Lowe', preview:'Question about duloxetine timing.', time:'5h', unread:true, av:6},
+  {name:'Benjamin Carter', preview:'Booked my physio for next week.', time:'1d', unread:false, av:0}
+];
+
+function initials(n){return n.split(' ').map(w=>w[0]).slice(0,2).join('')}
+function avColor(i){return AVC[i % AVC.length]}
+function sparkPath(arr){
+  const w=84,h=30,max=10,min=0;
+  return arr.map((v,i)=>{const x=(i/(arr.length-1))*w; const y=h-((v-min)/(max-min))*h; return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)}).join(' ');
+}
+
+/* ---- render roster ---- */
+function renderRoster(filter='all', q=''){
+  const tb=document.getElementById('roster'); tb.innerHTML='';
+  PATIENTS.filter(p=>{
+    if(filter==='review' && p.status!=='review') return false;
+    if(filter==='hold' && p.status!=='hold') return false;
+    if(q){const s=(p.name+' '+COND[p.cond].label).toLowerCase(); if(!s.includes(q.toLowerCase())) return false;}
+    return true;
+  }).forEach((p,i)=>{
+    const c=COND[p.cond];
+    const statusMap={active:['s-active','Active'],review:['s-review','Needs review'],hold:['s-hold','On hold']};
+    const st=statusMap[p.status];
+    const tr=document.createElement('tr'); tr.onclick=()=>openPatient(p.id);
+    tr.innerHTML=
+      '<td><div class="pt"><div class="av" style="background:'+avColor(PATIENTS.indexOf(p))+'">'+initials(p.name)+'</div>'+
+        '<div><div class="nm">'+p.name+'</div><div class="em">'+p.age+', '+p.sex+'</div></div></div></td>'+
+      '<td><span class="tag-cond" style="background:'+hex(c.color)+'1A;color:'+hex(c.color)+'">'+c.label+'</span></td>'+
+      '<td><svg class="spark" viewBox="0 0 84 30"><path d="'+sparkPath(p.trend)+'" fill="none" stroke="'+hex(c.color)+'" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></td>'+
+      '<td class="last-checkin">'+p.last+'</td>'+
+      '<td><span class="status '+st[0]+'">'+st[1]+'</span>'+(p.flag?'<span class="rev-flag">'+p.flag+'</span>':'')+'</td>';
+    tb.appendChild(tr);
+  });
+}
+// map css var names to hex for inline svg fills
+function hex(v){const m={'var(--indigo)':'#5B5BD6','var(--teal)':'#14B8A6','var(--amber)':'#F59E0B','var(--purple)':'#8B5CF6'};return m[v]||v}
+
+/* ---- requests + messages ---- */
+function renderRail(){
+  const rq=document.getElementById('requests'); rq.innerHTML='';
+  REQUESTS.forEach(r=>{
+    const d=document.createElement('div'); d.className='req';
+    d.innerHTML='<div class="av" style="background:'+avColor(r.av)+'">'+initials(r.name)+'</div>'+
+      '<div class="ri"><div class="rn">'+r.name+'</div><div class="rt">'+r.type+'</div></div>'+
+      '<div class="acts"><button class="ok" title="Approve"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></button>'+
+      '<button class="no" title="Decline"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>';
+    d.querySelector('.ok').onclick=e=>{e.stopPropagation();d.style.opacity=.4;toast('Approved · '+r.name);};
+    d.querySelector('.no').onclick=e=>{e.stopPropagation();d.style.opacity=.4;toast('Declined · '+r.name);};
+    rq.appendChild(d);
+  });
+  const ms=document.getElementById('messages'); ms.innerHTML='';
+  MESSAGES.forEach(m=>{
+    const d=document.createElement('div'); d.className='msg';
+    d.innerHTML='<div class="av" style="background:'+avColor(m.av)+'">'+initials(m.name)+'</div>'+
+      '<div class="mi"><div class="mn">'+m.name+' <span class="tm">'+m.time+'</span></div><div class="mp">'+m.preview+'</div></div>'+
+      (m.unread?'<div class="unreaddot"></div>':'');
+    ms.appendChild(d);
+  });
+}
+
+/* ---- open the full patient record page ---- */
+function openPatient(id){
+  window.location.href='Clara-Doctor-Patient-MOCK-v1.html?patient='+encodeURIComponent(id);
+}
+function _legacyDrawer(id){
+  const p=PATIENTS.find(x=>x.id===id); if(!p)return;
+  const c=COND[p.cond]; const idx=PATIENTS.indexOf(p);
+  document.getElementById('dAv').textContent=initials(p.name);
+  document.getElementById('dAv').style.background=avColor(idx);
+  document.getElementById('dName').textContent=p.name;
+  document.getElementById('dMeta').innerHTML=p.age+' · '+p.sex+' · '+c.label+' &nbsp;·&nbsp; '+p.city;
+  if(p.id==='p1'){
+    document.getElementById('dBody').innerHTML=document.getElementById('rec-p1').innerHTML;
+    document.getElementById('overlay').classList.add('open');
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('dBody').scrollTop=0;
+    return;
+  }
+  const isAI = p.status==='review';
+  // pain change vs baseline (first reading): positive = improving (green), negative = pain rising (red)
+  const base=p.trend[0], now=p.trend[5];
+  const painPct=Math.round((base-now)/base*100);
+  const painGood=painPct>=0;
+  const body=document.getElementById('dBody');
+  body.innerHTML=
+    '<div class="sec-title">Outcome snapshot</div>'+
+    '<div class="mini-kpis">'+
+      mk(now.toFixed(1),'Pain now',(painGood?'▼ '+painPct:'▲ '+Math.abs(painPct))+'% base', painGood?'down':'bad')+
+      mk(p.koos==='—'?p.peg:p.koos, p.koos==='—'?'PEG-3':'KOOS-12', painGood?(p.koos==='—'?'▼ 2.3':'▲ 15'):(p.koos==='—'?'▲ 1.3':'▼ 8'), painGood?'up':'bad')+
+      mk(p.sleep, 'Sleep T', parseInt(p.sleep)<48?'▼ low':'▲ 6', parseInt(p.sleep)<48?'bad':'up')+
+      mk(p.adh,'Adherence', parseInt(p.adh)<70?'low':'good', parseInt(p.adh)<70?'warn':'up')+
+    '</div>'+
+    '<div class="sec-title">Demographics &amp; intake</div>'+
+    '<div class="demo">'+
+      dd('Age / sex',p.age+' · '+p.sex)+dd('Location',p.city)+
+      dd('Condition',c.label)+dd('Oral med days',p.med+' · opioid 0')+
+    '</div>'+
+    '<div class="intake" style="margin-top:12px">'+
+      iq('Primary pain site', siteFor(p.cond))+
+      iq('Pain duration','> 3 months (chronic)')+
+      iq('Red-flag screen','Negative · cleared')+
+      iq('Worst-pain time', p.cond==='migraine'?'Episodic':'Mornings & after activity')+
+    '</div>'+
+    '<div class="sec-title">Treatment plan'+(isAI?' · awaiting your review':'')+'</div>'+
+    (isAI?'<div class="ai-banner"><div class="aiic">✦</div><div><div class="ait">AI-drafted plan ready</div><div class="ais">Generated from this patient’s intake &amp; '+c.label+' protocol. You have full override.</div></div></div>':'')+
+    planCard('var(--indigo)','Cream','Compound cream',p.cream)+
+    planCard('var(--teal)','Meds','Medication',p.meds)+
+    planCard('var(--amber)','Move','Exercise &amp; movement',p.exercise)+
+    (isAI?
+      '<div class="plan-actions">'+
+        '<button class="btn btn-approve" onclick="act(\'Plan approved\',\''+p.name+'\')">Approve</button>'+
+        '<button class="btn btn-reject" onclick="act(\'Plan rejected\',\''+p.name+'\')">Reject</button>'+
+        '<button class="btn btn-edit" onclick="act(\'Opening plan editor\',\''+p.name+'\')">Edit plan</button>'+
+      '</div>'
+      :
+      '<div class="tx-actions">'+
+        '<button class="btn btn-hold" onclick="act(\'Treatment held\',\''+p.name+'\')">Hold treatment</button>'+
+        '<button class="btn btn-renew" onclick="act(\'Treatment renewed\',\''+p.name+'\')">Renew treatment</button>'+
+      '</div>')+
+    '<div style="height:10px"></div>';
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}
+function mk(n,l,d,cls){return '<div class="mk"><div class="mkn">'+n+'</div><div class="mkl">'+l+'</div><div class="mkd '+cls+'">'+d+'</div></div>'}
+function dd(l,v){return '<div class="d"><div class="dl">'+l+'</div><div class="dv">'+v+'</div></div>'}
+function iq(q,a){return '<div class="q"><span class="muted">'+q+'</span><span class="qa">'+a+'</span></div>'}
+function siteFor(k){return {knee:'Right knee',back:'Lower back',migraine:'Head (unilateral)',nerve:'Affected limb / patch'}[k]}
+function planCard(color,kic,title,txt){
+  return '<div class="plan-card"><div class="pch"><div class="pcic" style="background:'+hex(color)+'">'+
+    '<svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></div>'+
+    '<div><div class="pct">'+title+'</div><div class="pcs">'+kic+'</div></div></div><p>'+txt+'</p></div>';
+}
+function act(msg,name){toast(msg+' · '+name);}
+function closeDrawer(){document.getElementById('overlay').classList.remove('open');document.getElementById('drawer').classList.remove('open');}
+document.getElementById('dClose').onclick=closeDrawer;
+document.getElementById('overlay').onclick=closeDrawer;
+document.getElementById('dPrint').onclick=()=>window.print();
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+
+/* ---- toast ---- */
+let toastT;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);}
+
+/* ---- filters ---- */
+let curFilter='all';
+document.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+  ch.classList.add('active'); curFilter=ch.dataset.filter; renderRoster(curFilter, document.getElementById('rosterSearch').value);
+});
+document.getElementById('rosterSearch').oninput=e=>renderRoster(curFilter,e.target.value);
+
+renderRoster(); renderRail();
+</script>
+</body>
+</html>

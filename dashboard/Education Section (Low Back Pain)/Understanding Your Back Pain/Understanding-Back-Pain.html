@@ -19,22 +19,22 @@ a{color:inherit;text-decoration:none}
 .nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:14px 36px;display:flex;align-items:center;gap:32px}
 .nav-logo{font-family:Georgia,serif;font-weight:700;font-size:22px;color:var(--sage);letter-spacing:-.5px}
 .nav-tabs{display:flex;gap:4px;flex:1;justify-content:center}
-.nav-tab{padding:10px 16px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--grey)}
+.nav-tab{padding:10px 16px;border-radius:8px;font-size:15.5px;font-weight:500;color:var(--grey)}
 .nav-tab.active{color:var(--sage-dark);background:var(--sage-pale);font-weight:600;position:relative}
 .nav-tab.active::after{content:'';position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:24px;height:2px;background:var(--terra);border-radius:2px}
-.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
-.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px}
-.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:13.5px;font-weight:600;margin-bottom:22px}
+.nav-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:600;font-size:15.5px;border:2px solid #fff;box-shadow:0 0 0 2px var(--sage-soft)}
+.wrap{max-width:820px;margin:0 auto;padding:26px 28px 90px;font-size:18.5px;line-height:1.72;color:#2b302c}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--grey);font-size:15.5px;font-weight:600;margin-bottom:22px}
 .back:hover{color:var(--sage-dark)}
 .eyebrow{color:var(--terra);font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
 h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:700;letter-spacing:-.5px;margin-bottom:14px}
 .lede{font-family:Georgia,serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--grey);margin-bottom:18px}
 .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
-.byline{font-size:13.5px;color:var(--grey);font-weight:600}
-.chip{font-size:12px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
+.byline{font-size:15.5px;color:var(--grey);font-weight:600}
+.chip{font-size:14px;font-weight:600;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);padding:5px 11px;border-radius:20px}
 .hero-img{width:100%;border-radius:20px;display:block;box-shadow:var(--shadow-lg);margin-bottom:8px;aspect-ratio:16/8;object-fit:cover;object-position:center 35%}
-.cap{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:26px}
-.article{font-size:17px;line-height:1.72;color:#2b302c}
+.cap{font-size:14px;color:var(--muted);font-style:italic;margin-bottom:26px}
+.article{font-size:18.5px;line-height:1.72;color:#2b302c}
 .article h2{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:40px 0 12px;line-height:1.2}
 .article h3{font-size:18px;font-weight:700;color:var(--ink);margin:22px 0 4px}
 .article p{margin-bottom:16px}
@@ -46,9 +46,9 @@ sup a{font-size:.72em;line-height:0;color:#4A6B5B;font-style:italic;font-weight:
 .callout{border-radius:16px;padding:20px 22px;margin:22px 0}
 .callout.sage{background:var(--sage-pale);border:1px solid var(--sage-soft)}
 .callout.terra{background:var(--terra-pale);border:1px solid var(--terra-soft)}
-.callout h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.callout h4{font-size:18px;font-weight:700;margin-bottom:8px}
 .callout.sage h4{color:var(--sage-dark)}.callout.terra h4{color:var(--terra-deep)}
-.callout p{font-size:15px;line-height:1.6;margin-bottom:8px}.callout p:last-child{margin-bottom:0}
+.callout p{font-size:18.5px;line-height:1.6;margin-bottom:8px}.callout p:last-child{margin-bottom:0}
 .callout ul{margin:6px 0 0}
 .stat-banner{display:flex;align-items:center;gap:14px;background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:14px;padding:18px 22px;font-size:20px;line-height:1.45;margin:6px 0 22px}
 .stat-banner .sb-dot{flex:0 0 auto;width:12px;height:12px;border-radius:50%;background:var(--terra)}
@@ -56,9 +56,9 @@ sup a{font-size:.72em;line-height:0;color:#4A6B5B;font-style:italic;font-weight:
 @media(max-width:640px){.stat-grid{grid-template-columns:1fr}}
 .stat-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 20px;text-align:center;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center}
 .stat-num{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--sage-dark);line-height:1.1;margin-bottom:6px}
-.stat-cap{font-size:13.5px;line-height:1.5;color:var(--grey)}
+.stat-cap{font-size:15.5px;line-height:1.5;color:var(--grey)}
 .tl-range{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--terra-deep);margin:4px 0 16px;line-height:1.15}
-.tl-card .stat-cap{font-size:14.5px}
+.tl-card .stat-cap{font-size:16px}
 .stat-viz{min-height:92px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;margin-bottom:10px}
 .stat-viz svg.person{width:28px;height:33px;fill:#CBD4CC}
 .stat-viz svg.person.on{fill:var(--sage)}
@@ -71,18 +71,18 @@ sup a{font-size:.72em;line-height:0;color:#4A6B5B;font-style:italic;font-weight:
 .sixwk{position:absolute;left:50%;top:49%;transform:translate(-50%,-50%);font-family:Georgia,serif;font-weight:700;color:var(--sage-dark);font-size:36px;background:var(--cream);padding:2px 14px;border-radius:10px;pointer-events:none}
 .illus-note b{color:var(--sage-dark)}
 .photo{display:block;width:100%;border-radius:18px;box-shadow:var(--shadow-lg);margin:14px 0 8px}
-.photo-cap{font-size:13px;color:var(--muted);font-style:italic;margin:0 0 18px}
+.photo-cap{font-size:15.5px;color:var(--muted);font-style:italic;margin:0 0 18px}
 .patrow{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:18px 0 24px}
 @media(max-width:600px){.patrow{grid-template-columns:1fr}}
 .patcard img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:18px;box-shadow:var(--shadow-lg);display:block}
 .patcard .pl{display:block;font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--sage-dark);text-align:center;margin-top:14px}
-.patcard .pd{display:block;font-size:15.5px;color:var(--grey);line-height:1.5;text-align:center;margin-top:6px;max-width:34ch;margin-left:auto;margin-right:auto}
+.patcard .pd{display:block;font-size:18px;color:var(--grey);line-height:1.5;text-align:center;margin-top:6px;max-width:34ch;margin-left:auto;margin-right:auto}
 .imgrow{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:center;margin:24px 0}
 .imgrow.rev{grid-template-columns:1fr 300px}
 .imgrow .ir-img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:18px;box-shadow:var(--shadow-lg);display:block}
 .imgrow.rev .ir-img{order:2}
 .imgrow .ir-txt h4{font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--sage-dark);margin-bottom:8px}
-.imgrow .ir-txt p{font-size:17px;line-height:1.7;color:#2b302c;margin:0}
+.imgrow .ir-txt p{font-size:18.5px;line-height:1.7;color:#2b302c;margin:0}
 @media(max-width:640px){.imgrow,.imgrow.rev{grid-template-columns:1fr}.imgrow.rev .ir-img{order:0}.imgrow .ir-img{max-width:320px;margin:0 auto}}
 .med-divider{width:170px;height:4px;border-radius:3px;background:var(--terra);margin:88px auto 40px}
 .article h3.medtitle{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin:0 0 6px;line-height:1.2;text-align:center}
@@ -91,14 +91,14 @@ sup a{font-size:.72em;line-height:0;color:#4A6B5B;font-style:italic;font-weight:
 .medrow:last-child{border-bottom:none}
 .medrow .mp{flex:0 0 118px;width:118px;height:124px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(31,51,41,.14))}
 .medrow .mp.bottle{flex:0 0 150px;width:150px;height:198px}
-.medrow .mt{font-size:17px;line-height:1.6;color:#2b302c}
+.medrow .mt{font-size:18.5px;line-height:1.6;color:#2b302c}
 .medrow .mt b{color:var(--ink)}
 .recov{display:grid;grid-template-columns:0.92fr 1fr;gap:28px;align-items:stretch;margin:20px 0}
 .recov-img{width:100%;height:100%;object-fit:cover;border-radius:18px;box-shadow:var(--shadow-lg);display:block}
 .recov-steps{display:flex;flex-direction:column;gap:16px;justify-content:space-between}
 .rstep{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow)}
 .rstep .rk{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--sage-dark);margin-bottom:5px;line-height:1.1}
-.rstep .rc{font-size:15.5px;line-height:1.55;color:var(--grey)}
+.rstep .rc{font-size:18px;line-height:1.55;color:var(--grey)}
 @media(max-width:640px){.recov{grid-template-columns:1fr}.recov-img{max-height:520px}}
 .warn{background:var(--terra-pale);border-left:4px solid var(--terra);border-radius:10px;padding:16px 20px;margin:10px 0 16px}
 .warn b{color:var(--terra-deep)}
@@ -107,15 +107,15 @@ sup a{font-size:.72em;line-height:0;color:#4A6B5B;font-style:italic;font-weight:
 .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 30px;box-shadow:var(--shadow)}
 .box h4{font-size:19px;font-weight:700;margin-bottom:16px;color:var(--sage-dark)}
 .box.no h4{color:var(--terra-deep)}
-.box ul{margin:0}.box li{padding-left:26px;font-size:16.5px;line-height:1.55;margin-bottom:15px}
+.box ul{margin:0}.box li{padding-left:26px;font-size:18px;line-height:1.55;margin-bottom:15px}
 .box li:last-child{margin-bottom:0}
 .box.no li::before{background:var(--terra)}
-.srcbtn{display:inline-flex;align-items:center;gap:8px;background:var(--terra);color:#fff;font-weight:700;font-size:15px;padding:13px 20px;border-radius:14px;margin:6px 0 4px}
+.srcbtn{display:inline-flex;align-items:center;gap:8px;background:var(--terra);color:#fff;font-weight:700;font-size:16.5px;padding:13px 20px;border-radius:14px;margin:6px 0 4px}
 .sources{margin-top:42px}
 .sources h2{font-family:Georgia,serif;font-size:22px;color:var(--sage-dark);margin-bottom:12px}
-.sources ol{margin-left:18px;font-size:13px;color:var(--grey);line-height:1.6}
+.sources ol{margin-left:18px;font-size:15.5px;color:var(--grey);line-height:1.6}
 .sources li{margin-bottom:8px}
-.disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+.disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:15.5px;color:var(--muted);font-style:italic;line-height:1.6}
 .endnote{background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:18px;padding:34px 38px;margin:30px 0}
 .endnote p{font-family:Georgia,serif;font-size:25px;line-height:1.5;color:var(--sage-deep);margin:0}
 @media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
@@ -302,15 +302,17 @@ sup a{font-size:.72em;line-height:0;color:#4A6B5B;font-style:italic;font-weight:
     <p class="quietnote" style="color:var(--grey);font-style:italic">If you are not sure, err on the side of caution and see your family doctor or a clinic. clara is for the 90% of back pain that is routine; the remaining 10% deserves in person attention.</p>
 
 
+    <hr style="border:none;height:1px;background:linear-gradient(90deg,transparent,#D4CFC4,transparent);margin:56px 0">
+
     <h2 id="sources">Sources</h2>
   </div>
   <div class="sources">
     <ol>
       <li>Hartvigsen J, Hancock MJ, Kongsted A, et al. What low back pain is and why we need to pay attention. Lancet. 2018;391(10137):2356-2367.</li>
-      <li>Menezes Costa L da C, Maher CG, Hancock MJ, et al. The prognosis of acute and persistent low-back pain: a meta-analysis. CMAJ. 2012;184(11):E613-E624.</li>
+      <li>Menezes Costa L da C, Maher CG, Hancock MJ, et al. The prognosis of acute and persistent low back pain: a meta-analysis. CMAJ. 2012;184(11):E613-E624.</li>
       <li>Brinjikji W, Luetmer PH, Comstock B, et al. Systematic literature review of imaging features of spinal degeneration in asymptomatic populations. American Journal of Neuroradiology. 2015;36(4):811-816.</li>
       <li>Qaseem A, Wilt TJ, McLean RM, Forciea MA. Noninvasive treatments for acute, subacute, and chronic low back pain: a clinical practice guideline from the American College of Physicians. Annals of Internal Medicine. 2017;166(7):514-530.</li>
-      <li>Williams CM, Maher CG, Latimer J, et al. Efficacy of paracetamol for acute low-back pain: a double-blind, randomised controlled trial. Lancet. 2014;384(9954):1586-1596.</li>
+      <li>Williams CM, Maher CG, Latimer J, et al. Efficacy of paracetamol for acute low back pain: a double-blind, randomised controlled trial. Lancet. 2014;384(9954):1586-1596.</li>
       <li>Hayden JA, Ellis J, Ogilvie R, et al. Exercise therapy for chronic low back pain. Cochrane Database of Systematic Reviews. 2021;9:CD009790.</li>
       <li>Skljarevski V, Zhang S, Desaiah D, et al. Duloxetine versus placebo in patients with chronic low back pain. Journal of Pain. 2010;11(12):1282-1290.</li>
     </ol>

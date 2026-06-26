@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>clara · providers &amp; permissions</title>
+<style>
+:root{
+  --bg:#F3F5FB; --card:#FFFFFF; --ink:#1E293B; --muted:#64748B; --line:#E7EBF3;
+  --indigo:#5B5BD6; --indigo-soft:#EEEEFB; --blue:#3B82F6; --sky:#0EA5E9;
+  --teal:#14B8A6; --green:#22C55E; --amber:#F59E0B; --rose:#F43F5E; --purple:#8B5CF6;
+  --good:#16A34A; --watch:#D97706; --flag:#E11D48; --line-strong:#CBD5E1;
+  --shadow-sm:0 1px 2px rgba(30,41,59,.06); --shadow:0 8px 24px rgba(30,41,59,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 26px}
+
+/* top bar */
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.topbar .wrap{display:flex;align-items:center;gap:16px;height:66px;max-width:1100px}
+.back{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15.5px;color:var(--ink);text-decoration:none;background:#F1F4FA;border:1px solid var(--line);padding:10px 17px;border-radius:11px}
+.back:hover{background:#E9EEF7}
+.back svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
+.brand{font-weight:800;font-size:19px;letter-spacing:-.4px}
+.brand .tag{font-size:12px;font-weight:700;color:var(--flag);background:#FCE8EC;padding:3px 9px;border-radius:6px;letter-spacing:.4px;text-transform:uppercase;margin-left:4px}
+.me{margin-left:auto;display:flex;align-items:center;gap:11px}
+.me .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#E11D48,#F43F5E);color:#fff;display:grid;place-items:center;font-weight:700;font-size:16px}
+.me .nm{font-weight:700;font-size:17px;line-height:1.15}
+.me .ro{font-size:14.5px;color:var(--muted)}
+
+/* page header */
+.phead{margin:28px 0 8px}
+.phead h1{font-size:28px;font-weight:800;letter-spacing:-.6px}
+.phead .sub{color:var(--muted);font-size:16.5px;margin-top:5px}
+
+.sec{font-size:13.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--indigo);margin:30px 0 13px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm)}
+
+/* permissions table */
+.permwrap{overflow:hidden;border-radius:16px}
+.permtable{width:100%;border-collapse:collapse;font-size:16.5px}
+.permtable th,.permtable td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line)}
+.permtable thead th{background:#F4F6FB;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+.permtable th:not(:first-child),.permtable td:not(:first-child){text-align:center;width:150px}
+.permtable tbody tr:last-child td{border-bottom:none}
+.permtable td.y{color:var(--good);font-weight:800;font-size:20px}
+.permtable td.n{color:#CBD5E1;font-weight:800;font-size:20px}
+.perm-note{font-size:15.5px;color:var(--muted);line-height:1.6;margin-top:14px}
+
+/* provider directory */
+.prov-group{font-size:15px;font-weight:800;color:var(--ink);margin:24px 0 10px;display:flex;align-items:center;gap:9px}
+.prov-group .gc{font-size:13.5px;font-weight:800;color:var(--indigo);background:var(--indigo-soft);padding:3px 11px;border-radius:20px}
+.provrow{display:flex;align-items:center;gap:16px;padding:17px 20px;border:1px solid var(--line);border-radius:14px;margin-top:12px;background:#fff;box-shadow:var(--shadow-sm)}
+.provrow .pav{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0}
+.provrow .pin{flex:1;min-width:0}
+.provrow .pn{font-weight:700;font-size:18.5px}
+.provrow .ps{font-size:16px;color:var(--muted);margin-top:2px}
+.prov-status{font-size:14px;font-weight:800;padding:6px 14px;border-radius:20px;white-space:nowrap}
+.prov-status.active{background:#E7F8EE;color:var(--good)}
+.prov-status.pending{background:#FEF2E2;color:var(--watch)}
+.prov-role{font-size:16.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:11px 14px;background:#fff;color:var(--ink);cursor:pointer}
+.prov-approve{background:var(--good);color:#fff;border:none;border-radius:11px;padding:12px 18px;font-weight:700;font-size:15.5px;cursor:pointer;white-space:nowrap}
+.prov-add{margin-top:20px;width:100%;background:#fff;border:1.5px dashed var(--line-strong);border-radius:14px;padding:16px;font-weight:700;font-size:17px;color:var(--indigo);cursor:pointer}
+.prov-add:hover{background:#F1F4FA}
+
+.foot{text-align:center;color:var(--muted);font-size:13.5px;padding:30px 0 40px}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1E293B;color:#fff;padding:14px 24px;border-radius:13px;font-weight:600;font-size:16px;box-shadow:var(--shadow);z-index:90;opacity:0;transition:.25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:720px){.permtable th:not(:first-child),.permtable td:not(:first-child){width:auto}.provrow{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a class="back" href="Clara-Admin-Dashboard-MOCK-v1.html"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>Back to dashboard</a>
+  <span class="brand">clara <span class="tag">Administrator</span></span>
+  <div class="me">
+    <div class="av">AR</div>
+    <div><div class="nm">Alex Romano</div><div class="ro">Administrator · Greenvale</div></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <div class="phead">
+    <h1>Providers &amp; permissions</h1>
+    <div class="sub">Assign roles, set what each role can do, and approve new providers. 7 providers across the practice.</div>
+  </div>
+
+  <div class="sec">What each role can do</div>
+  <div class="card permwrap">
+    <table class="permtable">
+      <thead><tr><th>Capability</th><th>Doctor</th><th>Pharmacist</th><th>Staff</th></tr></thead>
+      <tbody>
+        <tr><td>View patient data &amp; outcomes</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Approve / change medications</td><td class="y">✓</td><td class="y">✓</td><td class="n">—</td></tr>
+        <tr><td>Approve / change treatment plans</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Print &amp; export records</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Message patients</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Message care team</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Manage providers &amp; roles</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="perm-note">Staff can view and print everything and message patients and the care team, but cannot change or approve medications or plans. Only Administrators can manage providers and roles.</div>
+
+  <div class="sec">Provider directory</div>
+  <div id="provList"></div>
+  <button class="prov-add" onclick="toast('Invite a new provider')">+ Add provider</button>
+
+  <div class="foot">clara · administrator console · providers &amp; permissions · MOCK v1 · June 2026 · first pass wireframe, not the live product</div>
+</div>
+
+<script>
+var PROVIDERS=[
+  {n:'Dr. Dolores Hart',sub:'Pain Medicine',role:'Doctor',status:'active',av:'#5B5BD6',ini:'DD'},
+  {n:'Dr. Marcus Reed',sub:'Family Medicine',role:'Doctor',status:'active',av:'#3B82F6',ini:'MR'},
+  {n:'Dr. Aisha Khan',sub:'Rheumatology',role:'Doctor',status:'pending',av:'#0EA5E9',ini:'AK'},
+  {n:'Priya Nair, PharmD',sub:'Clinical pharmacist',role:'Pharmacist',status:'active',av:'#14B8A6',ini:'PN'},
+  {n:'Tom Becker, PharmD',sub:'Compounding pharmacist',role:'Pharmacist',status:'active',av:'#22C55E',ini:'TB'},
+  {n:'Renee Lavoie',sub:'Care coordinator',role:'Staff',status:'active',av:'#F59E0B',ini:'RL'},
+  {n:'Jordan Lee',sub:'Intake admin',role:'Staff',status:'pending',av:'#A855F7',ini:'JL'}
+];
+var ROLES=['Doctor','Pharmacist','Staff'];
+function renderProviders(){
+  var box=document.getElementById('provList');var html='';
+  ROLES.forEach(function(role){
+    var list=PROVIDERS.filter(function(p){return p.role===role;});
+    html+='<div class="prov-group">'+role+'s <span class="gc">'+list.length+'</span></div>';
+    list.forEach(function(p){
+      var i=PROVIDERS.indexOf(p);
+      html+='<div class="provrow">'+
+        '<div class="pav" style="background:'+p.av+'">'+p.ini+'</div>'+
+        '<div class="pin"><div class="pn">'+p.n+'</div><div class="ps">'+p.sub+'</div></div>'+
+        '<span class="prov-status '+p.status+'">'+(p.status==='active'?'Active':'Pending approval')+'</span>'+
+        '<select class="prov-role" data-i="'+i+'">'+ROLES.map(function(r){return '<option'+(r===p.role?' selected':'')+'>'+r+'</option>';}).join('')+'</select>'+
+        (p.status==='pending'?'<button class="prov-approve" data-i="'+i+'">Approve</button>':'')+
+      '</div>';
+    });
+  });
+  box.innerHTML=html;
+  box.querySelectorAll('.prov-role').forEach(function(sel){sel.addEventListener('change',function(){PROVIDERS[+sel.dataset.i].role=sel.value;renderProviders();toast('Role updated to '+sel.value);});});
+  box.querySelectorAll('.prov-approve').forEach(function(b){b.addEventListener('click',function(){var p=PROVIDERS[+b.dataset.i];p.status='active';renderProviders();toast('Approved '+p.n+' as '+p.role);});});
+}
+var _tt;
+function toast(m){var t=document.getElementById('_t');if(!t){t=document.createElement('div');t.id='_t';t.className='toast';document.body.appendChild(t);}t.textContent=m;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(function(){t.classList.remove('show');},2600);}
+renderProviders();
+</script>
+</body>
+</html>

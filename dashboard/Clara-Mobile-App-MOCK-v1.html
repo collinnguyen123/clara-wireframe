@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clara · mobile app</title>
+<style>
+:root{
+  --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#24382E; --sage-soft:#D7E3DB; --sage-pale:#EAF1ED;
+  --terra:#C97257; --terra-soft:#F4DDD4; --terra-pale:#FBF2ED; --terra-deep:#A35540; --gold:#C8A875; --rose:#CF8A7A;
+  --ink:#1F2421; --grey:#474D48; --muted:#6E746E;
+  --cream:#F7F5F0; --cream-soft:#F2EFE8; --line:#E8E4DC; --line-strong:#D9D4C8;
+  --shadow:0 10px 30px rgba(31,36,33,.14); --shadow-sm:0 2px 8px rgba(31,36,33,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+  background:radial-gradient(120% 120% at 50% 0%,#E9E5DC 0%,#DCD7CC 60%,#CFC9BC 100%);
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:18px;padding:30px 16px 60px;color:var(--ink)}
+.hgroup{text-align:center;max-width:430px}
+.hgroup h1{font-family:Georgia,serif;font-size:26px;color:var(--sage-dark);letter-spacing:-.5px}
+.hgroup p{font-size:13.5px;color:#5b6158;margin-top:6px;line-height:1.5}
+.hint{font-size:12px;color:#6b716a;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.06);padding:7px 14px;border-radius:20px;text-align:center;max-width:360px}
+
+/* ===== DEVICE ===== */
+.device{position:relative;width:390px;height:844px;background:#0c0d0c;border-radius:56px;
+  padding:13px;box-shadow:0 2px 0 3px #20221f,0 0 0 6px #34362f,0 40px 80px rgba(31,36,33,.5);flex:0 0 auto}
+.viewport{position:relative;width:100%;height:100%;background:var(--cream);border-radius:44px;overflow:hidden}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:122px;height:34px;background:#000;border-radius:20px;z-index:120}
+.statusbar{position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 30px;font-size:14.5px;font-weight:700;z-index:110;color:var(--ink)}
+.statusbar.light{color:#fff}
+.statusbar .r{display:flex;gap:7px;align-items:center;font-size:13px}
+.sig{display:inline-block;width:17px;height:11px;background:currentColor;-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12'><rect x='0' y='7' width='3' height='5' rx='1'/><rect x='5' y='4' width='3' height='8' rx='1'/><rect x='10' y='2' width='3' height='10' rx='1'/><rect x='15' y='0' width='3' height='12' rx='1'/></svg>") no-repeat center/contain}
+.batt{width:24px;height:12px;border:1.5px solid currentColor;border-radius:3px;position:relative;opacity:.9}
+.batt:before{content:"";position:absolute;inset:1.5px;width:70%;background:currentColor;border-radius:1px}
+.batt:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:6px;background:currentColor;border-radius:2px}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:rgba(0,0,0,.32);border-radius:3px;z-index:115;pointer-events:none}
+
+/* ===== SCREENS ===== */
+.screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;flex-direction:column;background:var(--cream)}
+.screen.active{display:flex;animation:fade .32s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.screen::-webkit-scrollbar{display:none}
+.pad{padding:0 22px}
+.body{flex:1;padding-top:62px;padding-bottom:118px}
+.body.notab{padding-bottom:34px}
+
+.lgtitle{font-family:Georgia,serif;font-size:30px;font-weight:700;letter-spacing:-.5px;line-height:1.1}
+.subtle{font-size:14px;color:var(--muted)}
+.eyebrow{font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--terra-deep)}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:var(--shadow-sm);cursor:pointer}
+.back{display:inline-flex;align-items:center;gap:5px;font-size:16px;font-weight:600;color:var(--sage-dark);cursor:pointer;background:none;border:none}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--sage-dark);color:#fff;
+  font-size:17px;font-weight:700;padding:16px;border-radius:18px;border:none;cursor:pointer;transition:transform .12s,opacity .2s;box-shadow:0 8px 20px rgba(47,71,59,.28)}
+.btn:active{transform:scale(.97)}
+.btn.light{background:#fff;color:var(--sage-dark);border:1.5px solid var(--line-strong);box-shadow:var(--shadow-sm)}
+.btn.terra{background:var(--terra);box-shadow:0 8px 20px rgba(201,114,87,.32)}
+.btn.sm{font-size:15px;padding:12px 16px;width:auto;border-radius:14px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow-sm)}
+.card+.card{margin-top:14px}
+.tile{border-radius:24px;padding:22px;color:#fff;position:relative;overflow:hidden}
+.tile.green{background:linear-gradient(150deg,var(--sage),var(--sage-deep))}
+.tile.terra{background:linear-gradient(150deg,#D68A6C,var(--terra-deep))}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--sage-pale);color:var(--sage-dark);font-size:12px;font-weight:800;letter-spacing:.4px;padding:6px 12px;border-radius:20px}
+.row{display:flex;align-items:center;gap:14px}
+.spacer{flex:1}
+.streak{display:inline-flex;align-items:center;gap:6px;background:var(--terra-pale);color:var(--terra-deep);font-weight:800;font-size:13px;padding:7px 13px;border-radius:20px}
+
+/* TAB BAR */
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:84px;background:rgba(247,245,240,.86);backdrop-filter:blur(18px);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-start;padding:10px 6px 0;z-index:60}
+.tabbar.hidden{display:none}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600;color:var(--muted);cursor:pointer;width:60px}
+.tab svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tab.on{color:var(--sage-dark)}
+.tab.on svg{fill:var(--sage-pale)}
+
+/* welcome */
+.welcome{background:linear-gradient(180deg,rgba(31,36,33,0) 30%,rgba(31,36,33,.82) 100%),url("Clara%20Home%20page/Auth/jane-auth.jpg") center/cover;color:#fff;justify-content:flex-end}
+.welcome .wrapw{padding:0 28px 40px;z-index:2}
+.brandmark{font-family:Georgia,serif;font-weight:700;font-size:34px;color:#fff}
+.welcome h2{font-family:Georgia,serif;font-size:34px;font-weight:700;line-height:1.12;margin:10px 0 10px;letter-spacing:-.5px}
+.welcome p{font-size:15.5px;color:#EDE9E0;line-height:1.5;margin-bottom:26px;max-width:300px}
+.welcome .wtop{position:absolute;top:64px;left:28px;z-index:2}
+
+/* auth */
+.field{margin-top:14px}
+.field label{font-size:12.5px;font-weight:700;color:var(--grey);margin-bottom:6px;display:block}
+.field input{width:100%;border:1.5px solid var(--line-strong);border-radius:14px;padding:14px;font-size:16px;background:#fff;color:var(--ink)}
+.field input:focus{outline:none;border-color:var(--sage)}
+.social{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:1.5px solid var(--line-strong);
+  background:#fff;border-radius:14px;padding:13px;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;margin-top:10px}
+.divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12.5px;margin:18px 0}
+.divider:before,.divider:after{content:"";flex:1;height:1px;background:var(--line)}
+.authlink{text-align:center;font-size:13.5px;color:var(--muted);margin-top:22px}
+.authlink b{color:var(--sage-dark);cursor:pointer}
+
+/* condition picker */
+.cpick{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:18px}
+.cdoor{border-radius:20px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .12s}
+.cdoor:active{transform:scale(.97)}
+.cdoor img{width:100%;height:104px;object-fit:cover;display:block}
+.cdoor .cl{padding:11px 13px 14px}
+.cdoor h4{font-family:Georgia,serif;font-size:16.5px;font-weight:700}
+.cdoor p{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+
+/* home */
+.greet{font-family:Georgia,serif;font-size:27px;font-weight:700;letter-spacing:-.4px}
+.qa{display:flex;gap:11px;margin-top:4px}
+.qa .q{flex:1;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 12px;text-align:center;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .12s}
+.qa .q:active{transform:scale(.95)}
+.qa .q .ic{font-size:22px}
+.qa .q .t{font-size:11.5px;font-weight:700;color:var(--grey);margin-top:6px;line-height:1.2}
+.checkrow{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid var(--line)}
+.checkrow:last-child{border-bottom:none}
+.checkbox{width:28px;height:28px;border-radius:9px;border:2px solid var(--line-strong);flex:0 0 auto;display:grid;place-items:center;cursor:pointer;background:#fff;transition:all .15s;font-size:15px;color:#fff}
+.checkbox.done{background:var(--sage);border-color:var(--sage)}
+.checkrow.done .ctxt{color:var(--muted);text-decoration:line-through}
+.ctxt{font-size:15px;font-weight:600}
+.cmini{font-size:12px;color:var(--muted)}
+.thumb{width:48px;height:48px;border-radius:13px;object-fit:cover;flex:0 0 auto;background:var(--cream-soft)}
+.bottlethumb{width:46px;height:60px;object-fit:contain;flex:0 0 auto}
+.ring{width:62px;height:62px;border-radius:50%;flex:0 0 auto;background:conic-gradient(var(--terra) calc(var(--p,0)*1%),rgba(255,255,255,.25) 0);display:grid;place-items:center}
+.ring .inner{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px}
+
+/* plan */
+.med{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.med:last-child{border-bottom:none}
+.med .pm{width:42px;height:46px;object-fit:contain;flex:0 0 auto}
+.med h4{font-size:15.5px;font-weight:700}
+.med p{font-size:12.5px;color:var(--muted)}
+.ladder{display:flex;gap:8px;margin-top:14px}
+.rung{flex:1;text-align:center;border:1.5px solid var(--line);border-radius:14px;padding:11px 4px;font-size:12px;color:var(--muted);font-weight:700}
+.rung.on{background:var(--sage-pale);border-color:var(--sage);color:var(--sage-dark)}
+.move{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;margin-top:4px}
+.move::-webkit-scrollbar{display:none}
+.movecard{flex:0 0 140px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.movecard img{width:100%;height:92px;object-fit:cover;display:block}
+.movecard .ml{padding:10px 12px 13px}
+.movecard h5{font-size:13.5px;font-weight:700}
+.movecard p{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* track */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:6px}
+.cal .dh{text-align:center;font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.5px}
+.cal .d{aspect-ratio:1;border-radius:12px;display:grid;place-items:center;font-size:12.5px;font-weight:700;background:var(--cream-soft);color:var(--grey)}
+.cal .d.l0{background:#E4EDE6;color:var(--sage-dark)}
+.cal .d.l1{background:#CFE0D2;color:var(--sage-dark)}
+.cal .d.l2{background:#F4DEC9;color:var(--terra-deep)}
+.cal .d.l3{background:#EBB79C;color:#7a3a26}
+.cal .d.today{outline:2.5px solid var(--sage-dark);outline-offset:1px}
+.cal .d.empty{background:transparent}
+.legend{display:flex;gap:12px;justify-content:center;margin-top:14px;font-size:10.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:11px;height:11px;border-radius:4px;display:inline-block}
+.rhythm{display:flex;align-items:center;gap:15px;cursor:pointer}
+.rhythm img{width:62px;height:62px;object-fit:contain;flex:0 0 auto}
+.ci-pill{font-size:11px;font-weight:800;color:var(--muted)}
+.ci-pill.ci-now{color:var(--terra-deep)}
+.trend{height:120px;width:100%;margin-top:6px}
+
+/* learn */
+.peek{border-radius:20px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);margin-top:14px;cursor:pointer}
+.peek img{width:100%;height:140px;object-fit:cover;display:block}
+.peek .pl{padding:15px 17px 18px}
+.peek .pt{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--terra-deep)}
+.peek h4{font-family:Georgia,serif;font-size:18px;font-weight:700;margin:6px 0 5px;line-height:1.2}
+.peek p{font-size:13px;color:var(--muted);line-height:1.45}
+
+/* messages */
+.msg{display:flex;gap:9px;margin-top:14px;max-width:85%}
+.msg img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:0 0 auto;align-self:flex-end;background:var(--sage-pale)}
+.bubble{padding:12px 15px;border-radius:18px;font-size:14.5px;line-height:1.4}
+.msg.them .bubble{background:#fff;border:1px solid var(--line);border-bottom-left-radius:5px}
+.msg.me{margin-left:auto;flex-direction:row-reverse}
+.msg.me .bubble{background:var(--sage-dark);color:#fff;border-bottom-right-radius:5px}
+.msgmeta{font-size:11px;color:var(--muted);margin:2px 4px}
+.composer{position:absolute;bottom:0;left:0;right:0;padding:12px 16px calc(14px + env(safe-area-inset-bottom));background:rgba(247,245,240,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.composer input{flex:1;border:1.5px solid var(--line-strong);border-radius:22px;padding:12px 16px;font-size:15px;background:#fff}
+.composer input:focus{outline:none;border-color:var(--sage)}
+.send{width:42px;height:42px;border-radius:50%;background:var(--sage-dark);color:#fff;border:none;display:grid;place-items:center;font-size:18px;cursor:pointer;flex:0 0 auto}
+
+/* profile / settings / list rows */
+.lrow{display:flex;align-items:center;gap:14px;padding:16px 18px;background:#fff;border-bottom:1px solid var(--line);cursor:pointer}
+.lgroup{border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm);margin-top:14px}
+.lgroup .lrow:last-child{border-bottom:none}
+.lrow .le{font-size:20px;width:26px;text-align:center}
+.lrow .lt{font-size:15px;font-weight:600;flex:1}
+.lrow .lv{font-size:13px;color:var(--muted)}
+.lrow .chev{color:var(--muted);font-size:18px}
+.tgl{width:50px;height:30px;border-radius:18px;background:var(--line-strong);position:relative;cursor:pointer;transition:background .2s;flex:0 0 auto}
+.tgl:after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.2);transition:left .2s}
+.tgl.on{background:var(--sage)}.tgl.on:after{left:23px}
+.profhero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;margin-top:8px}
+.profhero img{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:var(--shadow)}
+.notif{display:flex;gap:13px;padding:15px 0;border-bottom:1px solid var(--line)}
+.notif .ni{width:40px;height:40px;border-radius:12px;background:var(--sage-pale);display:grid;place-items:center;font-size:19px;flex:0 0 auto}
+.notif h5{font-size:14.5px;font-weight:700}
+.notif p{font-size:13px;color:var(--muted);line-height:1.4;margin-top:2px}
+.notif .nt{font-size:11px;color:var(--muted);margin-top:4px}
+.section-h{display:flex;align-items:baseline;justify-content:space-between;margin:24px 0 4px}
+.section-h h3{font-family:Georgia,serif;font-size:20px;font-weight:700}
+.section-h a{font-size:13px;font-weight:700;color:var(--terra);cursor:pointer}
+
+/* ====== CHECK-IN ENGINE (ported, mobile-styled) ====== */
+.ct-overlay{position:absolute;inset:0;z-index:100;background:var(--cream);display:none;flex-direction:column}
+.ct-overlay.open{display:flex;animation:slideup .34s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.ct-modal{display:flex;flex-direction:column;height:100%}
+.ct-head{display:flex;align-items:center;gap:10px;padding:56px 20px 8px}
+.ct-phases{display:flex;gap:8px;flex:1}
+.ct-phase{font-size:11px;font-weight:800;letter-spacing:.4px;color:var(--muted);opacity:.45}
+.ct-phase.active{color:var(--sage-dark);opacity:1}
+.ct-phase.done{color:var(--sage);opacity:1}
+.ct-pct{font-size:11px;color:var(--muted);font-weight:700}
+.ct-close{width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:18px;color:var(--grey);cursor:pointer;line-height:1}
+.ct-pbar{height:4px;background:rgba(0,0,0,.06);flex:none}
+.ct-pbar>i{display:block;height:100%;background:var(--terra);width:0;transition:width .35s}
+.ct-body{flex:1;overflow-y:auto;padding:24px 22px}
+.ct-body::-webkit-scrollbar{display:none}
+.ct-foot{padding:14px 22px calc(16px + env(safe-area-inset-bottom));display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);flex:none;background:var(--cream)}
+.ct-modal .eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6e2417;font-weight:800;margin:0 0 8px}
+.ct-modal h1{font-family:Georgia,serif;font-size:25px;color:var(--sage-dark);margin:0 0 12px;line-height:1.2;font-weight:700}
+.ct-cad{color:var(--terra);text-transform:capitalize}
+.ct-key{color:var(--terra-deep);font-weight:700}
+.ct-modal .lead{font-size:15.5px;line-height:1.6;color:var(--grey)}
+.ct-modal .why{background:var(--terra-pale);border-left:4px solid var(--terra);padding:14px 16px;border-radius:0 10px 10px 0;margin:0 0 22px}
+.ct-modal .why .k{display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#6e2417;margin-bottom:4px;font-weight:800}
+.ct-modal .why p{margin:0;font-size:14px;line-height:1.55;color:#6e2417;font-weight:500}
+.ct-modal .ask{font-size:19px;font-weight:700;color:var(--ink);margin:0 0 4px;line-height:1.25}
+.ct-modal .sub{font-size:14px;color:var(--grey);font-weight:500;margin:8px 0 20px}
+.ct-modal .stagekv{display:inline-flex;align-items:center;gap:7px;background:var(--sage-pale);color:var(--sage-dark);font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:20px;margin-bottom:14px}
+.ct-slide{margin-top:6px}
+.ct-slide .num{font-size:52px;font-weight:700;color:var(--sage-dark);line-height:1;font-family:Georgia,serif}
+.ct-slide .of{font-size:18px;color:var(--muted)}
+.ct-slidehead{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:6px}
+.ct-modal input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:7px;background:linear-gradient(90deg,#7fae8e,#e3c14f,#d98a3d,#cf5a4a);outline:none;margin:10px 0}
+.ct-modal input[type=range].pos{background:linear-gradient(90deg,#cf5a4a,#d98a3d,#e3c14f,#7fae8e)}
+.ct-modal input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;border:4px solid var(--sage-dark);cursor:pointer;box-shadow:var(--shadow-sm)}
+.ct-faces{display:flex;justify-content:space-between;margin-top:6px}
+.ct-anchors{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:12px}
+.ct-anchors span{flex:1;font-size:12.5px;font-weight:700;line-height:1.3}
+.ct-anchors .lo{text-align:left;color:var(--ink)}
+.ct-anchors .mid{text-align:center;color:var(--grey)}
+.ct-anchors .hi{text-align:right;color:var(--ink)}
+.ct-bubbles{display:flex;gap:7px;margin:6px 0}
+.ct-bub{flex:1;min-width:0;border:2px solid var(--line-strong);background:#fff;border-radius:13px;padding:11px 3px 9px;text-align:center;cursor:pointer;transition:all .12s}
+.ct-bub .dot{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--muted);margin:0 auto 7px}
+.ct-bub .lbl{font-size:10.5px;line-height:1.25;color:var(--grey)}
+.ct-bub.sel{border-color:var(--sage);background:var(--sage-pale)}
+.ct-bub.sel .dot{border-color:var(--sage);background:var(--sage)}
+.ct-bub.sel .lbl{color:var(--sage-dark);font-weight:700}
+.ct-bubbles.miss,.ct-seg.miss{outline:2px solid var(--terra);outline-offset:6px;border-radius:10px}
+.ct-row{margin:0 0 20px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.ct-row:last-child{border-bottom:none;padding-bottom:0}
+.ct-row .q{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 11px}
+.ct-chips{display:flex;flex-wrap:wrap;gap:9px;margin:8px 0}
+.ct-chip{font-size:14px;padding:11px 15px;border-radius:22px;border:2px solid var(--line-strong);background:#fff;color:var(--grey);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.ct-chip.sel{background:var(--sage);border-color:var(--sage);color:#fff}
+.ct-chip .ck{display:none}.ct-chip.sel .ck{display:inline}
+.ct-seg{display:flex;gap:9px;flex-wrap:wrap}
+.ct-seg button{flex:1 1 calc(50% - 9px);min-width:130px;padding:15px 10px;border:2px solid var(--line-strong);background:#fff;border-radius:13px;font-size:14.5px;font-weight:600;cursor:pointer;color:var(--grey)}
+.ct-seg button.sel{background:var(--sage);border-color:var(--sage);color:#fff}
+.ct-field{margin:0 0 18px}
+.ct-field label{display:block;font-size:14.5px;color:var(--ink);margin-bottom:8px;font-weight:600}
+.ct-field input[type=number]{width:120px;padding:12px;border:2px solid var(--line-strong);border-radius:10px;font-size:16px}
+.ct-auto{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.ct-auto svg.ring{width:58px;height:58px;flex:none}
+.ct-auto .t{font-size:15px;font-weight:700;color:var(--ink)}
+.ct-auto .d{font-size:13px;color:var(--muted);margin-top:2px}
+.ct-logged{font-size:12.5px;color:var(--sage);font-weight:700;display:inline-flex;align-items:center;gap:5px;margin-top:6px}
+.ct-pending{font-size:12.5px;color:var(--terra-deep);font-weight:700;display:inline-flex;align-items:center;gap:5px;margin-top:6px}
+.ct-btn{padding:16px 20px;border-radius:15px;border:none;font-size:16px;font-weight:700;cursor:pointer}
+.ct-btn.primary{flex:1;background:var(--sage-dark);color:#fff;box-shadow:0 8px 18px rgba(47,71,59,.26)}
+.ct-btn.ghost{background:transparent;color:var(--grey);font-weight:600}
+.ct-esc{background:#FBF3D0;border:1px solid #ecd98a;border-radius:12px;padding:13px 15px;font-size:13.5px;color:#6b5a13;margin-top:14px;line-height:1.5}
+.ct-missnote{margin-top:18px;background:#FBF2ED;border-left:3px solid var(--terra);color:#6e2417;font-size:14px;font-weight:600;padding:11px 14px;border-radius:0 10px 10px 0}
+.ct-sumgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 16px}
+.ct-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.ct-stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.ct-stat .v{font-size:24px;font-weight:700;color:var(--sage-dark);margin-top:3px;font-family:Georgia,serif}
+.ct-stat .s{font-size:12px;color:var(--muted);margin-top:2px}
+.ct-trend{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.ct-trend .k{font-size:13px;color:var(--ink);font-weight:700;margin-bottom:8px}
+.ct-pillrow{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.ct-pilltag{font-size:12px;background:var(--sage-pale);color:var(--sage-dark);border-radius:14px;padding:6px 11px}
+.ct-note{font-size:12px;color:var(--muted);text-align:center;line-height:1.55;margin-top:16px}
+.ct-celebrate{text-align:center;padding:18px 0}
+.ct-burst{width:120px;height:120px;margin:0 auto 12px;display:block}
+.ct-streak{display:inline-flex;align-items:center;gap:7px;background:var(--terra-pale);color:var(--terra-deep);font-size:14px;font-weight:800;padding:9px 18px;border-radius:22px;margin:0 0 14px}
+.ct-celebrate h1{font-size:27px;margin-bottom:12px}
+.ct-celebrate .lead{margin:0 auto 6px;text-align:center}
+.ct-closer{font-size:14.5px;font-weight:700;color:var(--sage);margin-top:14px}
+.ct-bigicon{width:60px;height:60px;margin:4px 0 14px}
+
+@media(max-width:430px){body{padding:10px 0 30px}.device{transform:scale(.96);transform-origin:top center}}
+</style>
+</head>
+<body>
+
+<div class="hgroup">
+  <h1>clara — iPhone app</h1>
+  <p>Interactive prototype. Real sign-in, and the full daily / monthly / quarterly check-ins mirrored from our clinical instrument (PEG-3, PGIC, KOOS-12, WPAI, PHQ-2/GAD-2, PROMIS sleep).</p>
+</div>
+
+<div class="device">
+  <div class="island"></div>
+  <div class="homebar"></div>
+  <div class="viewport" id="vp">
+
+    <div class="statusbar" id="statusbar">
+      <div>9:41</div>
+      <div class="r"><span class="sig"></span><span style="font-weight:800">5G</span><span class="batt"></span></div>
+    </div>
+
+    <!-- WELCOME -->
+    <div class="screen active welcome" id="s-welcome">
+      <div class="wtop"><span class="brandmark">clara</span></div>
+      <div class="wrapw">
+        <div class="eyebrow" style="color:#F4C9A8">The first pharmacy built for chronic pain</div>
+        <h2>Where does<br>it hurt?</h2>
+        <p>Real chronic pain care, built by pain specialists. A plan made for you, reviewed by a Canadian doctor.</p>
+        <button class="btn" onclick="go('s-signup')">Create your account</button>
+        <button class="btn light" style="margin-top:11px;background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.4)" onclick="go('s-signin')">I already have an account</button>
+      </div>
+    </div>
+
+    <!-- SIGN UP -->
+    <div class="screen" id="s-signup">
+      <div class="body pad notab">
+        <button class="back" onclick="go('s-welcome')">&#8249; Back</button>
+        <div style="text-align:center;margin-top:14px">
+          <span class="brandmark" style="color:var(--sage-dark)">clara</span>
+          <div class="lgtitle" style="font-size:25px;margin-top:16px">Create your account</div>
+          <p class="subtle" style="margin-top:6px">A few details to get you started.</p>
+        </div>
+        <div class="field"><label>Full name</label><input id="su-name" oninput="valSignup()" placeholder="Jane Doe"></div>
+        <div class="field"><label>Email</label><input id="su-email" type="email" oninput="valSignup()" placeholder="you@email.com"></div>
+        <div class="field"><label>Password</label><input id="su-pass" type="password" oninput="valSignup()" placeholder="Create a password"></div>
+        <button class="btn" id="su-btn" style="margin-top:20px" disabled onclick="go('s-pick')">Continue</button>
+        <div class="divider">or</div>
+        <button class="social" onclick="signedUp('Jane');go('s-pick')">&#63743;&nbsp; Sign up with Apple</button>
+        <button class="social" onclick="signedUp('Jane');go('s-pick')">G&nbsp; Sign up with Google</button>
+        <p class="authlink">Already have an account? <b onclick="go('s-signin')">Sign in</b></p>
+      </div>
+    </div>
+
+    <!-- SIGN IN -->
+    <div class="screen" id="s-signin">
+      <div class="body pad notab">
+        <button class="back" onclick="go('s-welcome')">&#8249; Back</button>
+        <div style="text-align:center;margin-top:18px">
+          <span class="brandmark" style="color:var(--sage-dark)">clara</span>
+          <div class="lgtitle" style="font-size:25px;margin-top:18px">Welcome back</div>
+          <p class="subtle" style="margin-top:6px">Sign in to your clara dashboard.</p>
+        </div>
+        <div class="field"><label>Email</label><input id="si-email" type="email" oninput="valSignin()" placeholder="you@email.com"></div>
+        <div class="field"><label>Password</label><input id="si-pass" type="password" oninput="valSignin()" placeholder="Your password"></div>
+        <div style="text-align:right;margin-top:8px;font-size:13px;font-weight:700;color:var(--sage-dark)">Forgot password?</div>
+        <button class="btn" id="si-btn" style="margin-top:16px" disabled onclick="enterApp()">Sign in</button>
+        <div class="divider">or</div>
+        <button class="social" onclick="enterApp()">&#63743;&nbsp; Continue with Apple</button>
+        <button class="social" onclick="enterApp()">G&nbsp; Continue with Google</button>
+        <p class="authlink">New to clara? <b onclick="go('s-signup')">Create an account</b></p>
+      </div>
+    </div>
+
+    <!-- CONDITION PICKER -->
+    <div class="screen" id="s-pick">
+      <div class="body pad notab">
+        <button class="back" onclick="go('s-signup')">&#8249; Back</button>
+        <div style="margin-top:16px">
+          <div class="eyebrow">Start your assessment</div>
+          <div class="lgtitle" style="margin-top:6px">Where does it hurt?</div>
+          <p class="subtle" style="margin-top:8px">Pick your pain. It takes about 5 minutes and a licensed doctor reviews every plan.</p>
+        </div>
+        <div class="cpick">
+          <div class="cdoor" onclick="go('s-assess')"><img src="Home%20(dashboard)/knee-oa-home-1600.jpg" alt=""><div class="cl"><h4>My knee</h4><p>Osteoarthritis, stiffness, stairs</p></div></div>
+          <div class="cdoor" onclick="go('s-assess')"><img src="Home%20(dashboard)/back-pain-home-1600.jpg" alt=""><div class="cl"><h4>My back</h4><p>Low back &amp; muscle pain</p></div></div>
+          <div class="cdoor" onclick="go('s-assess')"><img src="Home%20(dashboard)/migraine-home-1600.jpg" alt=""><div class="cl"><h4>Migraines</h4><p>Stop &amp; prevent attacks</p></div></div>
+          <div class="cdoor" onclick="go('s-assess')"><img src="Home%20(dashboard)/neuropathic-home-1600.jpg" alt=""><div class="cl"><h4>My nerves</h4><p>Burning, tingling pain</p></div></div>
+        </div>
+        <p style="text-align:center;font-size:12.5px;color:var(--muted);margin-top:22px">&#127809; Canadian doctors · Ontario pharmacy</p>
+      </div>
+    </div>
+
+    <!-- ASSESS TEASER -->
+    <div class="screen" id="s-assess">
+      <div class="body pad notab">
+        <button class="back" onclick="go('s-pick')">&#8249; Back</button>
+        <div style="text-align:center">
+          <img src="Clara%20Home%20page/Knee/knee-stage-1-lab.png" style="width:170px;margin:6px auto 0">
+          <div class="eyebrow" style="margin-top:6px">Knee assessment · step 1 of 5</div>
+          <div class="lgtitle" style="margin-top:8px;font-size:24px">How long has your<br>knee bothered you?</div>
+        </div>
+        <button class="opt social" style="margin-top:16px;justify-content:flex-start;gap:14px;font-weight:600" onclick="enterApp()"><span style="font-size:24px">&#127807;</span> Less than 6 weeks</button>
+        <button class="opt social" style="justify-content:flex-start;gap:14px;font-weight:600;border-color:var(--sage);background:var(--sage-pale)" onclick="enterApp()"><span style="font-size:24px">&#128197;</span> A few months</button>
+        <button class="opt social" style="justify-content:flex-start;gap:14px;font-weight:600" onclick="enterApp()"><span style="font-size:24px">&#9201;&#65039;</span> More than a year</button>
+        <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:18px">Preview — tap any answer to enter the app.</p>
+        <button class="btn" style="margin-top:12px" onclick="enterApp()">Continue &nbsp;&#8594;</button>
+      </div>
+    </div>
+
+    <!-- HOME -->
+    <div class="screen" id="s-home">
+      <div class="body pad">
+        <div class="topbar">
+          <div>
+            <div class="subtle" style="font-size:13px">Monday, June 15</div>
+            <div class="greet" id="homeGreet">Good evening, Jane</div>
+          </div>
+          <img class="avatar" src="Clara%20Home%20page/Auth/jane-auth.jpg" alt="" onclick="go('s-profile')">
+        </div>
+
+        <div class="tile terra" onclick="openCheckin('daily')" style="cursor:pointer">
+          <div class="row">
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.9">Today</div>
+              <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;margin-top:4px;line-height:1.2">Your 1-minute<br>daily check-in</div>
+              <div style="font-size:13px;opacity:.92;margin-top:8px">One tap on your pain keeps your plan tuned</div>
+            </div>
+            <div class="ring" style="--p:0"><div class="inner">&#9658;</div></div>
+          </div>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:10px">
+            <span class="streak" style="background:rgba(255,255,255,.18);color:#fff">&#128293; 28-day streak</span>
+            <span class="spacer"></span>
+            <span style="font-weight:800;font-size:14px">Start &#8594;</span>
+          </div>
+        </div>
+
+        <div class="qa">
+          <div class="q" onclick="setTab('plan')"><div class="ic">&#129656;</div><div class="t">Apply cream</div></div>
+          <div class="q" onclick="setTab('track')"><div class="ic">&#128202;</div><div class="t">My progress</div></div>
+          <div class="q" onclick="setTab('msg')"><div class="ic">&#128172;</div><div class="t">Care team</div></div>
+        </div>
+
+        <div class="section-h"><h3>Today&rsquo;s plan</h3><a onclick="setTab('plan')">See all</a></div>
+        <div class="card" style="padding:6px 20px">
+          <div class="checkrow done"><div class="checkbox done" onclick="tog(this)">&#10003;</div><img class="bottlethumb" src="Clara%20Home%20page/Knee/clara-bottle.png" alt=""><div style="flex:1"><div class="ctxt">Apply clara cream (AM)</div><div class="cmini">Rubbed in at the knee</div></div></div>
+          <div class="checkrow"><div class="checkbox" onclick="tog(this)"></div><div class="thumb" style="display:grid;place-items:center;font-size:22px">&#127939;</div><div style="flex:1"><div class="ctxt">10-minute walk</div><div class="cmini">Walk With Ease · week 3</div></div></div>
+          <div class="checkrow"><div class="checkbox" onclick="tog(this)"></div><img class="bottlethumb" src="Clara%20Home%20page/Knee/clara-bottle.png" alt=""><div style="flex:1"><div class="ctxt">Apply clara cream (PM)</div><div class="cmini">Before bed</div></div></div>
+        </div>
+
+        <div class="section-h"><h3>Keep learning</h3><a onclick="setTab('learn')">Library</a></div>
+        <div class="peek" onclick="setTab('learn')">
+          <img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/kim-walkcover.jpeg" alt="">
+          <div class="pl"><div class="pt">Move with confidence</div><h4>Your walking prescription</h4><p>The evidence-backed program that rebuilds your walks, week by week.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAN -->
+    <div class="screen" id="s-plan">
+      <div class="body pad">
+        <div class="eyebrow" style="padding-top:4px">Your clara plan</div>
+        <div class="lgtitle" style="margin-top:6px">Built for your knee</div>
+        <div class="chip" style="margin-top:12px">&#10003; Reviewed by Dr. Nguyen · Jun 12</div>
+        <div class="section-h"><h3>The cream</h3></div>
+        <div class="card">
+          <div class="row">
+            <img class="bottlethumb" style="width:54px;height:70px" src="Clara%20Home%20page/Knee/clara-bottle.png" alt="">
+            <div style="flex:1"><h4 style="font-family:Georgia,serif;font-size:19px">clara compound cream</h4><p style="font-size:13px;color:var(--muted);margin-top:3px">Apply a pea-sized amount twice daily</p></div>
+          </div>
+          <div class="ladder"><div class="rung">C1</div><div class="rung on">C2 &middot; you</div><div class="rung">C3</div></div>
+          <div class="row" style="margin-top:16px"><div><div style="font-size:12px;color:var(--muted)">Next refill</div><div style="font-weight:800">in 12 days</div></div><span class="spacer"></span><button class="btn sm terra" onclick="go('s-refill')">Refill now</button></div>
+        </div>
+        <div class="section-h"><h3>Medication</h3></div>
+        <div class="card" style="padding:6px 20px">
+          <div class="med"><img class="pm" src="Clara%20Home%20page/Knee/Naproxen.png" alt=""><div style="flex:1"><h4>Naproxen 250mg</h4><p>As needed for flares, with food</p></div></div>
+          <div class="med"><img class="pm" src="Clara%20Home%20page/Knee/acentaminophen.png" alt=""><div style="flex:1"><h4>Acetaminophen</h4><p>A gentler everyday option</p></div></div>
+        </div>
+        <div class="section-h"><h3>Movement</h3><a onclick="setTab('track')">Log it</a></div>
+        <div class="move">
+          <div class="movecard"><img src="Clara%20Home%20page/Your%20Plan/move-walking.jpg" alt=""><div class="ml"><h5>Walk With Ease</h5><p>10 min · week 3</p></div></div>
+          <div class="movecard"><img src="Clara%20Home%20page/Your%20Plan/move-strength.jpg" alt=""><div class="ml"><h5>Knee strength</h5><p>3 moves · 8 min</p></div></div>
+          <div class="movecard"><img src="Clara%20Home%20page/Your%20Plan/move-yoga.jpg" alt=""><div class="ml"><h5>Tai chi</h5><p>Calm &amp; balance</p></div></div>
+        </div>
+        <div style="height:8px"></div>
+      </div>
+    </div>
+
+    <!-- TRACK -->
+    <div class="screen" id="s-track">
+      <div class="body pad">
+        <div class="eyebrow" style="padding-top:4px">Your progress</div>
+        <div class="lgtitle" style="margin-top:6px">Pain tracker</div>
+        <div class="tile green" style="margin-top:16px">
+          <div class="row">
+            <div style="flex:1"><div style="font-size:13px;opacity:.9">Average pain, last 30 days</div><div style="font-family:Georgia,serif;font-size:38px;font-weight:700;line-height:1">4.1 <span style="font-size:18px;opacity:.85">/10</span></div><div style="font-size:13px;color:#CFE0D2;margin-top:4px;font-weight:700">&#8595; 2.3 since you started</div></div>
+            <svg class="trend" viewBox="0 0 120 80" style="width:120px;height:70px"><polyline points="2,18 22,26 42,22 62,40 82,46 102,58 118,62" fill="none" stroke="#F4C9A8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="118" cy="62" r="5" fill="#F4C9A8"/></svg>
+          </div>
+        </div>
+        <button class="btn" style="margin-top:16px" onclick="openCheckin('daily')">&#43;&nbsp; Log today&rsquo;s check-in</button>
+        <div class="section-h"><h3>This month</h3><span class="subtle" style="font-size:12px">June</span></div>
+        <div class="card">
+          <div class="cal">
+            <div class="dh">M</div><div class="dh">T</div><div class="dh">W</div><div class="dh">T</div><div class="dh">F</div><div class="dh">S</div><div class="dh">S</div>
+            <div class="d empty"></div><div class="d empty"></div><div class="d l1">3</div><div class="d l1">4</div><div class="d l2">5</div><div class="d l1">6</div><div class="d l0">7</div>
+            <div class="d l0">8</div><div class="d l1">9</div><div class="d l2">10</div><div class="d l3">11</div><div class="d l2">12</div><div class="d l1">13</div><div class="d l0">14</div>
+            <div class="d today l1">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div>
+          </div>
+          <div class="legend"><span><i style="background:#CFE0D2"></i>Good</span><span><i style="background:#F4DEC9"></i>Moderate</span><span><i style="background:#EBB79C"></i>Flare</span></div>
+        </div>
+        <div class="section-h"><h3>Deeper check-ins</h3></div>
+        <div class="card rhythm" data-checkin="monthly" onclick="openCheckin('monthly')">
+          <img src="Clara%20Home%20page/Your%20Plan/rhythm-monthly.png" alt="">
+          <div style="flex:1"><h4 style="font-family:Georgia,serif;font-size:18px">Monthly review</h4><p style="font-size:12.5px;color:var(--muted);margin-top:3px"><span class="ci-pill">About 2 minutes</span> · due in 9 days</p></div>
+          <span class="ci-go" style="font-size:13px;font-weight:800;color:var(--terra)">Start &#8594;</span>
+        </div>
+        <div class="card rhythm" data-checkin="quarterly" onclick="openCheckin('quarterly')" style="margin-top:12px">
+          <img src="Clara%20Home%20page/Your%20Plan/rhythm-quarterly.png" alt="">
+          <div style="flex:1"><h4 style="font-family:Georgia,serif;font-size:18px">Quarterly deep check-in</h4><p style="font-size:12.5px;color:var(--muted);margin-top:3px"><span class="ci-pill">About 8 minutes</span> · validated scores</p></div>
+          <span class="ci-go" style="font-size:13px;font-weight:800;color:var(--terra)">Start &#8594;</span>
+        </div>
+        <div style="height:8px"></div>
+      </div>
+    </div>
+
+    <!-- LEARN -->
+    <div class="screen" id="s-learn">
+      <div class="body pad">
+        <div class="eyebrow" style="padding-top:4px">Included free with your plan</div>
+        <div class="lgtitle" style="margin-top:6px">Your library</div>
+        <p class="subtle" style="margin-top:8px">The same guides our doctors use in clinic, in plain language.</p>
+        <div class="peek" onclick="alert('Opens the full guide')"><img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/bill-cover.png" alt=""><div class="pl"><div class="pt">Understand your pain</div><h4>What&rsquo;s really happening in your knee</h4><p>Why &ldquo;wear and tear&rdquo; is the wrong story, and what that means for moving again.</p></div></div>
+        <div class="peek" onclick="alert('Opens the full guide')"><img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/kim-walkcover.jpeg" alt=""><div class="pl"><div class="pt">Move with confidence</div><h4>Your walking prescription</h4><p>The 6-week program that rebuilds your walks, with a flare plan for hard days.</p></div></div>
+        <div class="peek" onclick="alert('Opens the full guide')"><img src="Education%20Section%20(Knee%20OA%20Pain)/EDU%20covers/tachi-card-hero.png" alt=""><div class="pl"><div class="pt">Calm the system</div><h4>Tai chi, the strongest evidence you&rsquo;ve never tried</h4><p>Gentle, proven, easier than it looks.</p></div></div>
+        <div style="height:8px"></div>
+      </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="screen" id="s-msg">
+      <div class="body pad" style="padding-bottom:150px">
+        <div class="topbar" style="margin-top:4px">
+          <div><div class="lgtitle" style="font-size:24px">Care team</div><div class="subtle" style="font-size:12.5px">Usually replies within a day</div></div>
+          <img class="avatar" src="Clara%20Home%20page/how-2-doctor.png" alt="" style="object-fit:cover">
+        </div>
+        <div style="text-align:center;font-size:11.5px;color:var(--muted);margin:8px 0">Today</div>
+        <div class="msg them"><img src="Clara%20Home%20page/how-2-doctor.png" alt=""><div><div class="bubble">Hi Jane — your June review looks great. Pain&rsquo;s trending down and you&rsquo;ve kept up the walks. 👏</div><div class="msgmeta">Dr. Nguyen · 9:02</div></div></div>
+        <div class="msg them"><img src="Clara%20Home%20page/how-2-doctor.png" alt=""><div><div class="bubble">Keep the cream at C2 for now. If flares pick up, the naproxen is there as needed.</div></div></div>
+        <div class="msg me"><div><div class="bubble">Thank you! The morning stiffness is so much better.</div><div class="msgmeta" style="text-align:right">9:14</div></div></div>
+        <div class="msg them"><img src="Clara%20Home%20page/how-2-doctor.png" alt=""><div><div class="bubble">That&rsquo;s exactly what we want to see. Message anytime. 🌿</div></div></div>
+      </div>
+      <div class="composer"><input placeholder="Message your care team…"><button class="send">&#8593;</button></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="screen" id="s-profile">
+      <div class="body pad">
+        <div class="topbar" style="margin-top:2px"><button class="back" onclick="setTab('home')">&#8249; Home</button><span></span></div>
+        <div class="profhero">
+          <img src="Clara%20Home%20page/Auth/jane-auth.jpg" alt="">
+          <div class="lgtitle" style="font-size:23px">Jane Doe</div>
+          <div class="subtle" style="font-size:13px">jane@email.com</div>
+          <div class="chip" style="margin-top:6px">Knee osteoarthritis · since March 2026</div>
+        </div>
+        <div class="lgroup">
+          <div class="lrow" onclick="go('s-plan')"><span class="le">&#128203;</span><span class="lt">My plan</span><span class="chev">&#8250;</span></div>
+          <div class="lrow" onclick="go('s-refill')"><span class="le">&#128230;</span><span class="lt">Orders &amp; refills</span><span class="lv">Next: 12 days</span><span class="chev">&#8250;</span></div>
+          <div class="lrow" onclick="go('s-notifs')"><span class="le">&#128276;</span><span class="lt">Notifications</span><span class="chev">&#8250;</span></div>
+          <div class="lrow" onclick="go('s-settings')"><span class="le">&#9881;&#65039;</span><span class="lt">Settings &amp; privacy</span><span class="chev">&#8250;</span></div>
+        </div>
+        <div class="lgroup">
+          <div class="lrow"><span class="le">&#10067;</span><span class="lt">Help &amp; support</span><span class="chev">&#8250;</span></div>
+          <div class="lrow" onclick="go('s-welcome')"><span class="le">&#128682;</span><span class="lt" style="color:var(--terra-deep)">Sign out</span></div>
+        </div>
+        <div style="height:8px"></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="screen" id="s-settings">
+      <div class="body pad">
+        <div class="topbar" style="margin-top:2px"><button class="back" onclick="go('s-profile')">&#8249; Profile</button><span></span></div>
+        <div class="lgtitle">Settings &amp; privacy</div>
+        <div class="section-h"><h3>Reminders</h3></div>
+        <div class="lgroup">
+          <div class="lrow"><span class="le">&#9201;&#65039;</span><span class="lt">Daily check-in reminder</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="lrow"><span class="le">&#129656;</span><span class="lt">Cream application nudges</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="lrow"><span class="le">&#128197;</span><span class="lt">Monthly &amp; quarterly reviews</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+        <div class="section-h"><h3>Data sharing</h3></div>
+        <div class="lgroup">
+          <div class="lrow"><span class="le">&#129489;&#8205;&#9877;&#65039;</span><span class="lt" style="flex:1">Share my check-ins with my care team</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="lrow"><span class="le">&#128202;</span><span class="lt" style="flex:1">Use my de-identified data for outcomes research</span><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+        <p class="ct-note" style="margin-top:16px;text-align:left;padding:0 4px">Your data is shared only with your clara care team and used in de-identified, aggregate form for reporting. You can pause sharing any time.</p>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="screen" id="s-notifs">
+      <div class="body pad">
+        <div class="topbar" style="margin-top:2px"><button class="back" onclick="go('s-profile')">&#8249; Profile</button><span></span></div>
+        <div class="lgtitle">Notifications</div>
+        <div style="margin-top:14px">
+          <div class="notif"><div class="ni">&#128293;</div><div><h5>You&rsquo;re on a 28-day streak!</h5><p>Tap to log today&rsquo;s check-in and keep it going.</p><div class="nt">2h ago</div></div></div>
+          <div class="notif"><div class="ni">&#128172;</div><div><h5>Dr. Nguyen replied</h5><p>&ldquo;Your June review looks great…&rdquo;</p><div class="nt">Today · 9:02</div></div></div>
+          <div class="notif"><div class="ni">&#128230;</div><div><h5>Refill coming up</h5><p>Your clara cream refills in 12 days. Confirm anytime.</p><div class="nt">Yesterday</div></div></div>
+          <div class="notif"><div class="ni">&#128221;</div><div><h5>Monthly review is almost due</h5><p>It takes about 2 minutes. Due in 9 days.</p><div class="nt">2 days ago</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFILL -->
+    <div class="screen" id="s-refill">
+      <div class="body pad">
+        <div class="topbar" style="margin-top:2px"><button class="back" onclick="go('s-plan')">&#8249; Plan</button><span></span></div>
+        <div class="lgtitle">Refill</div>
+        <div class="card" style="margin-top:14px">
+          <div class="row"><img class="bottlethumb" style="width:50px;height:64px" src="Clara%20Home%20page/Knee/clara-bottle.png" alt=""><div style="flex:1"><h4 style="font-family:Georgia,serif;font-size:18px">clara compound cream</h4><p style="font-size:13px;color:var(--muted);margin-top:2px">C2 · 50g airless pump · 1-month supply</p></div></div>
+        </div>
+        <div class="card" style="padding:6px 20px">
+          <div class="checkrow" style="border-bottom:1px solid var(--line)"><span class="le" style="font-size:18px">&#128205;</span><div style="flex:1"><div class="ctxt" style="font-size:14px">Ship to</div><div class="cmini">Jane Doe · 14 Maple St, Toronto ON</div></div><span class="chev" style="color:var(--muted)">&#8250;</span></div>
+          <div class="checkrow"><span class="le" style="font-size:18px">&#128179;</span><div style="flex:1"><div class="ctxt" style="font-size:14px">Payment</div><div class="cmini">Visa ···· 4242 · insurance on file</div></div><span class="chev" style="color:var(--muted)">&#8250;</span></div>
+        </div>
+        <div class="card">
+          <div class="row" style="font-size:14.5px"><span>Cream (at cost)</span><span class="spacer"></span><span style="font-weight:700">$38.00</span></div>
+          <div class="row" style="font-size:14.5px;margin-top:10px"><span>Pharmacy &amp; dispensing</span><span class="spacer"></span><span style="font-weight:700">$12.00</span></div>
+          <div class="row" style="font-size:14.5px;margin-top:10px;color:var(--sage-dark)"><span>Insurance applied</span><span class="spacer"></span><span style="font-weight:700">&minus;$30.00</span></div>
+          <div class="row" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)"><span style="font-weight:800">You pay today</span><span class="spacer"></span><span style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark)">$20.00</span></div>
+        </div>
+        <button class="btn" style="margin-top:16px" onclick="go('s-plan');toast('Refill confirmed · ships in 2 days 📦')">Confirm refill</button>
+        <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:12px">Free, discreet shipping · cancel anytime</p>
+      </div>
+    </div>
+
+    <!-- ===== CHECK-IN ENGINE OVERLAY ===== -->
+    <div class="ct-overlay" id="ctOverlay" aria-hidden="true">
+      <div class="ct-modal" role="dialog" aria-modal="true" aria-label="clara check-in">
+        <div class="ct-head">
+          <div class="ct-phases"><span class="ct-phase" data-p="daily">Daily</span><span class="ct-phase" data-p="monthly">Monthly</span><span class="ct-phase" data-p="quarterly">Quarterly</span></div>
+          <span class="ct-pct" id="ctPct"></span>
+          <button class="ct-close" id="ctClose" aria-label="Close">&times;</button>
+        </div>
+        <div class="ct-pbar"><i id="ctBar"></i></div>
+        <div class="ct-body" id="ctBody"></div>
+        <div class="ct-foot" id="ctFoot"></div>
+      </div>
+    </div>
+
+    <!-- TAB BAR -->
+    <div class="tabbar" id="tabbar">
+      <div class="tab on" data-tab="home" onclick="setTab('home')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</div>
+      <div class="tab" data-tab="plan" onclick="setTab('plan')"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Plan</div>
+      <div class="tab" data-tab="track" onclick="setTab('track')"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M7 15l3-4 3 2 4-6"/></svg>Track</div>
+      <div class="tab" data-tab="learn" onclick="setTab('learn')"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h6v17H6a2 2 0 0 0-2 2z"/><path d="M20 5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 1 2 2z"/></svg>Learn</div>
+      <div class="tab" data-tab="msg" onclick="setTab('msg')"><svg viewBox="0 0 24 24"><path d="M21 11.5a8 8 0 0 1-11.5 7.2L4 20l1.3-4.5A8 8 0 1 1 21 11.5z"/></svg>Inbox</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="hint">Tip: the daily check-in is the quick one. The <b>Quarterly</b> check-in on Track runs the full validated battery (KOOS-12, WPAI, mood, sleep).</div>
+
+<script>
+/* ---------- router ---------- */
+var TAB_SCREENS={home:'s-home',plan:'s-plan',track:'s-track',learn:'s-learn',msg:'s-msg'};
+var LOGGED=['s-home','s-plan','s-track','s-learn','s-msg','s-profile','s-settings','s-notifs','s-refill'];
+function go(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+  var el=document.getElementById(id); el.classList.add('active'); el.scrollTop=0;
+  var loggedIn=LOGGED.indexOf(id)>=0;
+  document.getElementById('tabbar').classList.toggle('hidden',!loggedIn);
+  document.getElementById('statusbar').classList.toggle('light', id==='s-welcome');
+}
+function setTab(name){go(TAB_SCREENS[name]);document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===name)});}
+function enterApp(){setTab('home');}
+function tog(el){el.classList.toggle('done');el.closest('.checkrow').classList.toggle('done');el.innerHTML=el.classList.contains('done')?'&#10003;':''}
+function valSignup(){var ok=su_v('su-name')&&su_v('su-email')&&su_v('su-pass');document.getElementById('su-btn').disabled=!ok;}
+function valSignin(){var ok=su_v('si-email')&&su_v('si-pass');document.getElementById('si-btn').disabled=!ok;}
+function su_v(id){return (document.getElementById(id).value||'').trim().length>0;}
+function signedUp(n){}
+function toast(msg){
+  var t=document.createElement('div');t.textContent=msg;
+  t.style.cssText='position:absolute;bottom:104px;left:50%;transform:translateX(-50%);background:var(--sage-deep);color:#fff;font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:20px;z-index:90;box-shadow:0 10px 24px rgba(0,0,0,.3);max-width:80%;text-align:center';
+  document.getElementById('vp').appendChild(t);
+  t.animate([{opacity:0,transform:'translate(-50%,10px)'},{opacity:1,transform:'translate(-50%,0)'}],{duration:240});
+  setTimeout(function(){t.animate([{opacity:1},{opacity:0}],{duration:300});setTimeout(function(){t.remove()},300)},2200);
+}
+
+/* ---------- CHECK-IN ENGINE (mirrored from dashboard FLOW) ---------- */
+(function(){
+ const A5=["None","Mild","Moderate","Severe","Extreme"];
+ const A4=["Not at all","Several days","Over half the days","Nearly every day"];
+ const face=(i)=>{const m=["M8 15c1.2 1.2 2.6 1.8 4 1.8s2.8-.6 4-1.8","M8 15.5c1.1.6 2.5 1 4 1s2.9-.4 4-1","M8 15.8h8","M8 16.4c1.1-.6 2.5-1 4-1s2.9.4 4 1","M8 16.8c1.2-1.2 2.6-1.8 4-1.8s2.8.6 4 1.8"][i];const c=["#4a6b5b","#7d9c8d","#c9a23f","#cf8a3d","#cf5a4a"][i];return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="'+c+'" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M9 10h0M15 10h0"/><path d="'+m+'"/></svg>';};
+ const ring=(p,col,lab)=>{const r=24,c=2*Math.PI*r,o=c*(1-p/100);return '<svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="none" stroke="#ECE8DF" stroke-width="6"/><circle cx="30" cy="30" r="24" fill="none" stroke="'+col+'" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+o+'" transform="rotate(-90 30 30)"/><text x="30" y="35" text-anchor="middle" font-size="15" font-weight="700" fill="#2F473B">'+lab+'</text></svg>';};
+ const FLOW=[
+  {t:'welcome'},
+  {t:'stage',stage:'daily',kv:'Under 1 minute',title:'Your daily check-in',body:'A few seconds today builds the picture your care team needs. The most useful thing you can do is tell us your pain each day. Your exercise and cream are logged for you automatically.'},
+  {t:'tool',stage:'daily',id:'nprs',kind:'slider',max:10,ask:'What is your <span class="ct-key">knee pain</span> today?',sub:'0 = no pain at all, 10 = the worst pain you can imagine',lo:'No pain',mid:'Moderate',hi:'Worst pain',why:'One tap a day draws the trend line your doctor watches. It is the clearest signal of what is actually helping you.'},
+  {t:'tool',stage:'daily',id:'exercise',kind:'segq',ask:'Did you do your knee <span class="ct-key">exercises</span> today?',sub:'A quick tap to record what you did.',opts:[['yes','Yes, done'],['no','Not yet']],why:'Checking these off each day shows your team you are doing the plan, and doing the plan is the strongest predictor of feeling better.'},
+  {t:'tool',stage:'daily',id:'cream',kind:'segq',ask:'Did you apply your compound <span class="ct-key">cream</span> today?',opts:[['0','Not yet'],['1','1 time'],['2','2 times'],['3','3 times']]},
+  {t:'tool',stage:'daily',id:'medsTaken',kind:'segq',ask:'Did you take your <span class="ct-key">medications</span> today?',opts:[['yes','Yes'],['no','Not yet'],['none','None prescribed']]},
+  {t:'tool',stage:'daily',id:'eng',kind:'auto',why:'Here is your plan logged for today. Your team sees this snapshot, so they know you are sticking with it.'},
+  {t:'celebrate',stage:'daily',end:true,streak:'28 days in a row',headline:'You showed up for yourself today',body:'Every check-in adds another detail to the picture your doctor uses to personalise your care. Small taps today, a clearer path tomorrow.',closer:'Same time tomorrow? Your future self will thank you.'},
+  {t:'stage',stage:'monthly',kv:'About 2 minutes',title:'Your monthly check-in',body:'Once a month we ask a little more, so your doctor can see not just your pain, but how it affects your life, your sleep, your medications, and how you feel overall.'},
+  {t:'tool',stage:'monthly',id:'nprs',kind:'slider',max:10,ask:'First, what is your <span class="ct-key">knee pain</span> today?',sub:'0 = no pain at all, 10 = the worst pain you can imagine',lo:'No pain',mid:'Moderate',hi:'Worst pain',why:'Your pain score today anchors everything else, so your team reads every answer against how you feel right now.'},
+  {t:'tool',stage:'monthly',id:'pp',kind:'slider',max:10,ask:'Over the past week, your <span class="ct-key">average pain</span>',lo:'No pain',mid:'Moderate',hi:'Worst imaginable',why:'Pain is more than a number. The next three quick questions show how much it gets in the way of the things you care about.'},
+  {t:'tool',stage:'monthly',id:'pe',kind:'slider',max:10,ask:'Over the past week, how much did pain interfere with your <span class="ct-key">enjoyment of life</span>?',lo:'Did not interfere',mid:'Somewhat',hi:'Completely'},
+  {t:'tool',stage:'monthly',id:'pa',kind:'slider',max:10,ask:'Over the past week, how much did pain interfere with your <span class="ct-key">general activity</span>?',lo:'Did not interfere',mid:'Somewhat',hi:'Completely'},
+  {t:'tool',stage:'monthly',id:'sl',kind:'slider',pos:true,max:10,ask:'Overall, how was your <span class="ct-key">sleep quality</span> this past week?',sub:'0 = very poor, 10 = excellent',lo:'Very poor',mid:'Fair',hi:'Excellent',why:'Better sleep is one of the first wins people feel from good pain control, so we keep an eye on it.'},
+  {t:'tool',stage:'monthly',id:'md',kind:'slider',max:30,ask:'About <span class="ct-key">how many days</span> this month did you take an oral pain medication?',lo:'0 days',mid:'About 15 days',hi:'30 days',why:'Fewer pills, and especially zero opioids, is a real marker of progress.'},
+  {t:'tool',stage:'monthly',id:'op',kind:'segq',ask:'Are any of these <span class="ct-key">opioid</span> medications?',opts:[['no','No, zero opioids'],['yes','Yes']]},
+  {t:'tool',stage:'monthly',id:'pgic',kind:'bub1',ask:'Since starting with clara, how would you describe your knee pain <span class="ct-key">overall</span>?',anch:['Very much better','Much better','A little better','No change','A little worse','Much worse','Very much worse'],why:'Your own overall verdict in one tap. Doctors use this as the anchor that gives meaning to all the other scores.'},
+  {t:'tool',stage:'monthly',id:'nps',kind:'slider',pos:true,max:10,ask:'How likely are you to <span class="ct-key">recommend clara</span> to a friend with chronic pain?',sub:'0 = not at all likely, 10 = extremely likely',lo:'Not likely',mid:'Maybe',hi:'Extremely likely',why:'A quick gut check that tells us whether we are truly helping you.'},
+  {t:'summary',stage:'monthly'},
+  {t:'celebrate',stage:'monthly',end:true,streak:'3 months in a row',headline:'Another month, in the books',body:'Your monthly check gives your doctor the bigger picture: how your pain, sleep, mood, and medications are trending together. You are building a story your care team can act on.',closer:'See you next month.'},
+  {t:'stage',stage:'quarterly',kv:'About 8 minutes',title:'Your quarterly deep check-in',body:'Every few months we ask the validated questionnaires your doctor, and one day your insurer or employer, will recognise. These are the scores that prove your progress is real.'},
+  {t:'tool',stage:'quarterly',id:'nprs',kind:'slider',max:10,ask:'First, what is your <span class="ct-key">knee pain</span> today?',sub:'0 = no pain at all, 10 = the worst pain you can imagine',lo:'No pain',mid:'Moderate',hi:'Worst pain',why:'Your pain score today anchors everything else in this check-in.'},
+  {t:'tool',stage:'quarterly',id:'koos',kind:'bub5',ask:'Your <span class="ct-key">knee</span> over the last week',sub:'The KOOS-12 knee score. Tap one answer per row.',items:[{k:'k1',q:'How often do you feel knee pain?',a:['Never','Monthly','Weekly','Daily','Always']},{k:'k2',q:'Pain when sitting or lying',a:A5},{k:'k3',q:'Pain when walking on a flat surface',a:A5},{k:'k4',q:'Pain going up or down stairs',a:A5},{k:'k5',q:'Difficulty standing',a:A5},{k:'k6',q:'Difficulty rising from sitting',a:A5},{k:'k7',q:'Difficulty getting in or out of a car',a:A5},{k:'k8',q:'Difficulty twisting or pivoting on your knee',a:A5},{k:'k9',q:'How often are you aware of your knee problem?',a:['Never','Monthly','Weekly','Daily','Constantly']},{k:'k10',q:'Changed your lifestyle to avoid harming your knee?',a:['Not at all','Mildly','Moderately','Severely','Totally']},{k:'k11',q:'Troubled by lack of confidence in your knee?',a:['Not at all','Mildly','Moderately','Severely','Extremely']},{k:'k12',q:'In general, how much difficulty with your knee?',a:A5}],why:'The trusted knee score. It turns walking, stairs, and everyday life into one number your doctor and others recognise.'},
+  {t:'tool',stage:'quarterly',id:'ms',kind:'chips',ask:'Compared with <span class="ct-key">3 months ago</span>, which of these are true now?',sub:'Select all that apply.',opts:['Walking farther','Stairs without stopping','Housework is easier','Carrying groceries','Playing with kids or grandkids','Back to gym, yoga, or sport','Sleeping through the night'],why:'The everyday wins. They keep you motivated and give your team your story in your own words.'},
+  {t:'tool',stage:'quarterly',id:'wk',kind:'segq',ask:'Your <span class="ct-key">work situation</span> right now',sub:'One tap is all it takes.',opts:[['Regular duties','Regular duties'],['Modified duties','Modified duties'],['Reduced hours','Reduced hours'],['Off work','Off work'],['Not employed','Not employed']],why:'Pain shows up at work too. Knowing your situation helps your team read the next answers in context.'},
+  {t:'tool',stage:'quarterly',id:'wpai',kind:'wpai',why:'This turns your pain into its real cost at work, the number employers and insurers understand.'},
+  {t:'tool',stage:'quarterly',id:'mood',kind:'bub5',ask:'Over the last 2 weeks, how often have you been <span class="ct-key">bothered</span> by...',sub:'A quick mood check (PHQ-2 and GAD-2).',items:[{k:'m1',q:'Little interest or pleasure in doing things',a:A4},{k:'m2',q:'Feeling down, depressed, or hopeless',a:A4},{k:'m3',q:'Feeling nervous, anxious, or on edge',a:A4},{k:'m4',q:'Not being able to stop or control worrying',a:A4}],why:'Pain and mood travel together. A quick check so nothing gets missed.',esc:'If these answers suggest you could use more support, we will ask a few more questions and your clinician will reach out. You are never on your own with this.'},
+  {t:'tool',stage:'quarterly',id:'pr',kind:'bub5',ask:'Your <span class="ct-key">sleep</span> in the past 7 days',sub:'The validated PROMIS sleep score.',items:[{k:'r1',q:'My sleep was restless',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']},{k:'r2',q:'I was satisfied with my sleep',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']},{k:'r3',q:'My sleep was refreshing',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']},{k:'r4',q:'I had difficulty falling asleep',a:['Not at all','A little bit','Somewhat','Quite a bit','Very much']}],why:'A validated sleep score that backs up your monthly check, so the improvement holds up to scrutiny.'},
+  {t:'summary'}];
+ const stageStart={daily:0, monthly:FLOW.findIndex(s=>s.t==='stage'&&s.stage==='monthly'), quarterly:FLOW.findIndex(s=>s.t==='stage'&&s.stage==='quarterly')};
+ let i=0,i0=0; const ans={cream:'2',medsTaken:'yes',exercise:'yes'};
+ const ov=document.getElementById('ctOverlay'),body=document.getElementById('ctBody'),foot=document.getElementById('ctFoot'),bar=document.getElementById('ctBar');
+ const clk='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+ function phases(stage){const o=['daily','monthly','quarterly'];document.querySelectorAll('.ct-phase').forEach(el=>{const p=el.dataset.p;el.classList.remove('active','done');if(!stage)return;if(p===stage)el.classList.add('active');else if(o.indexOf(p)<o.indexOf(stage))el.classList.add('done');});}
+ function slider(id,max,val,lo,hi,mid,pos){const f=(max===10)?'<div class="ct-faces">'+(pos?[4,3,2,1,0]:[0,1,2,3,4]).map(face).join('')+'</div>':'';const an='<div class="ct-anchors"><span class="lo">'+(lo||'0')+'</span><span class="mid">'+(mid||'')+'</span><span class="hi">'+(hi||max)+'</span></div>';return '<div class="ct-slide"><div class="ct-slidehead"><span class="num" id="cn-'+id+'">'+val+'</span><span class="of">/ '+max+'</span></div><input type="range"'+(pos?' class="pos"':'')+' min="0" max="'+max+'" step="1" value="'+val+'" data-s="'+id+'">'+f+an+'</div>';}
+ function bubs(id,anch){return '<div class="ct-bubbles" data-b="'+id+'">'+anch.map((a,n)=>'<div class="ct-bub '+(ans[id]===n?'sel':'')+'" data-i="'+n+'"><div class="dot"></div><div class="lbl">'+a+'</div></div>').join('')+'</div>';}
+ function tool(s){
+  if(s.kind==='slider')return slider(s.id,s.max,ans[s.id]??s.start??0,s.lo,s.hi,s.mid,s.pos);
+  if(s.kind==='bub1')return bubs(s.id,s.anch);
+  if(s.kind==='bub5')return s.items.map(it=>'<div class="ct-row"><p class="q">'+it.q+'</p>'+bubs(it.k,it.a)+'</div>').join('');
+  if(s.kind==='auto'){var ck='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>';var cr=parseInt(ans.cream!=null?ans.cream:'2',10);var pct=Math.round(cr/3*100);var md=ans.medsTaken||'yes';var exA=ans.exercise||'yes';var ex=(exA==='yes')?'<div class="ct-auto">'+ring(100,'#4A6B5B','✓')+'<div><div class="t">Today\'s exercise</div><div class="d">Knee strengthening routine</div><div class="ct-logged">'+ck+'Completed today</div></div></div>':'<div class="ct-auto">'+ring(12,'#C97257','0')+'<div><div class="t">Today\'s exercise</div><div class="d">Knee strengthening routine</div><div class="ct-pending">Not done yet</div></div></div>';var cream='<div class="ct-auto">'+ring(pct,'#C97257',cr+'/3')+'<div><div class="t">Cream applications</div><div class="d">Target: 2 to 3 per day</div>'+(cr>=2?'<div class="ct-logged">'+ck+cr+' of 3 logged today</div>':'<div class="ct-pending">'+cr+' of 3 logged so far</div>')+'</div></div>';var meds;if(md==='yes')meds='<div class="ct-auto">'+ring(100,'#4A6B5B','✓')+'<div><div class="t">Medications taken</div><div class="d">As prescribed today</div><div class="ct-logged">'+ck+'Taken today</div></div></div>';else if(md==='no')meds='<div class="ct-auto">'+ring(12,'#C97257','0')+'<div><div class="t">Medications taken</div><div class="d">As prescribed today</div><div class="ct-pending">Not taken yet</div></div></div>';else meds='<div class="ct-auto">'+ring(100,'#8A908B','-')+'<div><div class="t">Medications taken</div><div class="d">No medication prescribed</div><div class="ct-logged" style="color:var(--muted)">'+ck+'None to take</div></div></div>';return ex+cream+meds;}
+  if(s.kind==='segq')return '<div class="ct-seg" data-seg="'+s.id+'">'+s.opts.map(function(o){return '<button data-val="'+o[0]+'" class="'+(ans[s.id]===o[0]?'sel':'')+'">'+o[1]+'</button>';}).join('')+'</div>';
+  if(s.kind==='chips')return '<div class="ct-chips">'+s.opts.map(o=>'<span class="ct-chip '+((ans.ms||[]).includes(o)?'sel':'')+'" data-chip="'+o+'"><svg class="ck" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>'+o+'</span>').join('')+'</div>';
+  if(s.kind==='wpai'){var work=(ans.we==='yes')?'<div class="ct-field"><label>Past 7 days, <span class="ct-key">hours missed</span> from work because of your knee</label><input type="number" min="0" max="80" value="'+(ans.wm??0)+'" data-num="wm"> hours</div><div class="ct-field"><label>Hours you <span class="ct-key">actually worked</span> in the past 7 days</label><input type="number" min="0" max="80" value="'+(ans.ww??32)+'" data-num="ww"> hours</div><div class="ct-row"><p class="q">While working, how much did your knee affect your <span class="ct-key">productivity</span>?</p>'+slider('wp',10,ans.wp??0,'No effect','Some','Completely')+'</div>':(ans.we==='no')?'<p class="sub" style="margin:14px 0 4px">Since you are not working for pay right now, we will skip the work questions.</p>':'';return '<div class="ct-field"><label>Are you currently <span class="ct-key">working for pay</span>?</label><div class="ct-seg" data-seg="we"><button data-val="yes" class="'+(ans.we==='yes'?'sel':'')+'">Yes</button><button data-val="no" class="'+(ans.we==='no'?'sel':'')+'">No</button></div></div>'+work+'<div class="ct-row"><p class="q">How much did your knee affect activities <span class="ct-key">outside work</span>?</p>'+slider('wa',10,ans.wa??0,'No effect','Some','Completely')+'</div>';}
+  return '';
+ }
+ function peg(){const a=ans.pp,b=ans.pe,c=ans.pa;if([a,b,c].some(x=>x==null))return null;return ((a+b+c)/3).toFixed(1);}
+ function koos(){const ks=['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10','k11','k12'];if(ks.some(k=>ans[k]==null))return null;const mn=a=>a.reduce((s,k)=>s+ans[k],0)/a.length;const sb=a=>Math.round(100-mn(a)*25);return Math.round((sb(['k1','k2','k3','k4'])+sb(['k5','k6','k7','k8'])+sb(['k9','k10','k11','k12']))/3);}
+ function mood(){const k=['m1','m2','m3','m4'];if(k.some(x=>ans[x]==null))return null;return {phq:ans.m1+ans.m2,gad:ans.m3+ans.m4};}
+ function summary(mode){const monthly=(mode==='monthly');const pain=ans.nprs,pg=peg(),ko=koos(),mo=mood(),ms=(ans.ms||[]).length;const pgt=ans.pgic!=null?['Very much better','Much better','A little better','No change','A little worse','Much worse','Very much worse'][ans.pgic]:'—';const st=(k,v,s)=>'<div class="ct-stat"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="s">'+s+'</div></div>';let c=st('Pain today',pain+'/10',pain<=3?'good range':'we are watching');if(pg!=null)c+=st('PEG-3',pg+'/10','pain interference');if(monthly){if(ans.sl!=null)c+=st('Sleep quality',ans.sl+'/10',ans.sl>=7?'sleeping well':'we are watching');if(ans.md!=null)c+=st('Medication days',ans.md+' / 30',ans.op==='no'?'zero opioids':(ans.op==='yes'?'includes an opioid':'oral pain medication'));c+=st('Overall',pgt,'since starting with clara');if(ans.nps!=null)c+=st('Would recommend',ans.nps+'/10','thank you');}else{if(ko!=null)c+=st('KOOS-12',ko+'/100',ko>=70?'good function':'room to improve');if(mo)c+=st('Mood',(mo.phq+mo.gad)+'/12',(mo.phq>=3||mo.gad>=3)?'we will check in':'no flags');c+=st('Milestones',ms+' / 7','everyday wins');c+=st('Overall',pgt,'since starting');}const sr=[7,6,6,5,5,4,Number(pain)],W=560,H=120;const pts=sr.map((y,n)=>[20+n*((W-40)/(sr.length-1)),H-14-(y/10)*(H-32)]);const path=pts.map((p,n)=>(n?'L':'M')+p[0].toFixed(0)+' '+p[1].toFixed(0)).join(' ');const dots=pts.map((p,n)=>'<circle cx="'+p[0].toFixed(0)+'" cy="'+p[1].toFixed(0)+'" r="'+(n===pts.length-1?5:3)+'" fill="'+(n===pts.length-1?'#C97257':'#7d9c8d')+'"/>').join('');const li=[...new Set([0,Math.floor((sr.length-1)/2),sr.length-1])];const labs=li.map(n=>{const ly=(pts[n][1]-14<14)?pts[n][1]+26:pts[n][1]-14;return '<text x="'+pts[n][0].toFixed(0)+'" y="'+ly.toFixed(0)+'" text-anchor="middle" font-size="15" font-weight="700" fill="'+(n===sr.length-1?'#C97257':'#4a6b5b')+'">'+sr[n]+'</text>';}).join('');return '<p class="eyebrow">all done</p><h1>Here\'s what your care team sees</h1><p class="lead" style="margin-bottom:16px">Thank you. Here is the snapshot your team gets, always compared with where you started.</p><div class="ct-trend"><div class="k">Your pain trend (last 7 check-ins)</div><svg viewBox="0 0 '+W+' '+H+'" width="100%"><path d="'+path+'" fill="none" stroke="#7d9c8d" stroke-width="3" stroke-linecap="round"/>'+dots+labs+'</svg></div><div class="ct-sumgrid">'+c+'</div>'+((!monthly&&ms)?'<div class="ct-trend"><div class="k">Milestones you have regained</div><div class="ct-pillrow">'+(ans.ms||[]).map(m=>'<span class="ct-pilltag">'+m+'</span>').join('')+'</div></div>':'')+'<p class="ct-note">Your data, shared only with your clara care team and used in de-identified, aggregate form for reporting. Review or pause sharing any time in Settings.</p>';}
+ function render(){const s=FLOW[i];let e=FLOW.length-1;for(let n=i0;n<FLOW.length;n++){if(FLOW[n].end||n===FLOW.length-1){e=n;break;}}const pct=e>i0?Math.round(((i-i0)/(e-i0))*100):100;bar.style.width=pct+'%';const pl=document.getElementById('ctPct');if(pl)pl.textContent=pct+'% complete';phases(s.stage||(s.t==='summary'?'quarterly':null));let h='';
+  if(s.t==='welcome')h='<svg class="ct-bigicon" viewBox="0 0 24 24" fill="none" stroke="#4A6B5B" stroke-width="1.6"><path d="M12 21s-7-4.6-9.2-9C1.3 8.9 3 5.5 6.4 5.5c2 0 3.2 1.2 3.9 2.2.4.6 1.2.6 1.6 0 .7-1 1.9-2.2 3.9-2.2 3.4 0 5.1 3.4 3.6 6.5C19 16.4 12 21 12 21z"/></svg><h1>Let\'s track how you\'re really doing</h1><p class="lead">A few simple check-ins help your doctor understand your chronic pain far better than a single rushed visit ever could. It only takes a minute a day, with a little more once a month and each season.</p>';
+  else if(s.t==='stage')h='<div class="stagekv">'+clk+' '+s.kv+'</div><h1>'+s.title.replace(s.stage,'<span class="ct-cad">'+s.stage+'</span>')+'</h1><p class="lead">'+s.body+'</p>';
+  else if(s.t==='summary')h=summary(s.stage);
+  else if(s.t==='celebrate')h='<div class="ct-celebrate"><svg class="ct-burst" viewBox="0 0 120 120"><circle cx="20" cy="32" r="3" fill="#C97257"/><circle cx="100" cy="30" r="3" fill="#4A6B5B"/><circle cx="13" cy="72" r="2.5" fill="#C8A875"/><circle cx="107" cy="76" r="2.5" fill="#C97257"/><circle cx="60" cy="9" r="2.5" fill="#4A6B5B"/><circle cx="60" cy="58" r="33" fill="#E8EFEA"/><g transform="translate(38,34) scale(1.85)" fill="#C97257"><path d="M12 21s-7-4.6-9.2-9C1.3 8.9 3 5.5 6.4 5.5c2 0 3.2 1.2 3.9 2.2.4.6 1.2.6 1.6 0 .7-1 1.9-2.2 3.9-2.2 3.4 0 5.1 3.4 3.6 6.5C19 16.4 12 21 12 21z"/></g></svg><div class="ct-streak"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C97257"><path d="M12 2c1 3 4 4 4 8a4 4 0 0 1-8 0c0-1 .3-2 .8-2.6C9.5 7 11 6 12 2z"/></svg>'+(s.streak||'')+'</div><h1>'+(s.headline||'')+'</h1><p class="lead">'+(s.body||'')+'</p>'+(s.closer?'<p class="ct-closer">'+s.closer+'</p>':'')+'</div>';
+  else{var wy=s.why;if(wy==null){for(var j=i-1;j>=0;j--){if(FLOW[j].t==='stage')break;if(FLOW[j].t==='tool'&&FLOW[j].why){wy=FLOW[j].why;break;}}}h='<p class="eyebrow">'+s.stage+' check-in</p>'+(wy?'<div class="why"><span class="k">Why this helps</span><p>'+wy+'</p></div>':'');if(s.ask)h+='<p class="ask">'+s.ask+'</p>';if(s.sub)h+='<p class="sub">'+s.sub+'</p>';h+=tool(s);if(s.esc)h+='<div class="ct-esc">'+s.esc+'</div>';}
+  body.innerHTML=h;body.scrollTop=0;nav(s);attach();}
+ function missing(s){if(s.t!=='tool')return[];if(s.kind==='bub5')return s.items.filter(it=>ans[it.k]==null).map(it=>it.k);if(s.kind==='bub1'||s.kind==='segq')return ans[s.id]==null?[s.id]:[];if(s.kind==='wpai')return ans.we==null?['we']:[];return[];}
+ function flagMiss(keys){body.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));let first=null;keys.forEach(k=>{const el=body.querySelector('[data-b="'+k+'"]')||body.querySelector('[data-seg="'+k+'"]');if(el){el.classList.add('miss');if(!first)first=el;}});let n=document.getElementById('ctMiss');if(!n){n=document.createElement('div');n.id='ctMiss';n.className='ct-missnote';body.appendChild(n);}n.textContent=keys.length>1?'Almost there. Please answer the highlighted questions before continuing.':'Almost there. Please answer the highlighted question before continuing.';if(first)first.scrollIntoView({behavior:'smooth',block:'center'});}
+ function nav(s){const last=!!s.end||i===FLOW.length-1;const lab=s.t==='welcome'?'Start my check-in':s.t==='stage'?"Let's go":last?'Done':'Continue';const rst=FLOW[i0]?FLOW[i0].stage:null;const canSave=(rst==='monthly'||rst==='quarterly')&&s.t==='tool';foot.innerHTML=(i>i0&&!last?'<button class="ct-btn ghost" id="ctBack">Back</button>':'')+(canSave?'<button class="ct-btn ghost" id="ctSave">Save</button>':'')+'<button class="ct-btn primary" id="ctNext">'+lab+'</button>';document.getElementById('ctNext').onclick=()=>{const mk=missing(s);if(mk.length){flagMiss(mk);return;}if(last){clearProgress();closeFn();}else{i++;render();}};const svb=document.getElementById('ctSave');if(svb)svb.onclick=()=>{saveProgress();closeFn();};const b=document.getElementById('ctBack');if(b)b.onclick=()=>{i=Math.max(i0,i-1);render();};}
+ function attach(){
+  body.querySelectorAll('input[type=range]').forEach(el=>{if(ans[el.dataset.s]==null)ans[el.dataset.s]=+el.value;el.addEventListener('input',e=>{const id=e.target.dataset.s,v=+e.target.value;ans[id]=v;const n=document.getElementById('cn-'+id);if(n)n.textContent=v;});});
+  const unmiss=el=>{el.classList.remove('miss');const nn=document.getElementById('ctMiss');if(nn&&!body.querySelector('.miss'))nn.remove();};
+  body.querySelectorAll('[data-b]').forEach(row=>row.querySelectorAll('.ct-bub').forEach(b=>b.addEventListener('click',()=>{ans[row.dataset.b]=+b.dataset.i;row.querySelectorAll('.ct-bub').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');unmiss(row);})));
+  body.querySelectorAll('[data-seg]').forEach(sg=>sg.querySelectorAll('button').forEach(bt=>bt.addEventListener('click',()=>{ans[sg.dataset.seg]=bt.dataset.val;sg.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));bt.classList.add('sel');unmiss(sg);if(sg.dataset.seg==='we'){if(bt.dataset.val==='no'){delete ans.wm;delete ans.ww;delete ans.wp;}render();}})));
+  body.querySelectorAll('[data-num]').forEach(inp=>inp.addEventListener('input',e=>ans[e.target.dataset.num]=+e.target.value||0));
+  body.querySelectorAll('[data-chip]').forEach(c=>c.addEventListener('click',()=>{ans.ms=ans.ms||[];const k=c.dataset.chip,n=ans.ms.indexOf(k);if(n>=0){ans.ms.splice(n,1);c.classList.remove('sel');}else{ans.ms.push(k);c.classList.add('sel');}}));
+ }
+ const SAVEK=st=>'claraMobileCheckin_'+st;
+ function runStage(){const s=FLOW[i0];return s?s.stage:null;}
+ function saveProgress(){try{const st=runStage();if(st==='monthly'||st==='quarterly')localStorage.setItem(SAVEK(st),JSON.stringify({v:2,id:FLOW[i]&&FLOW[i].id||null,ans:ans}));}catch(e){}}
+ function clearProgress(){try{const st=runStage();if(st)localStorage.removeItem(SAVEK(st));}catch(e){}}
+ function cardStates(){['monthly','quarterly'].forEach(st=>{const card=document.querySelector('[data-checkin="'+st+'"]');if(!card)return;const pill=card.querySelector('.ci-pill'),go=card.querySelector('.ci-go');let saved=null;try{saved=localStorage.getItem(SAVEK(st));}catch(e){}if(saved){if(pill){pill.textContent='In progress';pill.classList.add('ci-now');}if(go)go.textContent='Resume →';}else{if(go)go.textContent='Start →';}});}
+ function openAt(idx,at){i0=idx;i=(at==null?idx:at);ov.classList.add('open');ov.setAttribute('aria-hidden','false');render();}
+ function openStage(stage){let sv=null;try{sv=localStorage.getItem(SAVEK(stage));}catch(e){}if(sv){try{const s=JSON.parse(sv);if(s&&s.v===2){Object.assign(ans,s.ans||{});const base=stageStart[stage]??0;let at=base;if(s.id){const k=FLOW.findIndex(x=>x.stage===stage&&x.id===s.id);if(k>=0)at=k;}openAt(base,at);return;}localStorage.removeItem(SAVEK(stage));}catch(e){}}openAt(stageStart[stage]??0);}
+ function closeFn(){const s=FLOW[i];if(!(s&&(s.end||i===FLOW.length-1)))saveProgress();ov.classList.remove('open');ov.setAttribute('aria-hidden','true');cardStates();}
+ document.getElementById('ctClose').addEventListener('click',closeFn);
+ ov.addEventListener('click',e=>{if(e.target===ov)closeFn();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('open'))closeFn();});
+ window.openCheckin=openStage;
+ cardStates();
+})();
+</script>
+</body>
+</html>

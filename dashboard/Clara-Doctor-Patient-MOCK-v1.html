@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clara · patient record</title>
+<style>
+:root{
+  --cream:#F7F5F0; --cream-soft:#F2EFE8; --sage:#4A6B5B; --sage-dark:#2F473B; --sage-deep:#24382E;
+  --sage-pale:#EAF1ED; --sage-soft:#D7E3DB; --terra:#C97257; --terra-deep:#A35540; --terra-pale:#FBF2ED;
+  --gold:#C8A875; --gold-pale:#F5EBD8; --ink:#1F2421; --grey:#42483F; --muted:#4A504B;
+  --line:#E8E4DC; --line-strong:#D9D4C8; --good:#4A6B5B; --watch:#A88747; --flag:#B0492F;
+  --shadow-sm:0 1px 3px rgba(31,36,33,.06); --shadow:0 10px 30px rgba(31,36,33,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.55}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px 70px}
+
+/* top bar */
+.bar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.bar-inner{max-width:1280px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:18px}
+.logo{font-family:Georgia,serif;font-weight:700;font-size:26px;color:var(--sage-dark);letter-spacing:-.5px}
+.bar-title{font-size:15px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink);border-left:1px solid var(--line-strong);padding-left:18px}
+.bar-right{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted)}
+.bar-chip{background:var(--sage-pale);color:var(--sage-dark);font-weight:600;padding:6px 14px;border-radius:16px}
+
+/* patient banner */
+.patient{display:flex;align-items:center;gap:20px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 26px;margin:26px 0 18px;box-shadow:var(--shadow-sm);flex-wrap:wrap}
+.avatar{width:92px;height:92px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dark));color:#fff;display:grid;place-items:center;font-weight:700;font-size:30px}
+.p-name{font-family:Georgia,serif;font-size:23px;font-weight:700;color:var(--ink)}
+.p-meta{font-size:15px;color:var(--grey);margin-top:2px}
+.p-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chip{font-size:13.5px;font-weight:700;padding:7px 14px;border-radius:16px}
+.chip.good{background:var(--sage-pale);color:var(--sage-dark)}
+.chip.terra{background:var(--terra-pale);color:var(--terra-deep)}
+.chip.gold{background:var(--gold-pale);color:#7A5F23}
+
+/* section labels */
+.slab{font-size:17px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:var(--ink);margin:38px 0 16px;display:flex;align-items:center;gap:14px}
+.slab::after{content:"";flex:1;height:1px;background:var(--line)}
+.slab .tag{font-size:15px;letter-spacing:.5px;background:var(--cream-soft);color:var(--ink);padding:6px 14px;border-radius:12px;text-transform:none;font-weight:700}
+
+/* KPI grid */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1000px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px 40px;box-shadow:var(--shadow-sm);position:relative}
+.kpi .verdict{position:absolute;right:14px;bottom:12px;font-size:13px;font-weight:800;color:var(--ink);background:var(--sage-pale);padding:4px 12px;border-radius:12px;letter-spacing:.3px}
+.kpi .k{font-size:15px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--ink)}
+.kpi .v{font-size:38px;font-weight:800;color:var(--sage-dark);line-height:1.1;margin-top:8px}
+.kpi .v small{font-size:17px;font-weight:600;color:var(--muted)}
+.kpi .delta{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:700;margin-top:8px;padding:4px 10px;border-radius:12px}
+.delta.good{background:var(--sage-pale);color:var(--sage-dark)}
+.delta.watch{background:var(--gold-pale);color:#7A5F23}
+.delta.down{background:#FCE8E2;color:#D6341F}
+.kpi .base{font-size:14.5px;color:var(--grey);margin-top:9px;line-height:1.5}
+
+/* cards & grids */
+.grid-2{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-32{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
+@media(max-width:1000px){.grid-2,.grid-3,.grid-32{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm)}
+.card h3{font-size:17px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.card .sub{font-size:15.5px;color:var(--grey);margin-bottom:14px;line-height:1.6}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dot.sage{background:var(--sage)} .dot.terra{background:var(--terra)} .dot.gold{background:var(--gold)}
+
+/* adherence rings row */
+.rings{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.ringbox{display:flex;align-items:center;gap:12px}
+.ringbox .t{font-size:14.5px;font-weight:700;color:var(--ink)}
+.ringbox .d{font-size:13.5px;color:var(--grey)}
+
+/* legend / status table */
+.rowline{display:flex;align-items:flex-start;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--cream-soft);gap:14px}
+.rowline:last-child{border-bottom:none}
+.rowline .l{font-size:15px;color:var(--ink);font-weight:600}
+.rowline .m{font-size:14px;color:var(--grey)}
+.rowline .r{font-size:15px;font-weight:800}
+.r.good{color:var(--good)} .r.watch{color:var(--watch)} .r.flag{color:var(--flag)}
+.pill{font-size:13px;font-weight:700;padding:4px 11px;border-radius:12px;white-space:nowrap}
+.pill.good{background:var(--sage-pale);color:var(--sage-dark)}
+.pill.watch{background:var(--gold-pale);color:#7A5F23}
+.pill.flag{background:#F7E5DE;color:var(--flag)}
+
+/* milestones */
+.mstones{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px}
+.ms{font-size:14px;font-weight:600;padding:8px 14px;border-radius:16px;border:1.5px solid var(--line-strong);color:var(--muted);display:inline-flex;align-items:center;gap:7px}
+.ms.on{background:var(--sage-pale);border-color:var(--sage-soft);color:var(--sage-dark)}
+
+/* summary */
+.summary{background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:20px;padding:28px 30px;margin-top:26px;box-shadow:var(--shadow-sm)}
+.summary h3{font-size:18.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.summary .sub{font-size:15.5px;color:var(--grey);margin-bottom:14px;line-height:1.6}
+.summary p{font-size:15.5px;line-height:1.7;color:var(--grey);margin-bottom:16px}
+.summary p:last-of-type{margin-bottom:0}
+.summary h4{font-size:15px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-deep);margin:32px 0 9px}
+.summary .hl{color:var(--sage-dark);font-weight:700}
+.summary .was{color:#C0392B;font-weight:800}
+.summary .now{color:#1B5FC2;font-weight:800}
+.foot{font-size:13.5px;color:var(--muted);text-align:center;margin-top:30px;font-style:italic}
+/* instrument info popover */
+.info{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--sage);background:#fff;color:var(--sage-dark);font-size:12px;font-weight:800;line-height:1;cursor:pointer;display:inline-grid;place-items:center;vertical-align:middle;margin-left:7px;transition:all .15s;font-style:normal}
+.info:hover{background:var(--sage);color:#fff;box-shadow:0 0 0 3px var(--sage-pale);transform:translateY(-1px)}
+.info-overlay{position:fixed;inset:0;background:rgba(31,36,33,.55);display:none;align-items:center;justify-content:center;z-index:400;padding:24px}
+.info-overlay.open{display:flex}
+.info-box{background:#fff;border-radius:20px;padding:28px 30px;max-width:560px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative}
+.info-box .eyebrow{font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:6px}
+.info-box h3{font-family:inherit;font-weight:800;font-size:23px;color:var(--ink);margin-bottom:10px;letter-spacing:-.2px}
+.info-box .what{font-size:15.5px;color:var(--grey);line-height:1.65;margin-bottom:14px}
+.info-box .irow{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--cream-soft);font-size:14.5px}
+.info-box .irow:last-of-type{border-bottom:none}
+.info-box .irow .a{font-weight:700;color:var(--ink);white-space:nowrap}
+.info-box .irow .b{color:var(--grey);text-align:right}
+.info-box .cite{font-size:13.5px;color:var(--muted);font-style:italic;margin-top:14px}
+.info-close{position:absolute;top:-14px;right:-14px;width:40px;height:40px;border-radius:50%;background:var(--sage-dark);color:#fff;font-size:21px;line-height:1;border:none;cursor:pointer;box-shadow:var(--shadow)}
+.info-close:hover{background:var(--terra)}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+
+/* ===== PATIENT RECORD ADDITIONS ===== */
+body{font-size:17.5px}
+.p-meta{font-size:17.5px}
+.card .sub{font-size:17.5px}
+.card h3{font-size:18.5px}
+.rowline .l{font-size:17.5px;flex:1;min-width:0} .rowline .m{font-size:16.5px} .rowline .r{font-size:17.5px;flex-shrink:0;white-space:nowrap;text-align:right}
+.kpi .base{font-size:17px} .kpi .k{font-size:16px}
+.ringbox .t{font-size:17.5px} .ringbox .d{font-size:16.5px}
+.ms{font-size:16.5px}
+.summary p{font-size:17.5px}
+.slab .tag{font-size:16.5px}
+.chip{font-size:15px}
+.barbtn{display:inline-flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;border-radius:11px;padding:9px 16px;cursor:pointer;text-decoration:none;border:none}
+.barbtn.back{background:var(--cream-soft);color:var(--ink);border:1px solid var(--line)}
+.barbtn.back:hover{background:var(--line)}
+.barbtn.print2{background:var(--sage-dark);color:#fff}
+.snapshot{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin-top:14px;font-size:17.5px;line-height:1.6;color:var(--ink);width:100%}
+.snapshot b{color:var(--sage-dark)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:1000px){.facts{grid-template-columns:1fr 1fr}}
+.fact{background:var(--cream);border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+.fact .fl{font-size:13.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.fact .fv{font-size:17px;font-weight:700;color:var(--ink);margin-top:3px}
+.fact .fv.good{color:var(--sage-dark)}
+.fact{position:relative}
+.fact .fl{padding-right:28px}
+.fact .info{position:absolute;top:11px;right:11px;margin-left:0}
+.fact-flag{background:var(--sage-pale);border-color:var(--sage-soft)}
+.fact-flag .info{border-color:var(--sage-dark);background:var(--sage-dark);color:#fff}
+.fact-flag .info:hover{background:var(--terra);border-color:var(--terra)}
+.plan-row{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--cream-soft)}
+.plan-row:last-of-type{border-bottom:none}
+.plan-row .pic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;flex-shrink:0}
+.plan-row .pic svg{width:27px;height:27px;display:block}
+.plan-row .pt{font-size:17.5px;font-weight:800;color:var(--ink)}
+.plan-row .pd{font-size:16.5px;color:var(--grey);margin-top:3px;line-height:1.55}
+.plan-row .pstatus{margin-left:auto;font-size:13.5px;font-weight:800;padding:6px 13px;border-radius:14px;white-space:nowrap;flex-shrink:0}
+.ps-pending{background:var(--gold-pale);color:#7A5F23}
+.ps-approved{background:var(--sage-pale);color:var(--sage-dark)}
+.ps-hold{background:#F7E5DE;color:var(--flag)}
+.ps-na{background:var(--cream-soft);color:var(--muted)}
+.aibanner{display:flex;gap:14px;align-items:center;background:var(--terra-pale);border:1px solid #EBD3C7;border-radius:14px;padding:14px 17px;margin-bottom:14px}
+.aibanner .aii{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--terra),var(--terra-deep));color:#fff;display:grid;place-items:center;font-size:19px;flex-shrink:0}
+.aibanner .ait{font-size:16.5px;font-weight:800;color:var(--ink)}
+.aibanner .ais{font-size:17.5px;color:var(--grey);line-height:1.55;margin-top:3px}
+.pbtns{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.pbtn{font-size:16.5px;font-weight:700;border:none;border-radius:12px;padding:10px 20px;cursor:pointer}
+.pbtn.approve{background:var(--sage);color:#fff}
+.pbtn.reject{background:#fff;color:var(--flag);border:1.5px solid #E3B9AC}
+.pbtn.edit{background:#fff;color:var(--sage-dark);border:1.5px solid var(--sage-soft)}
+.pbtn.hold{background:var(--gold-pale);color:#7A5F23}
+.pbtn.renew{background:var(--sage-dark);color:#fff}
+.rectoast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:var(--sage-dark);color:#fff;padding:14px 24px;border-radius:14px;font-weight:700;font-size:16px;box-shadow:var(--shadow);z-index:500;opacity:0;transition:.25s;pointer-events:none}
+.rectoast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.hist-note{font-size:16px;color:var(--grey);line-height:1.6;margin-bottom:16px}
+.hist-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:1000px){.hist-grid{grid-template-columns:1fr}}
+.hist-full{grid-column:1 / -1}
+.hist-field label{display:block;font-size:14px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--terra-deep);margin-bottom:8px}
+.hist-input{width:100%;border:1.5px solid var(--line-strong);border-radius:14px;background:var(--cream);padding:14px 16px;font-family:inherit;font-size:17.5px;line-height:1.55;color:var(--ink);resize:vertical}
+.hist-input:focus{outline:none;border-color:var(--sage);background:#fff;box-shadow:0 0 0 3px var(--sage-pale)}
+.hist-input::placeholder{color:var(--muted);opacity:.65}
+.hist-actions{display:flex;align-items:center;justify-content:flex-end;gap:16px;margin-top:18px}
+.hist-saved{font-size:15px;font-weight:700;color:var(--sage-dark)}
+.sig-hint{font-size:12.5px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:6px}
+.sig-preview{margin-top:10px;font-size:16.5px;line-height:1.55;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);border-radius:12px;padding:12px 15px;display:none}
+.sig-preview.show{display:block}
+.sig-preview .lbl{font-size:12.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--sage-dark);opacity:.8;margin-bottom:6px}
+.sig-preview .pl{display:block;padding:3px 0}
+.sig-cheat{margin-top:18px;border:1px solid var(--line);border-radius:14px;background:var(--cream);padding:0 18px}
+.sig-cheat summary{cursor:pointer;font-weight:800;font-size:16px;color:var(--ink);padding:14px 0;list-style:none}
+.sig-cheat summary::-webkit-details-marker{display:none}
+.sig-cheat summary::before{content:"▸ ";color:var(--terra)}
+.sig-cheat[open] summary::before{content:"▾ "}
+.sig-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 28px;padding:0 0 6px}
+@media(max-width:1000px){.sig-cols{grid-template-columns:1fr}}
+.sig-grp .h{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--terra-deep);margin:6px 0 6px}
+.sig-row{display:flex;justify-content:space-between;gap:12px;font-size:15px;padding:5px 0;border-bottom:1px solid var(--cream-soft)}
+.sig-row code{font-weight:800;color:var(--ink);font-family:inherit}
+.sig-row .m{color:var(--grey);text-align:right}
+.sig-warn{font-size:14.5px;color:var(--flag);margin:6px 0 16px;line-height:1.5}
+.slab.glance{margin-top:60px;padding-top:34px;border-top:1px solid var(--line)}
+.glance-card{padding:34px 24px 22px}
+.glance-card .kpi{background:var(--cream);box-shadow:none;border-color:var(--line-strong)}
+.glance-card .more-toggle{margin:24px 0 2px}
+.more-toggle{display:flex;justify-content:center;margin:30px 0 6px}
+.morebtn{font-size:18.5px;font-weight:800;color:var(--sage-dark);background:#fff;border:1.5px solid var(--line-strong);border-radius:18px;padding:18px 44px;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .15s}
+.morebtn:hover{border-color:var(--sage);box-shadow:0 0 0 3px var(--sage),0 20px 44px rgba(47,71,59,.24);transform:translateY(-5px)}
+.morebtn:active{transform:translateY(-2px)}
+.moredata{display:none}
+.moredata.open{display:block}
+@media print{.moredata{display:block!important}.more-toggle{display:none!important}}
+@media print{.bar .barbtn,.pbtns,.hist-actions{display:none!important}.bar{position:static}.hist-input{border:none;background:none;padding:0}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-inner">
+    <a class="barbtn back" href="Clara-Doctor-Dashboard-MOCK-v1.html">← Dashboard</a>
+    <span class="logo">clara</span>
+    <span class="bar-title">Patient record</span>
+    <div class="bar-right">
+      <button class="barbtn print2" onclick="window.print()">⎙ Print record</button>
+      <span>Dr. Dolores · Doctor</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- PATIENT BANNER -->
+  <div class="patient">
+    <div class="avatar">AB</div>
+    <div style="flex:1;min-width:280px">
+      <div class="p-name">Amelia Brooks, 61</div>
+      <div class="p-meta">Knee osteoarthritis, right knee · Greenvale, ON</div>
+      <div class="p-meta">Treatments: C2 compound cream + naproxen + movement</div>
+      <div class="p-meta">Day 130 of plan, Baseline Feb 14, 2026</div>
+      <div class="p-chips">
+        <span class="chip good">✓ Meaningful improvement reached</span>
+        <span class="chip good">Zero opioids</span>
+        <span class="chip gold">Dosage step-up requested</span>
+      </div>
+      <div class="snapshot"><b>Snapshot.</b> Amelia is responding well at Day 130. Pain has fallen from a baseline of <b>6.4</b> to <b>3.2</b> (a 50% reduction), KOOS-12 function is up 16 points, oral medication days halved with zero opioids, and adherence is strong. She has requested a cream step-up to C3, awaiting your review below.</div>
+    </div>
+  </div>
+
+  <!-- DIAGNOSIS -->
+  <div class="slab">Diagnosis <span class="tag">confirmed at intake</span></div>
+  <div class="card">
+    <h3><span class="dot sage"></span> Knee osteoarthritis, right knee</h3>
+    <div class="sub">Referred from the clara intake assessment and reviewed by the clinical team.</div>
+    <div class="facts">
+      <div class="fact"><div class="fl">Primary site</div><div class="fv">Right knee, medial</div><button class="info" data-info="dxsite" aria-label="Details">i</button></div>
+      <div class="fact"><div class="fl">Duration</div><div class="fv">&gt; 3 months (chronic)</div><button class="info" data-info="dxduration" aria-label="Details">i</button></div>
+      <div class="fact"><div class="fl">Onset</div><div class="fv">Gradual, activity-related</div><button class="info" data-info="dxonset" aria-label="Details">i</button></div>
+      <div class="fact fact-flag"><div class="fl">Red-flag screen</div><div class="fv good">Negative · cleared</div><button class="info" data-info="redflags" aria-label="See the red flags screened">i</button></div>
+      <div class="fact"><div class="fl">Imaging on file</div><div class="fv">X-ray: KL grade 2</div><button class="info" data-info="dximaging" aria-label="Details">i</button></div>
+      <div class="fact"><div class="fl">BMI</div><div class="fv">28</div><button class="info" data-info="dxbmi" aria-label="Details">i</button></div>
+      <div class="fact"><div class="fl">Worst-pain time</div><div class="fv">Mornings &amp; after activity</div><button class="info" data-info="dxworst" aria-label="Details">i</button></div>
+      <div class="fact"><div class="fl">Baseline KOOS-12</div><div class="fv">38 / 100</div><button class="info" data-info="dxkoos" aria-label="Details">i</button></div>
+    </div>
+  </div>
+
+  <!-- INTAKE -->
+  <div class="slab">Intake questionnaire <span class="tag">knee OA assessment</span></div>
+  <div class="card">
+    <div class="rowline"><span class="l">What makes it worse</span><span class="r">Stairs &amp; prolonged standing</span></div>
+    <div class="rowline"><span class="l">What relieves it</span><span class="r">Rest &amp; heat</span></div>
+    <div class="rowline"><span class="l">Locking or giving way</span><span class="r">No</span></div>
+    <div class="rowline"><span class="l">Recent trauma</span><span class="r">None</span></div>
+    <div class="rowline"><span class="l">Other joints affected</span><span class="r">No</span></div>
+    <div class="rowline"><span class="l">Main goal</span><span class="r">Keep walking, return to gardening</span></div>
+  </div>
+
+  <!-- CLINICAL HISTORY (doctor entered) -->
+  <div class="slab">Clinical history <span class="tag">doctor entered · verify with patient</span></div>
+  <div class="card">
+    <div class="hist-note">Record what the patient reports, or what you confirm by phone. Patients will be able to enter this from their own dashboard in a future build, and it will show up here; for now the care team types and verifies it.</div>
+    <div class="hist-grid">
+      <div class="hist-field">
+        <label for="histMeds">Current medications <span class="sig-hint">shorthand ok — see the cheat sheet below</span></label>
+        <textarea id="histMeds" class="hist-input" rows="5" placeholder="One per line, e.g.&#10;Naproxen 500 mg po bid pc&#10;Lisinopril 10 mg po od"></textarea>
+      </div>
+      <div class="hist-field">
+        <label for="histAllergies">Allergies</label>
+        <textarea id="histAllergies" class="hist-input" rows="5" placeholder="Drug and other allergies, with reaction.&#10;e.g. Penicillin — rash. Or NKDA."></textarea>
+      </div>
+      <div class="hist-field hist-full">
+        <label for="histPMH">Past medical history</label>
+        <textarea id="histPMH" class="hist-input" rows="4" placeholder="Conditions, surgeries, relevant history.&#10;e.g. Hypertension; right knee osteoarthritis; appendectomy 2008."></textarea>
+      </div>
+    </div>
+    <details class="sig-cheat">
+      <summary>Prescription shorthand cheat sheet</summary>
+      <div class="sig-cols">
+        <div class="sig-grp">
+          <div class="h">Frequency</div>
+          <div class="sig-row"><code>od / qd / daily</code><span class="m">once a day</span></div>
+          <div class="sig-row"><code>bid</code><span class="m">twice a day</span></div>
+          <div class="sig-row"><code>tid</code><span class="m">three times a day</span></div>
+          <div class="sig-row"><code>qid</code><span class="m">four times a day</span></div>
+          <div class="sig-row"><code>qod</code><span class="m">every other day</span></div>
+          <div class="sig-row"><code>q6h / q8h</code><span class="m">every 6 / 8 hours</span></div>
+          <div class="sig-row"><code>qwk</code><span class="m">once a week</span></div>
+        </div>
+        <div class="sig-grp">
+          <div class="h">Timing</div>
+          <div class="sig-row"><code>hs / qhs</code><span class="m">at bedtime</span></div>
+          <div class="sig-row"><code>qam / qpm</code><span class="m">every morning / evening</span></div>
+          <div class="sig-row"><code>ac</code><span class="m">before meals</span></div>
+          <div class="sig-row"><code>pc</code><span class="m">after meals</span></div>
+          <div class="sig-row"><code>prn</code><span class="m">as needed</span></div>
+          <div class="sig-row"><code>stat</code><span class="m">immediately</span></div>
+          <div class="sig-row"><code>ud</code><span class="m">as directed</span></div>
+        </div>
+        <div class="sig-grp">
+          <div class="h">Route &amp; form</div>
+          <div class="sig-row"><code>po</code><span class="m">by mouth</span></div>
+          <div class="sig-row"><code>sl</code><span class="m">under the tongue</span></div>
+          <div class="sig-row"><code>top</code><span class="m">topically</span></div>
+          <div class="sig-row"><code>pr</code><span class="m">rectally</span></div>
+          <div class="sig-row"><code>im / iv / sc</code><span class="m">muscle / vein / skin</span></div>
+          <div class="sig-row"><code>inh / neb</code><span class="m">inhaled / nebulized</span></div>
+          <div class="sig-row"><code>npo</code><span class="m">nothing by mouth</span></div>
+          <div class="sig-row"><code>gtt</code><span class="m">drops</span></div>
+        </div>
+      </div>
+      <div class="sig-warn">⚠ ISMP flags <b>QD, QOD, OD, U/IU</b> and trailing zeros as error-prone — write them in full on anything that leaves clara.</div>
+    </details>
+    <div class="hist-actions">
+      <span class="hist-saved" id="histSaved"></span>
+      <button class="pbtn renew" id="histSave" style="flex:0 0 auto;min-width:170px">Save history</button>
+    </div>
+  </div>
+
+  <!-- CURRENT Rx PLAN -->
+  <div class="slab">Current Rx plan <span class="tag">awaiting your review</span></div>
+  <div class="card">
+    <div class="aibanner"><div class="aii">✦</div><div><div class="ait">AI-drafted plan + dosage increase request</div><div class="ais">Generated from intake and the knee OA protocol.<br>Patient requested a cream step-up (C2 → C3), and you have full override.</div></div></div>
+    <div class="plan-row">
+      <div class="pic" style="background:var(--sage)">Rx</div>
+      <div style="flex:1"><div class="pt">Compound cream — C2 Standard</div><div class="pd">Ketoprofen 10% + Diclofenac 5% + Lidocaine 5% + Bupivacaine 0.25% + Baclofen 5% + Amitriptyline 5% + Gabapentin 5% + Menthol/Camphor. Thin layer to right knee, 2–3×/day.</div></div>
+      <span class="pstatus ps-pending">Step-up requested</span>
+    </div>
+    <div class="plan-row">
+      <div class="pic" style="background:var(--terra)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="8" width="19" height="8" rx="4"/><line x1="12" y1="8.5" x2="12" y2="15.5"/></svg></div>
+      <div style="flex:1"><div class="pt">Naproxen 500 mg</div><div class="pd">Oral anti-inflammatory, twice daily with food. 6 med-days last month, zero opioids.</div></div>
+      <span class="pstatus ps-approved">Approved</span>
+    </div>
+    <div class="plan-row">
+      <div class="pic" style="background:var(--gold)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-5 3 10 2.5-7 1.5 2H22"/></svg></div>
+      <div style="flex:1"><div class="pt">Movement &amp; physiotherapy</div><div class="pd">Knee strengthening (quad/hip/glute) + walking ramp, 8-week build. Free with plan.</div></div>
+      <span class="pstatus ps-approved">Active</span>
+    </div>
+    <div class="pbtns">
+      <button class="pbtn approve" onclick="recAct('Plan approved')">Approve plan</button>
+      <button class="pbtn reject" onclick="recAct('Plan rejected')">Reject</button>
+      <button class="pbtn edit" onclick="recAct('Opening plan editor')">Edit plan</button>
+    </div>
+    <div class="pbtns">
+      <button class="pbtn hold" onclick="recAct('Treatment held')">Hold treatment</button>
+      <button class="pbtn renew" onclick="recAct('Treatment renewed')">Renew treatment</button>
+    </div>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="slab glance">At a glance <span class="tag">vs baseline, March 1</span></div>
+  <div class="card glance-card">
+  <div class="kpis">
+    <div class="kpi">
+      <div class="k">Pain · 7 day average <button class="info" data-info="nprs" aria-label="About this score">i</button></div>
+      <div class="v">3.2 <small>/ 10</small></div>
+      <span class="delta down">▼ 50% from baseline</span>
+      <div class="base">Baseline 6.4<br>30% bar crossed ✓</div>
+      <span class="verdict">improved</span>
+    </div>
+    <div class="kpi">
+      <div class="k">PEG-3 interference <button class="info" data-info="peg3" aria-label="About this score">i</button></div>
+      <div class="v">4.3 <small>/ 10</small></div>
+      <span class="delta down">▼ 2.4 points</span>
+      <div class="base">Baseline 6.7<br>≥1 point is clinically meaningful</div>
+      <span class="verdict">better</span>
+    </div>
+    <div class="kpi">
+      <div class="k">KOOS-12 knee score <button class="info" data-info="koos" aria-label="About this score">i</button></div>
+      <div class="v">54 <small>/ 100</small></div>
+      <span class="delta good">▲ 16 points</span>
+      <div class="base">Baseline 38<br>MCID about 10 points</div>
+      <span class="verdict">better</span>
+    </div>
+    <div class="kpi">
+      <div class="k">Oral medication days <button class="info" data-info="meddays" aria-label="About this measure">i</button></div>
+      <div class="v">6 <small>/ 30</small></div>
+      <span class="delta down">▼ from 12 days</span>
+      <div class="base">Zero opioid days<br>every month on record</div>
+      <span class="verdict">reduced</span>
+    </div>
+  </div>
+
+  <div class="more-toggle"><button class="morebtn" id="moreBtn">Expand to see the full outcome data ▾</button></div>
+  </div><!-- /glance-card -->
+  <div id="moreData" class="moredata">
+  <!-- DAILY TIER -->
+  <div class="slab">Daily tier <span class="tag">pain + plan adherence, last 90 days</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3><span class="dot terra"></span> Pain trend, 90 days</h3>
+      <div class="sub">Daily 0 to 10 score<br>Dotted line = baseline week average<br>Shaded band = meaningful improvement zone (30% below baseline)</div>
+      <svg viewBox="0 0 720 230" width="100%">
+        <rect x="40" y="124" width="660" height="86" fill="#EAF1ED" opacity=".55"/>
+        <line x1="40" y1="58" x2="700" y2="58" stroke="#C97257" stroke-width="1.6" stroke-dasharray="5,5" opacity=".7"/>
+        <text x="44" y="50" font-size="11" fill="#A35540" font-weight="700">baseline 6.4</text>
+        <text x="44" y="140" font-size="11" fill="#4A6B5B" font-weight="700">meaningful improvement zone (≤ 4.5)</text>
+        <line x1="40" y1="30" x2="40" y2="210" stroke="#E8E4DC"/>
+        <line x1="40" y1="210" x2="700" y2="210" stroke="#E8E4DC"/>
+        <text x="24" y="63" font-size="14" font-weight="700" fill="#1F2421" text-anchor="end">6</text>
+        <text x="24" y="123" font-size="14" font-weight="700" fill="#1F2421" text-anchor="end">4</text>
+        <text x="24" y="183" font-size="14" font-weight="700" fill="#1F2421" text-anchor="end">2</text>
+        <path d="M40 64 L92 70 L144 60 L196 84 L248 92 L300 104 L352 98 L404 118 L456 128 L508 140 L560 136 L612 150 L664 158 L700 162"
+              fill="none" stroke="#4A6B5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="40" cy="64" r="4" fill="#7d9c8d"/>
+        <circle cx="352" cy="98" r="4" fill="#7d9c8d"/>
+        <circle cx="700" cy="162" r="6" fill="#C97257"/>
+        <text x="40" y="84" font-size="13" font-weight="800" fill="#4A6B5B">6.4</text>
+        <text x="352" y="90" font-size="13" font-weight="800" fill="#4A6B5B">4.6</text>
+        <text x="688" y="152" font-size="13" font-weight="800" fill="#C97257">3.2</text>
+        <text x="40" y="227" font-size="14" font-weight="700" fill="#1F2421">March</text>
+        <text x="352" y="227" font-size="14" font-weight="700" fill="#1F2421" text-anchor="middle">April</text>
+        <text x="700" y="227" font-size="14" font-weight="700" fill="#1F2421" text-anchor="end">June</text>
+      </svg>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <h3><span class="dot sage"></span> Plan adherence</h3>
+      <div class="sub">From daily check-ins · last 30 days</div>
+      <div class="rings" style="flex:1;align-content:center;row-gap:18px">
+        <div class="ringbox">
+          <svg width="96" height="96" viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="#ECE8DF" stroke-width="8"/><circle cx="37" cy="37" r="30" fill="none" stroke="#4A6B5B" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="54.7" transform="rotate(-90 37 37)"/><text x="37" y="42" text-anchor="middle" font-size="16" font-weight="800" fill="#2F473B">71%</text></svg>
+          <div><div class="t">Exercises</div><div class="d">21 of 30 days logged done</div></div>
+        </div>
+        <div class="ringbox">
+          <svg width="96" height="96" viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="#ECE8DF" stroke-width="8"/><circle cx="37" cy="37" r="30" fill="none" stroke="#C97257" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="26.4" transform="rotate(-90 37 37)"/><text x="37" y="42" text-anchor="middle" font-size="16" font-weight="800" fill="#A35540">86%</text></svg>
+          <div><div class="t">Cream applied</div><div class="d">2+ applications most days</div></div>
+        </div>
+        <div class="ringbox">
+          <svg width="96" height="96" viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="#ECE8DF" stroke-width="8"/><circle cx="37" cy="37" r="30" fill="none" stroke="#C8A875" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="13.2" transform="rotate(-90 37 37)"/><text x="37" y="42" text-anchor="middle" font-size="16" font-weight="800" fill="#7A5F23">93%</text></svg>
+          <div><div class="t">Check-in streak</div><div class="d">28 of last 30 days</div></div>
+        </div>
+      </div>
+      <div class="rowline" style="margin-top:16px">
+        <span class="l">Engagement signal</span>
+        <span class="pill good">Strong · doing the plan</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONTHLY TIER -->
+  <div class="slab">Monthly tier <span class="tag">PEG-3 · sleep · medications · PGIC · NPS</span></div>
+  <div class="grid-3">
+    <div class="card">
+      <h3><span class="dot sage"></span> PEG-3 and sleep, by month <button class="info" data-info="peg3" aria-label="About PEG-3">i</button></h3>
+      <div class="sub" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>Lower PEG is better</span><span>Higher sleep is better</span></div>
+      <svg viewBox="0 0 320 268" width="100%">
+        <line x1="30" y1="234" x2="310" y2="234" stroke="#E8E4DC"/>
+        <rect x="40"  y="100" width="32" height="134" rx="7" fill="#7d9c8d"/>
+        <rect x="76"  y="162" width="32" height="72"  rx="7" fill="#C8A875"/>
+        <rect x="134" y="122" width="32" height="112" rx="7" fill="#7d9c8d"/>
+        <rect x="170" y="142" width="32" height="92"  rx="7" fill="#C8A875"/>
+        <rect x="228" y="148" width="32" height="86"  rx="7" fill="#4A6B5B"/>
+        <rect x="264" y="114" width="32" height="120" rx="7" fill="#C8A875"/>
+        <text x="56"  y="92"  font-size="12" font-weight="800" fill="#4A6B5B" text-anchor="middle">6.7</text>
+        <text x="92"  y="154" font-size="12" font-weight="800" fill="#7A5F23" text-anchor="middle">3.6</text>
+        <text x="150" y="114" font-size="12" font-weight="800" fill="#4A6B5B" text-anchor="middle">5.6</text>
+        <text x="186" y="134" font-size="12" font-weight="800" fill="#7A5F23" text-anchor="middle">4.6</text>
+        <text x="244" y="140" font-size="12" font-weight="800" fill="#2F473B" text-anchor="middle">4.3</text>
+        <text x="280" y="106" font-size="12" font-weight="800" fill="#7A5F23" text-anchor="middle">6.0</text>
+        <text x="74"  y="256" font-size="13" font-weight="700" fill="#1F2421" text-anchor="middle">March</text>
+        <text x="168" y="256" font-size="13" font-weight="700" fill="#1F2421" text-anchor="middle">April</text>
+        <text x="262" y="256" font-size="13" font-weight="700" fill="#1F2421" text-anchor="middle">May</text>
+        <circle cx="40" cy="14" r="5" fill="#7d9c8d"/><text x="50" y="18" font-size="11" fill="#42483F">PEG-3 (0 to 10)</text>
+        <circle cx="160" cy="14" r="5" fill="#C8A875"/><text x="170" y="18" font-size="11" fill="#42483F">Sleep quality (0 to 10)</text>
+      </svg>
+    </div>
+    <div class="card">
+      <h3><span class="dot terra"></span> Oral medication days</h3>
+      <div class="sub">Days per month on an oral pain medication</div>
+      <svg viewBox="0 0 320 230" width="100%">
+        <line x1="30" y1="196" x2="310" y2="196" stroke="#E8E4DC"/>
+        <rect x="56"  y="52"  width="40" height="144" rx="9" fill="#C97257"/>
+        <rect x="146" y="88"  width="40" height="108" rx="9" fill="#D98E6F"/>
+        <rect x="236" y="124" width="40" height="72"  rx="9" fill="#7d9c8d"/>
+        <text x="76"  y="44"  font-size="13" font-weight="800" fill="#A35540" text-anchor="middle">12</text>
+        <text x="166" y="80"  font-size="13" font-weight="800" fill="#A35540" text-anchor="middle">9</text>
+        <text x="256" y="116" font-size="13" font-weight="800" fill="#2F473B" text-anchor="middle">6</text>
+        <text x="76"  y="218" font-size="13" font-weight="700" fill="#1F2421" text-anchor="middle">March</text>
+        <text x="166" y="218" font-size="13" font-weight="700" fill="#1F2421" text-anchor="middle">April</text>
+        <text x="256" y="218" font-size="13" font-weight="700" fill="#1F2421" text-anchor="middle">May</text>
+      </svg>
+      <div class="rowline" style="margin-top:6px;justify-content:flex-start;gap:14px">
+        <span class="l">Opioid days</span>
+        <span class="pill good">0 · every month on record</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="dot gold"></span> Patient verdict <button class="info" data-info="pgicnps" aria-label="About PGIC and NPS">i</button></h3>
+      <div class="sub">PGIC and would recommend, May check-in</div>
+      <div class="rowline"><span class="l">Overall change (PGIC)</span><span class="r good">Much better</span></div>
+      <div class="rowline"><span class="l">Trajectory</span><span class="m" style="text-align:right">A little better → Much better<br>over 3 months</span></div>
+      <div class="rowline"><span class="l">Would recommend clara (NPS)</span><span class="r good">8 / 10</span></div>
+      <div class="rowline"><span class="l">Sleep quality<br><span style="font-size:13px;font-weight:500;color:var(--muted)">monthly item</span></span><span class="r watch" style="text-align:right">​<span style="font-size:17px">6 / 10</span><br><span style="font-size:13px;font-weight:600">improving from 3.6</span></span></div>
+      <div class="rowline"><span class="l">Check-in completion</span><span class="r good">3 of 3 months</span></div>
+    </div>
+  </div>
+
+  <!-- QUARTERLY TIER -->
+  <div class="slab">Quarterly tier <span class="tag">KOOS-12 · WPAI · mood · PROMIS sleep · milestones</span></div>
+  <div class="grid-32">
+    <div class="card">
+      <h3><span class="dot sage"></span> KOOS-12 knee function <button class="info" data-info="koos" aria-label="About KOOS-12">i</button></h3>
+      <div class="sub">0 worst to 100 best<br>Published MCID about 10 points</div>
+      <svg viewBox="0 0 320 180" width="100%">
+        <path d="M40 150 A120 120 0 0 1 280 150" fill="none" stroke="#ECE8DF" stroke-width="20" stroke-linecap="round"/>
+        <path d="M40 150 A120 120 0 0 1 198 41" fill="none" stroke="#4A6B5B" stroke-width="20" stroke-linecap="round"/>
+        <circle cx="125" cy="55" r="7" fill="#C8A875" stroke="#fff" stroke-width="2.5"/>
+        <line x1="121.7" y1="47.8" x2="110" y2="22" stroke="#D6341F" stroke-width="1.3" opacity=".6"/><text x="106" y="14" font-size="13" font-weight="800" fill="#D6341F" text-anchor="middle">baseline 38</text>
+        <text x="160" y="124" text-anchor="middle"><tspan font-size="44" font-weight="800" fill="#2F473B">54</tspan><tspan font-size="18" font-weight="600" fill="#4A504B"> / 100</tspan></text>
+        <text x="160" y="152" font-size="18" font-weight="800" fill="#D6341F" text-anchor="middle">▲ 16 points</text>
+        <text x="40" y="174" font-size="13" font-weight="700" fill="#1F2421">0</text>
+        <text x="280" y="174" font-size="13" font-weight="700" fill="#1F2421" text-anchor="end">100</text>
+      </svg>
+      <div class="rowline"><span class="l">Change vs baseline</span><span class="pill good">▲ 16 · exceeds MCID</span></div>
+    </div>
+    <div class="card">
+      <h3><span class="dot terra"></span> Work impact (WPAI) <button class="info" data-info="wpai" aria-label="About WPAI">i</button></h3>
+      <div class="sub">Past 7 days, self reported<br>Employed, regular duties</div>
+      <div class="rowline"><span class="l">Hours missed (knee)</span><span class="r" style="color:#1B5FC2">1 h <span class="m" style="color:#D6341F;font-weight:700">was 6 h</span></span></div>
+      <div class="rowline"><span class="l">Productivity impact at work</span><span class="r" style="color:#1B5FC2">20% <span class="m" style="color:#D6341F;font-weight:700">was 60%</span></span></div>
+      <div class="rowline"><span class="l">Activity impact outside work</span><span class="r" style="color:#1B5FC2">30% <span class="m" style="color:#D6341F;font-weight:700">was 70%</span></span></div>
+      <div class="rowline"><span class="l">Estimated hours recovered</span><span class="r" style="color:#1B5FC2">≈ 7 h / week</span></div>
+      <div class="rowline"><span class="l">Work situation</span><span class="m">Regular duties, unchanged</span></div>
+    </div>
+    <div class="card">
+      <h3><span class="dot gold"></span> Mood and sleep instruments <button class="info" data-info="moodsleep" aria-label="About these instruments">i</button></h3>
+      <div class="sub">PHQ-2 / GAD-2 screen<br>PROMIS Sleep Disturbance</div>
+      <div class="rowline"><span class="l">PHQ-2 depression screen</span><span class="r" style="color:#1B5FC2">1 / 6 <span style="color:#D6341F">· no flag</span></span></div>
+      <div class="rowline"><span class="l">GAD-2 anxiety screen</span><span class="r" style="color:#1B5FC2">1 / 6 <span style="color:#D6341F">· no flag</span></span></div>
+      <div class="rowline"><span class="l">Item 9 safety rule</span><span class="m">Not triggered</span></div>
+      <div class="rowline"><span class="l">PROMIS sleep T score</span><span class="r" style="color:#1B5FC2">50 <span class="m" style="color:#D6341F;font-weight:700">was 58, mild</span></span></div>
+      <div class="rowline"><span class="l">Interpretation</span><span class="pill good">Within normal limits</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3><span class="dot sage"></span> Functional milestones regained <span class="pill good" style="margin-left:6px;font-size:16px;padding:6px 16px">5 of 7</span> <button class="info" data-info="milestones" aria-label="About milestones">i</button></h3>
+    <div class="sub">Compared with 3 months ago, patient reported</div>
+    <div class="mstones">
+      <span class="ms on">✓ Walking farther</span>
+      <span class="ms on">✓ Stairs without stopping</span>
+      <span class="ms on">✓ Housework is easier</span>
+      <span class="ms on">✓ Carrying groceries</span>
+      <span class="ms on">✓ Sleeping through the night</span>
+      <span class="ms">Playing with kids or grandkids</span>
+      <span class="ms">Back to gym, yoga, or sport</span>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="slab">Clinical summary <span class="tag">doctor's read</span></div>
+  <div class="summary">
+    <h3><span class="dot sage"></span> Amelia Brooks, knee osteoarthritis (right knee)</h3>
+    <div class="sub">61 year old female · Day 130 of plan · C2 compound cream, naproxen, strengthening and walking program.</div>
+    <h4>Pain and function</h4>
+    <p>Daily pain has fallen from a baseline average of <span class="was">6.4</span> to <span class="now">3.2</span>, <span class="hl">a 50% reduction</span> that crosses the 30% meaningful improvement bar.<br>PEG-3 interference improved from <span class="was">6.7</span> to <span class="now">4.3</span> and KOOS-12 function rose from <span class="was">38</span> to <span class="now">54</span>, both beyond published meaningful change thresholds.</p>
+    <h4>Medications</h4>
+    <p>Oral medication use halved from <span class="was">12</span> to <span class="now">6 days</span> per month, with <span class="hl">zero opioid exposure</span> on every month of record.</p>
+    <h4>Work and daily life</h4>
+    <p>Work absence fell from <span class="was">6 hours</span> to <span class="now">1 hour</span> per week, roughly <span class="hl">7 productive hours recovered weekly</span>.<br>Five of seven functional milestones regained. Mood and sleep instruments are within normal limits.</p>
+    <h4>Adherence and patient verdict</h4>
+    <p>Adherence is strong (cream <span class="now">86%</span>, exercises <span class="now">71%</span>), though exercise dips on higher pain days; consider reinforcing the flare plan.<br>Patient rates herself <span class="hl">Much better</span> and scores clara 8 of 10.</p>
+    <h4>Plan</h4>
+    <p>Continue C2. Encourage exercise consistency. Review a naproxen taper at the next quarterly check-in.</p>
+  </div>
+
+  </div><!-- /moreData -->
+
+  <div class="foot">clara · clinician outcomes console · MOCK v1 · June 2026 · sample patient with illustrative data, not the live product. Employer reporting uses de-identified aggregates only (PHIPA).</div>
+</div>
+
+<!-- instrument reference popover -->
+<div class="info-overlay" id="infoOverlay" aria-hidden="true">
+  <div class="info-box">
+    <button class="info-close" id="infoClose" aria-label="Close">&times;</button>
+    <div class="eyebrow">Instrument reference</div>
+    <h3 id="infoTitle"></h3>
+    <p class="what" id="infoWhat"></p>
+    <div id="infoRows"></div>
+    <p class="cite" id="infoCite"></p>
+  </div>
+</div>
+
+<script>
+(function(){
+ const INFO = {
+  redflags:{t:'Red-flag screen · negative',
+   w:'Serious causes the intake actively screened for before knee osteoarthritis was confirmed. The patient answered No to each, so the screen is negative and was cleared by the clinical team. If any of these turn positive, the plan halts for clinician review before treatment.',
+   rows:[['Hot, red, or swollen joint (infection)','No'],['Fever or feeling generally unwell','No'],['History of cancer','No'],['Significant injury, fall, or fracture','No'],['Night pain or rest pain unrelated to use','No'],['True locking or knee giving way','No'],['Sudden, rapid swelling','No'],['Unexplained weight loss','No']],
+   c:'Patient-reported at intake; verify by phone if you did not see the form.'},
+  dxsite:{t:'Primary pain site',
+   w:'Where the patient localizes the pain on the intake body map.',
+   rows:[['Location','Right knee, medial compartment'],['Side','Right only (unilateral)'],['Both knees','No'],['Radiates / refers elsewhere','No']],
+   c:'Patient-reported at intake.'},
+  dxduration:{t:'Duration',
+   w:'How long the pain has been present, used to classify acute vs chronic.',
+   rows:[['Reported onset','About 8 months ago'],['Pattern','Persistent, activity-related'],['Chronic (over 3 months)','Yes']],
+   c:'Patient-reported at intake.'},
+  dxonset:{t:'Onset',
+   w:'How the pain began, which helps separate mechanical OA from an acute injury.',
+   rows:[['Type','Gradual'],['Triggering injury','None reported'],['Activity-related','Yes']],
+   c:'Patient-reported at intake.'},
+  dximaging:{t:'Imaging on file',
+   w:'Imaging available in the record. KL grade 2 indicates moderate osteoarthritis; advanced imaging is not indicated when the picture is typical.',
+   rows:[['Modality','Weight-bearing knee X-ray'],['Finding','Kellgren-Lawrence grade 2'],['Date','January 2026'],['MRI indicated','No']],
+   c:'On file from referring clinic.'},
+  dxbmi:{t:'Body mass index',
+   w:'BMI is tracked because weight is a modifiable driver of knee OA load and a treatment target in the plan.',
+   rows:[['Height','5 ft 5 in'],['Weight','168 lb'],['BMI','28 (overweight)'],['Weight a plan target','Yes']],
+   c:'Patient-reported at intake.'},
+  dxworst:{t:'Worst-pain time',
+   w:'When pain peaks, which guides dosing timing and separates inflammatory from mechanical patterns.',
+   rows:[['Worst','Mornings and after activity'],['Morning stiffness','Under 30 minutes'],['Night pain','No']],
+   c:'Patient-reported at intake.'},
+  dxkoos:{t:'Baseline KOOS-12',
+   w:'The knee function score captured on day 0, the anchor every later change is measured against.',
+   rows:[['Baseline','38 / 100'],['Captured','Day 0 of plan'],['Current','54 / 100'],['Change','+16 points, exceeds MCID']],
+   c:'KOOS-12, Gandek et al, Osteoarthritis and Cartilage 2019.'},
+  nprs:{t:'Numeric Pain Rating Scale (NPRS)',
+   w:'The patient rates their average pain from 0 (no pain) to 10 (worst imaginable) in the daily check-in. The console charts the rolling 7 day average, the trend line that anchors everything else.',
+   rows:[['Scale','0 to 10, single item, daily'],['Meaningful change','About 2 points, or a 30% reduction from baseline'],['Captured in','Daily check-in, one tap']],
+   c:'Farrar et al, Pain 2001. Free to use.'},
+  peg3:{t:'PEG-3',
+   w:'A 3 item scale drawn from the Brief Pain Inventory: average Pain, interference with Enjoyment of life, and interference with General activity. Built specifically for tracking chronic pain in routine care, where the full BPI is too long.',
+   rows:[['Scale','Mean of three 0 to 10 items, lower is better'],['Meaningful change','1 point or more, or a 30% reduction'],['Captured in','Monthly check-in']],
+   c:'Krebs et al, Journal of General Internal Medicine 2009. Free to use.'},
+  koos:{t:'KOOS-12',
+   w:'The short form of the Knee injury and Osteoarthritis Outcome Score: 12 items across knee pain, daily function, and knee related quality of life. The knee score doctors, insurers, and researchers recognise.',
+   rows:[['Scale','0 (worst) to 100 (best)'],['Meaningful change','MCID about 8 to 10 points'],['Captured in','Quarterly check-in, 12 taps'],['Licensing','Commercial use licensed via Mapi ePROVIDE']],
+   c:'Roos et al 1998; KOOS-12 Gandek et al, Osteoarthritis and Cartilage 2019.'},
+  meddays:{t:'Oral medication days',
+   w:'A clara operational measure, not a validated instrument: how many days this month the patient took an oral pain medication, with opioid use asked separately. It makes medication reduction visible and safe to manage.',
+   rows:[['Scale','0 to 30 days per month'],['Goal','Stepwise reduction as topical and movement care take over'],['Opioids','Tracked separately; clara prescribes zero opioids'],['Captured in','Monthly check-in']],
+   c:'clara designed measure, reviewed by the clinical team.'},
+  wpai:{t:'WPAI (Work Productivity and Activity Impairment)',
+   w:'The standard self report of health related work loss: hours missed because of the condition (absenteeism), reduced effectiveness while at work (presenteeism), and impairment in activities outside work. This is the instrument that converts pain into the hours and dollars employers understand.',
+   rows:[['Scale','Percentages, higher is worse, past 7 days recall'],['Outputs','Hours missed, % productivity impact, % activity impact'],['Captured in','Quarterly check-in, skipped if not working for pay']],
+   c:'Reilly et al, PharmacoEconomics 1993. Free to use (WPAI:SHP).'},
+  moodsleep:{t:'PHQ-2 / GAD-2 and PROMIS Sleep Disturbance',
+   w:'PHQ-2 and GAD-2 are two item screens for depression and anxiety. A score of 3 or more (of 6) is a positive screen and escalates to the full PHQ-9 or GAD-7 with clinician review; item 9 of the PHQ-9 carries an immediate safety rule. PROMIS Sleep Disturbance is reported as a T score against the population: 50 is average, each 10 points is one standard deviation.',
+   rows:[['PHQ-2 / GAD-2 scale','0 to 6 each; 3 or more = positive screen'],['PROMIS T score','55 to 60 mild, 60 to 70 moderate, 70+ severe'],['Captured in','Quarterly check-in'],['Licensing','PROMIS free with HealthMeasures account; app use needs written PHO permission']],
+   c:'Kroenke et al 2003 and 2007; HealthMeasures / PROMIS Health Organization.'},
+  pgicnps:{t:'PGIC and NPS',
+   w:'PGIC (Patient Global Impression of Change) is the patient\'s own verdict on a 7 point scale from Very much better to Very much worse. Clinicians use it as the anchor that gives meaning to every other score. NPS asks how likely the patient is to recommend clara to a friend with chronic pain, 0 to 10.',
+   rows:[['PGIC scale','7 points, Very much better to Very much worse'],['NPS scale','0 to 10; 9 to 10 promoter, 0 to 6 detractor'],['Captured in','Monthly check-in']],
+   c:'PGIC: Hurst and Bolton 2004 usage in chronic pain. NPS: standard market instrument, not clinical.'},
+  milestones:{t:'Functional milestones',
+   w:'A clara designed checklist of everyday wins the patient selects from, compared with 3 months ago: walking farther, stairs without stopping, housework, groceries, play, sport, sleeping through the night. Motivational and narrative rather than psychometric.',
+   rows:[['Scale','Count of milestones regained, 0 to 7'],['Role','Patient story in their own words; not a validated instrument'],['Captured in','Quarterly check-in']],
+   c:'clara designed measure, flagged as not validated in the instruments library.'}
+ };
+ const ov=document.getElementById('infoOverlay');
+ const tEl=document.getElementById('infoTitle'),wEl=document.getElementById('infoWhat'),rEl=document.getElementById('infoRows'),cEl=document.getElementById('infoCite');
+ document.querySelectorAll('.info[data-info]').forEach(b=>b.addEventListener('click',e=>{
+   e.stopPropagation();
+   const d=INFO[b.dataset.info]; if(!d) return;
+   tEl.textContent=d.t; wEl.textContent=d.w; cEl.textContent=d.c;
+   rEl.innerHTML=d.rows.map(r=>'<div class="irow"><span class="a">'+r[0]+'</span><span class="b">'+r[1]+'</span></div>').join('');
+   ov.classList.add('open'); ov.setAttribute('aria-hidden','false');
+ }));
+ function shut(){ov.classList.remove('open');ov.setAttribute('aria-hidden','true');}
+ document.getElementById('infoClose').addEventListener('click',shut);
+ ov.addEventListener('click',e=>{if(e.target===ov)shut();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('open'))shut();});
+})();
+</script>
+
+<script>
+function recAct(m){var t=document.getElementById('_rt');if(!t){t=document.createElement('div');t.id='_rt';t.className='rectoast';document.body.appendChild(t);}t.textContent=m;t.classList.add('show');clearTimeout(window._rtt);window._rtt=setTimeout(function(){t.classList.remove('show');},2600);}
+(function(){var b=document.getElementById('moreBtn'),m=document.getElementById('moreData');if(b&&m){b.addEventListener('click',function(){var o=m.classList.toggle('open');b.innerHTML=o?'Show less ▴':'Expand to see the full outcome data ▾';if(o)m.scrollIntoView({behavior:'smooth',block:'nearest'});});}})();
+// Clinical history: doctor-typed, persisted per patient (localStorage). Future: patient enters from their dashboard.
+(function(){
+  var id=new URLSearchParams(location.search).get('patient')||'p1';
+  var key='claraHist_'+id;
+  var fields=['histMeds','histAllergies','histPMH'];
+  var defaults={histMeds:'Naproxen 500 mg — twice daily with food\nC2 compound cream — right knee, 2–3×/day',histAllergies:'NKDA (no known drug allergies)',histPMH:'Hypertension (controlled); right knee osteoarthritis; appendectomy 2008'};
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(key)||'null')||{};}catch(e){}
+  fields.forEach(function(f){var el=document.getElementById(f);if(!el)return;el.value=(saved[f]!==undefined?saved[f]:(defaults[f]||''));});
+  var btn=document.getElementById('histSave');
+  if(btn)btn.addEventListener('click',function(){
+    var data={};fields.forEach(function(f){var el=document.getElementById(f);if(el)data[f]=el.value;});
+    try{localStorage.setItem(key,JSON.stringify(data));}catch(e){}
+    var s=document.getElementById('histSaved');if(s){s.textContent='✓ Saved '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+    if(typeof recAct==='function')recAct('Clinical history saved');
+  });
+})();
+(function(){var id=new URLSearchParams(location.search).get('patient');if(id&&id!=='p1'){var n=document.createElement('div');n.style.cssText='max-width:1280px;margin:14px auto 0;padding:13px 20px;background:#FBF2ED;border:1px solid #E3B9AC;border-radius:14px;color:#A35540;font-weight:700;font-size:16px';n.textContent='Showing the approved record layout (sample patient: Amelia Brooks). Per-patient data for this patient is being prepared.';var w=document.querySelector('.wrap');w.parentNode.insertBefore(n,w);}})();
+</script>
+</body>
+</html>

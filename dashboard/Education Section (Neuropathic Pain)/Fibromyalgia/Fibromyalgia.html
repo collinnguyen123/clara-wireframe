@@ -86,6 +86,52 @@ h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--
 .sources li{margin-bottom:9px}
 .disclaimer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);font-style:italic;line-height:1.6}
 @media(max-width:640px){h1.title{font-size:34px}.wrap{padding:20px 18px 70px}.nav{padding:12px 18px}.nav-tabs{display:none}}
+.herofig{margin:8px 0 26px}
+.herofig img{width:100%;display:block;border-radius:18px;box-shadow:var(--shadow-lg)}
+.herofig figcaption{font-size:16.5px;color:var(--ink);font-style:italic;margin-top:12px;line-height:1.55}
+.recov{display:grid;grid-template-columns:0.92fr 1fr;gap:24px;align-items:stretch;margin:14px 0 6px}
+.recov-img{width:100%;height:100%;object-fit:cover;border-radius:18px;box-shadow:var(--shadow-lg);display:block}
+.recov-steps{display:flex;flex-direction:column;gap:14px;justify-content:space-between}
+.rstep{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow);text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center}
+.rstep .rk{font-family:Georgia,serif;font-size:40px;font-weight:700;color:var(--sage-dark);margin-bottom:8px;line-height:1.05}
+.rstep .rc{font-size:17px;line-height:1.5;color:#3a403c}
+@media(max-width:640px){.recov{grid-template-columns:1fr}.recov-img{max-height:520px}}
+.fxrow{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:center;margin:16px 0}
+.fxrow.rev{grid-template-columns:1fr 230px}
+.fxrow img{width:100%;height:300px;object-fit:cover;border-radius:16px;box-shadow:var(--shadow);display:block}
+.fxrow .step{margin:0}
+@media(max-width:640px){.fxrow,.fxrow.rev{grid-template-columns:1fr}.fxrow img{height:260px}}
+.lead-tip{font-size:20px;font-weight:700;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);border-left:5px solid var(--terra);border-radius:14px;padding:20px 24px;margin:8px 0 22px;display:flex;align-items:center;gap:14px;line-height:1.45}
+.lead-tip svg{flex:0 0 auto;width:28px;height:28px;stroke:var(--terra);fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.acc{border:1px solid var(--line);border-radius:16px;margin:12px 0;background:#fff;box-shadow:var(--shadow);overflow:hidden}
+.acc.open{box-shadow:var(--shadow-lg)}
+.acc-h{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:24px 24px;display:flex;align-items:center;gap:16px;font-family:inherit;color:inherit}
+.acc-n{flex:0 0 auto;width:54px;height:54px;border-radius:50%;background:var(--sage-pale);color:var(--sage-dark);display:grid;place-items:center;font-family:Georgia,serif;font-weight:700;font-size:26px}
+.acc.open .acc-n{background:var(--sage);color:#fff}
+.acc-tt{flex:1;min-width:0}
+.acc-tt .att{display:block;font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark);line-height:1.25}
+.acc-tt .ats{display:block;font-size:18px;color:var(--grey);margin-top:7px;line-height:1.5}
+.acc.open .acc-tt .ats{display:none}
+.acc-chev{flex:0 0 auto;width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.acc.open .acc-chev{transform:rotate(180deg);stroke:var(--sage-dark)}
+.acc-h:hover .att{color:var(--terra-deep)}
+.acc-body{display:none;padding:4px 22px 24px;font-size:18.5px;line-height:1.72;color:#2b302c}
+.acc.open .acc-body{display:block;animation:accfade .25s ease}
+@keyframes accfade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.acc-body>*:first-child{margin-top:0}
+.acc-body p{margin-bottom:14px}.acc-body p:last-child{margin-bottom:0}
+.stagerow{display:flex;flex-direction:column;gap:14px;margin:16px 0 8px}
+.stagecard{display:flex;align-items:stretch;background:var(--cream-soft);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.stagecard img{flex:0 0 320px;width:320px;height:200px;object-fit:cover;display:block}
+.stagecard .sc-b{flex:1;padding:20px 26px;display:flex;flex-direction:column;justify-content:center}
+.stagecard .sc-l{color:var(--terra);font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;line-height:1.3}
+.stagecard .sc-d{font-size:17.5px;line-height:1.55;color:#3a403c}
+@media(max-width:640px){.stagecard{flex-direction:column}.stagecard img{flex:0 0 auto;width:100%;height:220px}}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 4px}
+.minicard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.minicard .mt{font-weight:700;color:var(--sage-dark);font-size:17.5px;margin-bottom:6px}
+.minicard .md{font-size:16px;line-height:1.55;color:#2b302c}
+@media(max-width:640px){.mini{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -108,77 +154,126 @@ h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--
 <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education-nerve">&larr;  Back to nerve pain</a>
 <div class="eyebrow">Nerve pain &middot; Fibromyalgia</div>
 <h1 class="title serif">Fibromyalgia</h1>
-<p class="lede">Widespread pain, deep fatigue and unrefreshing sleep. Fibromyalgia is real, and it comes from how the nervous system processes pain across the whole body, which is why a single cream is not the answer and whole-body care is.</p>
+<p class="lede">Widespread pain, deep fatigue and unrefreshing sleep. Fibromyalgia is real, and it comes from how the nervous system processes pain across the whole body, so whole body care comes first, with a compound cream as an option to trial for focused areas of pain.</p>
 <div class="meta"><span class="byline">From your clara care team</span><span class="chip">&#9201; 8 min read</span><span class="chip">Evidence based</span></div>
 
-<div class="toc">
-  <h4>What's in this guide</h4>
-  <ol>
-    <li><a href="#what">What it is</a></li>
-    <li><a href="#cause">Where the pain comes from</a></li>
-    <li><a href="#who">Who gets it</a></li>
-    <li><a href="#feel">What it feels like</a></li>
-    <li><a href="#dx">How it is diagnosed</a></li>
-    <li><a href="#doctor">What actually helps</a></li>
-    <li><a href="#cream">Why a cream is not the treatment</a></li>
-  </ol>
-</div>
+<figure class="herofig">
+  <img src="fibro-hero.jpg" alt="A woman resting on her sofa with a hand to her temple on a grey rainy day, conveying the deep fatigue and widespread ache of fibromyalgia."/>
+  <figcaption>The aching and deep fatigue can flare with stress, poor sleep, and even a change in the weather.</figcaption>
+</figure>
+
+<div class="lead-tip"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Tap any question below to open it. Read only the parts you need, in any order.</span></div>
 
 <div class="article">
 
-<h2 id="what">What it is</h2>
-<p>Fibromyalgia is a condition that causes pain felt in the muscles and soft tissues all over the body, along with extreme tiredness, poor sleep and trouble with memory and concentration. It is a real illness, and the pain is not "all in your head."<sup><a href="#sources">(1)</a></sup></p>
-<p>Importantly, fibromyalgia is a disorder of how the nervous system processes pain, not a sign of damage or inflammation in the joints and muscles. The places that hurt usually look completely normal, because the problem is in the volume of the pain signal, not in the tissue itself.<sup><a href="#sources">(1, 2)</a></sup></p>
-
-<h2 id="cause">Where the pain comes from</h2>
-<p>The best-understood explanation is "central sensitization." In fibromyalgia the brain and spinal cord become more sensitive to pain, turning up the volume so that signals which would normally feel minor are experienced as real, significant pain. This is a change in pain processing, not inflammation, which is a key reason ordinary anti-inflammatory painkillers do not work well.<sup><a href="#sources">(1, 2)</a></sup></p>
-<p>Researchers have also found that a subset of people with fibromyalgia have changes in the small nerve fibres of the skin, but the meaning of this finding is still debated, and it is not used to diagnose or treat the condition in routine care.<sup><a href="#sources">(2)</a></sup></p>
-
-<h2 id="who">Who gets it</h2>
-<div class="stats">
-  <div class="stat"><div class="n">2&ndash;5%</div><div class="l">of adults are affected, making it common<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
-  <div class="stat"><div class="n">&gt;90%</div><div class="l">have significant, ongoing fatigue<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(1)</a></sup></div></div>
-  <div class="stat"><div class="n">No</div><div class="l">blood test or scan can diagnose it<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
-</div>
-<p>Fibromyalgia is more common in women and is the most frequent cause of widespread muscle pain in women between about 20 and 55, though it can affect anyone. It often travels with other conditions, including irritable bowel syndrome, migraine and tension headaches, sleep problems, and depression or anxiety.<sup><a href="#sources">(1, 2)</a></sup></p>
-
-<h2 id="feel">What it feels like</h2>
-<p>The defining feature is pain that is widespread, felt on both sides of the body and both above and below the waist, present for at least three months. But fibromyalgia is really a whole-body experience:<sup><a href="#sources">(2)</a></sup></p>
-<div class="feel">
-  <div class="feelcard"><div class="ft">Widespread aching and tenderness</div><div class="fd">Deep muscular aching, soreness, stiffness or burning across the body, with areas that feel painful under even mild pressure.</div></div>
-  <div class="feelcard"><div class="ft">Fatigue and unrefreshing sleep</div><div class="fd">Profound tiredness, and waking up unrefreshed even after a full night, as if you have not really rested.</div></div>
-  <div class="feelcard"><div class="ft">"Fibro fog"</div><div class="fd">Trouble with memory, focus and finding words, which many people find as frustrating as the pain itself.</div></div>
-  <div class="feelcard"><div class="ft">A flu-like, all-over feeling</div><div class="fd">Many describe it as feeling as though they always have the flu, alongside headaches, gut symptoms and low mood.</div></div>
+<div class="acc open">
+  <button class="acc-h" aria-expanded="true"><span class="acc-n">1</span><span class="acc-tt"><span class="att">What it is</span><span class="ats">A real, whole body illness, not "in your head"</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>Fibromyalgia causes pain in the muscles and soft tissues all over the body, along with deep tiredness, poor sleep and trouble with memory and focus. It is a real illness, and the pain is not "all in your head."<sup><a href="#sources">(1)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="fibro-joints.jpg" alt="A woman resting on a park bench holding a sore elbow, with her achy joints gently highlighted, conveying widespread joint pain."/>
+      <figcaption>The aching can show up in many places at once, yet the joints usually look completely normal.</figcaption>
+    </figure>
+    <p>It comes from how the nervous system handles pain, not from damage or swelling in the joints and muscles. The places that hurt usually look completely normal, because the problem is in the volume of the pain signal, not in the tissue.<sup><a href="#sources">(1, 2)</a></sup></p>
+  </div>
 </div>
 
-<h2 id="dx">How it is diagnosed</h2>
-<p>There is no blood test or imaging scan for fibromyalgia. It is diagnosed from the pattern of symptoms, using criteria that combine how many areas of the body are painful with how severe the fatigue, sleep and thinking problems are, present for at least three months.<sup><a href="#sources">(2)</a></sup></p>
-<p>Blood tests are used not to find fibromyalgia but to rule out other conditions that can look similar, such as thyroid problems or inflammatory arthritis. Reaching the diagnosis can take time, which is part of why a clear explanation can come as a relief.<sup><a href="#sources">(2, 1)</a></sup></p>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">2</span><span class="acc-tt"><span class="att">Where the pain comes from</span><span class="ats">The body turns up the volume on pain</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>The best understood explanation is that the brain and spinal cord become more sensitive to pain. They turn up the volume, so signals that would normally feel minor are felt as real, significant pain. This is a change in how pain is processed, not swelling, which is a key reason ordinary anti inflammatory painkillers do not help much.<sup><a href="#sources">(1, 2)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="Fibro-nerves-1.jpg" alt="A close-up visualization of a nerve cell with branching fibres firing, illustrating an oversensitive pain system."/>
+      <figcaption>In fibromyalgia the brain and spinal cord turn up the volume, so ordinary signals are felt as real pain.</figcaption>
+    </figure>
+    <p>Researchers have also found that some people with fibromyalgia have changes in the tiny nerve fibres of the skin, but what this means is still debated, and it is not used to diagnose or treat the condition in routine care.<sup><a href="#sources">(2)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0 4px">
+      <img src="Fibro-nerves-2.jpg" alt="A visualization of fine nerve fibres in the skin lighting up along the neck and shoulder."/>
+      <figcaption>Some people also show changes in the tiny nerve fibres of the skin, though what this means is still being studied.</figcaption>
+    </figure>
+  </div>
+</div>
 
-<h2 id="doctor">What actually helps</h2>
-<p>Because fibromyalgia comes from how the whole nervous system handles pain, the treatments that work are whole-body ones, and medicine alone is almost never enough. The foundation is the same for everyone: understanding the condition, moving your body, and protecting sleep and mood.<sup><a href="#sources">(3)</a></sup></p>
-<div class="step"><div class="sn">1</div><div><div class="st">Movement and gentle exercise</div><div class="sd">This is the most strongly supported treatment. Low-impact aerobic activity, built up gradually, genuinely reduces pain and improves function. Being active will not harm your muscles, and approaches like tai chi, yoga and water-based exercise also help.<sup><a href="#sources">(3, 1)</a></sup></div></div></div>
-<div class="step"><div class="sn">2</div><div><div class="st">Sleep, stress and talking therapy</div><div class="sd">Improving sleep and using cognitive behavioural therapy to manage stress and pain are core parts of care, with real evidence behind them.<sup><a href="#sources">(3)</a></sup></div></div></div>
-<div class="step"><div class="sn">3</div><div><div class="st">Medicines that calm the nervous system</div><div class="sd">When medicine is added, the options that help work on the central nervous system: a low-dose tricyclic such as amitriptyline is often used first, and duloxetine, milnacipran and pregabalin are specifically approved for fibromyalgia. The benefit is real but usually modest, so they are used alongside the steps above.<sup><a href="#sources">(3)</a></sup></div></div></div>
-<div class="step"><div class="sn">4</div><div><div class="st">What does not work</div><div class="sd">Opioids are not used, because they do not help and can make pain worse over time. Anti-inflammatories and steroids do not work either, because there is no inflammation to treat, and locally-acting treatments are generally not effective for whole-body pain.<sup><a href="#sources">(3, 1)</a></sup></div></div></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">3</span><span class="acc-tt"><span class="att">Who gets it</span><span class="ats">Common, and more often in women</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <div class="recov" style="margin-top:6px">
+      <img class="recov-img" src="nadia-beach.jpg" alt="A woman sitting on a seaside boardwalk looking calmly out at the sea"/>
+      <div class="recov-steps">
+        <div class="rstep"><div class="rk">2&ndash;8%</div><div class="rc">of adults are affected, making it common<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(1)</a></sup></div></div>
+        <div class="rstep"><div class="rk">Most</div><div class="rc">also have ongoing fatigue, poor sleep and memory trouble<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(1)</a></sup></div></div>
+        <div class="rstep"><div class="rk" style="color:var(--terra-deep)">No</div><div class="rc">blood test or scan can diagnose it<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
+      </div>
+    </div>
+    <p>It is more common in women and is the most frequent cause of widespread muscle pain in women between about 20 and 55, though anyone can get it. It often comes alongside other conditions, including irritable bowel, migraine and tension headaches, sleep problems, and depression or anxiety.<sup><a href="#sources">(1, 2)</a></sup></p>
+  </div>
+</div>
 
-<h2 id="cream">Why a cream is not the treatment</h2>
-<p style="margin-bottom:14px"><span class="ev whole">Whole-body care, not a cream</span></p>
-<p>We want to be honest with you, because it matters. Unlike shingles pain or diabetic nerve pain, fibromyalgia is not pain coming from one damaged patch of nerve or tissue. It is widespread, and it comes from how the whole nervous system processes pain. For that reason, treatments that act in one spot, including creams, are generally not effective for it.<sup><a href="#sources">(1)</a></sup></p>
-<p>That is why <b>clara does not offer a compound cream as a treatment for fibromyalgia.</b> Compound creams are designed for focal, localised nerve pain, and even for those conditions a large trial of multi-ingredient creams found no benefit over placebo. Selling you a cream for whole-body pain would not be honest care.<sup><a href="#sources">(4)</a></sup></p>
-<p>If you also have a separate, localised pain problem alongside fibromyalgia, that is worth raising with a clara doctor, who can look at whether a targeted treatment fits that specific issue. But for fibromyalgia itself, the real, evidence-backed plan is the whole-body one above.<sup><a href="#sources">(3)</a></sup></p>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">4</span><span class="acc-tt"><span class="att">What it feels like</span><span class="ats">Pain, fatigue, foggy thinking, all over</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>The defining feature is pain that is widespread, felt on both sides of the body and both above and below the waist, for at least three months. But it is really a whole body experience:<sup><a href="#sources">(2)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="fibro-tender-points.jpg" alt="Front and back view of a woman with the common fibromyalgia tender points marked across the body."/>
+      <figcaption>The pain is widespread, with tender points that can show up across the whole body, on both sides and above and below the waist.</figcaption>
+    </figure>
+    <div class="feel">
+      <div class="feelcard"><div class="ft">Widespread aching and tenderness</div><div class="fd">Deep aching, soreness, stiffness or burning across the body, with areas that feel painful under even mild pressure.</div></div>
+      <div class="feelcard"><div class="ft">Fatigue and unrefreshing sleep</div><div class="fd">Deep tiredness, and waking up unrested even after a full night, as if you never really slept.</div></div>
+      <div class="feelcard"><div class="ft">"Fibro fog"</div><div class="fd">Trouble with memory, focus and finding words, which many people find as frustrating as the pain.</div></div>
+      <div class="feelcard"><div class="ft">A flu like, all over feeling</div><div class="fd">Many describe feeling as though they always have the flu, with headaches, gut symptoms and low mood.</div></div>
+    </div>
+  </div>
+</div>
 
-<div class="callout sage"><h3>The takeaway</h3><p>Fibromyalgia is real and it is treatable, but it is treated by caring for the whole body: movement, sleep, stress and, when needed, medicines that calm the nervous system. A cream is not a shortcut around that, and we would rather tell you so.<sup><a href="#sources">(3)</a></sup></p></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">5</span><span class="acc-tt"><span class="att">How it is diagnosed</span><span class="ats">From the pattern, not a single test</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>There is no blood test or scan for fibromyalgia. It is diagnosed from the pattern of symptoms, combining how many areas of the body are painful with how severe the fatigue, sleep and thinking problems are, present for at least three months.<sup><a href="#sources">(2)</a></sup></p>
+    <figure class="herofig" style="margin:16px 0">
+      <img src="fibro-exam.jpg" alt="A doctor gently pressing a tender point on the neck and shoulder of a seated patient during a fibromyalgia exam."/>
+      <figcaption>A doctor reaches the diagnosis from the whole pattern of symptoms, including where the body feels tender.</figcaption>
+    </figure>
+    <p>Blood tests are used not to find fibromyalgia but to rule out other conditions that can look similar, such as thyroid problems or inflammatory arthritis. Reaching the diagnosis can take time, which is part of why a clear explanation can come as a relief.<sup><a href="#sources">(2, 1)</a></sup></p>
+  </div>
+</div>
 
-<div class="ctacard"><h3>Build a plan that fits you</h3><p>A Canadian licensed clara doctor can talk through what is driving your pain and help you build a whole-body plan, and review whether any targeted treatment fits a separate, localised problem.</p><a class="ctabtn" href="../../Clara-Dashboard-MOCK-v1.html#care">Talk to a clara doctor &rarr;</a></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">6</span><span class="acc-tt"><span class="att">What actually helps</span><span class="ats">Whole body care, not medicine alone</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>Because fibromyalgia comes from how the whole nervous system handles pain, the treatments that work are whole body ones, and medicine alone is almost never enough. The foundation is the same for everyone: understanding the condition, moving your body, and protecting sleep and mood.<sup><a href="#sources">(3)</a></sup></p>
+    <div class="fxrow"><img src="bill-stretch.jpg" alt="A man doing a gentle stretch on a seaside boardwalk"/><div class="step"><div class="sn">1</div><div><div class="st">Movement and gentle exercise</div><div class="sd">This is the most strongly supported treatment. Gentle aerobic activity, built up slowly, genuinely reduces pain and helps you do more. Being active will not harm your muscles, and tai chi, yoga and exercise in water also help.<sup><a href="#sources">(3, 1)</a></sup></div></div></div></div>
+    <div class="fxrow rev"><div class="step"><div class="sn">2</div><div><div class="st">Sleep, stress and talking therapy</div><div class="sd">Improving sleep and using talking therapy to manage stress and pain are core parts of care, with real evidence behind them.<sup><a href="#sources">(3)</a></sup></div></div></div><img src="Ellie-sleep.jpg" alt="A woman resting peacefully asleep on her sofa under a soft blanket"/></div>
+    <div class="fxrow"><img src="kim-meds.jpg" alt="A woman taking her medication with a glass of water on a garden bench"/><div class="step"><div class="sn">3</div><div><div class="st">Medicines that calm the nervous system</div><div class="sd">When medicine is added, the ones that help work on the nervous system: a low dose of amitriptyline is often tried first, and duloxetine, milnacipran and pregabalin are approved for fibromyalgia. The benefit is real but usually modest, so they are used alongside the steps above.<sup><a href="#sources">(3)</a></sup></div></div></div></div>
+    <div class="step"><div class="sn">4</div><div><div class="st">What does not work</div><div class="sd">Opioids are not used, because they do not help and can make pain worse over time. Anti inflammatories and steroids do not work either, because there is no swelling to treat, and treatments that act in one spot do not help whole body pain.<sup><a href="#sources">(3, 1)</a></sup></div></div></div>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">7</span><span class="acc-tt"><span class="att">Where a cream can fit</span><span class="ats">Whole body care first, with an optional cream to trial</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p style="margin-bottom:14px"><span class="ev whole">Whole body care first, with an optional cream</span></p>
+    <p>We will be honest with you, because it matters. Fibromyalgia is widespread pain that comes from how the whole nervous system processes pain, so the heart of treatment is the whole body plan above, and a cream on its own will not fix widespread pain.<sup><a href="#sources">(1)</a></sup></p>
+    <p>At the same time, we see in practice that the usual treatments do not work well enough for everyone. And many people with fibromyalgia also carry focused pain on top of it: a sore knee or other joint, tight and knotted muscle areas known as myofascial pain, low back pain, or a patch of nerve pain. Those focused problems are exactly what a compound cream is made for.<sup><a href="#sources">(3)</a></sup></p>
+    <p>So <b>clara does offer a compound cream as an option to trial</b>, for people who would like to treat those focused areas. Some of the same ingredients we use for knee, back and nerve pain may ease the localized parts of your pain, even though a cream is not a treatment for the whole body condition itself. We stay honest about the evidence: a large trial of multi ingredient creams for general pain found no benefit over placebo, so we offer the cream as an optional trial alongside the whole body plan, never as a cure.<sup><a href="#sources">(4)</a></sup></p>
+    <p>If you would like to try it, a clara doctor reviews your pain, your history and your other medicines, decides whether a cream makes sense and what to put in it, and you give it a fair trial of a few weeks and keep it only if it helps.<sup><a href="#sources">(3)</a></sup></p>
+    <div class="callout sage"><h3>The takeaway</h3><p>Fibromyalgia is treated by caring for the whole body: movement, sleep, stress and, when needed, medicines that calm the nervous system. A cream is not a substitute for that. But if focused areas of pain are part of your picture, clara can offer a compound cream to trial alongside your plan.<sup><a href="#sources">(3)</a></sup></p></div>
+  </div>
+</div>
+
+<div class="ctacard"><h3>See if a cream is right for you</h3><p>Send a quick note to your clara care team. A Canadian licensed clara doctor will help you build a whole body plan and review whether a compound cream is worth trialing for any focused areas of pain, before anything is made or shipped.</p><a class="ctabtn" href="../../Clara-Dashboard-MOCK-v1.html#messages">Request a cream trial &rarr;</a></div>
 
 <hr class="hr">
 <h2 id="sources">Sources</h2>
 <ol class="sources">
-<li>UpToDate. Patient education: Fibromyalgia (Beyond the Basics). Wolters Kluwer.</li>
-<li>UpToDate. Fibromyalgia: Clinical manifestations and diagnosis in adults. Wolters Kluwer.</li>
-<li>UpToDate. Fibromyalgia: Treatment in adults. Wolters Kluwer.</li>
+<li>Clauw DJ. Fibromyalgia: a clinical review. JAMA. 2014;311(15):1547-1555.</li>
+<li>Wolfe F, Clauw DJ, Fitzcharles MA, et al. 2016 revisions to the 2010/2011 fibromyalgia diagnostic criteria. Seminars in Arthritis and Rheumatism. 2016;46(3):319-329.</li>
+<li>Macfarlane GJ, Kronisch C, Dean LE, et al. EULAR revised recommendations for the management of fibromyalgia. Annals of the Rheumatic Diseases. 2017;76(2):318-328.</li>
 <li>Brutcher RE, Kurihara C, Bicket MC, et al. Compounded topical pain creams to treat localized chronic pain: a randomized controlled trial. Annals of Internal Medicine. 2019;170(5):309-318.</li>
 </ol>
 <p class="disclaimer">This guide is general education from your clara care team and is not a substitute for personal medical advice. Treatment decisions are made with your clara doctor based on your health, symptoms and history.</p>
-</div></div></body></html>
+</div></div>
+<script>
+document.querySelectorAll('.acc-h').forEach(function(h){h.addEventListener('click',function(){var a=h.parentElement;var open=a.classList.toggle('open');h.setAttribute('aria-expanded',open?'true':'false');});});
+</script>
+</body></html>

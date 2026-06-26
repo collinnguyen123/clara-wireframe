@@ -39,6 +39,40 @@ h1.title{font-family:Georgia,serif;font-size:46px;line-height:1.08;font-weight:7
 .procfig img{width:100%;display:block;border-radius:18px;box-shadow:var(--shadow-lg)}
 .proclabel{color:var(--terra);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;margin:18px 0 6px}
 .procdesc{font-size:18px;line-height:1.7;color:#2b302c;margin:0}
+.dxpair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dxpair img{width:100%;height:100%;object-fit:cover;display:block;border-radius:18px;box-shadow:var(--shadow-lg)}
+@media(max-width:640px){.dxpair{grid-template-columns:1fr}}
+.lead-tip{font-size:20px;font-weight:700;color:var(--sage-dark);background:var(--sage-pale);border:1px solid var(--sage-soft);border-left:5px solid var(--terra);border-radius:14px;padding:20px 24px;margin:8px 0 22px;display:flex;align-items:center;gap:14px;line-height:1.45}
+.lead-tip svg{flex:0 0 auto;width:28px;height:28px;stroke:var(--terra);fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.acc{border:1px solid var(--line);border-radius:16px;margin:12px 0;background:#fff;box-shadow:var(--shadow);overflow:hidden}
+.acc.open{box-shadow:var(--shadow-lg)}
+.acc-h{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:24px 24px;display:flex;align-items:center;gap:16px;font-family:inherit;color:inherit}
+.acc-n{flex:0 0 auto;width:54px;height:54px;border-radius:50%;background:var(--sage-pale);color:var(--sage-dark);display:grid;place-items:center;font-family:Georgia,serif;font-weight:700;font-size:26px}
+.acc.open .acc-n{background:var(--sage);color:#fff}
+.acc-tt{flex:1;min-width:0}
+.acc-tt .att{display:block;font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--sage-dark);line-height:1.25}
+.acc-tt .ats{display:block;font-size:18px;color:var(--grey);margin-top:7px;line-height:1.5}
+.acc.open .acc-tt .ats{display:none}
+.acc-chev{flex:0 0 auto;width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.acc.open .acc-chev{transform:rotate(180deg);stroke:var(--sage-dark)}
+.acc-h:hover .att{color:var(--terra-deep)}
+.acc-body{display:none;padding:4px 22px 24px;font-size:18.5px;line-height:1.72;color:#2b302c}
+.acc.open .acc-body{display:block;animation:accfade .25s ease}
+@keyframes accfade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.acc-body>*:first-child{margin-top:0}
+.acc-body p{margin-bottom:14px}.acc-body p:last-child{margin-bottom:0}
+.stagerow{display:flex;flex-direction:column;gap:14px;margin:16px 0 8px}
+.stagecard{display:flex;align-items:stretch;background:var(--cream-soft);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.stagecard img{flex:0 0 320px;width:320px;height:200px;object-fit:cover;display:block}
+.stagecard .sc-b{flex:1;padding:20px 26px;display:flex;flex-direction:column;justify-content:center}
+.stagecard .sc-l{color:var(--terra);font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;line-height:1.3}
+.stagecard .sc-d{font-size:17.5px;line-height:1.55;color:#3a403c}
+@media(max-width:640px){.stagecard{flex-direction:column}.stagecard img{flex:0 0 auto;width:100%;height:220px}}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 4px}
+.minicard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.minicard .mt{font-weight:700;color:var(--sage-dark);font-size:17.5px;margin-bottom:6px}
+.minicard .md{font-size:16px;line-height:1.55;color:#2b302c}
+@media(max-width:640px){.mini{grid-template-columns:1fr}}
 .toc{background:var(--cream-soft);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin:6px 0 30px}
 .toc h4{font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:12px}
 .toc ol{margin:0;padding-left:20px;columns:2;column-gap:30px}
@@ -128,7 +162,7 @@ h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--
 <a class="back" href="../../Clara-Dashboard-MOCK-v1.html#education-nerve">&larr;  Back to nerve pain</a>
 <div class="eyebrow">Nerve pain &middot; Post-herpetic neuralgia</div>
 <h1 class="title serif">Pain after shingles</h1>
-<p class="lede">When shingles clears but the pain stays, the nerve itself has been hurt. Here is what is happening, what your doctor can do, and why this is the one nerve-pain condition where a cream is best proven.</p>
+<p class="lede">When shingles clears but the pain stays, the nerve itself has been hurt. Here is what is happening, what your doctor can do, and why this is the one nerve pain condition where a cream is best proven.</p>
 <div class="meta"><span class="byline">From your clara care team</span><span class="chip">&#9201; 9 min read</span><span class="chip">Evidence based</span></div>
 
 <figure class="herofig">
@@ -136,120 +170,129 @@ h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--
   <figcaption>A shingles rash typically appears as a band of blisters along the path of one nerve, on one side of the body.</figcaption>
 </figure>
 
-<div class="toc">
-  <h4>What's in this guide</h4>
-  <ol>
-    <li><a href="#what">What it is</a></li>
-    <li><a href="#cause">Where the pain comes from</a></li>
-    <li><a href="#who">Who gets it</a></li>
-    <li><a href="#feel">What it feels like</a></li>
-    <li><a href="#dx">How it is diagnosed</a></li>
-    <li><a href="#prevent">Can it be prevented</a></li>
-    <li><a href="#doctor">What a doctor may recommend</a></li>
-    <li><a href="#cream">How a compound cream can help</a></li>
-  </ol>
-</div>
+<div class="lead-tip"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Tap any question below to open it. Read only the parts you need, in any order.</span></div>
 
 <div class="article">
 
-<h2 id="what">What it is</h2>
-<p>Shingles is a painful, blistering rash caused by the chickenpox virus reactivating in the body. For most people the rash heals on its own within about two to four weeks.<sup><a href="#sources">(1)</a></sup></p>
-<p>In some people the pain does not leave with the rash. When burning or shooting nerve pain lasts three months or more in the same band of skin where the shingles was, it is called <b>post-herpetic neuralgia</b>, or PHN. It is the most common lasting complication of shingles, and the skin over it can become so sensitive that light touch, clothing or even a breeze can hurt.<sup><a href="#sources">(1, 2)</a></sup></p>
-
-<h2 id="cause">Where the pain comes from</h2>
-<p>The chickenpox virus never fully leaves the body. After childhood chickenpox it lies quietly for decades inside the nerve roots near your spine. When age, illness or stress lowers your immune defences, the virus can wake up, travel back down a nerve to the skin, and cause the shingles rash.<sup><a href="#sources">(2)</a></sup></p>
-<p>During that flare-up, the virus can injure the nerve fibres themselves. Damaged nerves do not simply stop working; they misfire, sending strong, repeated pain signals to the brain even when nothing is touching the skin. That faulty signalling is why the pain can outlast the rash by months, and it is also why ordinary painkillers, which are built for ordinary aches, often do not help much.<sup><a href="#sources">(2)</a></sup></p>
-
-<figure class="procfig">
-  <img src="shingles-stage-1.jpg" alt="3D medical illustration of varicella-zoster virus particles inside a nerve cell, with a nerve fibre leading away toward the skin."/>
-  <div class="proclabel">Stage 1 &middot; The virus wakes up inside the nerve</div>
-  <p class="procdesc">After childhood chickenpox, varicella-zoster virus particles sit silently inside a sensory nerve cell near the spine. When age, illness or stress weakens the immune system, they switch back on, multiply, and begin to travel down the nerve fibre toward the patch of skin that nerve supplies.<sup><a href="#sources">(2)</a></sup></p>
-</figure>
-
-<figure class="procfig">
-  <img src="shingles-stage-2.jpg" alt="Close-up of skin on a shoulder showing the first small red blisters of a shingles rash beginning to appear in a band."/>
-  <div class="proclabel">Stage 2 &middot; The first blisters appear on the skin</div>
-  <p class="procdesc">Where that nerve reaches the surface, the virus erupts as small red bumps and tiny fluid-filled blisters. They cluster along the single band of skin the nerve serves, which is exactly why a shingles rash stays on one side of the body rather than spreading all over.<sup><a href="#sources">(2)</a></sup></p>
-</figure>
-
-<figure class="procfig">
-  <img src="shingles-stage-3.jpg" alt="A developed shingles rash: clustered fluid-filled blisters on red, inflamed skin in a band across the shoulder."/>
-  <div class="proclabel">Stage 3 &middot; The rash develops, then the pain can linger</div>
-  <p class="procdesc">Over a few days the blisters multiply and group together on red, inflamed skin into the classic shingles band. They later crust over and heal, but in some people the irritated nerve underneath keeps sending pain signals long after the skin has cleared. That lasting pain is post-herpetic neuralgia.<sup><a href="#sources">(2)</a></sup></p>
-</figure>
-
-<h2 id="who">Who gets it</h2>
-<div class="recov">
-  <img class="recov-img" src="chan-phn.jpg" alt="A calm, smiling man in his 50s standing on a sunlit leafy park path"/>
-  <div class="recov-steps">
-    <div class="rstep"><div class="rk">5&ndash;20%</div><div class="rc">of people who get shingles go on to develop PHN<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
-    <div class="rstep"><div class="rk">~50%</div><div class="rc">of cases are in people older than 60<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(1)</a></sup></div></div>
-    <div class="rstep"><div class="rk" style="color:var(--terra-deep);font-size:52px">66</div><div class="rc">median age, in years, when PHN begins<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
+<div class="acc open">
+  <button class="acc-h" aria-expanded="true"><span class="acc-n">1</span><span class="acc-tt"><span class="att">What it is</span><span class="ats">Shingles, and the pain it can leave behind</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>Shingles is a painful, blistering rash caused by the chickenpox virus waking up in the body. For most people it heals within two to four weeks.<sup><a href="#sources">(1)</a></sup></p>
+    <p>Sometimes the pain stays after the rash clears. When burning or shooting pain lasts three months or more in the same patch of skin, it is called <b>post-herpetic neuralgia</b>, or simply post shingles pain. It is the most common lasting effect of shingles, and the skin can become so sensitive that even light touch hurts.<sup><a href="#sources">(1, 2)</a></sup></p>
   </div>
 </div>
-<p>The single biggest factor is age. The risk of lingering nerve pain after shingles climbs steeply the older you are, which is why PHN is uncommon in young adults but far more likely after 60.<sup><a href="#sources">(2)</a></sup></p>
-<p>Other things that raise the risk include a weakened immune system, diabetes, severe pain or a severe rash during the shingles attack, and shingles that affects the face or eye. Having strong pain before the rash even appears can also be a warning sign.<sup><a href="#sources">(2)</a></sup></p>
-<p>There is good news in the long run: for most people the pain of PHN slowly eases over months, though for some it can last a year or longer.<sup><a href="#sources">(1)</a></sup></p>
 
-<h2 id="feel">What it feels like</h2>
-<p>PHN pain stays in one band of skin, following the path of the affected nerve. It is most common across the chest and trunk, on the face, or around the neck. People usually describe two kinds of pain, often at the same time:<sup><a href="#sources">(2)</a></sup></p>
-
-<figure class="procfig">
-  <img src="nerve-shock.jpg" alt="Biomedical close-up of a damaged nerve fibre firing an electric pain signal at the molecular level."/>
-  <p class="procdesc">Up close, the pain of PHN comes from a damaged nerve fibre misfiring: the injured nerve sends out sudden bursts of electrical signals on its own, which the brain reads as burning and shock-like pain.<sup><a href="#sources">(2)</a></sup></p>
-</figure>
-
-<div class="feel">
-  <div class="feelcard"><div class="ft">A constant, burning ache</div><div class="fd">A steady, deep, burning or throbbing pain that is there in the background. The skin in that area may also feel numb or oddly dull.</div></div>
-  <div class="feelcard"><div class="ft">Sudden, electric jolts</div><div class="fd">Brief, sharp, shooting or shock-like stabs that come and go on their own, or are set off by movement or touch.</div></div>
-</div>
-<p>A hallmark of PHN is that gentle, normally painless touch becomes painful, so a shirt, a bedsheet or a light breeze can trigger it. Doctors call this allodynia. Because the pain can be relentless, it commonly disrupts sleep, mood and everyday activities, which is part of why treating it matters.<sup><a href="#sources">(2)</a></sup></p>
-
-<h2 id="dx">How it is diagnosed</h2>
-<p>PHN is diagnosed from your story and a physical exam, not from a scan or blood test. The picture is usually clear: nerve pain that has lasted three months or more, in the same area of skin where you had a shingles rash.<sup><a href="#sources">(2)</a></sup></p>
-<p>Extra tests, such as an MRI, are only needed when something is unusual, for example pain that does not match a past rash, or added weakness or numbness that suggests another problem. For most people, no further testing is required.<sup><a href="#sources">(2)</a></sup></p>
-
-<h2 id="prevent">Can it be prevented</h2>
-<p>To a meaningful degree, yes. The best protection is the shingles vaccine, which lowers the chance of getting shingles in the first place and, if you do get it, lowers the chance of developing lasting nerve pain. Vaccination is generally recommended for adults over 50.<sup><a href="#sources">(1)</a></sup></p>
-<p>If shingles does appear, starting an antiviral medicine within about 72 hours of the rash helps the rash heal faster and eases the pain of the attack. It may also lower the risk of lingering nerve pain afterward, though the evidence on that point is mixed. Either way, treating shingles early and getting pain under control quickly is worthwhile.<sup><a href="#sources">(1, 3)</a></sup></p>
-
-<h2 id="doctor">What a doctor may recommend</h2>
-<p>PHN is treated step by step, and plans are personalised. Treatment usually starts with a medicine taken by mouth and often adds a treatment applied to the skin. Which medicine comes first depends partly on whether your pain is more of the constant-burning type or the electric-shooting type.<sup><a href="#sources">(2)</a></sup></p>
-<div class="step"><div class="sn">1</div><div><div class="st">Nerve-calming medicines by mouth</div><div class="sd">The usual first choices are anti-seizure medicines such as gabapentin or pregabalin, or low-dose tricyclic antidepressants such as nortriptyline or amitriptyline. These are not used here for seizures or depression; at these doses they quiet overactive nerve signals. They are started low and increased slowly to limit side effects like drowsiness or dizziness.<sup><a href="#sources">(2)</a></sup></div></div></div>
-<div class="step"><div class="sn">2</div><div><div class="st">Treatments applied to the skin</div><div class="sd">Because PHN pain sits in one area, treatments placed directly over it are a natural fit. Lidocaine (over the counter at 4%, by prescription at 5%) and capsaicin, made from chili peppers, are both used over the painful skin, on their own or alongside a pill.<sup><a href="#sources">(2)</a></sup></div></div></div>
-<div class="step"><div class="sn">3</div><div><div class="st">Other options if needed</div><div class="sd">If the first medicines are not enough, a doctor may try a different class, such as duloxetine or venlafaxine, or use a short course of a medicine like tramadol while other treatments are adjusted. Talk, or behavioural, therapy can also genuinely help people cope with and reduce nerve pain.<sup><a href="#sources">(2)</a></sup></div></div></div>
-<div class="step"><div class="sn">4</div><div><div class="st">For stubborn, severe pain</div><div class="sd">When pain does not respond to two or more medicines, a pain specialist may offer a high-strength capsaicin patch applied in the clinic, nerve blocks or injections, or nerve-stimulation procedures. These are reserved for more difficult cases.<sup><a href="#sources">(2)</a></sup></div></div></div>
-
-<h2 id="cream">How a compound cream can help</h2>
-<p style="margin-bottom:14px"><span class="ev strong">Strongest evidence for a cream</span></p>
-<p>Of all the nerve-pain conditions, PHN is the one where treating the pain through the skin is best proven. The reason is simple: the pain stays in one defined area, so a cream can act right where it hurts while far less medicine reaches the rest of your body than a pill would deliver.<sup><a href="#sources">(4)</a></sup></p>
-<p><b>Lidocaine</b> is especially helpful for the touch-sensitive part of PHN. It calms the irritated nerve endings just under the skin and adds a thin protective layer, which can take the sting out of the allodynia, the pain set off by light touch.<sup><a href="#sources">(4, 7)</a></sup> <b>Capsaicin</b>, from chili peppers, is another proven topical option; a high-strength version is approved specifically for PHN.<sup><a href="#sources">(6)</a></sup></p>
-<p>A compound cream lets a pharmacist combine more than one of these active ingredients into a single preparation made for you. For PHN the best-studied combination pairs <b>amitriptyline with ketamine</b>, often together with lidocaine. In studies covering more than 700 people, this mixture eased pain about as well as a common oral nerve medicine (gabapentin), while very little of the drug was absorbed into the bloodstream.<sup><a href="#sources">(5)</a></sup></p>
-
-<div class="formula">
-  <h3>What clara may compound for PHN</h3>
-  <p class="fsub">A starting point your clara doctor tailors to you. Not everyone receives every ingredient.</p>
-  <div class="ingr"><span>Amitriptyline</span><span>Ketamine</span><span>Lidocaine</span><span>Gabapentin</span></div>
-  <p class="fnote">Amitriptyline and ketamine are the best-studied pairing for PHN; lidocaine targets the touch-sensitive pain; topical gabapentin may be added for its effect on misfiring nerves. The exact ingredients and strengths are chosen by your clara doctor.<sup><a href="#sources" style="color:var(--sage)">(5)</a></sup></p>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">2</span><span class="acc-tt"><span class="att">Where the pain comes from</span><span class="ats">Why the pain can outlast the rash</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>The chickenpox virus never fully leaves. It hides for years in the nerves near your spine. When age, illness or stress lowers your defences, it can wake up, travel down a nerve, and erupt as the shingles rash.<sup><a href="#sources">(2)</a></sup></p>
+    <p>Along the way it can damage the nerve itself. Damaged nerves misfire, sending pain signals even when nothing is touching the skin. That is why the pain can outlast the rash, and why ordinary painkillers often do not help much.<sup><a href="#sources">(2)</a></sup></p>
+    <div class="stagerow">
+      <div class="stagecard"><img src="shingles-stage-1.jpg" alt="Virus particles inside a nerve cell near the spine."/><div class="sc-b"><div class="sc-l">Stage 1 &middot; The virus wakes up</div><div class="sc-d">It switches back on inside a nerve near the spine and travels toward the skin.</div></div></div>
+      <div class="stagecard"><img src="shingles-stage-2.jpg" alt="First small blisters of a shingles rash appearing in a band."/><div class="sc-b"><div class="sc-l">Stage 2 &middot; First blisters appear</div><div class="sc-d">It erupts as small blisters along the one band of skin that nerve serves.</div></div></div>
+      <div class="stagecard"><img src="shingles-stage-3.jpg" alt="A developed shingles rash with clustered blisters on inflamed skin."/><div class="sc-b"><div class="sc-l">Stage 3 &middot; Then pain can linger</div><div class="sc-d">Blisters crust and heal, but the irritated nerve can keep hurting.</div></div></div>
+    </div>
+  </div>
 </div>
 
-<h3 class="sub">Why a cream can be a good fit</h3>
-<div class="benefit"><div class="bi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></div><div><div class="bt">It works where the pain is</div><div class="bd">Applied over the affected band of skin, it targets the painful area directly instead of treating your whole body.<sup><a href="#sources" style="color:var(--sage)">(4)</a></sup></div></div></div>
-<div class="benefit"><div class="bi"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div><div class="bt">Less reaches the rest of the body</div><div class="bd">Because little is absorbed into the bloodstream, creams can be a sensible choice for older adults or people already taking several medicines, who may not tolerate the drowsiness or dizziness of oral nerve medicines.<sup><a href="#sources" style="color:var(--sage)">(4, 8)</a></sup></div></div></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">3</span><span class="acc-tt"><span class="att">Who gets it</span><span class="ats">Age is the biggest factor</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <div class="recov" style="margin-top:6px">
+      <img class="recov-img" src="chan-phn.jpg" alt="A calm, smiling man in his 50s standing on a sunlit leafy park path"/>
+      <div class="recov-steps">
+        <div class="rstep"><div class="rk">5&ndash;20%</div><div class="rc">of people who get shingles go on to develop post shingles pain<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
+        <div class="rstep"><div class="rk">~50%</div><div class="rc">of cases are in people older than 60<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(1)</a></sup></div></div>
+        <div class="rstep"><div class="rk" style="color:var(--terra-deep);font-size:52px">60+</div><div class="rc">the age at which the risk rises most steeply<sup style="font-size:11px"><a href="#sources" style="color:var(--muted)">(2)</a></sup></div></div>
+      </div>
+    </div>
+    <p>Age is the biggest factor: the risk climbs steeply after 60, so post shingles pain is uncommon in younger adults.<sup><a href="#sources">(2)</a></sup> Other things that raise it: a weak immune system, diabetes, a severe shingles attack, or shingles on the face or eye.<sup><a href="#sources">(2)</a></sup></p>
+    <p>The good news: for most people the pain slowly eases over months, though for some it lasts a year or longer.<sup><a href="#sources">(1)</a></sup></p>
+  </div>
+</div>
 
-<h3 class="sub">An honest word on the evidence</h3>
-<p>A cream usually takes the edge off rather than removing pain entirely, and the evidence is not all one way. One large trial of multi-ingredient pain creams found no benefit over placebo, and reviews note that studies of some topical ingredients are limited or mixed. Compound creams are also not FDA approved, because each one is mixed individually rather than mass-produced. The sensible approach is to give a cream a fair four-to-six-week trial as one part of a plan your clara doctor builds and monitors with you.<sup><a href="#sources">(8, 9)</a></sup></p>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">4</span><span class="acc-tt"><span class="att">What it feels like</span><span class="ats">Two kinds of pain, often at once</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>The pain stays in one band of skin along the affected nerve, most often on the chest, the face or the neck. People usually feel two things at once:<sup><a href="#sources">(2)</a></sup></p>
+    <div class="feel" style="margin-top:6px">
+      <div class="feelcard"><div class="ft">A constant, burning ache</div><div class="fd">A steady, deep, burning or throbbing pain in the background. The skin may also feel numb or oddly dull.</div></div>
+      <div class="feelcard"><div class="ft">Sudden, electric jolts</div><div class="fd">Brief, sharp, shooting stabs that come and go on their own, or are set off by movement or touch.</div></div>
+    </div>
+    <p>A telltale sign is that gentle touch hurts, so a shirt or a light breeze can set it off (doctors call this allodynia). Because it can be relentless, it often disturbs sleep and mood, which is part of why treating it matters.<sup><a href="#sources">(2)</a></sup></p>
+  </div>
+</div>
 
-<div class="callout sage"><h3>Using a nerve-pain cream safely</h3><p>Never apply a compound cream to broken, cut, raw or burned skin, keep it well away from your eyes, do not cover it with tight dressings or external heat, and store it out of reach of children and pets. Mild stinging, warmth or redness where you apply it is common and usually settles. A clara doctor reviews every ingredient against your health, allergies and other medicines before anything is made.<sup><a href="#sources">(8)</a></sup></p></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">5</span><span class="acc-tt"><span class="att">How it is diagnosed</span><span class="ats">From your story and a quick exam</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>There is no scan or blood test for post shingles pain. A doctor recognises it from your story and a brief exam: nerve pain lasting three months or more, in the same area where you had the shingles rash.<sup><a href="#sources">(2)</a></sup></p>
+    <figure style="margin:14px 0 6px">
+      <div class="dxpair">
+        <img src="PHN-face.jpg" alt="Shingles affecting one side of the forehead and the skin around one eye, the rash and swelling stopping at the midline of the face."/>
+        <img src="PHN-trunks.jpg" alt="Shingles forming a band across one side of the chest, following a single nerve and stopping at the midline."/>
+      </div>
+      <figcaption style="font-size:15.5px;color:var(--ink);font-style:italic;margin-top:10px;line-height:1.5">Wherever the shingles struck, the rash and the pain stay on one side of the body, here on the forehead and eye, and across one side of the chest. That one sided pattern is one of the clearest signs.</figcaption>
+    </figure>
+    <p>Extra tests like an MRI are only needed if something is unusual, such as pain that does not match a past rash. For most people, no further testing is needed.<sup><a href="#sources">(2)</a></sup></p>
+  </div>
+</div>
 
-<div class="ctacard"><h3>See if a cream is right for you</h3><p>Answer a few questions and a Canadian licensed clara doctor will review whether a compound cream fits your pain, your history and your other medicines, before anything is made or shipped.</p><a class="ctabtn" href="../../Clara-Dashboard-MOCK-v1.html#care">Talk to a clara doctor &rarr;</a></div>
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">6</span><span class="acc-tt"><span class="att">Can it be prevented</span><span class="ats">Yes, to a meaningful degree</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>To a meaningful degree, yes. Two things help the most:<sup><a href="#sources">(1)</a></sup></p>
+    <div class="mini">
+      <div class="minicard"><div class="mt">The shingles vaccine</div><div class="md">Your best protection. It lowers your chance of getting shingles and, if you do, your chance of lasting pain. Recommended for adults over 50.<sup><a href="#sources" style="color:var(--sage)">(1)</a></sup></div></div>
+      <div class="minicard"><div class="mt">Early antiviral medicine</div><div class="md">Started within about 72 hours of the rash, it speeds healing and eases the attack, and may lower the risk of lasting pain.<sup><a href="#sources" style="color:var(--sage)">(1, 3)</a></sup></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">7</span><span class="acc-tt"><span class="att">What a doctor may recommend</span><span class="ats">A plan built up step by step</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p>Treatment is personalised and built up step by step. It usually starts with a pill and often adds something applied to the skin.<sup><a href="#sources">(2)</a></sup></p>
+    <div class="step"><div class="sn">1</div><div><div class="st">Medicines that calm the nerve</div><div class="sd">Gabapentin or pregabalin, or a low dose of amitriptyline or nortriptyline. At these doses they quiet overactive nerve signals. Started low and raised slowly to limit drowsiness.<sup><a href="#sources">(2)</a></sup></div></div></div>
+    <div class="step"><div class="sn">2</div><div><div class="st">Treatments on the skin</div><div class="sd">Lidocaine or capsaicin (from chili peppers), applied right over the painful area, on their own or with a pill.<sup><a href="#sources">(2)</a></sup></div></div></div>
+    <div class="step"><div class="sn">3</div><div><div class="st">Other options if needed</div><div class="sd">A different medicine such as duloxetine or venlafaxine, or a short course of tramadol. Talk therapy genuinely helps too.<sup><a href="#sources">(2)</a></sup></div></div></div>
+    <div class="step"><div class="sn">4</div><div><div class="st">For stubborn, severe pain</div><div class="sd">A pain specialist may offer a strong capsaicin patch, nerve blocks, or nerve stimulation. These are kept for harder cases.<sup><a href="#sources">(2)</a></sup></div></div></div>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-h" aria-expanded="false"><span class="acc-n">8</span><span class="acc-tt"><span class="att">How a compound cream can help</span><span class="ats">The one nerve pain where a cream is best proven</span></span><svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="acc-body">
+    <p style="margin:2px 0 14px"><span class="ev strong">Strongest evidence for a cream</span></p>
+    <p>Of all the nerve pain conditions, post shingles pain is where treating through the skin is best proven. The pain sits in one spot, so a cream works right where it hurts, with far less medicine reaching the rest of your body than a pill.<sup><a href="#sources">(4)</a></sup></p>
+    <figure class="procfig" style="margin:16px 0 8px">
+      <img src="cream-clinic.jpg" alt="A clara compound cream bottle on a doctor's office table, with a folded patient booklet and a small heart rate monitor, a calm clinic blurred behind."/>
+      <figcaption style="font-size:15.5px;color:var(--ink);font-style:italic;margin-top:10px;line-height:1.5">Every clara compound cream is prepared for your specific pain and reviewed by a doctor before it is made.</figcaption>
+    </figure>
+    <p><b>Lidocaine</b> calms the touch sensitive pain; <b>capsaicin</b> (from chili peppers) is another proven option.<sup><a href="#sources">(4, 6, 7)</a></sup> A compound cream can combine a few of these in one preparation. The best studied mix pairs <b>amitriptyline with ketamine</b>, often with lidocaine; in studies of more than 700 people it eased pain about as well as a common nerve pill, with very little absorbed into the body.<sup><a href="#sources">(5)</a></sup></p>
+    <div class="formula">
+      <h3>What clara may compound for post shingles pain</h3>
+      <p class="fsub">A starting point your clara doctor tailors to you. Not everyone receives every ingredient.</p>
+      <div class="ingr"><span>Amitriptyline</span><span>Ketamine</span><span>Lidocaine</span><span>Gabapentin</span></div>
+      <p class="fnote">Amitriptyline and ketamine are the best studied pairing; lidocaine targets the touch sensitive pain; gabapentin may be added for misfiring nerves. Your clara doctor chooses the exact ingredients and strengths.<sup><a href="#sources" style="color:var(--sage)">(5)</a></sup></p>
+    </div>
+    <div class="mini">
+      <div class="minicard"><div class="mt">It works where the pain is</div><div class="md">Applied over the affected skin, it targets the painful area instead of your whole body.<sup><a href="#sources" style="color:var(--sage)">(4)</a></sup></div></div>
+      <div class="minicard"><div class="mt">Less reaches the rest of you</div><div class="md">Little is absorbed into the blood, so it can suit older adults or people already on several medicines.<sup><a href="#sources" style="color:var(--sage)">(4, 8)</a></sup></div></div>
+    </div>
+    <p style="margin-top:14px">The most sensible approach is simple: give a cream a fair four to six week trial as one part of a plan your clara doctor builds and monitors with you. A cream usually takes the edge off rather than erasing pain entirely, and because each one is compounded for you it is not approved by the FDA, so results can vary from person to person. Used as one piece of a wider plan, it is a reasonable option to try.<sup><a href="#sources">(8, 9)</a></sup></p>
+    <div class="callout sage" style="margin:18px 0 4px"><h3>Using a nerve pain cream safely</h3><p>Never apply it to broken, cut, raw or burned skin, keep it well away from your eyes, do not cover it with tight dressings or heat, and store it out of reach of children and pets. Mild stinging, warmth or redness is common and usually settles. A clara doctor reviews every ingredient against your health, allergies and other medicines first.<sup><a href="#sources">(8)</a></sup></p></div>
+  </div>
+</div>
+
+<div class="ctacard"><h3>See if a cream is right for you</h3><p>Send a quick note to your clara care team to request a cream trial. A Canadian licensed clara doctor reviews whether a compound cream fits your pain, your history and your other medicines before anything is made or shipped.</p><a class="ctabtn" href="../../Clara-Dashboard-MOCK-v1.html#messages">Request a cream trial &rarr;</a></div>
 
 <hr class="hr">
 <h2 id="sources">Sources</h2>
 <ol class="sources">
-<li>UpToDate. Patient education: Shingles (Beyond the Basics). Wolters Kluwer.</li>
-<li>UpToDate. Postherpetic neuralgia. Wolters Kluwer.</li>
-<li>UpToDate. Treatment of herpes zoster. Wolters Kluwer.</li>
+<li>Cohen JI. Herpes zoster. New England Journal of Medicine. 2013;369(3):255-263.</li>
+<li>Johnson RW, Rice AS. Postherpetic neuralgia. New England Journal of Medicine. 2014;371(16):1526-1533.</li>
+<li>Dworkin RH, Johnson RW, Breuer J, et al. Recommendations for the management of herpes zoster. Clinical Infectious Diseases. 2007;44(Suppl 1):S1-S26.</li>
 <li>Finnerup NB. Nonnarcotic methods of pain management. New England Journal of Medicine. 2019;380(25):2440-2448.</li>
 <li>Sawynok J, Zinger C. Topical amitriptyline and ketamine for post-herpetic neuralgia and other forms of neuropathic pain. Expert Opinion on Pharmacotherapy. 2016;17(4):601-609.</li>
 <li>Derry S, Rice AS, Cole P, et al. Topical capsaicin (high concentration) for chronic neuropathic pain in adults. Cochrane Database of Systematic Reviews. 2017;1:CD007393.</li>
@@ -258,4 +301,14 @@ h2#sources{font-family:Georgia,serif;font-size:27px;font-weight:700;color:var(--
 <li>Brutcher RE, Kurihara C, Bicket MC, et al. Compounded topical pain creams to treat localized chronic pain: a randomized controlled trial. Annals of Internal Medicine. 2019;170(5):309-318.</li>
 </ol>
 <p class="disclaimer">This guide is general education from your clara care team and is not a substitute for personal medical advice. Compounded creams are prepared for the individual, are not FDA approved, and their ingredients, doses and suitability are decided by your clara doctor based on your health, allergies and other medicines.</p>
-</div></div></body></html>
+</div></div>
+<script>
+document.querySelectorAll('.acc-h').forEach(function(h){
+  h.addEventListener('click',function(){
+    var a=h.parentElement;
+    var open=a.classList.toggle('open');
+    h.setAttribute('aria-expanded',open?'true':'false');
+  });
+});
+</script>
+</body></html>
