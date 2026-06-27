@@ -403,7 +403,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="quiz-container">
     <h1 class="quiz-question">Do any of these apply to your health?</h1>
     <p class="quiz-question-sub">Check anything that applies. Most just tell your doctor what to review; a couple mean we will have you seen in person instead. If none apply, use the green button.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our C1 and C2 creams include a numbing agent (lidocaine) and an anti-inflammatory (diclofenac). A few conditions and medicines change how these are handled, so a doctor reviews them before anything ships.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Our N1 and N2 creams include a numbing agent (lidocaine) and an anti-inflammatory (diclofenac). A few conditions and medicines change how these are handled, so a doctor reviews them before anything ships.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'cond','liver')"><div class="opt-content">Severe liver disease<div class="opt-sub">The liver clears the numbing agent and the anti-inflammatory, so this needs a closer look</div></div></div>
       <div class="opt multi" onclick="multi(this,'cond','g6pd')"><div class="opt-content">G6PD deficiency, or a history of methemoglobinemia<div class="opt-sub">A blood condition that affects how lidocaine is handled</div></div></div>
@@ -424,7 +424,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="alert-screen">
     <div class="alert-icon info">&#9432;</div>
     <h2>Let's have a doctor manage this in person.</h2>
-    <p>Our starter creams, C1 and C2, contain an anti-inflammatory called diclofenac. With severe heart failure or advanced kidney disease, even a topical anti-inflammatory can make those conditions worse, so clara does not dispense these creams to you online.</p>
+    <p>Our starter creams, N1 and N2, contain an anti-inflammatory called diclofenac. With severe heart failure or advanced kidney disease, even a topical anti-inflammatory can make those conditions worse, so clara does not dispense these creams to you online.</p>
     <p><strong style="color:var(--ink);">What to do now:</strong><br>Please work with your doctor or specialist to manage your nerve pain safely alongside your heart or kidney condition. They can decide whether a different, anti-inflammatory free option is right for you.</p>
     <div class="alert-actions"><button class="btn-primary" onclick="resetQuiz()">Go back home</button><button class="btn-secondary" onclick="window.print()">Save this for later</button></div>
   </div>
@@ -547,7 +547,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <button class="cta-secondary" onclick="alert('In the live version, this would email a printable PDF of the plan to share with your doctor.')">Email me this plan</button>
     </div>
     <div class="plan-disclaimer">This plan is a recommendation generated from your assessment, not a prescription. A doctor licensed in Canada reviews and approves (or modifies) every order before anything ships. You will get an SMS the moment your plan is reviewed. clara treats diagnosed nerve pain with compounded topical creams only. We do not diagnose nerve pain, we do not prescribe opioids, and for now we do not prescribe oral medications through this program. Compounded creams are not FDA approved products and their ingredients are used based on published evidence and doctor judgement.</div>
-    <div class="mock-footer">clara &middot; Neuropathic Pain Quiz &middot; MOCK v1 &middot; May 2026 &middot; First pass demonstration, not the live product &middot; Clinical logic per the Clara Neuropathic Pain evidence set (AAPM topical guide 2025, AAN 2022, Harden CRPS 2022, Open Evidence syntheses) and the Clara Neuropathic C1 to C3 cream ladder (Sandbox V3 formulations, May 2026)</div>
+    <div class="mock-footer">clara &middot; Neuropathic Pain Quiz &middot; MOCK v1 &middot; May 2026 &middot; First pass demonstration, not the live product &middot; Clinical logic per the Clara Neuropathic Pain evidence set (AAPM topical guide 2025, AAN 2022, Harden CRPS 2022, Open Evidence syntheses) and the Clara Neuropathic N1 to N3 cream ladder (canonical formulations, June 7 2026)</div>
   </div>
 </section>
 
@@ -603,7 +603,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     const f=state.answers['redflag']||[];
     (f.length>0)?goNext('redflag-exit'):goNext('q4');
   }
-  // severe heart failure or advanced renal disease + diclofenac in C1/C2 = hard exit to in-person care
+  // severe heart failure or advanced renal disease + diclofenac in N1/N2 = hard exit to in-person care
   function checkComorbid(){
     const f=state.answers['cond']||[];
     (f.includes('hf')||f.includes('renal'))?goNext('nsaid-exit'):goNext('q9');
@@ -665,16 +665,20 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     const pregbf=a.pregbf||[];
     const breastfeeding=pregbf.includes('breastfeed');
 
-    // ingredient allergies. Sandbox V3 ladder ingredients:
-    //   C1 + C2: amitriptyline, ketamine, lidocaine, gabapentin, diclofenac, baclofen, camphor, menthol
-    //   C3: phenytoin, amitriptyline, ketamine, lidocaine, camphor, menthol (no diclofenac, no gabapentin)
+    // ingredient allergies. Canonical (June 7 2026) ladder ingredients:
+    //   N1: lidocaine, bupivacaine, amitriptyline, gabapentin, diclofenac, baclofen, camphor, menthol
+    //   N2: phenytoin, lidocaine, bupivacaine, amitriptyline, gabapentin, diclofenac, baclofen, camphor, menthol
+    //   N3: phenytoin, ketamine, lidocaine, bupivacaine, amitriptyline, gabapentin, camphor, menthol (no diclofenac)
     const lidoAllergy=allergy.includes('lido');
     const tcaAllergy=allergy.includes('tca');
     const ketAllergy=allergy.includes('ketamine');
-    const gabaAllergy=allergy.includes('gaba');    // gabapentin is in C1 and C2
-    const nsaidAllergy=allergy.includes('nsaid');  // diclofenac (an NSAID) is in C1 and C2
-    const coreBlocked=lidoAllergy||tcaAllergy||ketAllergy;          // these three are in every tier
-    const entryBlocked=coreBlocked||gabaAllergy||nsaidAllergy;      // C1 and C2 also contain gabapentin and diclofenac
+    const gabaAllergy=allergy.includes('gaba');    // gabapentin is in every tier
+    const nsaidAllergy=allergy.includes('nsaid');  // diclofenac (an NSAID) is in N1 and N2
+    // NOTE: lidocaine and amitriptyline are in every tier; ketamine is now only in N3. The engine still
+    // holds the whole cream on a ketamine allergy (a conservative over-block, pending medical sign-off to
+    // narrow it to N3 only) so coreBlocked behaviour is unchanged from the prior formulation.
+    const coreBlocked=lidoAllergy||tcaAllergy||ketAllergy;
+    const entryBlocked=coreBlocked||gabaAllergy||nsaidAllergy;      // N1 and N2 also contain gabapentin and diclofenac
 
     function comp(name,badge,cls,why,extra){
       const c={name,badge,badgeClass:cls,why};
@@ -686,26 +690,26 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     // ---- cream tier selection ----
     section('Your targeted topical, applied right where it hurts','For nerve pain, clara starts with a compounded cream rather than a pill. It goes straight to the painful area with very little absorbed into the body. We start at a sensible strength and step up only if you need it.');
     if(!entryBlocked){
-      // default C1; step to C2 if a compounded cream was used before, or significant/severe and tried oral/specialist
-      let tier='C1';
-      if(tried.includes('compound')) tier='C2';
-      else if(sevHigh && (tried.includes('oral')||tried.includes('specialist'))) tier='C2';
+      // default N1; step to N2 if a compounded cream was used before, or significant/severe and tried oral/specialist
+      let tier='N1';
+      if(tried.includes('compound')) tier='N2';
+      else if(sevHigh && (tried.includes('oral')||tried.includes('specialist'))) tier='N2';
       plan.cream=tier;
 
       const creamPositives='Why we lead with a topical instead of a pill: a cream concentrates the medicine at the painful nerve, with much less reaching the bloodstream than a pill. That means far fewer of the side effects and drug interactions that oral nerve pain medicines can cause, which matters most in older adults and anyone taking several medications. Most people get partial relief rather than zero pain, so we set honest expectations and give it a fair 4 to 6 week trial before deciding whether to step up.';
       let cc;
-      if(tier==='C2'){
-        cc={name:'clara Neuropathic Cream, C2 (Standard)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C2',
+      if(tier==='N2'){
+        cc={name:'clara Neuropathic Cream, N2 (Standard)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'N2',
           whyShort:(tried.includes('compound')
-            ? 'You told us you have used a compounded cream before, so we are starting you at C2 rather than the entry strength. C2 keeps the same multi-agent recipe as C1 but raises ketamine to 10% (and amitriptyline and gabapentin a little) for a stronger effect on an over-firing nerve.'
-            : 'Because your pain is significant and you have already tried oral medicine or a specialist, we are starting at C2. It keeps the same multi-agent recipe as C1 but raises ketamine to 10% (and amitriptyline and gabapentin a little) for a stronger effect on an over-firing nerve.'),
+            ? 'You told us you have used a compounded cream before, so we are starting you at N2 rather than the entry strength. N2 keeps the multi-agent recipe and adds phenytoin 5% (a fast-acting nerve stabilizer), with higher amitriptyline and gabapentin, for a stronger effect on an over-firing nerve.'
+            : 'Because your pain is significant and you have already tried oral medicine or a specialist, we are starting at N2. It keeps the multi-agent recipe and adds phenytoin 5% (a fast-acting nerve stabilizer), with higher amitriptyline and gabapentin, for a stronger effect on an over-firing nerve.'),
           whyMore:creamPositives};
-        plan.creamNote='You are starting at C2 (a step up from the C1 entry strength). If C2 is not enough after a fair trial, your doctor can step you up to C3, our phenytoin led maximum tier.';
+        plan.creamNote='You are starting at N2 (a step up from the N1 entry strength). If N2 is not enough after a fair trial, your doctor can step you up to N3, our phenytoin and ketamine led maximum tier.';
       }else{
-        cc={name:'clara Neuropathic Cream, C1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C1',
-          whyShort:'Our foundation cream layers several agents that calm an over-firing nerve from different directions at once: amitriptyline 3% and ketamine 5% (the most studied nerve pain pair), lidocaine 5% to numb, gabapentin 5%, the anti-inflammatory diclofenac 5%, and baclofen 3% to ease muscle over-activity, finished with a touch of camphor and menthol. It is your targeted first step, concentrated right where it hurts.',
+        cc={name:'clara Neuropathic Cream, N1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'N1',
+          whyShort:'Our foundation cream layers several agents that calm an over-firing nerve from different directions at once: lidocaine 5% and bupivacaine 0.25% to numb, amitriptyline 3% (a studied nerve pain agent), gabapentin 6%, the anti-inflammatory diclofenac 5%, and baclofen 3% to ease muscle over-activity, finished with a touch of camphor and menthol. It is your targeted first step, concentrated right where it hurts.',
           whyMore:creamPositives};
-        plan.creamNote='Everyone starts at C1, our foundation strength. It is a deliberately stepwise system: if C1 is not enough after a fair trial, your doctor can step you up to C2 (higher strengths of the same agents), and then C3 (our phenytoin led maximum) if needed. We start lower and increase only if you need it.';
+        plan.creamNote='Everyone starts at N1, our foundation strength. It is a deliberately stepwise system: if N1 is not enough after a fair trial, your doctor can step you up to N2 (which adds phenytoin), and then N3 (our phenytoin and ketamine led maximum) if needed. We start lower and increase only if you need it.';
       }
       cc.note=plan.creamNote;
       plan.components.push(cc);
@@ -719,8 +723,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         if(ketAllergy)al.push('ketamine');
         reasons.push('an allergy to '+al.join(' and ')+', which is in every strength of our cream');
       }
-      if(gabaAllergy)reasons.push('a gabapentin allergy, and gabapentin is in our C1 and C2 creams');
-      if(nsaidAllergy)reasons.push('an anti-inflammatory (NSAID or aspirin) allergy, and the anti-inflammatory diclofenac is in our C1 and C2 creams');
+      if(gabaAllergy)reasons.push('a gabapentin allergy, and gabapentin is in our N1 and N2 creams');
+      if(nsaidAllergy)reasons.push('an anti-inflammatory (NSAID or aspirin) allergy, and the anti-inflammatory diclofenac is in our N1 and N2 creams');
       plan.reviewFlags.push(reasons.join('; ')+', so a doctor must choose a safe alternative before anything is dispensed');
       comp('Topical plan held for doctor review','RX','badge-rx',
         'You told us about '+reasons.join('; ')+'. For your safety we are not auto recommending a cream. A clara doctor will review your profile and decide whether a topical can be made safely for you, for example a version without that ingredient.');
@@ -730,8 +734,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     if(conds.includes('liver'))plan.reviewFlags.push('severe liver disease, which affects how both the numbing agent (lidocaine) and the anti-inflammatory (diclofenac) are cleared, so your doctor will confirm it is safe and may adjust the cream');
     if(conds.includes('g6pd'))plan.reviewFlags.push('G6PD deficiency or a history of methemoglobinemia, the lidocaine in the cream is reviewed because it can rarely affect how your blood carries oxygen');
     if(conds.includes('heart'))plan.reviewFlags.push('a heart medication you told us about'+(heartText?' ('+heartText+')':'')+', so your doctor will review it and check for interactions with the cream before anything is dispensed (for example, heart rhythm medicines like mexiletine can add to the effect of the numbing agent, lidocaine)');
-    if(conds.includes('anticoag'))plan.reviewFlags.push('a blood thinner, the anti-inflammatory (diclofenac) in the C1 and C2 creams can add to bleeding risk, so your doctor will confirm it is safe or choose a diclofenac free option');
-    if(conds.includes('htn'))plan.reviewFlags.push('poorly controlled high blood pressure, the anti-inflammatory (diclofenac) in the C1 and C2 creams can nudge blood pressure up, so your doctor will review before dispensing');
+    if(conds.includes('anticoag'))plan.reviewFlags.push('a blood thinner, the anti-inflammatory (diclofenac) in the N1 and N2 creams can add to bleeding risk, so your doctor will confirm it is safe or choose a diclofenac free option');
+    if(conds.includes('htn'))plan.reviewFlags.push('poorly controlled high blood pressure, the anti-inflammatory (diclofenac) in the N1 and N2 creams can nudge blood pressure up, so your doctor will review before dispensing');
     if(breastfeeding)plan.reviewFlags.push('breastfeeding, the cream ingredients are reviewed by a doctor personally before anything is dispensed, and we keep the strength and the area treated as low as possible');
     if(age75plus)plan.reviewFlags.push('age 75 or older, your doctor will take extra care with strength and the amount of skin treated, since skin can absorb a little more with age');
     if(cond==='crps')plan.reviewFlags.push('complex regional pain syndrome, which is complex by nature, so a doctor reviews your plan closely and may coordinate with your specialist');
@@ -787,9 +791,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
             '<div class="cream-step-label">About your compound cream, the stepwise approach</div>'+
             '<p>'+x.note+'</p>'+
             '<div class="cream-ladder">'+
-              '<div class="cream-tier'+(x.tier==='C1'?' active':'')+'"><b>C1 &middot; Foundation</b>Amitriptyline 3% + ketamine 5% + lidocaine 5% + gabapentin 5% + diclofenac 5% + baclofen 3%, with camphor and menthol. The multi-agent foundation.</div>'+
-              '<div class="cream-tier'+(x.tier==='C2'?' active':'')+'"><b>C2 &middot; Standard</b>Amitriptyline 5% + ketamine 10% + lidocaine 5% + gabapentin 6% + diclofenac 5% + baclofen 3%, with camphor and menthol. Higher strengths.</div>'+
-              '<div class="cream-tier'+(x.tier==='C3'?' active':'')+'"><b>C3 &middot; Maximum</b>Phenytoin 10% + amitriptyline 5% + ketamine 10% + lidocaine 5%, with camphor and menthol. Phenytoin led, our strongest tier (specialist oversight).</div>'+
+              '<div class="cream-tier'+(x.tier==='N1'?' active':'')+'"><b>N1 &middot; Foundation</b>Lidocaine 5% + bupivacaine 0.25% + amitriptyline 3% + gabapentin 6% + diclofenac 5% + baclofen 3% + menthol 0.25% + camphor 0.25%. The multi-agent foundation.</div>'+
+              '<div class="cream-tier'+(x.tier==='N2'?' active':'')+'"><b>N2 &middot; Standard</b>Phenytoin 5% + lidocaine 5% + bupivacaine 0.25% + amitriptyline 5% + gabapentin 7% + diclofenac 5% + baclofen 3% + menthol 0.25% + camphor 0.25%. Higher strengths, adds phenytoin.</div>'+
+              '<div class="cream-tier'+(x.tier==='N3'?' active':'')+'"><b>N3 &middot; Maximum</b>Phenytoin 10% + ketamine 7% + lidocaine 5% + bupivacaine 0.25% + amitriptyline 5% + gabapentin 7% + menthol 0.25% + camphor 0.25%. Phenytoin led with ketamine, our strongest tier (specialist oversight).</div>'+
             '</div>'+
           '</div>';
         c.insertAdjacentHTML('beforeend',

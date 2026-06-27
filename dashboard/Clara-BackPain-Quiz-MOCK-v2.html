@@ -891,15 +891,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       const creamPositives='Why we lead with a topical instead of a pill: a cream goes straight to the painful area, with very little absorbed into the bloodstream. That means a far lower risk of the stomach ulcers, GI bleeding, kidney strain and cardiovascular effects that oral anti-inflammatories can cause, and far fewer interactions with your other medications. For localized back pain it can work as well as a pill with a much safer profile, and it is often the only anti-inflammatory route for people who cannot take NSAIDs by mouth. Apply to the affected area 3\u20134\u00d7 daily.';
       let cc;
       if(plan.cream==='C2'){
-        cc={name:'Clara Compound Cream, C2 (Mixed Pain)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C2',
-          whyShort:'You told us you\'ve used a compounded cream before, so we\'re starting you at C2 rather than the entry strength, it layers ketamine, gabapentin and amitriptyline on top of the C1 base (diclofenac + lidocaine + baclofen + menthol/camphor) for a stronger, multi-mechanism effect.',
+        cc={name:'Clara Compound Cream, C2 (Standard)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C2',
+          whyShort:'You told us you\'ve used a compounded cream before, so we\'re starting you at C2 rather than the entry strength. C2 steps up the strengths and adds gabapentin to the C1 base, for a stronger, multi-mechanism effect. Back and knee share the same MSK cream.',
           whyMore:creamPositives};
         plan.creamNote='You\'ve used a compounded cream before, so we started you at C2 (a step up from the C1 entry strength) to give you a stronger effect from the start. If C2 isn\'t enough, your doctor can step you up to C3.';
       }else{
         cc={name:'Clara Compound Cream, C1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'C1',
-          whyShort:'Our foundation cream pairs an anti-inflammatory (diclofenac) with lidocaine, baclofen and menthol/camphor in one custom formula, included in every Clara back-pain plan as the targeted, lower-risk first step.',
+          whyShort:'Our foundation cream pairs anti-inflammatories (ketoprofen 7% and diclofenac 3%) with lidocaine 5%, bupivacaine 0.25%, amitriptyline 3%, and baclofen 5%, plus menthol and camphor, in one custom formula, the shared MSK cream used for both back and knee, your targeted, lower-risk first step.',
           whyMore:creamPositives};
-        plan.creamNote='Everyone starts at C1, our foundation strength. It\'s a deliberately stepwise system: if C1 isn\'t enough after a fair trial, your doctor can step you up to C2 (which adds nerve-pain ingredients), and C3 if needed. We start low and increase only if you need it.';
+        plan.creamNote='Everyone starts at C1, our foundation strength. It\'s a deliberately stepwise system: if C1 isn\'t enough after a fair trial, your doctor can step you up to C2 (higher strengths plus gabapentin), and C3 (which adds capsaicin) if needed. We start low and increase only if you need it.';
       }
       cc.note=plan.creamNote;
       cc.priceDisplay='$340 / bottle';cc.priceValue=340;cc.insured=true;cc.inTotals=false;
@@ -1033,9 +1033,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
             '<div class="cream-step-label">About your compound cream, the stepwise approach</div>'+
             '<p>'+x.note+'</p>'+
             '<div class="cream-ladder">'+
-              '<div class="cream-tier'+(x.tier==='C1'?' active':'')+'"><b>C1 · Foundation</b>Diclofenac + lidocaine + baclofen + menthol/camphor. The everyday starting strength.</div>'+
-              '<div class="cream-tier'+(x.tier==='C2'?' active':'')+'"><b>C2 · Mixed Pain</b>Adds ketamine, gabapentin &amp; amitriptyline for nerve-related pain. A genuine step up.</div>'+
-              '<div class="cream-tier'+(x.tier==='C3'?' active':'')+'"><b>C3 · Neuropathic</b>Our strongest formula for severe nerve pain. Reserved for refractory cases.</div>'+
+              '<div class="cream-tier'+(x.tier==='C1'?' active':'')+'"><b>C1 · Foundation</b>Ketoprofen 7% + diclofenac 3% + lidocaine 5% + bupivacaine 0.25% + amitriptyline 3% + baclofen 5% + menthol 0.25% + camphor 0.25%. The everyday starting strength.</div>'+
+              '<div class="cream-tier'+(x.tier==='C2'?' active':'')+'"><b>C2 · Standard</b>Ketoprofen 10% + diclofenac 5% + lidocaine 5% + bupivacaine 0.25% + baclofen 5% + amitriptyline 5% + gabapentin 5% + menthol 0.25% + camphor 0.25%. A step up.</div>'+
+              '<div class="cream-tier'+(x.tier==='C3'?' active':'')+'"><b>C3 · Maximum</b>Ketoprofen 10% + diclofenac 5% + capsaicin 0.05% + lidocaine 5% + bupivacaine 0.25% + baclofen 10% + menthol 0.25% + camphor 0.25%. Our strongest formula.</div>'+
             '</div>'+
           '</div>';
         // Cream price is shown prominently in the finance card below; keep this header price-free for cleaner hierarchy.
