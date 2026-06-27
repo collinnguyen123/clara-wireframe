@@ -351,7 +351,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <section class="quiz-screen" id="q5" data-progress="48">
   <div class="quiz-container">
     <h1 class="quiz-question">On most days, how bad is your nerve pain?</h1>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Your usual pain level helps us choose a sensible starting strength on the cream ladder. We start low and step up only if you need it.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>Everyone starts at our foundation strength (N1). Your usual pain level helps your doctor judge how soon you might need to step up, and shapes the follow-up and education we give you.</div>
     <div class="opt-stack">
       <div class="opt" onclick="single(this,'q5','mild'); goNext('q6');"><div class="opt-content">Mild<div class="opt-sub">Noticeable, but it does not really limit my day</div></div><span class="opt-arrow">&rarr;</span></div>
       <div class="opt" onclick="single(this,'q5','moderate'); goNext('q6');"><div class="opt-content">Moderate<div class="opt-sub">It bothers me often and limits some activities</div></div><span class="opt-arrow">&rarr;</span></div>
@@ -366,7 +366,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="quiz-container">
     <h1 class="quiz-question">What have you already tried for this nerve pain?</h1>
     <p class="quiz-question-sub">Check anything that applies. This helps us pick the right starting point.</p>
-    <div class="why-ask"><span class="why-ask-label">Why we ask</span>If you have already used a compounded cream, we can start you a step up the ladder. What you have tried also helps your doctor understand your history.</div>
+    <div class="why-ask"><span class="why-ask-label">Why we ask</span>What you have tried helps your doctor understand your history. Everyone is recommended our foundation cream (N1) to start, and your doctor can step you up from there if your history calls for it.</div>
     <div class="opt-stack">
       <div class="opt multi" onclick="multi(this,'tried','otc')"><div class="opt-content">Over the counter options<div class="opt-sub">For example a lidocaine patch or cream, or a capsaicin cream</div></div></div>
       <div class="opt multi" onclick="multi(this,'tried','oral')"><div class="opt-content">Prescription pills for nerve pain<div class="opt-sub">For example gabapentin, pregabalin, amitriptyline, nortriptyline, or duloxetine</div></div></div>
@@ -515,7 +515,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="finance-title">Your cost, made simple</div>
       <div class="finance-sub">One clara compounded cream bottle is a 30 day supply for one treatment area, applied 2 to 3 times a day.</div>
       <div class="fin-price-row">
-        <div class="fin-price">$340 <small>CAD / bottle</small></div>
+        <div class="fin-price">$210 <small>CAD / bottle</small></div>
         <div class="fin-perday">About $11.33 a day</div>
       </div>
       <div class="fin-seg-label">Choose your supply</div>
@@ -526,7 +526,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       </div>
       <div class="fin-total">
         <span class="lab" id="fin-total-lab">1 bottle, one month supply</span>
-        <span class="val" id="fin-total-val">$340</span>
+        <span class="val" id="fin-total-val">$210</span>
       </div>
       <div class="fin-covered"><span class="cov-ico">&#10003;</span><span>This is usually covered by most insurance plans</span></div>
       <div class="fin-includes">
@@ -553,7 +553,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 <script>
   const state={answers:{},currentStep:'landing',history:['landing']};
-  const PRICE=340;
+  const PRICE=210;
 
   function showStep(stepId){
     document.querySelectorAll('.quiz-screen').forEach(s=>s.classList.remove('active'));
@@ -690,27 +690,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     // ---- cream tier selection ----
     section('Your targeted topical, applied right where it hurts','For nerve pain, clara starts with a compounded cream rather than a pill. It goes straight to the painful area with very little absorbed into the body. We start at a sensible strength and step up only if you need it.');
     if(!entryBlocked){
-      // default N1; step to N2 if a compounded cream was used before, or significant/severe and tried oral/specialist
+      // Universal entry: everyone is recommended N1 on the front end, regardless of severity or what they
+      // have tried. A patient can request a stronger version, which a doctor reviews, and a doctor can also
+      // start a patient higher (N2 or N3) after looking at their clinical data on the back end. The questionnaire
+      // answers (severity, prior treatment) are carried through to the doctor to inform that decision.
       let tier='N1';
-      if(tried.includes('compound')) tier='N2';
-      else if(sevHigh && (tried.includes('oral')||tried.includes('specialist'))) tier='N2';
       plan.cream=tier;
 
       const creamPositives='Why we lead with a topical instead of a pill: a cream concentrates the medicine at the painful nerve, with much less reaching the bloodstream than a pill. That means far fewer of the side effects and drug interactions that oral nerve pain medicines can cause, which matters most in older adults and anyone taking several medications. Most people get partial relief rather than zero pain, so we set honest expectations and give it a fair 4 to 6 week trial before deciding whether to step up.';
-      let cc;
-      if(tier==='N2'){
-        cc={name:'clara Neuropathic Cream, N2 (Standard)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'N2',
-          whyShort:(tried.includes('compound')
-            ? 'You told us you have used a compounded cream before, so we are starting you at N2 rather than the entry strength. N2 keeps the multi-agent recipe and adds phenytoin 5% (a fast-acting nerve stabilizer), with higher amitriptyline and gabapentin, for a stronger effect on an over-firing nerve.'
-            : 'Because your pain is significant and you have already tried oral medicine or a specialist, we are starting at N2. It keeps the multi-agent recipe and adds phenytoin 5% (a fast-acting nerve stabilizer), with higher amitriptyline and gabapentin, for a stronger effect on an over-firing nerve.'),
-          whyMore:creamPositives};
-        plan.creamNote='You are starting at N2 (a step up from the N1 entry strength). If N2 is not enough after a fair trial, your doctor can step you up to N3, our phenytoin and ketamine led maximum tier.';
-      }else{
-        cc={name:'clara Neuropathic Cream, N1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'N1',
-          whyShort:'Our foundation cream layers several agents that calm an over-firing nerve from different directions at once: lidocaine 5% and bupivacaine 0.25% to numb, amitriptyline 3% (a studied nerve pain agent), gabapentin 6%, the anti-inflammatory diclofenac 5%, and baclofen 3% to ease muscle over-activity, finished with a touch of camphor and menthol. It is your targeted first step, concentrated right where it hurts.',
-          whyMore:creamPositives};
-        plan.creamNote='Everyone starts at N1, our foundation strength. It is a deliberately stepwise system: if N1 is not enough after a fair trial, your doctor can step you up to N2 (which adds phenytoin), and then N3 (our phenytoin and ketamine led maximum) if needed. We start lower and increase only if you need it.';
-      }
+      const cc={name:'clara Neuropathic Cream, N1 (Foundation)',badge:'RX',badgeClass:'badge-rx',isCream:true,tier:'N1',
+        whyShort:'Our foundation cream layers several agents that calm an over-firing nerve from different directions at once: lidocaine 5% and bupivacaine 0.25% to numb, amitriptyline 3% (a studied nerve pain agent), gabapentin 6%, the anti-inflammatory diclofenac 5%, and baclofen 3% to ease muscle over-activity, finished with a touch of camphor and menthol. It is your targeted first step, concentrated right where it hurts.',
+        whyMore:creamPositives};
+      plan.creamNote='Everyone starts at N1, our foundation strength, so this is the cream we are recommending today. It is a deliberately stepwise system: if N1 is not enough after a fair trial, you can request a stronger version and your doctor can step you up to N2 (which adds phenytoin) and then N3 (our phenytoin and ketamine led maximum). Your doctor may also start you higher than N1 if your history calls for it. We start lower and increase only if you need it.';
       cc.note=plan.creamNote;
       plan.components.push(cc);
     }else{

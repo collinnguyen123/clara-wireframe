@@ -584,7 +584,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="finance-title">Your cost, made simple</div>
       <div class="finance-sub">One clara compounded cream bottle is a 30 day supply for one knee, applied 2 to 3 times a day. Movement, weight care, and physiotherapy stay free.</div>
       <div class="fin-price-row">
-        <div class="fin-price">$250 <small>CAD / bottle</small></div>
+        <div class="fin-price">$210 <small>CAD / bottle</small></div>
         <div class="fin-perday">About $8.33 a day</div>
       </div>
       <div class="fin-seg-label">Choose your supply</div>
@@ -595,7 +595,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       </div>
       <div class="fin-total">
         <span class="lab" id="fin-total-lab">1 bottle, one month supply</span>
-        <span class="val" id="fin-total-val">$250</span>
+        <span class="val" id="fin-total-val">$210</span>
       </div>
       <div class="fin-covered"><span class="cov-ico">&#10003;</span><span>This is usually covered by most insurance plans</span></div>
       <div class="fin-includes">
@@ -623,7 +623,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 <script>
   const state={answers:{},currentStep:'landing',history:['landing']};
-  const PRICE=250;  // clara Knee OA compound cream, CAD per bottle (30 day supply for one knee)
+  const PRICE=210;  // clara Knee OA compound cream, CAD per bottle (30 day supply for one knee)
 
   function showStep(stepId){
     document.querySelectorAll('.quiz-screen').forEach(s=>s.classList.remove('active'));
@@ -860,7 +860,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     plan.summary=s;
 
     // ---- finance: 30-day dispensing, patient prices from the Clara Master Drug list (May 2026) ----
-    const PRICE_CREAM=250, P_NAP=41.38, P_ACE=28.13, P_DUL=43.82;
+    const PRICE_CREAM=210, P_NAP=41.38, P_ACE=28.13, P_DUL=43.82;
     plan.finance={items:[]};
     function fin(name,price,kind,detail){plan.finance.items.push({name:name,price:price,kind:kind,detail:detail});}
     fin('Movement, weight care, and physiotherapy',0,'free','The foundation of knee osteoarthritis care, and the part with the strongest evidence');

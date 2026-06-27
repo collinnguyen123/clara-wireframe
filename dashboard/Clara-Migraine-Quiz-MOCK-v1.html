@@ -1544,7 +1544,53 @@ body.show-side-decor .side-decor { display: block; }
     const triedSimpleFailed = tried.includes('otc') || tried.includes('rx-nsaid');
     const needsMigraineSpecific = (severity === 'moderate' || severity === 'severe' || severity === 'disabling' || triedSimpleFailed);
 
-    if (goal !== 'prevention') {
+    // ===== REFILL PATH (goal = continue a migraine medication that already works) =====
+    // We continue the patient's current acute medication (inferred from Q7, by migraine-specificity:
+    // gepant > triptan > prescription NSAID > OTC) ONLY if it still passes their safety screen.
+    // If their usual medication is now contraindicated, or they report nothing to refill, we do NOT
+    // refill it: we flag it and fall through to the standard tier logic to pick a safe alternative.
+    let refillSatisfied = false;
+    if (goal === 'refill' && !isPregnant) {
+      const usedGepant = tried.includes('gepant'), usedTriptan = tried.includes('triptan'),
+            usedRxNsaid = tried.includes('rx-nsaid'), usedOtc = tried.includes('otc');
+      const primary = usedGepant ? 'gepant' : usedTriptan ? 'triptan'
+                    : usedRxNsaid ? 'rx-nsaid' : usedOtc ? 'otc' : null;
+      const refillWhy = 'You told us this already works for you, so the goal here is simply to keep you supplied. A clara doctor reviews every refill before it is dispensed. ';
+      if (primary === 'gepant') {
+        if (!gepantBlocked) {
+          plan.components.push(comp('Rimegepant (Nurtec ODT) 75 mg, continue as needed', 'RX', 'badge-rx', 'rimegepant',
+            refillWhy + 'We are continuing the gepant you have been using. Take one tablet at the onset of an attack.'));
+          acuteChosen = 'refill-gepant'; refillSatisfied = true;
+        }
+      } else if (primary === 'triptan') {
+        if (!triptanBlocked) {
+          plan.components.push(comp('Continue your current triptan, at your usual dose', 'RX', 'badge-rx', 'sumatriptan',
+            refillWhy + 'We are refilling the triptan that works for you. Confirm the exact product and strength with the doctor, keep taking it at the first sign of an attack, and pair it with naproxen if that has been your routine. To avoid medication-overuse headache, keep triptan use to about 2 to 3 days a week.'));
+          acuteChosen = 'refill-triptan'; refillSatisfied = true;
+        }
+      } else if (primary === 'rx-nsaid') {
+        if (!nsaidBlocked) {
+          plan.components.push(comp('Naproxen 500 mg at onset, continue as needed', 'RX', 'badge-rx', 'naproxen',
+            refillWhy + 'We are continuing the prescription anti-inflammatory you have been using. Take at the first sign of an attack, with food (max 1000 mg in 24 hours).'));
+          acuteChosen = 'refill-rxnsaid'; refillSatisfied = true;
+        }
+      } else if (primary === 'otc') {
+        if (!nsaidBlocked) {
+          plan.components.push(comp('Ibuprofen 400 mg at onset, continue as needed', 'OTC', 'badge-otc', 'ibuprofen',
+            refillWhy + 'We are continuing the over-the-counter anti-inflammatory you have been using. Take early, with food.'));
+          acuteChosen = 'refill-otc'; refillSatisfied = true;
+        } else if (!cond.includes('liver')) {
+          plan.components.push(comp('Acetaminophen 1000 mg at onset, continue as needed', 'OTC', 'badge-otc', 'acetaminophen',
+            refillWhy + 'An anti-inflammatory is not the right choice given a flag in your screen, so we continue acetaminophen as your simple option.'));
+          acuteChosen = 'refill-otc-apap'; refillSatisfied = true;
+        }
+      }
+      if (!refillSatisfied && primary) {
+        plan.reviewFlags.push('a request to refill your usual migraine medication, which a safety flag now makes unsuitable, so a doctor will choose a safe replacement');
+      }
+    }
+
+    if (goal !== 'prevention' && !refillSatisfied) {
       if (isPregnant) {
         // Pregnancy/breastfeeding: acetaminophen is the one safe acute option, regardless of tier.
         // Triptans have limited data and are used only with specialist oversight; NSAIDs and gepants are avoided.
@@ -1681,8 +1727,9 @@ body.show-side-decor .side-decor { display: block; }
       'Knowing your pattern is half the battle. Your primer covers migraine triggers, how to treat early for the best results, the medication-overuse trap to avoid, and a simple headache diary to track what works. Arrives in your account on day one.'));
 
     // ============ NAME + SUMMARY ============
-    if (isChronicMigraine) plan.name = 'Chronic Migraine Plan';
-    else if (preventionIndicated && goal !== 'acute') plan.name = 'Migraine Relief + Prevention Plan';
+    if (acuteChosen && acuteChosen.indexOf('refill') === 0) plan.name = 'Migraine Refill Plan';
+    else if (isChronicMigraine) plan.name = 'Chronic Migraine Plan';
+    else if (preventionIndicated && goal !== 'acute' && goal !== 'refill') plan.name = 'Migraine Relief + Prevention Plan';
     else plan.name = 'Acute Migraine Relief Plan';
 
     // Build summary mirror

@@ -693,7 +693,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="finance-title">Your cost, made simple</div>
       <div class="finance-sub">One clara compounded cream bottle is a 30 day supply for one treatment area, applied 2 to 3 times a day.</div>
       <div class="fin-price-row">
-        <div class="fin-price">$340 <small>CAD / bottle</small></div>
+        <div class="fin-price">$210 <small>CAD / bottle</small></div>
         <div class="fin-perday">About $11.33 a day</div>
       </div>
       <div class="fin-seg-label">Choose your supply</div>
@@ -704,7 +704,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       </div>
       <div class="fin-total">
         <span class="lab" id="fin-total-lab">1 bottle, one month supply</span>
-        <span class="val" id="fin-total-val">$340</span>
+        <span class="val" id="fin-total-val">$210</span>
       </div>
       <div class="fin-covered"><span class="cov-ico">&#10003;</span><span>This is usually covered by most insurance plans</span></div>
       <div class="fin-includes">
@@ -732,7 +732,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 <script>
   const state={answers:{},currentStep:'landing',history:['landing']};
-  const PRICE=340;  // Clara Back Pain compound cream, CAD per bottle (30 day supply)
+  const PRICE=210;  // Clara Back Pain compound cream, CAD per bottle (30 day supply)
 
   function showStep(stepId){
     document.querySelectorAll('.quiz-screen').forEach(s=>s.classList.remove('active'));
@@ -902,7 +902,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         plan.creamNote='Everyone starts at C1, our foundation strength. It\'s a deliberately stepwise system: if C1 isn\'t enough after a fair trial, your doctor can step you up to C2 (higher strengths plus gabapentin), and C3 (which adds capsaicin) if needed. We start low and increase only if you need it.';
       }
       cc.note=plan.creamNote;
-      cc.priceDisplay='$340 / bottle';cc.priceValue=340;cc.insured=true;cc.inTotals=false;
+      cc.priceDisplay='$210 / bottle';cc.priceValue=210;cc.insured=true;cc.inTotals=false;
       plan.components.push(cc);
       // When a Clara compound cream (C1–C3) is recommended it is the chosen compound topical,
       // so we do NOT also list the compound diclofenac/lidocaine patches (avoids redundancy).
@@ -1017,7 +1017,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     plan.components.forEach(x=>{
       if(x.sectionLabel)return;
       if(x.inTotals){oralAcq+=x.acqMonth;oralPatient+=x.patientMonth;}
-      if(x.isCream)creamPrice=x.priceValue||340;
+      if(x.isCream)creamPrice=x.priceValue||210;
       else if(x.insured&&x.patientMonth>0)insuredTopicals.push({name:x.name,amount:x.patientMonth});
     });
     // Per-day inline card is now superseded by the finance card at the end of the plan.
